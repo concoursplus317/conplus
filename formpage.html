@@ -1,415 +1,2927 @@
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'Inscription - École Excellence</title>
+    <title>Excellentia Academia - Structure Académique d'Excellence, Université de Kinshasa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #d32f2f;
+            --secondary-light: #ff6659;
+            --secondary-dark: #9a0007;
+            --accent: #ffab00;
+            --light: #f5f5f7;
+            --dark: #121212;
+            --gray: #5f6368;
+            --success: #4caf50;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
         }
-
-        /* Navbar */
-        .navbar {
-            background-color: #2c3e50;
-            padding: 1rem 2rem;
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-small {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-login {
+            background-color: var(--accent);
+            color: var(--dark);
+            margin-left: 10px;
+        }
+        
+        .btn-login:hover {
+            background-color: #ff8f00;
+            color: white;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1000;
         }
-
-        .navbar-brand {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
+        
+        .logo {
+            display: flex;
+            align-items: center;
             text-decoration: none;
         }
-
-        .navbar-brand:hover {
+        
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .logo-text span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu Button - AMÉLIORÉ pour mobile */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(26, 35, 126, 0.1);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-menu-btn:hover {
+            background-color: rgba(26, 35, 126, 0.2);
+        }
+        
+        /* Institutional Badge */
+        .institutional-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 5px 20px rgba(26, 35, 126, 0.2);
+            animation: slideInDown 0.8s ease-out;
+        }
+        
+        .badge-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            color: var(--accent);
+        }
+        
+        .badge-content h3 {
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+        
+        .badge-content p {
+            margin-bottom: 0;
             opacity: 0.9;
         }
-
-        /* Hamburger Button */
-        .hamburger {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 150px;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.05) 0%, rgba(255, 171, 0, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
             display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 30px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 3px;
-            background-color: white;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Menu Window */
-        .menu-window {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background-color: white;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-            transition: right 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .menu-window.active {
-            right: 0;
-        }
-
-        .menu-header {
-            background-color: #2c3e50;
-            padding: 1.5rem;
-            color: white;
-            display: flex;
+            align-items: center;
             justify-content: space-between;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 40px;
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .hero-text h1 span {
+            color: var(--secondary);
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .coordinateur-info {
+            background-color: rgba(26, 35, 126, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .coordinateur-info h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
             align-items: center;
         }
-
-        .menu-title {
-            font-size: 1.3rem;
-            font-weight: bold;
+        
+        .coordinateur-info h4 i {
+            margin-right: 10px;
+            color: var(--secondary);
         }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
+        
+        .coordinateur-info p {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+        
+        .floating-elements {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .floating-element:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .element-1 {
+            top: 0;
+            left: 0;
+            width: 180px;
+            height: 180px;
+            animation: float 6s ease-in-out infinite;
+            border-top: 5px solid var(--primary);
+        }
+        
+        .element-2 {
+            top: 50px;
+            right: 0;
+            width: 220px;
+            height: 150px;
+            animation: float 7s ease-in-out infinite 0.5s;
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .element-3 {
+            bottom: 0;
+            left: 50px;
+            width: 160px;
+            height: 160px;
+            animation: float 8s ease-in-out infinite 1s;
+            border-top: 5px solid var(--accent);
+        }
+        
+        .floating-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .floating-text {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* About Section */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-visual {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-visual img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(26, 35, 126, 0.05);
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        /* Faculties Section */
+        .faculties {
+            background-color: white;
+        }
+        
+        .faculties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .faculty-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
             cursor: pointer;
-            padding: 0.5rem;
-            line-height: 1;
         }
-
-        .close-btn:hover {
-            opacity: 0.8;
+        
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
-
-        .menu-content {
-            padding: 2rem 0;
+        
+        .faculty-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
         }
-
-        .menu-item {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e0e0e0;
-            transition: background-color 0.2s ease;
+        
+        .faculty-content {
+            padding: 25px;
         }
-
-        .menu-item:hover {
-            background-color: #f5f5f5;
+        
+        .faculty-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
         }
-
-        .menu-item a {
-            color: #333;
-            text-decoration: none;
-            font-size: 1.1rem;
+        
+        .faculty-leadership {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .leader {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .leader:last-child {
+            margin-bottom: 0;
+        }
+        
+        .leader-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(26, 35, 126, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        
+        .leader-info h5 {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .leader-info p {
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .faculty-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        /* Activities Section */
+        .activities {
+            background-color: #f9f9fc;
+        }
+        
+        .activities-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 30px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            margin: 0 10px 10px 0;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background-color: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .tab-content.active {
             display: block;
         }
-
-        .menu-item a:hover {
-            color: #2c3e50;
+        
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
         }
-
-        /* Overlay */
-        .overlay {
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .activity-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .activity-content {
+            padding: 25px;
+        }
+        
+        .activity-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Registration Form */
+        .registration {
+            background-color: white;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .form-header h2 {
+            color: white;
+        }
+        
+        .form-body {
+            padding: 40px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .form-group {
+            flex: 1 0 300px;
+            padding: 0 15px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Source Sans Pro', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a237e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        .checkbox-group {
+            margin-top: 20px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        /* Events Section */
+        .events {
+            background-color: #f9f9fc;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .event-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-date {
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .event-date .day {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        
+        .event-date .month {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+        
+        .event-content {
+            padding: 25px;
+        }
+        
+        .event-content h3 {
+            color: var(--primary);
+        }
+        
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Menu Overlay - AMÉLIORÉ */
+        .mobile-menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
         }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 2rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Form Container */
-        .form-container {
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        .form-card {
-            background: white;
+        
+        .mobile-menu-content {
+            background-color: white;
+            width: 90%;
+            max-width: 400px;
             border-radius: 15px;
-            padding: 3rem;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideInUp 0.4s ease;
         }
-
-        /* Form */
-        .form-group {
-            margin-bottom: 1.5rem;
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(26, 35, 126, 0.1);
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            font-weight: 500;
+        
+        .mobile-menu-logo {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
         }
-
-        .form-group label .required {
-            color: #e74c3c;
+        
+        .mobile-menu-logo i {
+            margin-right: 10px;
         }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        
+        .mobile-menu-close {
+            background: none;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--gray);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 1rem;
+            padding: 5px;
         }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        
+        .mobile-menu-links {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
         }
-
-        .submit-btn:active {
-            transform: translateY(0);
+        
+        .mobile-menu-links li {
+            margin-bottom: 15px;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .form-card {
-                padding: 2rem 1.5rem;
+        
+        .mobile-menu-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-links a i {
+            margin-right: 12px;
+            width: 25px;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        .mobile-menu-links a:hover {
+            background-color: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .mobile-menu-divider {
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        
+        .mobile-menu-archives {
+            background-color: rgba(255, 171, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .mobile-menu-archives h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-menu-archives h4 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .archive-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+        
+        .archive-item:last-child {
+            border-bottom: none;
+        }
+        
+        .archive-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .archive-item a i {
+            margin-right: 8px;
+            color: var(--secondary);
+            font-size: 0.8rem;
+        }
+        
+        .mobile-menu-login {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(26, 35, 126, 0.05);
+            border-radius: 10px;
+        }
+        
+        .mobile-menu-login h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .login-form input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .login-form button {
+            background-color: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .login-form button:hover {
+            background-color: #ff8f00;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 70px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .coordinateur-footer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .coordinateur-footer h4 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .coordinateur-footer p {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+        }
+        
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
             }
-
-            .form-row {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 60px;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .floating-elements {
+                height: 300px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .faculties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .institutional-badge {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .badge-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .form-body {
+                padding: 30px 20px;
+            }
+            
+            .faculties-grid {
                 grid-template-columns: 1fr;
             }
-
-            .hero h1 {
-                font-size: 2rem;
+            
+            .faculty-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .faculty-actions .btn {
+                width: 100%;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .mobile-menu-content {
+                padding: 20px;
+            }
+            
+            .mobile-menu-links a {
+                font-size: 1rem;
+                padding: 10px 12px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="homepage.html" class="navbar-brand">🎓 École Excellence</a>
-        <button class="hamburger" id="hamburgerBtn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Menu Window -->
-    <div class="menu-window" id="menuWindow">
-        <div class="menu-header">
-            <div class="menu-title">Menu</div>
-            <button class="close-btn" id="closeBtn">&times;</button>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Excellentia <span>Academia</span></div>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="#apropos"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                <li><a href="#facultes"><i class="fas fa-university"></i> Facultés</a></li>
+                <li><a href="#activites"><i class="fas fa-tasks"></i> Activités</a></li>
+                <li><a href="#evenements"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+                <li><a href="#inscription" class="btn btn-small"><i class="fas fa-user-plus"></i> Adhérer</a></li>
+                <li><a href="#" class="btn btn-small btn-login" id="desktopLoginBtn"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+            </ul>
+            
+            <!-- Bouton Menu Mobile AMÉLIORÉ -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu mobile">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <div class="menu-content">
-            <div class="menu-item">
-                <a href="homepage.html">Accueil</a>
+    </header>
+
+    <!-- Mobile Menu Overlay AMÉLIORÉ -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <div class="mobile-menu-logo">
+                    <i class="fas fa-graduation-cap"></i> Excellentia Academia
+                </div>
+                <button class="mobile-menu-close" id="closeMobileMenu">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="menu-item">
-                <a href="visitepage.html">Visite</a>
+            
+            <ul class="mobile-menu-links">
+                <li><a href="#accueil"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="#apropos"><i class="fas fa-info-circle"></i> À Propos</a></li>
+
+
+
+                <li><a href="#facultes"><i class="fas fa-university"></i> 13 Facultés</a></li>
+                <li><a href="#activites"><i class="fas fa-tasks"></i> Activités</a></li>
+                <li><a href="#evenements"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+                <li><a href="#inscription"><i class="fas fa-user-plus"></i> Adhésion</a></li>
+            </ul>
+            
+            <div class="mobile-menu-divider"></div>
+            
+            <!-- Section Archives Professionnelles -->
+            <div class="mobile-menu-archives">
+                <h4><i class="fas fa-archive"></i> Archives des Activités</h4>
+                <div class="archive-item">
+                    <a href="#"><i class="fas fa-trophy"></i> Concours d'Éloquence 2023</a>
+                </div>
+                <div class="archive-item">
+                    <a href="#"><i class="fas fa-microscope"></i> Semaine de la Recherche 2023</a>
+                </div>
+                <div class="archive-item">
+                    <a href="#"><i class="fas fa-users"></i> Camp de Leadership 2023</a>
+                </div>
+                <div class="archive-item">
+                    <a href="#"><i class="fas fa-graduation-cap"></i> Cérémonie d'Excellence 2023</a>
+                </div>
+                <div class="archive-item">
+                    <a href="#"><i class="fas fa-chart-line"></i> Forum Entrepreneurial 2023</a>
+                </div>
             </div>
-            <div class="menu-item">
-                <a href="assisatancepage.html">Assistance</a>
+            
+            <!-- Formulaire de Connexion -->
+            <div class="mobile-menu-login">
+                <h4><i class="fas fa-sign-in-alt"></i> Connexion Membre</h4>
+                <form class="login-form" id="mobileLoginForm">
+                    <input type="email" placeholder="Adresse email" required>
+                    <input type="password" placeholder="Mot de passe" required>
+                    <button type="submit"><i class="fas fa-lock"></i> Se connecter</button>
+                </form>
+                <p style="font-size: 0.8rem; margin-top: 10px; color: var(--gray);">
+                    <i class="fas fa-info-circle"></i> Accès réservé aux membres actifs
+                </p>
             </div>
-            <div class="menu-item">
-                <a href="formpage.html">Formulaire</a>
+            
+            <div class="mobile-menu-contact">
+                <h4><i class="fas fa-user-tie"></i> Fondateur</h4>
+                <p><strong>MALALE MUSAO Credo</strong></p>
+                <p>Coordonnateur Général</p>
+                <p>Master 1 Droit International</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Institutional Badge -->
+    <div class="institutional-identity">
+        <div class="container">
+            <div class="institutional-badge">
+                <div class="badge-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="badge-content">
+                    <h3>Structure Académique Officielle UNIKIN</h3>
+                    <p>Reconnue par l'Université de Kinshasa • N° STAE-UNIKIN-2023-001</p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <h1>Formulaire d'Inscription</h1>
-        <p>Rejoignez l'École Excellence et commencez votre parcours vers l'excellence</p>
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
+                    <p>Excellentia Academia est la <strong>Structure Académique Officielle</strong> d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée dans les 13 facultés.</p>
+                    
+                    <div class="coordinateur-info">
+                        <h4><i class="fas fa-user-tie"></i> Coordonnateur Général & Fondateur</h4>
+                        <p><strong>MALALE MUSAO Credo</strong></p>
+                        <p>Étudiant en Master 1 Droit, Département de Droit International Public et Relations Internationales</p>
+                        <p><i class="fas fa-envelope"></i> contact@excellentia-academia.unikin.cd</p>
+                    </div>
+                    
+                    <div class="hero-btns">
+                        <a href="#inscription" class="btn"><i class="fas fa-user-plus"></i> Devenir Membre</a>
+                        <a href="#apropos" class="btn btn-outline"><i class="fas fa-info-circle"></i> Notre Histoire</a>
+                        <a href="#activites" class="btn btn-outline"><i class="fas fa-tasks"></i> Nos Activités</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-elements">
+                        <div class="floating-element element-1">
+                            <i class="fas fa-university floating-icon"></i>
+                            <div class="floating-text">Structure Centrale</div>
+                            <small>+13 Clubs Facultaires</small>
+                        </div>
+                        <div class="floating-element element-2">
+                            <i class="fas fa-trophy floating-icon"></i>
+                            <div class="floating-text">Concours Académiques</div>
+                            <small>Inter-facultés</small>
+                        </div>
+                        <div class="floating-element element-3">
+                            <i class="fas fa-users floating-icon"></i>
+                            <div class="floating-text">Accompagnement</div>
+                            <small>Expert & Personnalisé</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Form Container -->
-    <div class="form-container">
-        <div class="form-card">
-            <form method="POST" action="http://localhost/phpmyadmin/index.php?route=/sql&pos=0&db=test&table=inscriptions" onsubmit="alert('Formulaire soumis avec succès !'); return false;">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nom">Nom <span class="required">*</span></label>
-                        <input type="text" id="nom" name="nom" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="prenom">Prénom <span class="required">*</span></label>
-                        <input type="text" id="prenom" name="prenom" required>
+    <!-- Section À Propos -->
+    <section class="about" id="apropos">
+        <div class="container">
+            <h2 class="section-title">À Propos d'Excellentia Academia</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Notre Histoire & Mission</h3>
+                    <p>Fondée en 2023 par <strong>MALALE MUSAO Credo</strong>, étudiant en Master 1 Droit International Public et Relations Internationales, Excellentia Academia est née d'une vision ambitieuse : créer une structure académique d'excellence qui transcende les frontières facultaires et unisse les étudiants les plus brillants de l'Université de Kinshasa.</p>
+                    
+                    <p>Notre mission est triple :</p>
+                    <ul style="margin: 20px 0 20px 30px;">
+                        <li><strong>Promouvoir l'excellence académique</strong> à travers toutes les facultés de l'UNIKIN</li>
+                        <li><strong>Développer les compétences transversales</strong> essentielles à la réussite professionnelle</li>
+                        <li><strong>Créer un réseau d'élites étudiantes</strong> engagées pour le développement de la RDC</li>
+                    </ul>
+                    
+                    <p>Excellentia Academia fonctionne selon un modèle unique : une <strong>structure centrale</strong> qui coordonne et chapeaute 13 <strong>clubs facultaires spécialisés</strong>, permettant ainsi une approche à la fois unifiée et adaptée aux spécificités de chaque domaine d'étude.</p>
+                    
+                    <h4 style="margin-top: 30px;">Notre Vision</h4>
+                    <p>Devenir la référence en matière d'excellence académique en RDC, en formant une nouvelle génération de leaders intellectuels capables de contribuer significativement au développement national et continental.</p>
+                </div>
+                
+                <div class="about-visual">
+                    <div style="background-color: var(--primary-light); color: white; padding: 30px; border-radius: 15px; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="color: white; margin-bottom: 20px;"><i class="fas fa-bullseye"></i> Nos Valeurs</h3>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--accent); margin-bottom: 5px;"><i class="fas fa-star"></i> Excellence</h4>
+                            <p style="color: rgba(255,255,255,0.9);">Nous visons la perfection dans chaque domaine académique.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--accent); margin-bottom: 5px;"><i class="fas fa-handshake"></i> Intégrité</h4>
+                            <p style="color: rgba(255,255,255,0.9);">Nous agissons avec éthique et transparence.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--accent); margin-bottom: 5px;"><i class="fas fa-users"></i> Solidarité</h4>
+                            <p style="color: rgba(255,255,255,0.9);">Nous travaillons ensemble pour la réussite de tous.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--accent); margin-bottom: 5px;"><i class="fas fa-lightbulb"></i> Innovation</h4>
+                            <p style="color: rgba(255,255,255,0.9);">Nous encourageons la créativité et les nouvelles idées.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--accent); margin-bottom: 5px;"><i class="fas fa-globe-africa"></i> Leadership</h4>
+                            <p style="color: rgba(255,255,255,0.9);">Nous formons les leaders de demain pour l'Afrique.</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telephone">Téléphone <span class="required">*</span></label>
-                        <input type="tel" id="telephone" name="telephone" required>
-                    </div>
+            </div>
+            
+            <div class="about-stats">
+                <div class="stat-item">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Facultés</div>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="date_naissance">Date de Naissance</label>
-                        <input type="date" id="date_naissance" name="date_naissance">
-                    </div>
-                    <div class="form-group">
-                        <label for="programme">Programme d'Études <span class="required">*</span></label>
-                        <select id="programme" name="programme" required>
-                            <option value="">Sélectionnez un programme</option>
-                            <option value="Sciences & Technologies">Sciences & Technologies</option>
-                            <option value="Business & Management">Business & Management</option>
-                            <option value="Arts & Design">Arts & Design</option>
-                            <option value="Santé & Médecine">Santé & Médecine</option>
-                            <option value="Éducation & Pédagogie">Éducation & Pédagogie</option>
-                            <option value="Droit & Sciences Politiques">Droit & Sciences Politiques</option>
-                        </select>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Activités organisées</div>
                 </div>
-
-                <div class="form-group">
-                    <label for="message">Message (Optionnel)</label>
-                    <textarea id="message" name="message" placeholder="Dites-nous pourquoi vous souhaitez rejoindre notre école..."></textarea>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Membres actifs</div>
                 </div>
-
-                <button type="submit" class="submit-btn">Envoyer l'Inscription</button>
-            </form>
+                <div class="stat-item">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Partenariats</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Engagement</div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <!-- Facultés Section -->
+    <section class="faculties" id="facultes">
+        <div class="container">
+            <h2 class="section-title">13 Facultés de l'Université de Kinshasa</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Excellentia Academia est structurée en 1 <strong>Structure Centrale</strong> et 13 <strong>Clubs Facultaires</strong>, chacun avec son équipe de direction dédiée.</p>
+            
+            <div class="faculties-grid">
+                <!-- Faculté 1 - Sciences et Technologies -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #1a237e;">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Sciences et Technologies</h3>
+                        <p>Laboratoires de recherche, olympiades scientifiques, hackathons et développement de projets innovants en sciences fondamentales et appliquées.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('sciences-tech')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('sciences-tech')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 2 - Lettres et Sciences Humaines -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #d32f2f;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Lettres et Sciences Humaines</h3>
+                        <p>Ateliers d'écriture créative, clubs de philosophie et de littérature, conférences interdisciplinaires et projets culturels.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('lettres')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('lettres')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 3 - Sciences Économiques et de Gestion -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #388e3c;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Sciences Économiques et de Gestion</h3>
+                        <p>Clubs d'analyse économique, compétitions de trading, ateliers d'économétrie, simulations boursières et projets de recherche économique.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('economie')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('economie')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 4 - Sciences Sociales, Administratives et Politiques -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #7b1fa2;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Sciences Sociales, Administratives et Politiques</h3>
+                        <p>Débats politiques, analyses sociologiques, simulations administratives et recherches sur les politiques publiques.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('sciences-sociales')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('sciences-sociales')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 5 - Droit -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #f57c00;">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Droit</h3>
+                        <p>Clubs de plaidoirie, concours de procès simulés, ateliers de rédaction juridique, moots courts et préparation aux examens du barreau.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('droit')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('droit')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 6 - Polytechnique -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #00796b;">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Polytechnique</h3>
+                        <p>Projets d'ingénierie, compétitions de robotique, ateliers de conception assistée par ordinateur et innovations technologiques.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('polytechnique')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('polytechnique')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 7 - Sciences Pharmaceutiques -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #5d4037;">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Sciences Pharmaceutiques</h3>
+                        <p>Ateliers de pharmacologie, recherche pharmaceutique, préparation aux concours, stages pratiques et développement de médicaments.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('pharma')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('pharma')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 8 - Médecine Dentaire -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #0288d1;">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Médecine Dentaire</h3>
+                        <p>Ateliers de techniques dentaires, recherches en odontologie, simulations cliniques et innovations en santé bucco-dentaire.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('dentaire')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('dentaire')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 9 - Médecine Vétérinaire -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #c2185b;">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Médecine Vétérinaire</h3>
+                        <p>Cliniques vétérinaires étudiantes, recherche en santé animale, ateliers de chirurgie et prévention des zoonoses.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('veto')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('veto')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 10 - Pétrole, Gaz et Énergies Renouvelables -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #303f9f;">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Pétrole, Gaz et Énergies Renouvelables</h3>
+                        <p>Projets énergétiques, recherche sur les énergies alternatives, simulations d'exploitation et gestion des ressources énergétiques.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('petrole')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('petrole')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 11 - Sciences Agronomiques -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #689f38;">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Sciences Agronomiques</h3>
+                        <p>Projets agricoles innovants, recherche agronomique, ateliers de transformation des produits et gestion des exploitations.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('agronomie')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('agronomie')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 12 - Médecine -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #e64a19;">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Médecine</h3>
+                        <p>Groupes d'étude avancée, simulations médicales, recherche clinique, préparation aux résidanats et innovations médicales.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('medecine')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('medecine')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Faculté 13 - Psychologie et Sciences de l'Éducation -->
+                <div class="faculty-card">
+                    <div class="faculty-icon" style="background-color: #5d4037;">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>Faculté de Psychologie et Sciences de l'Éducation</h3>
+                        <p>Ateliers de psychologie appliquée, recherche en sciences éducatives, interventions psychosociales et innovations pédagogiques.</p>
+                        
+                        <div class="faculty-leadership">
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Président du Club</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                            <div class="leader">
+                                <div class="leader-icon">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <div class="leader-info">
+                                    <h5>Vice-Président</h5>
+                                    <p>À désigner</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faculty-actions">
+                            <button class="btn btn-small btn-primary" onclick="showFacultyDetails('psycho')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                            <button class="btn btn-small" onclick="joinFaculty('psycho')">
+                                <i class="fas fa-user-plus"></i> Rejoindre
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activités Section -->
+    <section class="activities" id="activites">
+        <div class="container">
+            <h2 class="section-title">Nos Activités & Programmes</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Découvrez nos activités structurées pour développer l'excellence académique dans les 13 facultés de l'UNIKIN.</p>
+            
+            <div class="activities-tabs">
+                <button class="tab-btn active" data-tab="programmes"><i class="fas fa-calendar-check"></i> Programmes récurrents</button>
+                <button class="tab-btn" data-tab="concours"><i class="fas fa-trophy"></i> Concours inter-facultés</button>
+                <button class="tab-btn" data-tab="accompagnement"><i class="fas fa-hands-helping"></i> Accompagnement académique</button>
+                <button class="tab-btn" data-tab="activites-specifiques"><i class="fas fa-tasks"></i> Activités spécifiques</button>
+            </div>
+            
+            <div class="tab-content active" id="programmes">
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #1a237e;"></div>
+                        <div class="activity-content">
+                            <h3>Clubs d'excellence par faculté</h3>
+                            <p>13 clubs spécialisés, un par faculté, pour approfondir les connaissances disciplinaires et préparer les compétitions académiques nationales et internationales.</p>
+                            <a href="#inscription" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-users"></i> Rejoindre mon club</a>
+                        </div>
+                    </div>
+                    
+
+
+                        <div class="activity-img" style="background-color: #d32f2f;"></div>
+                        <div class="activity-content">
+                            <h3>Ateliers d'écriture académique</h3>
+                            <p>Formations à la rédaction scientifique, méthodologie de recherche, et techniques de rédaction de mémoires, thèses et articles scientifiques.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Voir calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #388e3c;"></div>
+                        <div class="activity-content">
+                            <h3>Formations soft skills</h3>
+                            <p>Développement des compétences transversales : prise de parole, leadership, gestion du temps, rédaction de CV, entretiens et intelligence émotionnelle.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Voir calendrier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="concours">
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #7b1fa2;"></div>
+                        <div class="activity-content">
+                            <h3>Concours d'éloquence inter-facultés</h3>
+                            <p>Compétition d'art oratoire entre les 13 facultés sur des sujets d'actualité et académiques. Prix pour les meilleurs orateurs de chaque faculté.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #f57c00;"></div>
+                        <div class="activity-content">
+                            <h3>Olympiades scientifiques UNIKIN</h3>
+                            <p>Compétitions de résolution de problèmes complexes en mathématiques, physique, chimie, biologie et informatique entre facultés scientifiques.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #00796b;"></div>
+                        <div class="activity-content">
+                            <h3>Quiz académique des 13 facultés</h3>
+                            <p>Jeu-questionnaire couvrant tous les domaines de connaissance. Équipes mixtes inter-facultés encouragées pour favoriser l'interdisciplinarité.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="accompagnement">
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #1a237e;"></div>
+                        <div class="activity-content">
+                            <h3>Camp de préparation aux examens</h3>
+                            <p>Sessions intensives de révision avant les examens avec professeurs et étudiants mentors dans chaque faculté. Méthodologie de travail adaptée.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #d32f2f;"></div>
+                        <div class="activity-content">
+                            <h3>Mentorat par les anciens et experts</h3>
+                            <p>Accompagnement personnalisé par des diplômés excellents et professionnels dans chaque domaine pour guider les projets académiques et professionnels.</p>
+                            <a href="#inscription" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-user-plus"></i> Demander un mentor</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #388e3c;"></div>
+                        <div class="activity-content">
+                            <h3>Préparation TFC/Mémoire/Thèse</h3>
+                            <p>Ateliers spécialisés pour la rédaction du Travail de Fin de Cycle, mémoire ou thèse, avec suivi individualisé par des experts disciplinaires.</p>
+                            <a href="#inscription" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-plus"></i> Réserver une session</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="activites-specifiques">
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #7b1fa2;"></div>
+                        <div class="activity-content">
+                            <h3>Séminaires de recherche</h3>
+                            <p>Présentations de travaux de recherche par des étudiants avancés et des professeurs pour développer la culture de la recherche scientifique.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #f57c00;"></div>
+                        <div class="activity-content">
+                            <h3>Visites académiques</h3>
+                            <p>Visites d'institutions professionnelles, entreprises et centres de recherche pour le développement professionnel des membres.</p>
+                            <a href="#evenements" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-img" style="background-color: #00796b;"></div>
+                        <div class="activity-content">
+                            <h3>Projets communautaires</h3>
+                            <p>Initiatives sociales et communautaires pour appliquer les connaissances académiques au service du développement de la communauté.</p>
+                            <a href="#inscription" class="btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;"><i class="fas fa-hands-helping"></i> Participer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Événements Section -->
+    <section class="events" id="evenements">
+        <div class="container">
+            <h2 class="section-title">Événements à Venir</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Ne manquez pas nos événements phares qui rassemblent l'élite académique des 13 facultés de l'Université de Kinshasa.</p>
+            
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="day">15</div>
+                        <div class="month">Octobre</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Semaine de l'Excellence UNIKIN</h3>
+                        <p>Exposition des projets étudiants des 13 facultés, panels de discussion avec des experts internationaux, et cérémonie de remise des prix d'excellence académique.</p>
+                        <div class="event-meta">
+                            <span><i class="far fa-clock"></i> 9h-18h</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Campus Principal UNIKIN</span>
+                        </div>
+                        <a href="#inscription" class="btn" style="margin-top: 20px; padding: 10px 25px; font-size: 0.9rem;"><i class="fas fa-user-plus"></i> S'inscrire</a>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="day">28</div>
+                        <div class="month">Octobre</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Finale du Concours d'Éloquence</h3>
+                        <p>Finale inter-facultés du concours d'art oratoire avec participation des 13 facultés. Thème : "L'excellence académique au service du développement de la RDC".</p>
+                        <div class="event-meta">
+                            <span><i class="far fa-clock"></i> 14h-17h</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Amphithéâtre Kwame Nkrumah</span>
+                        </div>
+                        <a href="#inscription" class="btn" style="margin-top: 20px; padding: 10px 25px; font-size: 0.9rem;"><i class="fas fa-user-plus"></i> S'inscrire</a>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="day">05</div>
+                        <div class="month">Novembre</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Camp de Préparation aux Examens</h3>
+                        <p>Session intensive de révision dans les 13 facultés avec les meilleurs professeurs et étudiants mentors. Méthodologie adaptée à chaque discipline.</p>
+                        <div class="event-meta">
+                            <span><i class="far fa-clock"></i> 8h-20h</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Bibliothèque Centrale UNIKIN</span>
+                        </div>
+                        <a href="#inscription" class="btn" style="margin-top: 20px; padding: 10px 25px; font-size: 0.9rem;"><i class="fas fa-user-plus"></i> S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#evenements" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Voir tous les événements</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulaire d'Inscription -->
+    <section class="registration" id="inscription">
+        <div class="container">
+            <h2 class="section-title">Devenir Membre d'Excellentia Academia</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Rejoignez notre structure d'excellence et bénéficiez de tous nos programmes, événements et accompagnements personnalisés dans votre faculté.</p>
+            
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Formulaire d'Adhésion</h2>
+                    <p>Remplissez ce formulaire pour rejoindre la structure Excellentia Academia</p>
+                </div>
+                
+                <!-- FORMSPREE FORM -->
+                <form class="form-body" action="https://formspree.io/f/mldqkngp" method="POST" id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Prénom *</label>
+                            <input type="text" id="firstName" name="Prénom" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Nom *</label>
+                            <input type="text" id="lastName" name="Nom" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="postnom">Post-nom (Optionnel)</label>
+                            <input type="text" id="postnom" name="Postnom" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Adresse Email *</label>
+                            <input type="email" id="email" name="Email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Téléphone/WhatsApp *</label>
+                            <input type="tel" id="phone" name="Téléphone" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faculty">Faculté *</label>
+                            <select id="faculty" name="Faculté" class="form-control" required>
+                                <option value="">Sélectionnez votre faculté</option>
+                                <option value="sciences_tech">Faculté de Sciences et Technologies</option>
+                                <option value="lettres">Faculté de Lettres et Sciences Humaines</option>
+                                <option value="economie">Faculté de Sciences Économiques et de Gestion</option>
+                                <option value="sciences_sociales">Faculté de Sciences Sociales, Administratives et Politiques</option>
+                                <option value="droit">Faculté de Droit</option>
+                                <option value="polytechnique">Faculté de Polytechnique</option>
+                                <option value="pharma">Faculté de Sciences Pharmaceutiques</option>
+                                <option value="dentaire">Faculté de Médecine Dentaire</option>
+                                <option value="veto">Faculté de Médecine Vétérinaire</option>
+                                <option value="petrole">Faculté de Pétrole, Gaz et Énergies Renouvelables</option>
+                                <option value="agronomie">Faculté de Sciences Agronomiques</option>
+                                <option value="medecine">Faculté de Médecine</option>
+                                <option value="psycho">Faculté de Psychologie et Sciences de l'Éducation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="niveau">Niveau d'études *</label>
+                            <select id="niveau" name="Niveau" class="form-control" required>
+                                <option value="">Sélectionnez votre niveau</option>
+                                <option value="licence1">Licence 1</option>
+                                <option value="licence2">Licence 2</option>
+                                <option value="licence3">Licence 3</option>
+                                <option value="master1">Master 1</option>
+                                <option value="master2">Master 2</option>
+                                <option value="doctorat">Doctorat</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="interests">Centres d'intérêt * (Sélectionnez 1 ou plusieurs)</label>
+                            <select id="interests" name="Centres d'intérêt" class="form-control" multiple required>
+                                <option value="clubs">Club d'excellence de ma faculté</option>
+                                <option value="concours">Concours académiques inter-facultés</option>
+                                <option value="ateliers">Ateliers d'écriture et méthodologie</option>
+                                <option value="softskills">Formations soft skills</option>
+                                <option value="mentorat">Programme de mentorat</option>
+                                <option value="entrepreneuriat">Entrepreneuriat étudiant</option>
+                                <option value="recherche">Recherche académique et scientifique</option>
+                                <option value="international">Programmes internationaux et échanges</option>
+                                <option value="leadership">Développement du leadership</option>
+                            </select>
+                            <small style="color: var(--gray);">Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs options</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="message">Pourquoi voulez-vous rejoindre Excellentia Academia ? *</label>
+                            <textarea id="message" name="Motivation" class="form-control" rows="4" required placeholder="Expliquez votre motivation pour rejoindre notre structure..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="Consentement" required>
+                            <span>J'accepte que mes données soient traitées par Excellentia Academia pour les besoins de mon adhésion. Je comprends que je peux retirer mon consentement à tout moment.</span>
+                        </label>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
+                            <i class="fas fa-paper-plane"></i> Soumettre ma candidature
+                        </button>
+                    </div>
+                    
+                    <input type="hidden" name="_subject" value="Nouvelle candidature Excellentia Academia">
+                    <input type="hidden" name="_replyto" value="contact@excellentia-academia.unikin.cd">
+                    <input type="text" name="_gotcha" style="display:none">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i> Excellentia Academia
+                    </div>
+                    <p><strong>Structure Académique d'Excellence</strong> de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée dans les 13 facultés.</p>
+                    
+                    <div class="coordinateur-footer">
+                        <h4><i class="fas fa-user-tie"></i> Coordonnateur Général & Fondateur</h4>
+                        <p><strong>MALALE MUSAO Credo</strong></p>
+                        <p>Étudiant en Master 1 Droit - Droit International Public et Relations Internationales</p>
+                        <p>Fondateur de la Structure Excellentia Academia</p>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="#accueil"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="#apropos"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                        <li><a href="#facultes"><i class="fas fa-university"></i> 13 Facultés UNIKIN</a></li>
+                        <li><a href="#activites"><i class="fas fa-tasks"></i> Activités</a></li>
+                        <li><a href="#evenements"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+                        <li><a href="#inscription"><i class="fas fa-user-plus"></i> Adhésion</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contactez la Structure</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Université de Kinshasa, Campus Principal</p>
+                    <p><i class="fas fa-phone"></i> +243 81 234 5678</p>
+                    <p><i class="fas fa-envelope"></i> contact@excellentia-academia.unikin.cd</p>
+                    <p><i class="far fa-clock"></i> Lundi - Vendredi: 8h00 - 18h00</p>
+                    <p><i class="fas fa-university"></i> Présent dans les 13 facultés de l'UNIKIN</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Excellentia Academia - Structure Académique d'Excellence, Université de Kinshasa. Tous droits réservés.</p>
+                <p style="margin-top: 10px;">Développé avec <i class="fas fa-heart" style="color: var(--secondary);"></i> par l'équipe Excellentia Academia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript pour les interactions -->
     <script>
-        // Menu functionality
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const menuWindow = document.getElementById('menuWindow');
-        const overlay = document.getElementById('overlay');
-
-        hamburgerBtn.addEventListener('click', () => {
-            menuWindow.classList.add('active');
-            overlay.classList.add('active');
-            hamburgerBtn.classList.add('active');
+        // Menu mobile overlay - AMÉLIORÉ
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const desktopLoginBtn = document.getElementById('desktopLoginBtn');
+        
+        // Fonction pour ouvrir le menu mobile
+        function openMobileMenu() {
+            mobileMenuOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        // Fonction pour fermer le menu mobile
+        function closeMobileMenuFunc() {
+            mobileMenuOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        // Événements pour le menu mobile
+        mobileMenuBtn.addEventListener('click', () => {
+            if (mobileMenuOverlay.style.display === 'flex') {
+                closeMobileMenuFunc();
+            } else {
+                openMobileMenu();
+            }
         });
-
-        closeBtn.addEventListener('click', () => {
-            menuWindow.classList.remove('active');
-            overlay.classList.remove('active');
-            hamburgerBtn.classList.remove('active');
+        
+        closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) {
+                closeMobileMenuFunc();
+            }
         });
-
-        overlay.addEventListener('click', () => {
-            menuWindow.classList.remove('active');
-            overlay.classList.remove('active');
-            hamburgerBtn.classList.remove('active');
+        
+        // Fermer le menu mobile en cliquant sur un lien
+        document.querySelectorAll('.mobile-menu-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenuFunc);
         });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuWindow.classList.contains('active')) {
-                menuWindow.classList.remove('active');
-                overlay.classList.remove('active');
-                hamburgerBtn.classList.remove('active');
+        
+        // Connexion desktop
+        desktopLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLoginModal();
+        });
+        
+        // Connexion mobile
+        document.getElementById('mobileLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            closeMobileMenuFunc();
+            showLoginModal();
+        });
+        
+        // Fonction pour afficher la modale de connexion
+        function showLoginModal() {
+            const loginModal = document.createElement('div');
+            loginModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            loginModal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 40px;
+                    border-radius: 15px;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                    animation: slideInUp 0.4s ease;
+                ">
+                    <div style="
+                        width: 70px;
+                        height: 70px;
+                        background-color: var(--accent);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 20px;
+                    ">
+                        <i class="fas fa-lock" style="color: white; font-size: 2rem;"></i>
+                    </div>
+                    
+                    <h2 style="color: var(--primary); margin-bottom: 10px;">Connexion Membre</h2>
+                    <p style="color: var(--gray); margin-bottom: 25px;">
+                        Accès réservé aux membres actifs d'Excellentia Academia
+                    </p>
+                    
+                    <form id="loginModalForm" style="display: flex; flex-direction: column; gap: 15px;">
+                        <input type="email" placeholder="Adresse email" required style="padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                        <input type="password" placeholder="Mot de passe" required style="padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                        
+                        <div style="text-align: left; font-size: 0.9rem; color: var(--gray);">
+                            <label style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                        
+                        <button type="submit" style="
+                            background-color: var(--primary);
+                            color: white;
+                            border: none;
+                            padding: 14px;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-size: 1rem;
+                        ">
+                            <i class="fas fa-sign-in-alt"></i> Se connecter
+                        </button>
+                    </form>
+                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <p style="font-size: 0.9rem; color: var(--gray);">
+                            <i class="fas fa-question-circle"></i> Problème de connexion ? 
+                            <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Contactez l'administration</a>
+                        </p>
+                    </div>
+                    
+                    <button id="closeLoginModal" style="
+                        background: none;
+                        border: none;
+                        color: var(--gray);
+                        font-size: 1.5rem;
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                        cursor: pointer;
+                    ">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(loginModal);
+            document.body.style.overflow = 'hidden';
+            
+            // Ajouter les styles d'animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideInUp {
+                    from { 
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to { 
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Gérer la soumission du formulaire
+            document.getElementById('loginModalForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Simulation de connexion
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    // Fermer la modale
+                    document.body.removeChild(loginModal);
+                    document.head.removeChild(style);
+                    document.body.style.overflow = 'auto';
+                    
+                    // Rediriger vers la page de la faculté (simulation)
+                    alert('Connexion réussie ! Redirection vers votre espace facultaire...');
+                    // Ici, vous redirigeriez vers la page réelle de connexion
+                    // window.location.href = '/espace-membre';
+                }, 1500);
+            });
+            
+            // Fermer la modale
+            document.getElementById('closeLoginModal').addEventListener('click', () => {
+                document.body.removeChild(loginModal);
+                document.head.removeChild(style);
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Fermer en cliquant à l'extérieur
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    document.body.removeChild(loginModal);
+                    document.head.removeChild(style);
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+        
+        // Onglets des activités
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Retirer la classe active de tous les boutons et contenus
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Ajouter la classe active au bouton cliqué
+                btn.classList.add('active');
+                
+                // Afficher le contenu correspondant
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Animation au défilement
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observer les éléments à animer
+        document.querySelectorAll('.faculty-card, .activity-card, .event-card, .stat-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+        
+        // Gestion du formulaire avec Formspree
+        const registrationForm = document.getElementById('registrationForm');
+        
+        registrationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Désactiver le bouton pendant l'envoi
+            const submitBtn = registrationForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData(registrationForm);
+                const response = await fetch('https://formspree.io/f/mldqkngp', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Succès - redirection vers une page de confirmation personnalisée
+                    showSuccessMessage();
+                    
+                    // Réinitialisation du formulaire
+                    registrationForm.reset();
+                } else {
+                    throw new Error('Erreur lors de l\'envoi');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'envoi du formulaire. Veuillez réessayer.');
+            } finally {
+                // Réactiver le bouton
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        function showSuccessMessage() {
+            // Créer une modale de succès personnalisée
+            const successModal = document.createElement('div');
+            successModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            successModal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 40px;
+                    border-radius: 15px;
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                    animation: slideInUp 0.4s ease;
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background-color: #4caf50;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 20px;
+                    ">
+                        <i class="fas fa-check" style="color: white; font-size: 2.5rem;"></i>
+                    </div>
+                    
+                    <h2 style="color: var(--primary); margin-bottom: 15px;">Candidature Soumise avec Succès !</h2>
+                    <p style="color: var(--gray); margin-bottom: 25px;">
+                        Merci pour votre candidature à Excellentia Academia. Votre demande a été envoyée au Coordonnateur Général.<br><br>
+                        <strong>MALALE MUSAO Credo</strong> ou un responsable de votre faculté vous contactera dans les 48 heures.
+                    </p>
+                    
+                    <div style="
+                        background-color: rgba(26, 35, 126, 0.05);
+                        padding: 15px;
+                        border-radius: 8px;
+                        margin: 20px 0;
+                        text-align: left;
+                    ">
+                        <p style="margin-bottom: 5px;"><strong>Prochaines étapes :</strong></p>
+                        <p style="font-size: 0.9rem; margin-bottom: 3px;">1. Vérification de votre candidature</p>
+                        <p style="font-size: 0.9rem; margin-bottom: 3px;">2. Contact par le Président de votre club facultaire</p>
+                        <p style="font-size: 0.9rem;">3. Participation à la première réunion</p>
+                    </div>
+                    
+                    <button id="closeSuccessModal" style="
+                        background-color: var(--primary);
+                        color: white;
+                        border: none;
+                        padding: 12px 30px;
+                        border-radius: 50px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 20px;
+                        transition: all 0.3s ease;
+                    ">
+                        <i class="fas fa-thumbs-up"></i> Parfait !
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(successModal);
+            document.body.style.overflow = 'hidden';
+            
+            // Ajouter les styles d'animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideInUp {
+                    from { 
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to { 
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Fermer la modale
+            document.getElementById('closeSuccessModal').addEventListener('click', () => {
+                document.body.removeChild(successModal);
+                document.head.removeChild(style);
+                document.body.style.overflow = 'auto';
+                
+                // Retour en haut de la page
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Fermer en cliquant à l'extérieur
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) {
+                    document.body.removeChild(successModal);
+                    document.head.removeChild(style);
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+        
+        // Fonctions pour les boutons des facultés
+        function showFacultyDetails(facultyId) {
+            const facultyNames = {
+                'sciences-tech': 'Sciences et Technologies',
+                'lettres': 'Lettres et Sciences Humaines',
+                'economie': 'Sciences Économiques et de Gestion',
+                'sciences-sociales': 'Sciences Sociales, Administratives et Politiques',
+                'droit': 'Droit',
+                'polytechnique': 'Polytechnique',
+                'pharma': 'Sciences Pharmaceutiques',
+                'dentaire': 'Médecine Dentaire',
+                'veto': 'Médecine Vétérinaire',
+                'petrole': 'Pétrole, Gaz et Énergies Renouvelables',
+                'agronomie': 'Sciences Agronomiques',
+                'medecine': 'Médecine',
+                'psycho': 'Psychologie et Sciences de l\'Éducation'
+            };
+            
+            alert(`Détails du Club Excellentia - ${facultyNames[facultyId]}\n\nContactez le Coordonnateur Général pour plus d'informations sur les activités spécifiques à cette faculté.`);
+        }
+        
+        function joinFaculty(facultyId) {
+            // Faire défiler vers le formulaire d'inscription
+            document.getElementById('inscription').scrollIntoView({ behavior: 'smooth' });
+            
+            // Pré-sélectionner la faculté dans le formulaire
+            setTimeout(() => {
+                const facultySelect = document.getElementById('faculty');
+                const facultyNames = {
+                    'sciences-tech': 'sciences_tech',
+                    'lettres': 'lettres',
+                    'economie': 'economie',
+                    'sciences-sociales': 'sciences_sociales',
+                    'droit': 'droit',
+                    'polytechnique': 'polytechnique',
+                    'pharma': 'pharma',
+                    'dentaire': 'dentaire',
+                    'veto': 'veto',
+                    'petrole': 'petrole',
+                    'agronomie': 'agronomie',
+                    'medecine': 'medecine',
+                    'psycho': 'psycho'
+                };
+                
+                facultySelect.value = facultyNames[facultyId];
+            }, 500);
+        }
+        
+        // Smooth scroll pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animation des éléments flottants au survol
+        document.querySelectorAll('.floating-element').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.animationPlayState = 'paused';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.animationPlayState = 'running';
+            });
+        });
+        
+        // Changement de couleur de la navbar au scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+                header.style.padding = '10px 0';
+            } else {
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                header.style.padding = '15px 0';
+            }
+        });
+        
+        // Affichage dynamique du nombre de facultés
+        document.addEventListener('DOMContentLoaded', function() {
+            const facultyCount = document.querySelectorAll('.faculty-card').length;
+            const heroSubtitle = document.querySelector('.floating-element.element-1 .floating-text');
+            if (heroSubtitle) {
+                heroSubtitle.innerHTML = `${facultyCount} Facultés`;
             }
         });
     </script>
 </body>
-</html>
+
 
