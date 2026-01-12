@@ -355,6 +355,43 @@
             flex-shrink: 0;
         }
         
+        /* Style spécial pour les badges des promotions */
+        .promotion-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+        
+        .badge-l1 {
+            background: linear-gradient(90deg, #1e90ff, #0d47a1);
+            color: white;
+        }
+        
+        .badge-l2 {
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            color: white;
+        }
+        
+        .badge-l3 {
+            background: linear-gradient(90deg, #ff6b6b, #c44569);
+            color: white;
+        }
+        
+        .badge-m1 {
+            background: linear-gradient(90deg, #d4af37, #8b7500);
+            color: white;
+        }
+        
+        .badge-m2 {
+            background: linear-gradient(90deg, #9c27b0, #6a1b9a);
+            color: white;
+        }
+        
         /* Section WhatsApp */
         .whatsapp-section {
             background: rgba(37, 211, 102, 0.1);
@@ -584,22 +621,47 @@
         .hidden {
             display: none;
         }
+        
+        /* Style amélioré pour les cartes de prix */
+        .prize-feature {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid;
+        }
+        
+        .prize-card.first .prize-feature {
+            border-left-color: #ffd700;
+        }
+        
+        .prize-card.second .prize-feature {
+            border-left-color: #c0c0c0;
+        }
+        
+        .prize-card.third .prize-feature {
+            border-left-color: #cd7f32;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Header avec logo -->
     <header class="header">
-<div class="logo-container">
-    <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="logo-img">
-</div>
+        <div class="logo-container">
+            <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="logo-img">
+        </div>
+        <div class="logo-text">
+            <div class="logo-title">Excellentia Academia</div>
+            <div class="logo-subtitle">Excellence • Éloquence • Excellence</div>
+        </div>
     </header>
 
     <!-- Contenu principal -->
     <main class="main-container">
         <!-- Hero Section -->
         <section class="hero-section fade-in">
-            <h1 class="event-title">Éloquence en Scène • 1ère Édition</h1>
+            <h1 class="event-title">Concours d'Éloquence 2026 • 1ère Édition</h1>
             
             <div class="deadline-box">
                 <div class="deadline-title">DERNIER JOUR D'INSCRIPTION</div>
@@ -676,12 +738,60 @@
                         <i class="fas fa-crown"></i> 1ère Place
                     </div>
                     <div class="prize-amount">1.000.000 Fc</div>
-                    <ul class="prize-details">
-                        <li><i class="fas fa-check"></i> Sur compte Equity BCDC</li>
-                        <li><i class="fas fa-check"></i> Bourse académique UNIKIN</li>
-                        <li><i class="fas fa-check"></i> Carte Trans Academia</li>
-                        <li><i class="fas fa-check"></i> Médaille d'Or + Trophée</li>
-                    </ul>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte Equity BCDC
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-graduation-cap"></i> Bourse académique UNIKIN 2026-2027
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Couverture des frais académiques
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-bus"></i> Carte Trans Academia annuelle
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transport gratuit pendant 1 an
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-book"></i> Accès Bibliothèque Centrale (1 an)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Accès prioritaire aux ressources
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-award"></i> Médaille d'Or et Echarpe Officielle
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Reconnaissance officielle
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- 2ème Place -->
@@ -690,12 +800,60 @@
                         <i class="fas fa-medal"></i> 2ème Place
                     </div>
                     <div class="prize-amount">500.000 Fc</div>
-                    <ul class="prize-details">
-                        <li><i class="fas fa-check"></i> Sur compte Equity BCDC</li>
-                        <li><i class="fas fa-check"></i> Médaille d'Argent</li>
-                        <li><i class="fas fa-check"></i> Trophée d'Argent</li>
-                        <li><i class="fas fa-check"></i> Brevet d'Excellence</li>
-                    </ul>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte Equity BCDC
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-medal"></i> Médaille d'Argent
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Médaille d'excellence en argent
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée d'Argent
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-file-certificate"></i> Brevet d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Diplôme officiel de mérite
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-book"></i> Accès Bibliothèque (6 mois)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Accès aux ressources documentaires
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-bus"></i> Carte Trans Academia (6 mois)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transport gratuit pendant 6 mois
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- 3ème Place -->
@@ -704,12 +862,60 @@
                         <i class="fas fa-award"></i> 3ème Place
                     </div>
                     <div class="prize-amount">250.000 Fc</div>
-                    <ul class="prize-details">
-                        <li><i class="fas fa-check"></i> Sur compte Equity BCDC</li>
-                        <li><i class="fas fa-check"></i> Médaille de Bronze</li>
-                        <li><i class="fas fa-check"></i> Trophée de Bronze</li>
-                        <li><i class="fas fa-check"></i> Brevet d'Excellence</li>
-                    </ul>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte Equity BCDC
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-medal"></i> Médaille de Bronze
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Médaille d'excellence en bronze
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée de Bronze
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-file-certificate"></i> Brevet d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Diplôme officiel de mérite
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-book"></i> Accès Bibliothèque (3 mois)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Accès aux ressources documentaires
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-bus"></i> Carte Trans Academia (3 mois)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transport gratuit pendant 3 mois
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -840,22 +1046,23 @@
                 </div>
                 
                 <div class="form-group">
+                    <label class="form-label">Promotion *</label>
+                    <select class="form-select" name="promotion" required>
+                        <option value="">Sélectionnez votre promotion</option>
+                        <option value="L1">Licence 1 (L1)</option>
+                        <option value="L2">Licence 2 (L2)</option>
+                        <option value="L3">Licence 3 (L3)</option>
+                        <option value="M1">Master 1 (M1)</option>
+                        <option value="M2">Master 2 (M2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label class="form-label">Catégorie *</label>
                     <select class="form-select" name="categorie" required>
                         <option value="">Sélectionnez votre catégorie</option>
                         <option value="etudiant_regulier">Étudiant régulier (5.000 Fc)</option>
                         <option value="membre_excellentia">Membre Excellentia (3.000 Fc)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Thème du discours *</label>
-                    <select class="form-select" name="theme" required>
-                        <option value="">Sélectionnez un thème</option>
-                        <option value="liberte">La liberté d'expression numérique</option>
-                        <option value="education">Éducation et émancipation</option>
-                        <option value="environnement">Responsabilité envers les générations futures</option>
-                        <option value="autre">Autre</option>
                     </select>
                 </div>
                 
@@ -1044,8 +1251,8 @@
                 whatsapp: inscriptionForm.whatsapp.value,
                 universite: inscriptionForm.universite.value,
                 faculte: inscriptionForm.faculte.value,
+                promotion: inscriptionForm.promotion.value,
                 categorie: inscriptionForm.categorie.value,
-                theme: inscriptionForm.theme.value,
                 message: inscriptionForm.message.value,
                 date_inscription: new Date().toISOString(),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1117,11 +1324,23 @@
                 div.style.borderRadius = '8px';
                 div.style.borderLeft = '3px solid #d4af37';
                 
+                // Déterminer la classe du badge promotion
+                let badgeClass = '';
+                switch(p.promotion) {
+                    case 'L1': badgeClass = 'badge-l1'; break;
+                    case 'L2': badgeClass = 'badge-l2'; break;
+                    case 'L3': badgeClass = 'badge-l3'; break;
+                    case 'M1': badgeClass = 'badge-m1'; break;
+                    case 'M2': badgeClass = 'badge-m2'; break;
+                    default: badgeClass = 'badge-l1';
+                }
+                
                 const date = new Date(p.date_inscription).toLocaleDateString('fr-FR');
                 div.innerHTML = `
                     <div style="font-weight: bold; color: #f7ef8a;">${p.nom}</div>
                     <div style="font-size: 0.8rem; color: #a0c8ff;">
-                        ${p.faculte} • ${p.telephone} • ${date}
+                        <span class="promotion-badge ${badgeClass}">${p.promotion}</span>
+                        • ${p.faculte} • ${p.telephone} • ${date}
                     </div>
                 `;
                 
@@ -1136,10 +1355,10 @@
                 return;
             }
             
-            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Catégorie,Thème,Date\n";
+            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Promotion,Catégorie,Date\n";
             
             participantsData.forEach(p => {
-                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.categorie}","${p.theme}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
+                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.promotion}","${p.categorie}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
             });
             
             const blob = new Blob([csv], { type: 'text/csv' });
