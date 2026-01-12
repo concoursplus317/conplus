@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -283,27 +281,27 @@
             box-shadow: 0 12px 20px rgba(212, 175, 55, 0.6);
         }
         
-        /* Frais d'inscription */
-        .fees-section {
-            background: linear-gradient(135deg, rgba(30, 144, 255, 0.1), rgba(212, 175, 55, 0.1));
+        /* Frais de participation - SIMPLIFIÉ */
+        .participation-fee {
+            background: rgba(212, 175, 55, 0.15);
             border-radius: 15px;
             padding: 25px;
             margin: 30px 0;
-            border: 2px solid rgba(30, 144, 255, 0.3);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
         }
         
-        .fees-title {
+        .fee-title {
             font-size: 1.8rem;
-            color: #1e90ff;
+            color: #ffd700;
             margin-bottom: 25px;
-            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
         }
         
-        .fees-container {
+        .fee-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
@@ -314,7 +312,7 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             padding: 25px 20px;
-            border: 2px solid rgba(30, 144, 255, 0.4);
+            border: 2px solid rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -325,16 +323,8 @@
         
         .fee-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
-            border-color: #1e90ff;
-        }
-        
-        .fee-card.regular {
-            border-color: rgba(30, 144, 255, 0.4);
-        }
-        
-        .fee-card.member {
-            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
         }
         
         .fee-card::before {
@@ -357,69 +347,20 @@
             --color2: #f7ef8a;
         }
         
-        .fee-type {
-            font-size: 1.4rem;
-            color: #1e90ff;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-align: center;
-        }
-        
-        .fee-card.member .fee-type {
-            color: #f7ef8a;
-        }
-        
         .fee-amount {
             font-size: 2.5rem;
-            color: #fff;
+            color: #f7ef8a;
             margin-bottom: 10px;
-            text-shadow: 0 0 8px rgba(30, 144, 255, 0.7);
+            text-shadow: 0 0 8px rgba(247, 239, 138, 0.7);
             font-weight: bold;
         }
         
-        .fee-card.member .fee-amount {
-            text-shadow: 0 0 8px rgba(247, 239, 138, 0.7);
-        }
-        
         .fee-description {
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             color: #a0c8ff;
             font-style: italic;
             text-align: center;
             margin-bottom: 15px;
-        }
-        
-        .fee-details {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-            width: 100%;
-            text-align: left;
-        }
-        
-        .fee-details li {
-            margin-bottom: 10px;
-            color: #cccccc;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
-        }
-        
-        .fee-details i {
-            color: #1e90ff;
-            width: 20px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        
-        .fee-card.member .fee-details i {
-            color: #f7ef8a;
         }
         
         .fee-note {
@@ -1053,7 +994,7 @@
                 font-size: 1.3rem;
             }
             
-            .fees-title, .prizes-title, .rewards-title {
+            .fee-title, .prizes-title, .rewards-title {
                 font-size: 2.2rem;
             }
             
@@ -1092,7 +1033,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             
-            .fees-container {
+            .fee-cards {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -1148,7 +1089,7 @@
                 align-items: center;
             }
             
-            .prizes-container, .fees-container, .rewards-grid {
+            .prizes-container, .fee-cards, .rewards-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -1223,46 +1164,28 @@
         </div>
         <div class="progress-text" id="progress-text">Temps restant avant la fermeture des inscriptions : 100%</div>
         
-        <!-- Frais d'inscription -->
-        <div class="fees-section animate" style="animation-delay: 0.8s">
-            <h2 class="fees-title">
-                <i class="fas fa-ticket-alt"></i> FRAIS D'INSCRIPTION
+        <!-- Frais de participation - SIMPLIFIÉ -->
+        <div class="participation-fee animate" style="animation-delay: 0.8s">
+            <h2 class="fee-title">
+                <i class="fas fa-money-bill-wave"></i> FRAIS DE PARTICIPATION
             </h2>
             
-            <div class="fees-container">
-                <!-- Frais Réguliers -->
+            <div class="fee-cards">
+                <!-- Pour tous les étudiants -->
                 <div class="fee-card regular">
-                    <div class="fee-type">
-                        <i class="fas fa-user-graduate"></i> Participants Réguliers
-                    </div>
                     <div class="fee-amount">5.000 Fc</div>
-                    <div class="fee-description">Montant standard pour tous les participants</div>
-                    <ul class="fee-details">
-                        <li><i class="fas fa-check-circle"></i> Accès à toutes les séances préparatoires</li>
-                        <li><i class="fas fa-check-circle"></i> Matériel du concours inclus</li>
-                        <li><i class="fas fa-check-circle"></i> Support pédagogique complet</li>
-                        <li><i class="fas fa-check-circle"></i> Accès aux ressources en ligne</li>
-                    </ul>
+                    <div class="fee-description">Pour tous les étudiants qui souhaitent participer</div>
                 </div>
                 
-                <!-- Frais Membres -->
+                <!-- Pour les membres Excellentia -->
                 <div class="fee-card member">
-                    <div class="fee-type">
-                        <i class="fas fa-crown"></i> Membres Excellentia
-                    </div>
                     <div class="fee-amount">3.000 Fc</div>
-                    <div class="fee-description">Tarif spécial pour les membres enregistrés</div>
-                    <ul class="fee-details">
-                        <li><i class="fas fa-check-circle"></i> Tous les avantages des participants réguliers</li>
-                        <li><i class="fas fa-check-circle"></i> Accès prioritaire aux formations</li>
-                        <li><i class="fas fa-check-circle"></i> Coaching personnalisé supplémentaire</li>
-                        <li><i class="fas fa-check-circle"></i> Certification de membre Excellentia</li>
-                    </ul>
+                    <div class="fee-description">Pour les étudiants membres de la structure Excellentia Academia</div>
                 </div>
             </div>
             
             <div class="fee-note">
-                <i class="fas fa-info-circle"></i> Les frais couvrent l'accès à toutes les séances préparatoires et le matériel du concours.
+                <i class="fas fa-info-circle"></i> Ces frais sont uniquement pour la participation au concours et donnent accès à toutes les séances préparatoires.
             </div>
         </div>
         
@@ -1364,7 +1287,7 @@
             <h3><i class="fas fa-info-circle"></i> Comment s'inscrire :</h3>
             <ul>
                 <li><strong>Remplissez le formulaire d'inscription</strong> en cliquant sur le bouton ci-dessus</li>
-                <li><strong>Payez les frais de participation</strong> selon votre catégorie (régulier ou membre)</li>
+                <li><strong>Payez les frais de participation :</strong> 5.000 Fc (tous) ou 3.000 Fc (membres Excellentia)</li>
                 <li><strong>Préparez un discours de 3 minutes</strong> sur un des thèmes proposés</li>
                 <li><strong>Les participants sélectionnés</strong> seront contactés avant le 20 février 2026</li>
                 <li><strong>Bénéficiez de séances préparatoires</strong> gratuites pour perfectionner votre éloquence</li>
@@ -1423,9 +1346,6 @@
                 </div>
             </div>
             
-            <!-- Formulaire intégré via iframe -->
-            <iframe name="hiddenIframe" class="hidden-form"></iframe>
-            
             <!-- Formulaire visible -->
             <form id="inscriptionForm" class="form-container">
                 <div class="form-group">
@@ -1478,11 +1398,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="categorie">Catégorie d'inscription *</label>
+                    <label class="form-label" for="categorie">Catégorie de participation *</label>
                     <select id="categorie" name="categorie" class="form-select" required>
                         <option value="" disabled selected>Sélectionnez votre catégorie</option>
-                        <option value="participant_regulier">Participant Régulier (5.000 Fc)</option>
-                        <option value="membre_excellentia">Membre Excellentia (3.000 Fc)</option>
+                        <option value="etudiant_regulier">Étudiant régulier (5.000 Fc)</option>
+                        <option value="membre_excellentia">Membre Excellentia Academia (3.000 Fc)</option>
                     </select>
                 </div>
                 
@@ -1861,7 +1781,7 @@
                 
                 const date = new Date(participant.date_inscription).toLocaleDateString('fr-FR');
                 const hasWhatsapp = participant.whatsapp === 'oui' ? '✓' : '✗';
-                const categorie = participant.categorie === 'participant_regulier' ? 'Régulier' : 'Membre Excellentia';
+                const categorie = participant.categorie === 'etudiant_regulier' ? 'Étudiant régulier (5.000 Fc)' : 'Membre Excellentia (3.000 Fc)';
                 
                 div.innerHTML = `
                     <div class="participant-name">${participant.nom}</div>
@@ -1878,10 +1798,8 @@
         }
         
         // Exporter en Excel
-
-document.getElementById('exportButton').addEventListener('click', () => {
-
-if (participantsData.length === 0) {
+        document.getElementById('exportButton').addEventListener('click', () => {
+            if (participantsData.length === 0) {
                 alert("Aucune donnée à exporter.");
                 return;
             }
@@ -1890,7 +1808,7 @@ if (participantsData.length === 0) {
             let csvContent = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Catégorie,Thème,Date d'inscription\n";
             
             participantsData.forEach(participant => {
-                const categorie = participant.categorie === 'participant_regulier' ? 'Régulier (5.000 Fc)' : 'Membre Excellentia (3.000 Fc)';
+                const categorie = participant.categorie === 'etudiant_regulier' ? 'Étudiant régulier (5.000 Fc)' : 'Membre Excellentia (3.000 Fc)';
                 const row = [
                     `"${participant.nom}"`,
                     `"${participant.email}"`,
