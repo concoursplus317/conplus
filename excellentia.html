@@ -642,18 +642,6 @@
         .prize-card.third .prize-feature {
             border-left-color: #cd7f32;
         }
-        
-        /* Style pour les statistiques facultés */
-        .faculty-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin: 2px;
-            background: rgba(30, 144, 255, 0.2);
-            border: 1px solid rgba(30, 144, 255, 0.4);
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -673,7 +661,7 @@
     <main class="main-container">
         <!-- Hero Section -->
         <section class="hero-section fade-in">
-            <h1 class="event-title">Éloquence en Scène • 1ère Édition</h1>
+            <h1 class="event-title">Concours d'Éloquence 2026 • 1ère Édition</h1>
             
             <div class="deadline-box">
                 <div class="deadline-title">DERNIER JOUR D'INSCRIPTION</div>
@@ -1003,4 +991,433 @@
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
             
-            <h2 style="color: #f7ef8a; text-align: center; margin-bottom: 25px; font-size:
+            <h2 style="color: #f7ef8a; text-align: center; margin-bottom: 25px; font-size: 1.5rem;">
+                <i class="fas fa-user-plus"></i> Formulaire d'Inscription
+            </h2>
+            
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label class="form-label">Nom complet *</label>
+                    <input type="text" class="form-input" name="nom" required placeholder="Nom, Postnom, Prénom">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" name="email" required placeholder="exemple@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Téléphone *</label>
+                    <input type="tel" class="form-input" name="telephone" required placeholder="+243 970 501 523">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Avez-vous WhatsApp ? *</label>
+                    <select class="form-select" name="whatsapp" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Université *</label>
+                    <input type="text" class="form-input" name="universite" required placeholder="Votre université">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Faculté *</label>
+                    <select class="form-select" name="faculte" required>
+                        <option value="">Sélectionnez votre faculté</option>
+                        <option value="Faculté de sciences et technologies">Faculté de sciences et technologies</option>
+                        <option value="Faculté de Lettres et sciences humaines">Faculté de Lettres et sciences humaines</option>
+                        <option value="Faculté de Sciences économiques et de gestion">Faculté de Sciences économiques et de gestion</option>
+                        <option value="Faculté de Sciences sociales, administratives et politiques">Faculté de Sciences sociales, administratives et politiques</option>
+                        <option value="Faculté de Droit">Faculté de Droit</option>
+                        <option value="Faculté de Polytechnique">Faculté de Polytechnique</option>
+                        <option value="Faculté de sciences pharmaceutiques">Faculté de sciences pharmaceutiques</option>
+                        <option value="Faculté de médecine dentaire">Faculté de médecine dentaire</option>
+                        <option value="Faculté de médecine vétérinaire">Faculté de médecine vétérinaire</option>
+                        <option value="Faculté de Pétrole, gaz et énergies renouvelables">Faculté de Pétrole, gaz et énergies renouvelables</option>
+                        <option value="Faculté sciences agronomiques">Faculté sciences agronomiques</option>
+                        <option value="Faculté de Médecine">Faculté de Médecine</option>
+                        <option value="Faculté de psychologie et sciences de l'éducation">Faculté de psychologie et sciences de l'éducation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Promotion *</label>
+                    <select class="form-select" name="promotion" required>
+                        <option value="">Sélectionnez votre promotion</option>
+                        <option value="L1">Licence 1 (L1)</option>
+                        <option value="L2">Licence 2 (L2)</option>
+                        <option value="L3">Licence 3 (L3)</option>
+                        <option value="M1">Master 1 (M1)</option>
+                        <option value="M2">Master 2 (M2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Catégorie *</label>
+                    <select class="form-select" name="categorie" required>
+                        <option value="">Sélectionnez votre catégorie</option>
+                        <option value="etudiant_regulier">Étudiant régulier (5.000 Fc)</option>
+                        <option value="membre_excellentia">Membre Excellentia (3.000 Fc)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Votre motivation *</label>
+                    <textarea class="form-textarea" name="message" required placeholder="Pourquoi souhaitez-vous participer ?"></textarea>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; color: #cccccc;">
+                        <input type="checkbox" required style="margin-top: 3px;">
+                        <span>J'accepte les frais de participation selon ma catégorie *</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-paper-plane"></i> ENVOYER L'INSCRIPTION
+                </button>
+            </form>
+            
+            <div id="confirmationMessage" class="hidden" style="text-align: center; padding: 20px;">
+                <div style="font-size: 3rem; color: #25d366; margin-bottom: 15px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="color: #f7ef8a; margin-bottom: 15px;">Inscription réussie !</h3>
+                <p style="color: #a0c8ff; margin-bottom: 20px;">
+                    Vous recevrez les instructions de paiement par WhatsApp.
+                </p>
+                <button class="whatsapp-button" onclick="joinWhatsAppGroup()">
+                    <i class="fab fa-whatsapp"></i> REJOINDRE WHATSAPP
+                </button>
+                <button class="main-cta" id="closeAfterSubmit" style="margin-top: 10px;">
+                    <i class="fas fa-home"></i> RETOUR À L'ACCUEIL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Admin -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            
+            <h2 style="color: #f7ef8a; text-align: center; margin-bottom: 25px;">
+                <i class="fas fa-lock"></i> PANEL ADMIN
+            </h2>
+            
+            <div id="passwordSection">
+                <p style="color: #a0c8ff; text-align: center; margin-bottom: 20px;">
+                    Accès réservé à la coordination Excellentia Academia
+                </p>
+                <input type="password" id="adminPassword" 
+                       placeholder="Mot de passe : Excellence@acad_2K26"
+                       style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #d4af37; background: rgba(0,0,0,0.3); color: white; text-align: center; margin-bottom: 20px;">
+                <button id="loginButton" class="submit-button">
+                    <i class="fas fa-sign-in-alt"></i> SE CONNECTER
+                </button>
+            </div>
+            
+            <div id="adminPanel" class="hidden">
+                <h3 style="color: #f7ef8a; text-align: center; margin-bottom: 20px;">
+                    Excellentia Academia - Coordination
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+                    <div style="background: rgba(212,175,55,0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2rem; color: #f7ef8a; font-weight: bold;" id="totalParticipants">0</div>
+                        <div style="color: #a0c8ff; font-size: 0.9rem;">Total Inscriptions</div>
+                    </div>
+                    <div style="background: rgba(212,175,55,0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2rem; color: #f7ef8a; font-weight: bold;" id="todayParticipants">0</div>
+                        <div style="color: #a0c8ff; font-size: 0.9rem;">Aujourd'hui</div>
+                    </div>
+                </div>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                    <div id="participantsList">
+                        <!-- Liste des participants -->
+                    </div>
+                </div>
+                
+                <button id="exportButton" class="whatsapp-button" style="background: linear-gradient(90deg, #4CAF50, #2E7D32);">
+                    <i class="fas fa-download"></i> EXPORTER LES DONNÉES
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1ks7dKq69VZaSKV9j2imPUszA5o1HsrI",
+            authDomain: "eloquence-1-1a6a9.firebaseapp.com",
+            projectId: "eloquence-1-1a6a9",
+            storageBucket: "eloquence-1-1a6a9.firebasestorage.app",
+            messagingSenderId: "929069975420",
+            appId: "1:929069975420:web:5bc50e842a7a76f5c046f9",
+            measurementId: "G-RW9C3YRG1Q"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Variables
+        let participantsData = [];
+        const ADMIN_PASSWORD = "Excellence@acad_2K26";
+        
+        // DOM Elements
+        const formModal = document.getElementById('formModal');
+        const adminModal = document.getElementById('adminModal');
+        const openFormButton = document.getElementById('openFormButton');
+        const adminButton = document.getElementById('adminButton');
+        const closeModal = document.getElementById('closeModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const closeAfterSubmit = document.getElementById('closeAfterSubmit');
+        const inscriptionForm = document.getElementById('inscriptionForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const loginButton = document.getElementById('loginButton');
+        const exportButton = document.getElementById('exportButton');
+
+        // Fonctions WhatsApp
+        function joinWhatsAppGroup() {
+            window.open("https://chat.whatsapp.com/EuFshU5EEZ7LpxQrC7OQuM", "_blank");
+        }
+
+        // Gestion des modals
+        openFormButton.addEventListener('click', () => {
+            formModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        adminButton.addEventListener('click', () => {
+            adminModal.style.display = 'block';
+            document.getElementById('passwordSection').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+        });
+
+        const closeModalFunc = (modal) => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModal.addEventListener('click', () => closeModalFunc(formModal));
+        closeAdminModal.addEventListener('click', () => closeModalFunc(adminModal));
+
+        closeAfterSubmit?.addEventListener('click', () => {
+            closeModalFunc(formModal);
+            inscriptionForm.reset();
+            inscriptionForm.classList.remove('hidden');
+            confirmationMessage.classList.add('hidden');
+        });
+
+        // Fermer modal en cliquant à l'extérieur
+        [formModal, adminModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModalFunc(modal);
+            });
+        });
+
+        // Login admin
+        loginButton.addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadParticipantsData();
+            } else {
+                alert("Mot de passe incorrect");
+            }
+        });
+
+        // Gestion du formulaire d'inscription
+        inscriptionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nom: inscriptionForm.nom.value,
+                email: inscriptionForm.email.value,
+                telephone: inscriptionForm.telephone.value,
+                whatsapp: inscriptionForm.whatsapp.value,
+                universite: inscriptionForm.universite.value,
+                faculte: inscriptionForm.faculte.value,
+                promotion: inscriptionForm.promotion.value,
+                categorie: inscriptionForm.categorie.value,
+                message: inscriptionForm.message.value,
+                date_inscription: new Date().toISOString(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection('participants').add(formData);
+                
+                // Envoyer également à Formspree
+                const formspreeForm = new FormData();
+                for (const key in formData) {
+                    formspreeForm.append(key, formData[key]);
+                }
+                
+                fetch('https://formspree.io/f/mldqkngp', {
+                    method: 'POST',
+                    body: formspreeForm,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                // Afficher confirmation
+                inscriptionForm.classList.add('hidden');
+                confirmationMessage.classList.remove('hidden');
+                
+                // Mettre à jour les données
+                loadParticipantsData();
+
+            } catch (error) {
+                console.error("Erreur:", error);
+                alert("Erreur lors de l'enregistrement");
+            }
+        });
+
+        // Charger les participants
+        async function loadParticipantsData() {
+            try {
+                const snapshot = await db.collection('participants').get();
+                participantsData = [];
+                snapshot.forEach(doc => {
+                    participantsData.push({ id: doc.id, ...doc.data() });
+                });
+                updateAdminStats();
+            } catch (error) {
+                console.error("Erreur de chargement:", error);
+            }
+        }
+
+        function updateAdminStats() {
+            document.getElementById('totalParticipants').textContent = participantsData.length;
+            
+            const today = new Date().toDateString();
+            const todayCount = participantsData.filter(p => {
+                return new Date(p.date_inscription).toDateString() === today;
+            }).length;
+            document.getElementById('todayParticipants').textContent = todayCount;
+            
+            updateParticipantsList();
+        }
+
+        function updateParticipantsList() {
+            const listElement = document.getElementById('participantsList');
+            listElement.innerHTML = '';
+            
+            participantsData.slice(0, 20).forEach(p => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.marginBottom = '8px';
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.borderRadius = '8px';
+                div.style.borderLeft = '3px solid #d4af37';
+                
+                // Déterminer la classe du badge promotion
+                let badgeClass = '';
+                switch(p.promotion) {
+                    case 'L1': badgeClass = 'badge-l1'; break;
+                    case 'L2': badgeClass = 'badge-l2'; break;
+                    case 'L3': badgeClass = 'badge-l3'; break;
+                    case 'M1': badgeClass = 'badge-m1'; break;
+                    case 'M2': badgeClass = 'badge-m2'; break;
+                    default: badgeClass = 'badge-l1';
+                }
+                
+                const date = new Date(p.date_inscription).toLocaleDateString('fr-FR');
+                div.innerHTML = `
+                    <div style="font-weight: bold; color: #f7ef8a;">${p.nom}</div>
+                    <div style="font-size: 0.8rem; color: #a0c8ff;">
+                        <span class="promotion-badge ${badgeClass}">${p.promotion}</span>
+                        • ${p.faculte} • ${p.telephone} • ${date}
+                    </div>
+                `;
+                
+                listElement.appendChild(div);
+            });
+        }
+
+        // Export des données
+        exportButton.addEventListener('click', () => {
+            if (participantsData.length === 0) {
+                alert("Aucune donnée à exporter");
+                return;
+            }
+            
+            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Promotion,Catégorie,Date\n";
+            
+            participantsData.forEach(p => {
+                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.promotion}","${p.categorie}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `participants_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Compte à rebours
+        const targetDate = new Date('January 20, 2026 23:59:59').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('jours').textContent = '00';
+                document.getElementById('heures').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('secondes').textContent = '00';
+                return;
+            }
+            
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('jours').textContent = jours.toString().padStart(2, '0');
+            document.getElementById('heures').textContent = heures.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('secondes').textContent = secondes.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Charger les données au démarrage
+        loadParticipantsData();
+
+        // Écouter les nouvelles inscriptions
+        db.collection('participants').onSnapshot(() => {
+            loadParticipantsData();
+        });
+
+        // Animation d'entrée
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                }, i * 100);
+            });
+        });
+    </script>
+</body>
+</html>
