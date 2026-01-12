@@ -1,5 +1,3 @@
-Code annonce du concours 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,6 +20,52 @@ Code annonce du concours
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #fff;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Logo en filigrane */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+            width: 60%;
+            max-width: 800px;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .watermark-logo {
+            width: 100%;
+            height: auto;
+            filter: grayscale(100%) brightness(200%);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -52%) rotate(1deg); }
+            50% { transform: translate(-50%, -50%) rotate(0deg); }
+            75% { transform: translate(-50%, -48%) rotate(-1deg); }
+        }
+        
+        /* Animation d'entrée pour les éléments */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
         }
         
         .container {
@@ -213,6 +257,35 @@ Code annonce du concours
             line-height: 1.4;
         }
         
+        /* Bouton Admin */
+        .admin-button-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .admin-button {
+            background: linear-gradient(90deg, #d4af37, #8b7500);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .admin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139, 117, 0, 0.4);
+        }
+        
         .cta-button {
             background: linear-gradient(90deg, #d4af37, #f7ef8a);
             color: #1a1a2e;
@@ -265,7 +338,6 @@ Code annonce du concours
             font-size: 0.95rem;
         }
         
-        /* Nouvelle section Prix et Récompenses */
         .prizes-section {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(30, 144, 255, 0.1));
             border-radius: 15px;
@@ -574,7 +646,7 @@ Code annonce du concours
             text-align: center;
         }
         
-        /* Modal styles pour mobile */
+        /* Modal styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -718,6 +790,98 @@ Code annonce du concours
             line-height: 1.4;
         }
         
+        /* Modal Admin */
+        .admin-modal-content {
+            max-width: 800px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            color: #f7ef8a;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #a0c8ff;
+        }
+        
+        .participants-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .participant-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .participant-name {
+            font-weight: bold;
+            color: #f7ef8a;
+        }
+        
+        .participant-details {
+            font-size: 0.8rem;
+            color: #a0c8ff;
+            margin-top: 4px;
+        }
+        
+        .export-button {
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .password-input-container {
+            margin: 20px 0;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #d4af37;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
         footer {
             margin-top: 30px;
             color: #88aabb;
@@ -833,13 +997,33 @@ Code annonce du concours
             .rewards-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .admin-button {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Logo en filigrane -->
+    <div class="watermark">
+        <div class="watermark-logo" style="font-size: 100px; text-align: center; color: rgba(255,255,255,0.1);">
+            🎓
+            <div style="font-size: 30px; margin-top: 10px;">EXCELLENTIA ACADEMIA</div>
+        </div>
+    </div>
+    
+    <!-- Bouton Admin -->
+    <div class="admin-button-container">
+        <button class="admin-button" id="adminButton">
+            <i class="fas fa-lock"></i> Admin
+        </button>
+    </div>
+    
     <div class="container">
-        <div class="logo-container">
+        <div class="logo-container animate" style="animation-delay: 0.1s">
             <div class="logo">
                 <div class="logo-row">
                     <span class="excel">Excel</span><span class="lentia">lentia</span> <span class="academia">Academia</span>
@@ -850,19 +1034,19 @@ Code annonce du concours
             <div class="subtitle">Concours d'Éloquence </div>
         </div>
         <br>
-        <h1 class="event-title">Éloquence en scène   1ère édition</h1>
+        <h1 class="event-title animate" style="animation-delay: 0.2s">Éloquence en scène   1ère édition</h1>
         
-        <div class="deadline-info">
+        <div class="deadline-info animate" style="animation-delay: 0.3s">
             <div class="deadline-title">DERNIER JOUR D'INSCRIPTION</div>
             <div class="deadline-date">20 Janvier 2026</div>
         </div>
         
-        <div class="urgent-message">
+        <div class="urgent-message animate" style="animation-delay: 0.4s">
             <div class="urgent-title"><i class="fas fa-exclamation-circle"></i> DERNIÈRE CHANCE !</div>
             <div class="urgent-text">Le temps presse ! Inscrivez-vous avant la date limite pour participer à ce prestigieux concours.</div>
         </div>
         
-        <div class="countdown">
+        <div class="countdown animate" style="animation-delay: 0.5s">
             <div class="time-unit">
                 <div class="time-value" id="jours">00</div>
                 <div class="time-label">Jours</div>
@@ -884,17 +1068,17 @@ Code annonce du concours
             </div>
         </div>
         
-        <button class="cta-button" id="openFormButton">
+        <button class="cta-button animate" id="openFormButton" style="animation-delay: 0.6s">
             <i class="fas fa-pen-fancy"></i> S'INSCRIRE MAINTENANT
         </button>
         
-        <div class="progress-container">
+        <div class="progress-container animate" style="animation-delay: 0.7s">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         <div class="progress-text" id="progress-text">Temps restant avant la fermeture des inscriptions : 100%</div>
         
         <!-- Frais d'inscription -->
-        <div class="registration-fee">
+        <div class="registration-fee animate" style="animation-delay: 0.8s">
             <div class="fee-title">
                 <i class="fas fa-ticket-alt"></i> Frais de Participation
             </div>
@@ -903,7 +1087,7 @@ Code annonce du concours
         </div>
         
         <!-- Section des Prix et Récompenses -->
-        <div class="prizes-section">
+        <div class="prizes-section animate" style="animation-delay: 0.9s">
             <h2 class="prizes-title">
                 <i class="fas fa-trophy"></i> PRIX ET RÉCOMPENSES
             </h2>
@@ -995,7 +1179,7 @@ Code annonce du concours
         </div>
         
         <!-- Section Comment s'inscrire -->
-        <div class="instructions">
+        <div class="instructions animate" style="animation-delay: 1s">
             <h3><i class="fas fa-info-circle"></i> Comment s'inscrire :</h3>
             <ul>
                 <li><strong>Remplissez le formulaire d'inscription</strong> en cliquant sur le bouton ci-dessus</li>
@@ -1006,7 +1190,7 @@ Code annonce du concours
         </div>
         
         <!-- Section WhatsApp -->
-        <div class="whatsapp-section">
+        <div class="whatsapp-section animate" style="animation-delay: 1.1s">
             <div class="whatsapp-header">
                 <i class="fab fa-whatsapp whatsapp-icon"></i>
                 <h3 class="whatsapp-title">Rejoignez notre groupe WhatsApp</h3>
@@ -1033,7 +1217,7 @@ Code annonce du concours
             </p>
         </div>
         
-        <footer>
+        <footer class="animate" style="animation-delay: 1.2s">
             <p><i class="far fa-clock"></i> Compte à rebours en temps réel</p>
             <p>Excellentia Academia © 2025-2026 | "Concours d'éloquence"</p>
         </footer>
@@ -1057,7 +1241,7 @@ Code annonce du concours
             <iframe name="hiddenIframe" class="hidden-form"></iframe>
             
             <!-- Formulaire visible -->
-            <form id="inscriptionForm" class="form-container" action="https://formspree.io/f/mldqkngp" method="POST" target="hiddenIframe">
+            <form id="inscriptionForm" class="form-container">
                 <div class="form-group">
                     <label class="form-label" for="nom">Nom complet *</label>
                     <input type="text" id="nom" name="nom" class="form-input" required placeholder="Votre nom, postnom et prénom">
@@ -1070,7 +1254,7 @@ Code annonce du concours
                 
                 <div class="form-group">
                     <label class="form-label" for="telephone">Téléphone *</label>
-                    <input type="tel" id="telephone" name="telephone" class="form-input" required placeholder="+243 970 501 523 ">
+                    <input type="tel" id="telephone" name="telephone" class="form-input" required placeholder="+243 970 501 523">
                 </div>
                 
                 <div class="form-group">
@@ -1085,6 +1269,26 @@ Code annonce du concours
                 <div class="form-group">
                     <label class="form-label" for="universite">Établissement *</label>
                     <input type="text" id="universite" name="universite" class="form-input" required placeholder="Votre université/école">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="faculte">Faculté *</label>
+                    <select id="faculte" name="faculte" class="form-select" required>
+                        <option value="" disabled selected>Sélectionnez votre faculté</option>
+                        <option value="Faculté de sciences et technologies">Faculté de sciences et technologies</option>
+                        <option value="Faculté de Lettres et sciences humaines">Faculté de Lettres et sciences humaines</option>
+                        <option value="Faculté de Sciences économiques et de gestion">Faculté de Sciences économiques et de gestion</option>
+                        <option value="Faculté de Sciences sociales, administratives et politiques">Faculté de Sciences sociales, administratives et politiques</option>
+                        <option value="Faculté de Droit">Faculté de Droit</option>
+                        <option value="Faculté de Polytechnique">Faculté de Polytechnique</option>
+                        <option value="Faculté de sciences pharmaceutiques">Faculté de sciences pharmaceutiques</option>
+                        <option value="Faculté de médecine dentaire">Faculté de médecine dentaire</option>
+                        <option value="Faculté de médecine vétérinaire">Faculté de médecine vétérinaire</option>
+                        <option value="Faculté de Pétrole, gaz et énergies renouvelables">Faculté de Pétrole, gaz et énergies renouvelables</option>
+                        <option value="Faculté sciences agronomiques">Faculté sciences agronomiques</option>
+                        <option value="Faculté de Médecine">Faculté de Médecine</option>
+                        <option value="Faculté de psychologie et sciences de l'éducation">Faculté de psychologie et sciences de l'éducation</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -1148,12 +1352,97 @@ Code annonce du concours
             </div>
         </div>
     </div>
+    
+    <!-- Modal Admin -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content admin-modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            
+            <h2 class="modal-title">
+                <i class="fas fa-lock"></i> PANEL ADMINISTRATEUR
+            </h2>
+            
+            <div id="passwordSection">
+                <h3 style="color: #f7ef8a; text-align: center; margin-bottom: 20px;">
+                    Accès réservé à la coordination Excellentia Academia
+                </h3>
+                <div class="password-input-container">
+                    <input type="password" id="adminPassword" class="password-input" 
+                           placeholder="Entrez le mot de passe">
+                    <p style="color: #a0c8ff; font-size: 0.9rem; margin-top: 10px; text-align: center;">
+                        Mot de passe : Excellence@acad_2K26
+                    </p>
+                </div>
+                <button id="loginButton" class="submit-button">
+                    <i class="fas fa-sign-in-alt"></i> CONNEXION
+                </button>
+            </div>
+            
+            <div id="adminPanel" class="hidden-form">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h3 style="color: #f7ef8a;">Excellentia Academia - Coordination</h3>
+                    <p style="color: #a0c8ff;">Gestion des inscriptions</p>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalParticipants">0</div>
+                        <div class="stat-label">Total Inscriptions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayParticipants">0</div>
+                        <div class="stat-label">Aujourd'hui</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="whatsappParticipants">0</div>
+                        <div class="stat-label">Sur WhatsApp</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="facultesCount">13</div>
+                        <div class="stat-label">Facultés représentées</div>
+                    </div>
+                </div>
+                
+                <h4 style="color: #f7ef8a; margin: 20px 0 10px;">Liste des Participants</h4>
+                <div class="participants-list" id="participantsList">
+                    <!-- La liste des participants sera chargée ici -->
+                </div>
+                
+                <button id="exportButton" class="export-button">
+                    <i class="fas fa-download"></i> EXPORTER EN EXCEL
+                </button>
+                
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(212, 175, 55, 0.3);">
+                    <p style="color: #a0c8ff; font-size: 0.8rem; text-align: center;">
+                        <i class="fas fa-info-circle"></i> Les données sont synchronisées en temps réel avec Firebase
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
     <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1ks7dKq69VZaSKV9j2imPUszA5o1HsrI",
+            authDomain: "eloquence-1-1a6a9.firebaseapp.com",
+            projectId: "eloquence-1-1a6a9",
+            storageBucket: "eloquence-1-1a6a9.firebasestorage.app",
+            messagingSenderId: "929069975420",
+            appId: "1:929069975420:web:5bc50e842a7a76f5c046f9",
+            measurementId: "G-RW9C3YRG1Q"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         // Date limite d'inscription : 20 janvier 2026 à 23h59
         const targetDate = new Date('January 20, 2026 23:59:59').getTime();
-        
-        // Date de début des inscriptions (1 an avant)
         const startDate = new Date('January 20, 2025 00:00:00').getTime();
         const totalDuration = targetDate - startDate;
         
@@ -1162,11 +1451,32 @@ Code annonce du concours
         
         // Éléments du modal
         const formModal = document.getElementById('formModal');
+        const adminModal = document.getElementById('adminModal');
         const openFormButton = document.getElementById('openFormButton');
+        const adminButton = document.getElementById('adminButton');
         const closeModal = document.getElementById('closeModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
         const closeAfterSubmit = document.getElementById('closeAfterSubmit');
         const inscriptionForm = document.getElementById('inscriptionForm');
         const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        // Variables admin
+        let participantsData = [];
+        const ADMIN_PASSWORD = "Excellence@acad_2K26";
+        
+        // Activer les animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            animateElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Charger les données des participants
+            loadParticipantsData();
+        });
         
         // Fonction pour rejoindre le groupe WhatsApp
         function joinWhatsAppGroup() {
@@ -1174,23 +1484,33 @@ Code annonce du concours
             window.open(whatsappLink, '_blank');
         }
         
-        // Ouvrir le modal
+        // Ouvrir le modal d'inscription
         openFormButton.addEventListener('click', () => {
             formModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
         
-        // Fermer le modal
-        const closeModalFunc = () => {
-            formModal.style.display = 'none';
+        // Ouvrir le modal admin
+        adminButton.addEventListener('click', () => {
+            adminModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('passwordSection').classList.remove('hidden-form');
+            document.getElementById('adminPanel').classList.add('hidden-form');
+            document.getElementById('adminPassword').value = '';
+        });
+        
+        // Fermer les modals
+        const closeModalFunc = (modal) => {
+            modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         };
         
-        closeModal.addEventListener('click', closeModalFunc);
+        closeModal.addEventListener('click', () => closeModalFunc(formModal));
+        closeAdminModal.addEventListener('click', () => closeModalFunc(adminModal));
         
         // Fermer le modal après soumission
         closeAfterSubmit.addEventListener('click', () => {
-            closeModalFunc();
+            closeModalFunc(formModal);
             // Réinitialiser le formulaire
             inscriptionForm.reset();
             // Revenir au formulaire
@@ -1198,22 +1518,37 @@ Code annonce du concours
             confirmationMessage.classList.add('hidden-form');
         });
         
-        // Fermer le modal en cliquant à l'extérieur
+        // Fermer les modals en cliquant à l'extérieur
         formModal.addEventListener('click', (e) => {
-            if (e.target === formModal) {
-                closeModalFunc();
-            }
+            if (e.target === formModal) closeModalFunc(formModal);
         });
         
-        // Fermer le modal avec la touche Échap
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) closeModalFunc(adminModal);
+        });
+        
+        // Fermer les modals avec la touche Échap
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && formModal.style.display === 'flex') {
-                closeModalFunc();
+            if (e.key === 'Escape') {
+                if (formModal.style.display === 'flex') closeModalFunc(formModal);
+                if (adminModal.style.display === 'flex') closeModalFunc(adminModal);
             }
         });
         
-        // Gérer la soumission du formulaire
-        inscriptionForm.addEventListener('submit', function(e) {
+        // Gérer la connexion admin
+        document.getElementById('loginButton').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').classList.add('hidden-form');
+                document.getElementById('adminPanel').classList.remove('hidden-form');
+                updateAdminStats();
+            } else {
+                alert("Mot de passe incorrect. Accès refusé.");
+            }
+        });
+        
+        // Gérer la soumission du formulaire d'inscription
+        inscriptionForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Validation rapide
@@ -1223,35 +1558,175 @@ Code annonce du concours
                 return;
             }
             
-            // Envoyer les données
-            fetch(this.action, {
-                method: this.method,
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Afficher le message de confirmation
-                    inscriptionForm.classList.add('hidden-form');
-                    confirmationMessage.classList.remove('hidden-form');
-                    
-                    // Réinitialiser le formulaire
-                    this.reset();
-                    
-                    // Mettre à jour le bouton d'inscription principal
-                    if (Date.now() < targetDate) {
-                        openFormButton.innerHTML = '<i class="fas fa-check-circle"></i> INSCRIPTION ENVOYÉE';
-                        openFormButton.style.background = 'linear-gradient(90deg, #4CAF50, #2E7D32)';
-                        openFormButton.style.cursor = 'default';
-                        openFormButton.onclick = null;
-                    }
-                } else {
-                    alert("Erreur lors de l'envoi. Veuillez réessayer.");
+            // Récupérer les données du formulaire
+            const formData = {
+                nom: document.getElementById('nom').value,
+                email: document.getElementById('email').value,
+                telephone: document.getElementById('telephone').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                universite: document.getElementById('universite').value,
+                faculte: document.getElementById('faculte').value,
+                theme: document.getElementById('theme').value,
+                message: document.getElementById('message').value,
+                whatsapp_group: document.getElementById('whatsapp_group').checked,
+                conditions: document.getElementById('conditions').checked,
+                date_inscription: new Date().toISOString(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            try {
+                // Envoyer à Firebase
+                await db.collection('participants').add(formData);
+                
+                // Envoyer également à Formspree pour garder la compatibilité
+                const formspreeForm = new FormData();
+                for (const key in formData) {
+                    formspreeForm.append(key, formData[key]);
                 }
-            })
-            .catch(() => {
-                alert("Erreur de connexion. Vérifiez votre internet.");
+                
+                fetch('https://formspree.io/f/mldqkngp', {
+                    method: 'POST',
+                    body: formspreeForm,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                // Afficher le message de confirmation
+                inscriptionForm.classList.add('hidden-form');
+                confirmationMessage.classList.remove('hidden-form');
+                
+                // Réinitialiser le formulaire
+                this.reset();
+                
+                // Mettre à jour les stats admin
+                loadParticipantsData();
+                
+            } catch (error) {
+                console.error("Erreur lors de l'enregistrement:", error);
+                alert("Erreur lors de l'enregistrement. Veuillez réessayer.");
+            }
+        });
+        
+        // Charger les données des participants
+        async function loadParticipantsData() {
+            try {
+                const snapshot = await db.collection('participants').get();
+                participantsData = [];
+                snapshot.forEach(doc => {
+                    participantsData.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Mettre à jour les stats si le panel admin est ouvert
+                if (!document.getElementById('adminPanel').classList.contains('hidden-form')) {
+                    updateAdminStats();
+                }
+            } catch (error) {
+                console.error("Erreur de chargement des données:", error);
+            }
+        }
+        
+        // Mettre à jour les statistiques admin
+        function updateAdminStats() {
+            // Nombre total de participants
+            document.getElementById('totalParticipants').textContent = participantsData.length;
+            
+            // Participants d'aujourd'hui
+            const today = new Date().toDateString();
+            const todayParticipants = participantsData.filter(p => {
+                const participantDate = new Date(p.date_inscription).toDateString();
+                return participantDate === today;
             });
+            document.getElementById('todayParticipants').textContent = todayParticipants.length;
+            
+            // Participants avec WhatsApp
+            const whatsappParticipants = participantsData.filter(p => p.whatsapp === 'oui');
+            document.getElementById('whatsappParticipants').textContent = whatsappParticipants.length;
+            
+            // Nombre de facultés représentées
+            const facultes = [...new Set(participantsData.map(p => p.faculte).filter(Boolean))];
+            document.getElementById('facultesCount').textContent = facultes.length;
+            
+            // Mettre à jour la liste des participants
+            updateParticipantsList();
+        }
+        
+        // Mettre à jour la liste des participants
+        function updateParticipantsList() {
+            const listElement = document.getElementById('participantsList');
+            listElement.innerHTML = '';
+            
+            // Trier par date (plus récent d'abord)
+            const sortedParticipants = [...participantsData].sort((a, b) => {
+                return new Date(b.date_inscription) - new Date(a.date_inscription);
+            });
+            
+            sortedParticipants.forEach(participant => {
+                const div = document.createElement('div');
+                div.className = 'participant-item';
+                
+                const date = new Date(participant.date_inscription).toLocaleDateString('fr-FR');
+                const hasWhatsapp = participant.whatsapp === 'oui' ? '✓' : '✗';
+                
+                div.innerHTML = `
+                    <div class="participant-name">${participant.nom}</div>
+                    <div class="participant-details">
+                        ${participant.faculte} | ${participant.telephone} | ${date} 
+                        <span style="color: ${participant.whatsapp === 'oui' ? '#25d366' : '#ff6b6b'}">
+                            WhatsApp: ${hasWhatsapp}
+                        </span>
+                    </div>
+                `;
+                
+                listElement.appendChild(div);
+            });
+        }
+        
+        // Exporter en Excel
+        document.getElementById('exportButton').addEventListener('click', () => {
+            if (participantsData.length === 0) {
+                alert("Aucune donnée à exporter.");
+                return;
+            }
+            
+            // Créer le contenu CSV
+            let csvContent = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Thème,Date d'inscription\n";
+            
+            participantsData.forEach(participant => {
+                const row = [
+                    `"${participant.nom}"`,
+                    `"${participant.email}"`,
+                    `"${participant.telephone}"`,
+                    `"${participant.whatsapp}"`,
+                    `"${participant.universite}"`,
+                    `"${participant.faculte}"`,
+                    `"${participant.theme}"`,
+                    `"${new Date(participant.date_inscription).toLocaleDateString('fr-FR')}"`
+                ];
+                csvContent += row.join(',') + "\n";
+            });
+            
+            // Créer et télécharger le fichier
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `participants_excellentia_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+        
+        // Écouter les nouvelles inscriptions en temps réel
+        db.collection('participants').onSnapshot((snapshot) => {
+            participantsData = [];
+            snapshot.forEach(doc => {
+                participantsData.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // Mettre à jour les stats si le panel admin est ouvert
+            if (!document.getElementById('adminPanel').classList.contains('hidden-form')) {
+                updateAdminStats();
+            }
         });
         
         function updateCountdown() {
