@@ -159,8 +159,9 @@
         /* DASHBOARD SECTIONS */
         .dashboard-section {
             display: none;
-            padding: 30px;
+            padding: 0;
             animation: slideIn 0.5s ease;
+            min-height: 600px;
         }
         
         .dashboard-section.active {
@@ -173,16 +174,16 @@
         }
         
         .section-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
         
         .section-title {
-            font-size: 2em;
+            font-size: 1.8em;
             color: var(--gold);
         }
         
@@ -201,220 +202,9 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
-        /* CODE GENERATOR STYLES */
-        .generator-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .control-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        label {
-            margin-bottom: 8px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9em;
-        }
-        
-        .form-control {
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: white;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
-        }
-        
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .btn-success {
-            background: linear-gradient(45deg, var(--success), #2e7d32);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(45deg, var(--danger), #c62828);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .code-display-large {
-            font-family: 'Courier New', monospace;
-            font-size: 2.5em;
-            background: rgba(0, 0, 0, 0.4);
+        /* GÉNÉRATEUR EXACT */
+        .generator-exact-container {
             padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-            letter-spacing: 3px;
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-            word-break: break-all;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .history-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 40px;
-        }
-        
-        .history-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        #historyList {
-            list-style: none;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .history-item {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid var(--accent);
-        }
-        
-        .history-code {
-            font-family: monospace;
-            font-size: 1.1em;
-            letter-spacing: 1px;
-        }
-        
-        .history-time {
-            font-size: 0.8em;
-            opacity: 0.7;
-        }
-        
-        /* PARTICIPANTS TABLE */
-        .table-container {
-            overflow-x: auto;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: var(--gold);
-        }
-        
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-        }
-        
-        .badge-success {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-        }
-        
-        .badge-warning {
-            background: rgba(255, 152, 0, 0.2);
-            color: #ff9800;
-        }
-        
-        .badge-danger {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-        }
-        
-        /* STATS CARDS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.12);
-        }
-        
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: var(--gold);
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            opacity: 0.8;
-            font-size: 0.9em;
         }
         
         /* NOTIFICATION */
@@ -442,31 +232,11 @@
                 grid-template-columns: 1fr;
             }
             
-            .code-display-large {
-                font-size: 1.8em;
-                padding: 20px;
-            }
-            
             .section-header {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
             }
-            
-            .generator-controls {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* ANIMATIONS */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
     </style>
 </head>
@@ -486,7 +256,7 @@
             <div class="access-card active" onclick="openSection('generator')">
                 <div class="access-icon">🔐</div>
                 <div class="access-title">Générateur de Codes</div>
-                <div class="access-desc">Générez des codes uniques pour les participants, jury et administrateurs</div>
+                <div class="access-desc">Générateur de codes uniques WMT6HP3VJVED</div>
                 <div class="access-code">WMT6HP3VJVED</div>
             </div>
             
@@ -512,66 +282,314 @@
             </div>
         </div>
         
-        <!-- CODE GENERATOR SECTION -->
+        <!-- CODE GENERATOR SECTION (EXACTEMENT VOTRE CODE) -->
         <div class="dashboard-section active" id="generatorSection">
             <div class="section-header">
-                <h2 class="section-title">🔐 Générateur de Codes d'Accès</h2>
+                <h2 class="section-title">🔐 Générateur de Code Unique - WMT6HP3VJVED</h2>
                 <button class="back-btn" onclick="showAccessPanel()">← Retour au Menu</button>
             </div>
-            
-            <div class="generator-controls">
-                <div class="control-group">
-                    <label for="codeLength">Longueur du code</label>
-                    <input type="number" id="codeLength" class="form-control" min="6" max="32" value="12">
-                </div>
+            <div class="generator-exact-container">
+                <style>
+                    .generator-exact * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    }
+                    
+                    .generator-exact {
+                        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                        color: #fff;
+                        min-height: 500px;
+                        padding: 20px;
+                    }
+                    
+                    .generator-exact .container {
+                        max-width: 800px;
+                        margin: 0 auto;
+                        padding: 20px;
+                        background: transparent;
+                        box-shadow: none;
+                        border: none;
+                    }
+                    
+                    .generator-exact header {
+                        text-align: center;
+                        margin-bottom: 40px;
+                    }
+                    
+                    .generator-exact h1 {
+                        font-size: 2.5rem;
+                        margin-bottom: 10px;
+                        background: linear-gradient(45deg, #00dbde, #fc00ff);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                    
+                    .generator-exact .subtitle {
+                        color: #b0b0b0;
+                        font-size: 1.1rem;
+                    }
+                    
+                    .generator-exact .example-code {
+                        display: inline-block;
+                        background: rgba(255, 255, 255, 0.1);
+                        padding: 10px 20px;
+                        border-radius: 8px;
+                        margin-top: 10px;
+                        font-family: monospace;
+                        font-size: 1.2rem;
+                        letter-spacing: 2px;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }
+                    
+                    .generator-exact .generator-section {
+                        background: rgba(255, 255, 255, 0.05);
+                        border-radius: 20px;
+                        padding: 40px;
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    .generator-exact .controls {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .generator-exact .control-group {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    
+                    .generator-exact label {
+                        margin-bottom: 8px;
+                        color: #a0a0a0;
+                        font-size: 0.9rem;
+                    }
+                    
+                    .generator-exact input, .generator-exact select, .generator-exact button {
+                        padding: 12px 16px;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 1rem;
+                        background: rgba(255, 255, 255, 0.1);
+                        color: white;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }
+                    
+                    .generator-exact input:focus, .generator-exact select:focus {
+                        outline: none;
+                        border-color: #00dbde;
+                        box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.2);
+                    }
+                    
+                    .generator-exact .buttons {
+                        display: flex;
+                        gap: 15px;
+                        margin-top: 20px;
+                        flex-wrap: wrap;
+                    }
+                    
+                    .generator-exact .btn {
+                        padding: 14px 28px;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        border: none;
+                        flex: 1;
+                        min-width: 150px;
+                        text-align: center;
+                    }
+                    
+                    .generator-exact .btn-primary {
+                        background: linear-gradient(45deg, #00dbde, #0093E9);
+                    }
+                    
+                    .generator-exact .btn-secondary {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    .generator-exact .btn:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                    }
+                    
+                    .generator-exact .result-section {
+                        margin-top: 40px;
+                        text-align: center;
+                    }
+                    
+                    .generator-exact .generated-code {
+                        font-size: 2.5rem;
+                        font-family: 'Courier New', monospace;
+                        background: rgba(0, 0, 0, 0.3);
+                        padding: 30px;
+                        border-radius: 15px;
+                        margin: 20px 0;
+                        letter-spacing: 4px;
+                        border: 2px dashed rgba(0, 219, 222, 0.3);
+                        word-break: break-all;
+                        min-height: 120px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    
+                    .generator-exact .history-section {
+                        margin-top: 40px;
+                        background: rgba(255, 255, 255, 0.05);
+                        border-radius: 15px;
+                        padding: 25px;
+                    }
+                    
+                    .generator-exact .history-title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .generator-exact #historyList {
+                        list-style: none;
+                        max-height: 300px;
+                        overflow-y: auto;
+                    }
+                    
+                    .generator-exact .history-item {
+                        background: rgba(255, 255, 255, 0.05);
+                        padding: 15px;
+                        margin-bottom: 10px;
+                        border-radius: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        border-left: 4px solid #00dbde;
+                    }
+                    
+                    .generator-exact .code-display {
+                        font-family: monospace;
+                        font-size: 1.2rem;
+                        letter-spacing: 1px;
+                    }
+                    
+                    .generator-exact .timestamp {
+                        font-size: 0.8rem;
+                        color: #a0a0a0;
+                    }
+                    
+                    .generator-exact .copy-btn {
+                        margin-top: 20px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border: none;
+                        color: white;
+                        padding: 12px 24px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        width: 100%;
+                        max-width: 200px;
+                        margin: 20px auto;
+                        transition: background 0.3s;
+                    }
+                    
+                    .generator-exact .copy-btn:hover {
+                        background: rgba(255, 255, 255, 0.2);
+                    }
+                    
+                    .generator-exact .copy-btn.copied {
+                        background: rgba(0, 255, 0, 0.2);
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .generator-exact .container {
+                            padding: 10px;
+                        }
+                        
+                        .generator-exact .generator-section {
+                            padding: 20px;
+                        }
+                        
+                        .generator-exact .generated-code {
+                            font-size: 1.8rem;
+                            padding: 20px;
+                            letter-spacing: 2px;
+                        }
+                        
+                        .generator-exact .controls {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
                 
-                <div class="control-group">
-                    <label for="codeCount">Nombre de codes</label>
-                    <input type="number" id="codeCount" class="form-control" min="1" max="100" value="1">
+                <div class="generator-exact">
+                    <div class="container">
+                        <header>
+                            <h1>🔐 Générateur de Code Unique</h1>
+                            <p class="subtitle">Générez des codes aléatoires uniques comme</p>
+                            <div class="example-code">WMT6HP3VJVED</div>
+                        </header>
+                        
+                        <main class="generator-section">
+                            <div class="controls">
+                                <div class="control-group">
+                                    <label for="codeLength">Longueur du code</label>
+                                    <input type="number" id="codeLength" min="6" max="32" value="12">
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="codeCount">Nombre de codes</label>
+                                    <input type="number" id="codeCount" min="1" max="100" value="1">
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="codeType">Type de caractères</label>
+                                    <select id="codeType">
+                                        <option value="uppercase">Majuscules seulement</option>
+                                        <option value="mixed" selected>Majuscules + Chiffres</option>
+                                        <option value="alphanumeric">Majuscules + Minuscules + Chiffres</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="buttons">
+                                <button class="btn btn-primary" onclick="generateCode()">
+                                    🎲 Générer un code
+                                </button>
+                                <button class="btn btn-secondary" onclick="generateMultiple()">
+                                    📝 Générer plusieurs codes
+                                </button>
+                                <button class="btn btn-secondary" onclick="clearHistory()">
+                                    🗑️ Effacer l'historique
+                                </button>
+                            </div>
+                            
+                            <div class="result-section">
+                                <h2>Code généré :</h2>
+                                <div class="generated-code" id="generatedCode">
+                                    Cliquez sur "Générer un code"
+                                </div>
+                                
+                                <button class="copy-btn" onclick="copyToClipboard()">
+                                    📋 Copier dans le presse-papier
+                                </button>
+                            </div>
+                            
+                            <div class="history-section">
+                                <div class="history-title">
+                                    <h3>📜 Historique des codes</h3>
+                                    <span id="historyCount">0 codes</span>
+                                </div>
+                                <ul id="historyList"></ul>
+                            </div>
+                        </main>
+                    </div>
                 </div>
-                
-                <div class="control-group">
-                    <label for="codeType">Type de code</label>
-                    <select id="codeType" class="form-control">
-                        <option value="participant">Participant</option>
-                        <option value="jury">Membre du Jury</option>
-                        <option value="admin">Administrateur</option>
-                        <option value="vote">Vote Public</option>
-                        <option value="special">Code Spécial</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label for="codePrefix">Préfixe</label>
-                    <input type="text" id="codePrefix" class="form-control" placeholder="Ex: EAS">
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
-                <button class="btn btn-primary" onclick="generateSingleCode()">
-                    🎲 Générer un code
-                </button>
-                <button class="btn btn-secondary" onclick="generateMultipleCodes()">
-                    📝 Générer plusieurs codes
-                </button>
-                <button class="btn btn-success" onclick="copyGeneratedCode()">
-                    📋 Copier le code
-                </button>
-                <button class="btn btn-danger" onclick="clearGeneratorHistory()">
-                    🗑️ Effacer l'historique
-                </button>
-            </div>
-            
-            <div class="code-display-large" id="generatedCodeDisplay">
-                Cliquez sur "Générer un code"
-            </div>
-            
-            <div class="history-container">
-                <div class="history-title">
-                    <h3>📜 Historique des codes générés</h3>
-                    <span id="historyCount">0 codes</span>
-                </div>
-                <ul id="historyList"></ul>
             </div>
         </div>
         
@@ -581,52 +599,41 @@
                 <h2 class="section-title">👥 Gestion des Participants</h2>
                 <button class="back-btn" onclick="showAccessPanel()">← Retour au Menu</button>
             </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Participants</div>
-                    <div class="stat-number" id="totalParticipants">0</div>
+            <div style="padding: 30px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; text-align: center;">
+                    <h3 style="color: var(--gold); margin-bottom: 20px;">Module Participants</h3>
+                    <p style="opacity: 0.8; margin-bottom: 30px;">Gestion complète des participants du concours</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--gold);">156</div>
+                            <div style="opacity: 0.8;">Participants inscrits</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--success);">124</div>
+                            <div style="opacity: 0.8;">Paiements validés</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--accent);">32</div>
+                            <div style="opacity: 0.8;">En attente</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--secondary);">78%</div>
+                            <div style="opacity: 0.8;">Taux de complétion</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="showNotification('Module Participants - Fonctionnalité à implémenter')" 
+                            style="background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+                                   color: white; 
+                                   border: none; 
+                                   padding: 15px 30px; 
+                                   border-radius: 10px; 
+                                   cursor: pointer;
+                                   font-size: 1.1em;">
+                        📋 Gérer les participants
+                    </button>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Nouveaux (7 jours)</div>
-                    <div class="stat-number" id="newParticipants">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Accès Mobile</div>
-                    <div class="stat-number" id="mobileParticipants">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Taux d'Inscription</div>
-                    <div class="stat-number" id="registrationRate">0%</div>
-                </div>
-            </div>
-            
-            <div style="margin: 30px 0;">
-                <button class="btn btn-primary" onclick="addNewParticipant()">
-                    ➕ Ajouter un participant
-                </button>
-                <button class="btn btn-secondary" onclick="exportParticipants()">
-                    📊 Exporter la liste
-                </button>
-            </div>
-            
-            <div class="table-container">
-                <table id="participantsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nom Complet</th>
-                            <th>Téléphone</th>
-                            <th>Institution</th>
-                            <th>Date</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="participantsBody">
-                        <!-- Rempli dynamiquement -->
-                    </tbody>
-                </table>
             </div>
         </div>
         
@@ -636,43 +643,41 @@
                 <h2 class="section-title">💰 Contrôle des Paiements</h2>
                 <button class="back-btn" onclick="showAccessPanel()">← Retour au Menu</button>
             </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Collecté</div>
-                    <div class="stat-number" id="totalCollected">0 CDF</div>
+            <div style="padding: 30px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; text-align: center;">
+                    <h3 style="color: var(--gold); margin-bottom: 20px;">Module Paiements</h3>
+                    <p style="opacity: 0.8; margin-bottom: 30px;">Suivi financier et validation des transactions</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--gold);">620,000</div>
+                            <div style="opacity: 0.8;">CDF Collectés</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--success);">124</div>
+                            <div style="opacity: 0.8;">Transactions</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--warning);">160,000</div>
+                            <div style="opacity: 0.8;">CDF En attente</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--secondary);">79%</div>
+                            <div style="opacity: 0.8;">Taux de paiement</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="showNotification('Module Paiements - Fonctionnalité à implémenter')" 
+                            style="background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+                                   color: white; 
+                                   border: none; 
+                                   padding: 15px 30px; 
+                                   border-radius: 10px; 
+                                   cursor: pointer;
+                                   font-size: 1.1em;">
+                        💳 Gérer les paiements
+                    </button>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Paiements Validés</div>
-                    <div class="stat-number" id="validatedPayments">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">En Attente</div>
-                    <div class="stat-number" id="pendingPayments">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Taux de Paiement</div>
-                    <div class="stat-number" id="paymentRate">0%</div>
-                </div>
-            </div>
-            
-            <div class="table-container">
-                <table id="paymentsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Participant</th>
-                            <th>Montant</th>
-                            <th>Méthode</th>
-                            <th>Date</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="paymentsBody">
-                        <!-- Rempli dynamiquement -->
-                    </tbody>
-                </table>
             </div>
         </div>
         
@@ -682,51 +687,41 @@
                 <h2 class="section-title">🗳️ Système de Votes</h2>
                 <button class="back-btn" onclick="showAccessPanel()">← Retour au Menu</button>
             </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Votes</div>
-                    <div class="stat-number" id="totalVotes">0</div>
+            <div style="padding: 30px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; text-align: center;">
+                    <h3 style="color: var(--gold); margin-bottom: 20px;">Module Votes</h3>
+                    <p style="opacity: 0.8; margin-bottom: 30px;">Contrôle et analyse des votes en temps réel</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--gold);">2,845</div>
+                            <div style="opacity: 0.8;">Votes totaux</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--success);">156</div>
+                            <div style="opacity: 0.8;">Participants</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--accent);">45</div>
+                            <div style="opacity: 0.8;">Votes/jour moyen</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
+                            <div style="font-size: 2em; color: var(--secondary);">68%</div>
+                            <div style="opacity: 0.8;">Participation</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="showNotification('Module Votes - Fonctionnalité à implémenter')" 
+                            style="background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+                                   color: white; 
+                                   border: none; 
+                                   padding: 15px 30px; 
+                                   border-radius: 10px; 
+                                   cursor: pointer;
+                                   font-size: 1.1em;">
+                        📊 Contrôler les votes
+                    </button>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Votes Validés</div>
-                    <div class="stat-number" id="validatedVotes">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Votes en Attente</div>
-                    <div class="stat-number" id="pendingVotes">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Participation</div>
-                    <div class="stat-number" id="participationRate">0%</div>
-                </div>
-            </div>
-            
-            <div style="margin: 30px 0;">
-                <button class="btn btn-primary" onclick="refreshVotes()">
-                    🔄 Actualiser les votes
-                </button>
-                <button class="btn btn-success" onclick="exportVotesData()">
-                    📈 Exporter les données
-                </button>
-            </div>
-            
-            <div class="table-container">
-                <table id="votesTable">
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Participant</th>
-                            <th>Votes</th>
-                            <th>Pourcentage</th>
-                            <th>Tendance</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="votesBody">
-                        <!-- Rempli dynamiquement -->
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -735,46 +730,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // Données initiales
-        let participants = JSON.parse(localStorage.getItem('excellentia_participants')) || [
-            {
-                id: 1,
-                name: "Jean Kabasele",
-                phone: "+243 81 234 5678",
-                institution: "Université de Kinshasa",
-                date: "2024-05-01",
-                status: "active",
-                payment: "paid",
-                amount: 5000,
-                votes: 150
-            },
-            {
-                id: 2,
-                name: "Marie Luzolo",
-                phone: "+243 89 876 5432",
-                institution: "Université de Kinshasa",
-                date: "2024-05-03",
-                status: "active",
-                payment: "pending",
-                amount: 0,
-                votes: 89
-            }
-        ];
-
-        let generatedCodes = JSON.parse(localStorage.getItem('excellentia_generated_codes')) || [];
-        let votesData = JSON.parse(localStorage.getItem('excellentia_votes')) || [];
-
-        // Caractères pour les codes
-        const CHAR_SET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-        const PREFIXES = {
-            participant: 'EAS-P',
-            jury: 'EAS-J',
-            admin: 'EAS-A',
-            vote: 'EAS-V',
-            special: 'EAS-S'
-        };
-
-        // Navigation
+        // Navigation entre les sections
         function openSection(section) {
             // Mettre à jour les cartes d'accès
             document.querySelectorAll('.access-card').forEach(card => {
@@ -790,15 +746,9 @@
             // Afficher la section sélectionnée
             document.getElementById(section + 'Section').classList.add('active');
             
-            // Charger les données de la section
-            if (section === 'participants') {
-                loadParticipantsData();
-            } else if (section === 'payments') {
-                loadPaymentsData();
-            } else if (section === 'votes') {
-                loadVotesData();
-            } else if (section === 'generator') {
-                updateHistoryDisplay();
+            // Réinitialiser le générateur si on y accède
+            if (section === 'generator') {
+                // Le générateur est déjà initialisé avec son propre code
             }
         }
 
@@ -813,414 +763,14 @@
                 card.classList.remove('active');
             });
             
-            // Activer la première carte
+            // Activer la première carte (générateur)
             document.querySelector('.access-card').classList.add('active');
+            
+            // Afficher la section du générateur
+            document.getElementById('generatorSection').classList.add('active');
         }
 
-        // Générateur de codes
-        function generateSingleCode() {
-            const length = parseInt(document.getElementById('codeLength').value);
-            const type = document.getElementById('codeType').value;
-            const prefix = document.getElementById('codePrefix').value || PREFIXES[type];
-            
-            let code = prefix + '-';
-            for (let i = 0; i < length; i++) {
-                code += CHAR_SET.charAt(Math.floor(Math.random() * CHAR_SET.length));
-            }
-            
-            // Afficher le code
-            const display = document.getElementById('generatedCodeDisplay');
-            display.textContent = code;
-            display.classList.add('pulse');
-            setTimeout(() => display.classList.remove('pulse'), 2000);
-            
-            // Ajouter à l'historique
-            addCodeToHistory(code, type);
-            
-            showNotification('✅ Code généré avec succès !');
-        }
-
-        function generateMultipleCodes() {
-            const length = parseInt(document.getElementById('codeLength').value);
-            const count = parseInt(document.getElementById('codeCount').value);
-            const type = document.getElementById('codeType').value;
-            const prefix = document.getElementById('codePrefix').value || PREFIXES[type];
-            
-            let codes = [];
-            for (let i = 0; i < count; i++) {
-                let code = prefix + '-';
-                for (let j = 0; j < length; j++) {
-                    code += CHAR_SET.charAt(Math.floor(Math.random() * CHAR_SET.length));
-                }
-                codes.push(code);
-                addCodeToHistory(code, type);
-            }
-            
-            // Afficher tous les codes
-            const display = document.getElementById('generatedCodeDisplay');
-            display.innerHTML = codes.map(code => 
-                `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">${code}</div>`
-            ).join('');
-            
-            showNotification(`✅ ${count} codes générés avec succès !`);
-        }
-
-        function addCodeToHistory(code, type) {
-            const codeData = {
-                code: code,
-                type: type,
-                timestamp: new Date().toISOString(),
-                used: false
-            };
-            
-            generatedCodes.push(codeData);
-            if (generatedCodes.length > 100) {
-                generatedCodes = generatedCodes.slice(-100);
-            }
-            
-            localStorage.setItem('excellentia_generated_codes', JSON.stringify(generatedCodes));
-            updateHistoryDisplay();
-        }
-
-        function updateHistoryDisplay() {
-            const historyList = document.getElementById('historyList');
-            const historyCount = document.getElementById('historyCount');
-            
-            historyList.innerHTML = '';
-            historyCount.textContent = `${generatedCodes.length} codes`;
-            
-            // Afficher les 20 derniers codes
-            const recentCodes = generatedCodes.slice(-20).reverse();
-            
-            recentCodes.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.className = 'history-item';
-                li.innerHTML = `
-                    <div>
-                        <div class="history-code">${item.code}</div>
-                        <div class="history-time">${new Date(item.timestamp).toLocaleString('fr-FR')} - ${item.type}</div>
-                    </div>
-                    <button onclick="copyCode('${item.code}')" style="background: none; border: none; color: var(--accent); cursor: pointer; font-size: 1.2em;">
-                        📋
-                    </button>
-                `;
-                historyList.appendChild(li);
-            });
-        }
-
-        function copyGeneratedCode() {
-            const code = document.getElementById('generatedCodeDisplay').textContent;
-            if (code && code !== 'Cliquez sur "Générer un code"') {
-                copyToClipboard(code);
-                showNotification('📋 Code copié dans le presse-papier !');
-            }
-        }
-
-        function copyCode(code) {
-            copyToClipboard(code);
-            showNotification(`📋 Code "${code}" copié !`);
-        }
-
-        function clearGeneratorHistory() {
-            if (confirm('Voulez-vous vraiment effacer tout l\'historique des codes ?')) {
-                generatedCodes = [];
-                localStorage.removeItem('excellentia_generated_codes');
-                updateHistoryDisplay();
-                document.getElementById('generatedCodeDisplay').textContent = 'Cliquez sur "Générer un code"';
-                showNotification('🗑️ Historique des codes effacé');
-            }
-        }
-
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-            } catch (err) {
-                // Fallback pour les anciens navigateurs
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
-        }
-
-        // Gestion des participants
-        function loadParticipantsData() {
-            // Mettre à jour les statistiques
-            const total = participants.length;
-            const newThisWeek = participants.filter(p => {
-                const regDate = new Date(p.date);
-                const now = new Date();
-                const diffDays = Math.floor((now - regDate) / (1000 * 60 * 60 * 24));
-                return diffDays <= 7;
-            }).length;
-            const mobileCount = participants.filter(p => p.phone.includes('+243')).length;
-            const rate = total > 0 ? Math.round((total / 100) * 100) : 0;
-            
-            document.getElementById('totalParticipants').textContent = total;
-            document.getElementById('newParticipants').textContent = newThisWeek;
-            document.getElementById('mobileParticipants').textContent = mobileCount;
-            document.getElementById('registrationRate').textContent = rate + '%';
-            
-            // Remplir le tableau
-            const tbody = document.getElementById('participantsBody');
-            tbody.innerHTML = '';
-            
-            participants.forEach(participant => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${participant.id}</td>
-                    <td>${participant.name}</td>
-                    <td>${participant.phone}</td>
-                    <td>${participant.institution}</td>
-                    <td>${participant.date}</td>
-                    <td>
-                        <span class="badge ${participant.status === 'active' ? 'badge-success' : 'badge-warning'}">
-                            ${participant.status === 'active' ? 'Actif' : 'Inactif'}
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn" style="padding: 5px 10px; margin-right: 5px;" onclick="editParticipant(${participant.id})">
-                            ✏️
-                        </button>
-                        <button class="btn btn-danger" style="padding: 5px 10px;" onclick="deleteParticipant(${participant.id})">
-                            🗑️
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function addNewParticipant() {
-            const name = prompt("Nom complet du participant :");
-            if (name) {
-                const phone = prompt("Numéro de téléphone :");
-                const institution = prompt("Institution :");
-                
-                const newParticipant = {
-                    id: participants.length + 1,
-                    name: name,
-                    phone: phone || '',
-                    institution: institution || '',
-                    date: new Date().toISOString().split('T')[0],
-                    status: 'active',
-                    payment: 'pending',
-                    amount: 0,
-                    votes: 0
-                };
-                
-                participants.push(newParticipant);
-                localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                loadParticipantsData();
-                showNotification('✅ Participant ajouté avec succès !');
-            }
-        }
-
-        function editParticipant(id) {
-            const participant = participants.find(p => p.id === id);
-            if (participant) {
-                const newName = prompt("Modifier le nom :", participant.name);
-                if (newName) {
-                    participant.name = newName;
-                    participant.phone = prompt("Modifier le téléphone :", participant.phone) || participant.phone;
-                    participant.institution = prompt("Modifier l'institution :", participant.institution) || participant.institution;
-                    
-                    localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                    loadParticipantsData();
-                    showNotification('✅ Participant modifié !');
-                }
-            }
-        }
-
-        function deleteParticipant(id) {
-            if (confirm("Voulez-vous vraiment supprimer ce participant ?")) {
-                participants = participants.filter(p => p.id !== id);
-                localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                loadParticipantsData();
-                showNotification('🗑️ Participant supprimé !');
-            }
-        }
-
-        function exportParticipants() {
-            const csv = participants.map(p => 
-                `${p.id},${p.name},${p.phone},${p.institution},${p.date},${p.status}`
-            ).join('\n');
-            
-            downloadCSV('participants_eloquence_scene.csv', 'ID,Nom,Téléphone,Institution,Date,Statut\n' + csv);
-            showNotification('📊 Liste exportée en CSV !');
-        }
-
-        // Gestion des paiements
-        function loadPaymentsData() {
-            const paidParticipants = participants.filter(p => p.payment === 'paid');
-            const totalCollected = paidParticipants.reduce((sum, p) => sum + p.amount, 0);
-            const pendingCount = participants.filter(p => p.payment === 'pending').length;
-            const paymentRate = participants.length > 0 ? 
-                Math.round((paidParticipants.length / participants.length) * 100) : 0;
-            
-            document.getElementById('totalCollected').textContent = totalCollected.toLocaleString() + ' CDF';
-            document.getElementById('validatedPayments').textContent = paidParticipants.length;
-            document.getElementById('pendingPayments').textContent = pendingCount;
-            document.getElementById('paymentRate').textContent = paymentRate + '%';
-            
-            // Remplir le tableau des paiements
-            const tbody = document.getElementById('paymentsBody');
-            tbody.innerHTML = '';
-            
-            participants.forEach(participant => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${participant.id}</td>
-                    <td>${participant.name}</td>
-                    <td>${participant.payment === 'paid' ? participant.amount.toLocaleString() + ' CDF' : '0 CDF'}</td>
-                    <td>${participant.paymentMethod || 'Non spécifié'}</td>
-                    <td>${participant.paymentDate || '-'}</td>
-                    <td>
-                        <span class="badge ${participant.payment === 'paid' ? 'badge-success' : 'badge-warning'}">
-                            ${participant.payment === 'paid' ? 'Payé' : 'En attente'}
-                        </span>
-                    </td>
-                    <td>
-                        ${participant.payment === 'pending' ? 
-                            `<button class="btn btn-success" style="padding: 5px 10px;" onclick="confirmPayment(${participant.id})">
-                                Valider
-                            </button>` : 
-                            `<button class="btn btn-danger" style="padding: 5px 10px;" onclick="cancelPayment(${participant.id})">
-                                Annuler
-                            </button>`
-                        }
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function confirmPayment(id) {
-            const participant = participants.find(p => p.id === id);
-            if (participant) {
-                const amount = prompt("Montant du paiement (CDF) :", "5000");
-                const method = prompt("Méthode de paiement :", "Mobile Money");
-                
-                if (amount && method) {
-                    participant.payment = 'paid';
-                    participant.amount = parseInt(amount);
-                    participant.paymentMethod = method;
-                    participant.paymentDate = new Date().toISOString().split('T')[0];
-                    
-                    localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                    loadPaymentsData();
-                    showNotification('✅ Paiement validé !');
-                }
-            }
-        }
-
-        function cancelPayment(id) {
-            const participant = participants.find(p => p.id === id);
-            if (participant) {
-                participant.payment = 'pending';
-                participant.amount = 0;
-                participant.paymentMethod = '';
-                participant.paymentDate = '';
-                
-                localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                loadPaymentsData();
-                showNotification('⚠️ Paiement annulé !');
-            }
-        }
-
-        // Gestion des votes
-        function loadVotesData() {
-            const totalVotes = participants.reduce((sum, p) => sum + p.votes, 0);
-            const maxVotes = participants.length * 100; // Maximum théorique
-            const participationRate = maxVotes > 0 ? Math.round((totalVotes / maxVotes) * 100) : 0;
-            
-            document.getElementById('totalVotes').textContent = totalVotes;
-            document.getElementById('validatedVotes').textContent = totalVotes;
-            document.getElementById('pendingVotes').textContent = 0;
-            document.getElementById('participationRate').textContent = participationRate + '%';
-            
-            // Trier par nombre de votes
-            const sortedParticipants = [...participants].sort((a, b) => b.votes - a.votes);
-            
-            // Remplir le tableau des votes
-            const tbody = document.getElementById('votesBody');
-            tbody.innerHTML = '';
-            
-            sortedParticipants.forEach((participant, index) => {
-                const percentage = totalVotes > 0 ? Math.round((participant.votes / totalVotes) * 100) : 0;
-                const trend = participant.votes > 50 ? '↗️' : participant.votes > 20 ? '→' : '↘️';
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${index + 1}</strong></td>
-                    <td>${participant.name}</td>
-                    <td><strong>${participant.votes}</strong></td>
-                    <td>
-                        <div style="background: rgba(255,255,255,0.1); border-radius: 10px; height: 20px; margin: 5px 0;">
-                            <div style="background: linear-gradient(45deg, var(--accent), var(--gold)); width: ${percentage}%; height: 100%; border-radius: 10px;"></div>
-                        </div>
-                        ${percentage}%
-                    </td>
-                    <td>${trend}</td>
-                    <td>
-                        <button class="btn btn-primary" style="padding: 5px 10px;" onclick="addVotes(${participant.id})">
-                            + Votes
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function addVotes(id) {
-            const participant = participants.find(p => p.id === id);
-            if (participant) {
-                const votes = prompt(`Ajouter des votes pour ${participant.name} :`, "10");
-                if (votes && !isNaN(votes)) {
-                    participant.votes += parseInt(votes);
-                    localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-                    loadVotesData();
-                    showNotification(`✅ ${votes} votes ajoutés pour ${participant.name}`);
-                }
-            }
-        }
-
-        function refreshVotes() {
-            // Simuler de nouveaux votes aléatoires
-            participants.forEach(p => {
-                if (Math.random() > 0.7) { // 30% de chance d'ajouter des votes
-                    p.votes += Math.floor(Math.random() * 10) + 1;
-                }
-            });
-            
-            localStorage.setItem('excellentia_participants', JSON.stringify(participants));
-            loadVotesData();
-            showNotification('🔄 Votes actualisés !');
-        }
-
-        function exportVotesData() {
-            const sortedParticipants = [...participants].sort((a, b) => b.votes - a.votes);
-            const csv = sortedParticipants.map((p, index) => 
-                `${index + 1},${p.name},${p.votes},${p.institution},${p.phone}`
-            ).join('\n');
-            
-            downloadCSV('votes_eloquence_scene.csv', 'Position,Nom,Votes,Institution,Téléphone\n' + csv);
-            showNotification('📈 Données de votes exportées !');
-        }
-
-        // Fonctions utilitaires
-        function downloadCSV(filename, csv) {
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
-
+        // Fonction de notification
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1231,18 +781,157 @@
             }, 3000);
         }
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            loadParticipantsData();
-            updateHistoryDisplay();
+        // ============================================================================
+        // CODE DU GÉNÉRATEUR EXACTEMENT TEL QUE FOURNI - NE PAS MODIFIER
+        // ============================================================================
+        
+        // Caractères disponibles
+        const CHAR_SETS = {
+            uppercase: 'ABCDEFGHJKLMNPQRSTUVWXYZ', // Sans I, O
+            mixed: 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', // Sans 0, 1, I, O
+            alphanumeric: 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
+        };
+        
+        // Stockage local pour l'historique
+        let codeHistory = JSON.parse(localStorage.getItem('codeHistory')) || [];
+        
+        // Mettre à jour l'affichage de l'historique
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            const historyCount = document.getElementById('historyCount');
             
-            // Exemple de code au chargement
-            if (generatedCodes.length === 0) {
-                setTimeout(() => {
-                    generateSingleCode();
-                }, 1000);
+            historyList.innerHTML = '';
+            historyCount.textContent = `${codeHistory.length} code${codeHistory.length > 1 ? 's' : ''}`;
+            
+            // Afficher les 50 derniers codes
+            const recentHistory = codeHistory.slice(-50).reverse();
+            
+            recentHistory.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `
+                    <div>
+                        <div class="code-display">${item.code}</div>
+                        <div class="timestamp">${new Date(item.timestamp).toLocaleString('fr-FR')}</div>
+                    </div>
+                    <button onclick="copySingleCode('${item.code}')" class="copy-btn" style="padding: 5px 10px; font-size: 0.8rem;">
+                        📋
+                    </button>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+        
+        // Générer un seul code
+        function generateCode() {
+            const length = parseInt(document.getElementById('codeLength').value);
+            const type = document.getElementById('codeType').value;
+            const chars = CHAR_SETS[type];
+            
+            let code = '';
+            for (let i = 0; i < length; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
             }
+            
+            // Afficher le code
+            document.getElementById('generatedCode').textContent = code;
+            
+            // Ajouter à l'historique
+            addToHistory(code);
+        }
+        
+        // Générer plusieurs codes
+        function generateMultiple() {
+            const length = parseInt(document.getElementById('codeLength').value);
+            const count = parseInt(document.getElementById('codeCount').value);
+            const type = document.getElementById('codeType').value;
+            const chars = CHAR_SETS[type];
+            
+            let codes = [];
+            for (let j = 0; j < count; j++) {
+                let code = '';
+                for (let i = 0; i < length; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                codes.push(code);
+                addToHistory(code);
+            }
+            
+            // Afficher tous les codes
+            document.getElementById('generatedCode').innerHTML = 
+                codes.map(code => `<div style="margin: 10px 0;">${code}</div>`).join('');
+        }
+        
+        // Ajouter un code à l'historique
+        function addToHistory(code) {
+            codeHistory.push({
+                code: code,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Limiter l'historique à 1000 entrées
+            if (codeHistory.length > 1000) {
+                codeHistory = codeHistory.slice(-1000);
+            }
+            
+            // Sauvegarder dans le localStorage
+            localStorage.setItem('codeHistory', JSON.stringify(codeHistory));
+            
+            // Mettre à jour l'affichage
+            updateHistoryDisplay();
+        }
+        
+        // Copier dans le presse-papier
+        async function copyToClipboard() {
+            const codeElement = document.getElementById('generatedCode');
+            const code = codeElement.textContent;
+            
+            if (code && code !== 'Cliquez sur "Générer un code"') {
+                try {
+                    await navigator.clipboard.writeText(code);
+                    showNotification('✅ Code copié dans le presse-papier !');
+                    
+                    // Animation du bouton
+                    const btn = document.querySelector('.copy-btn');
+                    btn.classList.add('copied');
+                    setTimeout(() => btn.classList.remove('copied'), 2000);
+                } catch (err) {
+                    showNotification('❌ Erreur lors de la copie');
+                }
+            }
+        }
+        
+        // Copier un code spécifique depuis l'historique
+        async function copySingleCode(code) {
+            try {
+                await navigator.clipboard.writeText(code);
+                showNotification('✅ Code copié : ' + code);
+            } catch (err) {
+                showNotification('❌ Erreur lors de la copie');
+            }
+        }
+        
+        // Effacer l'historique
+        function clearHistory() {
+            if (confirm('Voulez-vous vraiment effacer tout l\'historique ?')) {
+                codeHistory = [];
+                localStorage.removeItem('codeHistory');
+                updateHistoryDisplay();
+                showNotification('🗑️ Historique effacé');
+            }
+        }
+        
+        // Initialiser l'historique au chargement
+        document.addEventListener('DOMContentLoaded', updateHistoryDisplay);
+        
+        // Générer un exemple au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(generateCode, 500);
         });
+        
+        // ============================================================================
+        // FIN DU CODE DU GÉNÉRATEUR
+        // ============================================================================
     </script>
 </body>
 </html>
