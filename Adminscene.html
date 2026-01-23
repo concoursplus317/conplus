@@ -380,7 +380,7 @@
                         <span id="historyCount">0 codes</span>
                     </div>
                     <div class="history-buttons">
-                        <button onclick="exportHistory()">📥 Exporter</button>
+                        <button onclick="exportUniqueCodes()">📥 Exporter codes uniques</button>
                         <button onclick="toggleHistory()">🔄 Masquer/Afficher</button>
                     </div>
                 </div>
@@ -466,6 +466,12 @@
                 code += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             
+            // Vérifier si le code existe déjà
+            if (codeHistory.some(item => item.code === code)) {
+                showNotification('⚠️ Code déjà existant, nouvelle génération...');
+                return generateCode(); // Régénérer
+            }
+            
             // Afficher le code
             document.getElementById('generatedCode').textContent = code;
             
@@ -483,14 +489,23 @@
             const chars = CHAR_SETS[type];
             
             let codes = [];
-            for (let j = 0; j < count; j++) {
+            let generated = 0;
+            
+            while (generated < count) {
                 let code = '';
                 for (let i = 0; i < length; i++) {
                     code += chars.charAt(Math.floor(Math.random() * chars.length));
                 }
-                codes.push(code);
-                addToHistory(code); // Ajouter CHAQUE code à l'historique
+                
+                // Vérifier les doublons dans les nouveaux codes ET l'historique
+                if (!codes.includes(code) && !codeHistory.some(item => item.code === code)) {
+                    codes.push(code);
+                    generated++;
+                }
             }
+            
+            // Ajouter chaque code à l'historique
+            codes.forEach(code => addToHistory(code));
             
             // Afficher tous les codes
             if (count === 1) {
@@ -500,26 +515,29 @@
                     codes.map(code => `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">${code}</div>`).join('');
             }
             
-            showNotification(`✅ ${count} code${count > 1 ? 's' : ''} généré${count > 1 ? 's' : ''} !`);
+            showNotification(`✅ ${count} code${count > 1 ? 's' : ''} unique${count > 1 ? 's' : ''} généré${count > 1 ? 's' : ''} !`);
         }
         
         // Ajouter un code à l'historique
         function addToHistory(code) {
-            codeHistory.push({
-                code: code,
-                timestamp: new Date().toISOString()
-            });
-            
-            // Limiter l'historique à 500 entrées (au lieu de 1000)
-            if (codeHistory.length > 500) {
-                codeHistory = codeHistory.slice(-500);
+            // Vérifier si le code existe déjà dans l'historique
+            if (!codeHistory.some(item => item.code === code)) {
+                codeHistory.push({
+                    code: code,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Limiter l'historique à 500 entrées
+                if (codeHistory.length > 500) {
+                    codeHistory = codeHistory.slice(-500);
+                }
+                
+                // Sauvegarder dans le localStorage
+                localStorage.setItem('codeHistory', JSON.stringify(codeHistory));
+                
+                // Mettre à jour l'affichage
+                updateHistoryDisplay();
             }
-            
-            // Sauvegarder dans le localStorage
-            localStorage.setItem('codeHistory', JSON.stringify(codeHistory));
-            
-            // Mettre à jour l'affichage
-            updateHistoryDisplay();
         }
         
         // Copier dans le presse-papier
@@ -563,32 +581,38 @@
             }
         }
         
-        // Exporter l'historique
-        function exportHistory() {
+        // Exporter uniquement les codes uniques sans doublons
+        function exportUniqueCodes() {
             if (codeHistory.length === 0) {
                 showNotification('📭 Aucun code à exporter');
                 return;
             }
             
-            let exportText = '=== HISTORIQUE DES CODES GÉNÉRÉS ===\n\n';
-            exportText += `Date d'export: ${new Date().toLocaleString('fr-FR')}\n`;
-            exportText += `Total: ${codeHistory.length} codes\n\n`;
+            // Récupérer tous les codes UNIQUES de l'historique
+            const uniqueCodes = [];
+            const seenCodes = new Set();
             
-            codeHistory.forEach((item, index) => {
-                exportText += `${index + 1}. ${item.code} - ${new Date(item.timestamp).toLocaleString('fr-FR')}\n`;
+            codeHistory.forEach(item => {
+                if (!seenCodes.has(item.code)) {
+                    seenCodes.add(item.code);
+                    uniqueCodes.push(item.code);
+                }
             });
+            
+            // Créer le texte d'export (codes seulement, sans dates)
+            let exportText = uniqueCodes.join('\n');
             
             const blob = new Blob([exportText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `codes_${new Date().toISOString().slice(0, 10)}.txt`;
+            a.download = `codes_uniques_${uniqueCodes.length}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showNotification('📥 Historique exporté !');
+            showNotification(`📥 ${uniqueCodes.length} code${uniqueCodes.length > 1 ? 's' : ''} unique${uniqueCodes.length > 1 ? 's' : ''} exporté${uniqueCodes.length > 1 ? 's' : ''} !`);
         }
         
         // Basculer l'affichage de l'historique
