@@ -4,3220 +4,1320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excellentia Academia : Éloquence en Scène</title>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <title>Concours d'Éloquence Excellentia Academia</title>
     <style>
-        :root {
-            --primary: #8B4513;
-            --primary-dark: #654321;
-            --secondary: #D4AF37;
-            --accent: #228B22;
-            --light: #F5F5DC;
-            --dark: #2C1810;
-            --text: #333333;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
         }
         
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f5dc 0%, #fff8dc 100%);
-            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 Q100,50 50,100 Q0,50 50,0" fill="%238B4513" opacity="0.03"/></svg>');
-            z-index: -1;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
             padding: 20px;
         }
         
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 40px 20px;
-            border-radius: 0 0 30px 30px;
-            box-shadow: 0 10px 40px rgba(139, 69, 19, 0.3);
+        .container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
             text-align: center;
+            max-width: 1100px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(220, 190, 130, 0.2);
             position: relative;
             overflow: hidden;
         }
         
-        .header::before {
-            content: '🎤';
+        .container::before {
+            content: '';
             position: absolute;
-            font-size: 200px;
-            opacity: 0.1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37, #f7ef8a, #d4af37);
         }
         
         .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .logo {
-            background: white;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logo-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .logo i {
-            font-size: 40px;
-            color: var(--primary);
-        }
-        
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
-        }
-        
-        .header h2 {
-            font-size: 1.8em;
-            font-weight: 300;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-        
-        .event-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
             flex-wrap: wrap;
-            margin-top: 30px;
+            gap: 5px;
         }
         
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1em;
+        .excel {
+            color: #1e90ff;
         }
         
-        .info-item i {
-            color: var(--secondary);
+        .lentia {
+            color: #ff4444;
         }
         
-        /* Timer Section */
-        .timer-section {
-            background: white;
-            margin: 40px 0;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 2px solid var(--secondary);
+        .academia {
+            color: #0d47a1;
         }
         
-        .timer-title {
-            color: var(--primary);
-            font-size: 1.5em;
+        .graduation-cap {
+            font-size: 1.8rem;
+            margin-left: 10px;
+            color: #d4af37;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0c8ff;
+            font-style: italic;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
         
-        .timer {
+        .event-title {
+            font-size: 1.6rem;
+            color: #f7ef8a;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .deadline-info {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .deadline-title {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+        
+        .deadline-date {
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        
+        .countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
             flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
         }
         
         .time-unit {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            min-width: 120px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+            padding: 20px 10px;
+            min-width: 75px;
+            flex: 1;
+            max-width: 120px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-unit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f7ef8a);
+        }
+        
+        .time-unit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.7);
         }
         
         .time-value {
-            font-size: 3em;
+            font-size: 2.2rem;
             font-weight: bold;
+            color: #f7ef8a;
+            text-shadow: 0 0 10px rgba(247, 239, 138, 0.7);
+            line-height: 1;
             font-family: 'Courier New', monospace;
         }
         
         .time-label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-        
-        /* Règlement Section */
-        .reglement-entrance {
-            animation: slideDown 0.5s ease-out;
-        }
-        
-        @keyframes slideDown {
-            from { 
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Voting Cards */
-        .voting-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .voting-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .card-header i {
-            font-size: 1.8em;
-        }
-        
-        .card-header h3 {
-            font-size: 1.5em;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            color: #a0c8ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: 600;
         }
         
-        .card-content {
-            padding: 30px;
-        }
-        
-        /* Code Input Section */
-        .code-input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-        
-        .code-input-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .code-input-wrapper {
-            position: relative;
-        }
-        
-        .code-input {
-            width: 100%;
-            padding: 20px 60px 20px 20px;
-            font-size: 1.2em;
-            border: 3px solid #e2e8f0;
-            border-radius: 15px;
-            transition: all 0.3s;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-        
-        .code-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-        }
-        
-        .code-input-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.5em;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 15px;
-            font-size: 1.2em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
-        }
-        
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        /* Candidates Section */
-        .candidates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-        
-        .candidate-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 3px solid transparent;
-        }
-        
-        .candidate-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
-        
-        .candidate-card.selected {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, #f8fff8 0%, #f0fff0 100%);
-        }
-        
-        .candidate-header {
-            background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%);
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .candidate-number {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--secondary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        
-        .candidate-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2.5em;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .candidate-name {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        
-        .candidate-theme {
-            color: var(--accent);
-            font-style: italic;
-            font-size: 0.9em;
-        }
-        
-        .candidate-body {
-            padding: 20px;
-        }
-        
-        .candidate-quote {
-            font-style: italic;
-            color: #666;
-            text-align: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-left: 3px solid var(--secondary);
-            background: #f9f9f9;
-        }
-        
-        /* Live Results Section */
-        .live-results-section {
-            background: white;
-            margin: 40px 0;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .live-results-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .live-results-title {
-            color: var(--primary);
-            font-size: 1.8em;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .personal-vote-info {
-            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border-left: 5px solid var(--primary);
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-        
-        .personal-vote-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .personal-vote-icon {
-            font-size: 2em;
-            color: var(--primary);
-        }
-        
-        .personal-vote-text h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 1.2em;
-        }
-        
-        .personal-vote-text p {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        .live-results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .live-result-item {
-            background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .live-result-item:hover {
-            transform: translateY(-3px);
-        }
-        
-        .live-result-name {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .live-result-votes {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--primary-dark);
-            margin: 10px 0;
-        }
-        
-        .live-result-percentage {
-            font-size: 1.1em;
-            color: var(--accent);
-            font-weight: 600;
-        }
-        
-        .live-result-bar {
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .live-result-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 4px;
-            transition: width 1s ease-in-out;
-        }
-        
-        .results-disclaimer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #fff8dc 0%, #ffe4b5 100%);
-            border-radius: 15px;
-            border: 2px dashed var(--secondary);
-            margin-top: 20px;
-        }
-        
-        .results-disclaimer p {
-            color: var(--primary-dark);
-            font-style: italic;
-            margin: 0;
-        }
-        
-        /* Results Section */
-        .results-section {
-            background: white;
-            margin: 40px 0;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: none;
-        }
-        
-        .results-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .results-title {
-            color: var(--primary);
-            font-size: 2em;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .result-item {
-            background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .result-item.winner {
-            background: linear-gradient(135deg, #fff8dc 0%, #ffe4b5 100%);
-            border: 3px solid var(--secondary);
-            transform: scale(1.05);
-        }
-        
-        .result-rank {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--primary);
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .result-name {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .result-votes {
-            font-size: 3em;
-            font-weight: bold;
-            color: var(--primary-dark);
-            margin: 10px 0;
-        }
-        
-        .result-percentage {
-            font-size: 1.2em;
-            color: var(--accent);
-            font-weight: 600;
-        }
-        
-        .result-bar {
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .result-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 5px;
-            transition: width 1s ease-in-out;
-        }
-        
-        /* Champion List Styles */
-        .champion-list-section {
-            background: linear-gradient(135deg, #fff8dc 0%, #ffe4b5 100%);
-            margin: 40px 0;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
-            border: 3px solid var(--secondary);
-            display: none;
-            animation: fadeIn 1s ease;
-        }
-        
-        .champion-list-header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .champion-list-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5em;
-            color: var(--primary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        .champion-list-header h2 i {
-            color: var(--secondary);
-            font-size: 1.2em;
-        }
-        
-        .champion-list-subtitle {
-            color: var(--primary-dark);
-            font-size: 1.2em;
-            font-style: italic;
-            opacity: 0.8;
-        }
-        
-        /* Podium Styles */
-        .podium-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 20px;
-            margin: 40px 0;
-            height: 300px;
-        }
-        
-        .podium-place {
-            text-align: center;
-            color: white;
-            position: relative;
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .first-place {
-            background: linear-gradient(135deg, var(--secondary) 0%, #DAA520 100%);
-            width: 220px;
-            height: 250px;
-        }
-        
-        .second-place {
-            background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
-            width: 180px;
-            height: 200px;
-        }
-        
-        .third-place {
-            background: linear-gradient(135deg, #CD7F32 0%, #B5651D 100%);
-            width: 160px;
-            height: 150px;
-        }
-        
-        /* Ranking Table */
-        .ranking-table {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 40px;
-        }
-        
-        .ranking-table h3 {
-            color: var(--primary);
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .ranking-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .ranking-table th {
+        .urgent-message {
+            background-color: rgba(255, 50, 50, 0.1);
+            border-radius: 12px;
             padding: 15px;
-            text-align: left;
-            border-bottom: 2px solid var(--secondary);
-            background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%);
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .ranking-table td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .ranking-table tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-        
-        .ranking-table tr:hover {
-            background: #fff8dc;
-        }
-        
-        .ranking-position {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: var(--primary);
-            text-align: center;
-        }
-        
-        .ranking-name {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .ranking-votes {
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        .ranking-percentage {
-            color: var(--accent);
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        /* Final Celebration */
-        .final-celebration {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border-radius: 20px;
-            margin-top: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .final-celebration::before {
-            content: '🏆';
-            position: absolute;
-            font-size: 150px;
-            opacity: 0.1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        .final-celebration h3 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-        
-        .final-celebration p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-        
-        /* Alerts */
-        .alert {
-            padding: 20px;
-            border-radius: 15px;
             margin: 20px 0;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .alert.success {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-            border: 2px solid #c3e6cb;
-        }
-        
-        .alert.error {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            color: #721c24;
-            border: 2px solid #f5c6cb;
-        }
-        
-        .alert.warning {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            color: #856404;
-            border: 2px solid #ffeaa7;
-        }
-        
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 40px 20px;
-            border-radius: 30px 30px 0 0;
-            text-align: center;
-            margin-top: 60px;
-        }
-        
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        
-        .footer-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-        }
-        
-        .footer-section h4 {
-            color: var(--secondary);
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-        
-        .copyright {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            opacity: 0.8;
-        }
-        
-        /* Loading Animation */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background: var(--secondary);
-            top: 0;
-            opacity: 0;
-            z-index: 1000;
-            pointer-events: none;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5em;
-            }
-            
-            .header h2 {
-                font-size: 1.4em;
-            }
-            
-            .timer {
-                gap: 10px;
-            }
-            
-            .time-unit {
-                min-width: 80px;
-                padding: 15px;
-            }
-            
-            .time-value {
-                font-size: 2em;
-            }
-            
-            .card-content {
-                padding: 20px;
-            }
-            
-            .live-results-section,
-            .results-section,
-            .champion-list-section {
-                padding: 20px;
-            }
-            
-            .podium-container {
-                flex-direction: column;
-                align-items: center;
-                height: auto;
-                gap: 10px;
-            }
-            
-            .podium-place {
-                width: 80% !important;
-                height: auto !important;
-                margin-bottom: 10px;
-                border-radius: 10px;
-            }
-            
-            .champion-list-header h2 {
-                font-size: 2em;
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-        
-        /* Animations */
-        .pulse {
+            border: 2px solid rgba(255, 100, 100, 0.4);
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { border-color: rgba(255, 100, 100, 0.4); }
+            50% { border-color: rgba(255, 100, 100, 0.8); }
+            100% { border-color: rgba(255, 100, 100, 0.4); }
         }
         
-        /* Hidden class */
-        .hidden {
-            display: none !important;
+        .urgent-title {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
-        /* STYLES ADMIN */
-        @keyframes modalAppear {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .urgent-text {
+            font-size: 1rem;
+            color: #ffaaaa;
+            line-height: 1.4;
         }
         
-        /* Bouton Admin fixé */
-        #adminBtn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: #000;
-            color: white;
+        .cta-button {
+            background: linear-gradient(90deg, #d4af37, #f7ef8a);
+            color: #1a1a2e;
             border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
+            padding: 16px 30px;
+            font-size: 1.2rem;
             font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(212, 175, 55, 0.6);
+        }
+        
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            border-left: 5px solid #d4af37;
+        }
+        
+        .instructions h3 {
+            color: #f7ef8a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        /* Nouvelle section Prix et Récompenses */
+        .prizes-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(30, 144, 255, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .prizes-title {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .prizes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .prize-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .prize-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+        
+        .prize-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color1), var(--color2));
+        }
+        
+        .prize-card.first::before {
+            --color1: #ffd700;
+            --color2: #ffed4e;
+        }
+        
+        .prize-card.second::before {
+            --color1: #c0c0c0;
+            --color2: #e8e8e8;
+        }
+        
+        .prize-card.third::before {
+            --color1: #cd7f32;
+            --color2: #e49b5d;
+        }
+        
+        .prize-rank {
+            font-size: 1.6rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+        
+        .prize-amount {
+            font-size: 2rem;
+            color: #f7ef8a;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(247, 239, 138, 0.7);
+            font-weight: bold;
+        }
+        
+        .prize-label {
+            font-size: 1rem;
+            color: #a0c8ff;
+            margin-bottom: 20px;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .prize-details {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .prize-details li {
+            margin-bottom: 10px;
+            color: #cccccc;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
         }
         
-        #adminBtn:hover {
+        .prize-details i {
+            color: #d4af37;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .registration-fee {
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px dashed rgba(212, 175, 55, 0.5);
+            text-align: center;
+        }
+        
+        .fee-title {
+            font-size: 1.2rem;
+            color: #f7ef8a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .fee-amount {
+            font-size: 1.8rem;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .fee-note {
+            font-size: 0.9rem;
+            color: #a0c8ff;
+            font-style: italic;
+        }
+        
+        .other-rewards {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .rewards-title {
+            font-size: 1.3rem;
+            color: #f7ef8a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .reward-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .reward-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .reward-icon {
+            font-size: 1.6rem;
+            color: #d4af37;
+            min-width: 40px;
+        }
+        
+        .reward-text {
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .whatsapp-section {
+            background-color: rgba(37, 211, 102, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            text-align: center;
+        }
+        
+        .whatsapp-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .whatsapp-icon {
+            font-size: 2.2rem;
+            color: #25d366;
+        }
+        
+        .whatsapp-title {
+            font-size: 1.4rem;
+            color: #25d366;
+            font-weight: bold;
+        }
+        
+        .whatsapp-description {
+            font-size: 1rem;
+            color: #a0ffc0;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .whatsapp-benefits {
+            background-color: rgba(37, 211, 102, 0.08);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .whatsapp-benefits li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+        
+        .whatsapp-button {
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        
+        .whatsapp-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            background: #333;
+            box-shadow: 0 12px 20px rgba(37, 211, 102, 0.4);
+            background: linear-gradient(90deg, #2eff7c, #1ab394);
         }
         
-        /* Modal Admin */
-        .admin-modal {
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 20px;
+            overflow: hidden;
+            height: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0f3460, #d4af37, #f7ef8a);
+            width: 0%;
+            border-radius: 12px;
+            transition: width 1s ease;
+        }
+        
+        .progress-text {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: #a0c8ff;
+            text-align: center;
+        }
+        
+        /* Modal styles pour mobile */
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
             justify-content: center;
             align-items: center;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
         
-        .admin-modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: modalAppear 0.5s ease;
+        .close-modal:hover {
+            background-color: rgba(255, 107, 107, 0.1);
+            transform: rotate(90deg);
         }
         
-        /* Panel Admin */
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .modal-title {
+            font-size: 1.6rem;
+            color: #f7ef8a;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-right: 20px;
+        }
+        
+        .form-container {
+            margin-top: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0c8ff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .form-input, .form-textarea, .form-select {
             width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 3000;
-            overflow-y: auto;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        /* Animations pour les boutons admin */
-        #submitAdminPassword:hover,
-        #refreshAdminResults:hover,
-        #exportData:hover,
-        #resetVotes:hover,
-        #closeAdminPanel:hover,
-        #cancelAdmin:hover,
-        #importCSVBtn:hover {
-            transform: translateY(-3px);
-        }
-        
-        /* Badge pour le seuil maximum atteint */
-        .max-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 14px;
+            border-radius: 8px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 10px;
-            animation: pulse 1.5s infinite;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
         
-        .threshold-reached {
-            border: 2px solid #dc3545 !important;
-            position: relative;
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
         }
         
-        .threshold-reached::after {
-            content: 'MAX ATTEINT';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #dc3545;
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background: linear-gradient(90deg, #1e90ff, #0d47a1);
             color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.7em;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
             font-weight: bold;
-            z-index: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-    </style>
-</head>
-<body>
-    <!-- BOUTON ADMIN -->
-    <button id="adminBtn">
-        <i class="fas fa-lock"></i>
-        ADMIN
-    </button>
-
-    <!-- MODAL MOT DE PASSE -->
-    <div id="adminModal" class="admin-modal">
-        <div class="admin-modal-content">
-            <h3 style="color: var(--primary); font-size: 1.8em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-shield-alt"></i>
-                ACCÈS ADMINISTRATEUR
-            </h3>
-            
-            <p style="color: #666; margin-bottom: 30px;">
-                Accès restreint à la salle des résultats - Réservé à l'organisation
-            </p>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600;">
-                    <i class="fas fa-key"></i>
-                    MOT DE PASSE ADMIN
-                </label>
-                <input type="password" 
-                       id="adminPassword" 
-                       placeholder="Entrez le mot de passe" 
-                       style="width: 100%; padding: 15px; border: 3px solid #e2e8f0; border-radius: 10px; font-size: 1.1em; transition: all 0.3s;">
-            </div>
-            
-            <div id="adminAlert" style="padding: 15px; border-radius: 10px; margin: 20px 0; display: none;"></div>
-            
-            <div style="display: flex; gap: 15px; margin-top: 30px;">
-                <button id="submitAdminPassword" style="flex: 1; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <i class="fas fa-unlock"></i>
-                    VALIDER
-                </button>
-                
-                <button id="cancelAdmin" style="flex: 1; background: #f0f0f0; color: #666; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <i class="fas fa-times"></i>
-                    ANNULER
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANEL ADMIN -->
-    <div id="adminPanel" class="admin-panel">
-        <!-- Admin Header -->
-        <div style="background: linear-gradient(135deg, #000 0%, #333 100%); color: white; padding: 30px 40px; position: sticky; top: 0; z-index: 10; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div style="background: var(--secondary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-chart-bar" style="font-size: 25px; color: #000;"></i>
-                    </div>
-                    <div>
-                        <h1 style="font-size: 2em; margin-bottom: 5px; color: var(--secondary);">
-                            SALLE DES RÉSULTATS
-                        </h1>
-                        <p style="opacity: 0.8;">
-                            Panel d'administration - Accès sécurisé
-                        </p>
-                    </div>
-                </div>
-                
-                <button id="closeAdminPanel" style="background: rgba(255,255,255,0.1); color: white; border: 2px solid var(--secondary); padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-sign-out-alt"></i>
-                    QUITTER
-                </button>
-            </div>
-        </div>
         
-        <!-- Admin Content -->
-        <div style="padding: 40px; max-width: 1400px; margin: 0 auto;">
-            <div style="background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid var(--secondary);">
-                <h2 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-info-circle"></i>
-                    STATISTIQUES ADMINISTRATIVES
-                </h2>
-                <p style="color: #666;">
-                    Interface de contrôle et de visualisation complète des résultats du concours.
-                    Accès en temps réel à toutes les données des votes.
-                </p>
-                <div style="margin-top: 15px; padding: 10px; background: rgba(139, 69, 19, 0.1); border-radius: 8px;">
-                    <p style="color: var(--primary); font-size: 0.9em; margin: 0;">
-                        <i class="fas fa-calculator"></i>
-                        <strong>Système de pourcentage :</strong> 1 voix = 0,15% • Maximum 30% = 200 voix
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Stats Overview -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
-                <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;">
-                    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="fas fa-users" style="font-size: 25px;"></i>
-                    </div>
-                    <h3 style="color: var(--primary); margin-bottom: 10px;">TOTAL VOTANTS</h3>
-                    <div id="adminTotalVotes" style="font-size: 3em; font-weight: bold; color: var(--primary-dark);">0</div>
-                </div>
-                
-                <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;">
-                    <div style="background: linear-gradient(135deg, var(--secondary) 0%, #DAA520 100%); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="fas fa-trophy" style="font-size: 25px;"></i>
-                    </div>
-                    <h3 style="color: var(--primary); margin-bottom: 10px;">VAINQUEUR</h3>
-                    <div id="adminWinner" style="font-size: 1.8em; font-weight: bold; color: var(--secondary);">...</div>
-                </div>
-                
-                <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;">
-                    <div style="background: linear-gradient(135deg, var(--accent) 0%, #1e7e34 100%); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="fas fa-chart-line" style="font-size: 25px;"></i>
-                    </div>
-                    <h3 style="color: var(--primary); margin-bottom: 10px;">TAUX PARTICIPATION</h3>
-                    <div id="adminParticipation" style="font-size: 2.5em; font-weight: bold; color: var(--accent);">0%</div>
-                </div>
-                
-                <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;">
-                    <div style="background: linear-gradient(135deg, #666 0%, #333 100%); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i class="fas fa-clock" style="font-size: 25px;"></i>
-                    </div>
-                    <h3 style="color: var(--primary); margin-bottom: 10px;">DERNIÈRE MAJ</h3>
-                    <div id="adminLastUpdate" style="font-size: 1.3em; font-weight: bold; color: #333;">--:--</div>
-                </div>
-            </div>
-            
-            <!-- Detailed Results -->
-            <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 40px;">
-                <h2 style="color: var(--primary); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; font-size: 1.8em;">
-                    <i class="fas fa-chart-bar"></i>
-                    RÉSULTATS DÉTAILLÉS EN TEMPS RÉEL
-                </h2>
-                
-                <div id="adminDetailedResults" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;"></div>
-                
-                <div style="margin-top: 40px; text-align: center;">
-                    <button id="refreshAdminResults" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1em;">
-                        <i class="fas fa-sync-alt"></i>
-                        ACTUALISER LES DONNÉES
-                    </button>
-                </div>
-            </div>
-            
-            <!-- GESTION DES CODES - NOUVELLE SECTION -->
-            <div style="background: linear-gradient(135deg, #f0fff0 0%, #e6ffe6 100%); padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 3px solid var(--accent); margin-bottom: 40px;">
-                <h2 style="color: var(--primary); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; font-size: 1.8em;">
-                    <i class="fas fa-key"></i>
-                    GESTION DES CODES DE VOTE
-                </h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                    <!-- Import CSV -->
-                    <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">
-                            <i class="fas fa-file-import"></i> IMPORT CSV
-                        </h3>
-                        <p style="color: #666; margin-bottom: 20px; font-size: 0.95em;">
-                            Importez des codes depuis un fichier CSV (un code par ligne).
-                        </p>
-                        
-                        <textarea id="csvCodesTextarea" 
-                                  placeholder="Collez vos codes CSV ici (un code par ligne)&#10;Exemple:&#10;PBQJV6L6DFFJ&#10;M2CXHABC6LQ6&#10;3QBTKE7GUYVU"
-                                  style="width: 100%; height: 150px; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; font-family: monospace; font-size: 0.9em;">
-                        </textarea>
-                        
-                        <button id="importCSVBtn" style="background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fas fa-upload"></i>
-                            IMPORTER CSV
-                        </button>
-                    </div>
-                    
-                    <!-- Génération de codes -->
-                    <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">
-                            <i class="fas fa-plus-circle"></i> GÉNÉRER DES CODES
-                        </h3>
-                        <p style="color: #666; margin-bottom: 20px; font-size: 0.95em;">
-                            Générez automatiquement de nouveaux codes de vote.
-                        </p>
-                        
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                            <input type="number" id="codeCount" placeholder="Nombre" min="1" max="1000" 
-                                   style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; flex: 1;" value="10">
-                            
-                            <input type="text" id="codePrefix" placeholder="Préfixe" 
-                                   style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; flex: 1;" value="VOTE">
-                        </div>
-                        
-                        <button id="generateCodesBtn" style="background: var(--secondary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fas fa-cogs"></i>
-                            GÉNÉRER
-                        </button>
-                    </div>
-                    
-                    <!-- Statistiques des codes -->
-                    <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">
-                            <i class="fas fa-chart-pie"></i> STATISTIQUES CODES
-                        </h3>
-                        <div id="codesStats" style="text-align: center;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                    <div style="font-size: 0.9em; color: #666;">Total Codes</div>
-                                    <div id="totalCodes" style="font-size: 1.8em; font-weight: bold; color: var(--primary);">0</div>
-                                </div>
-                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                                    <div style="font-size: 0.9em; color: #666;">Utilisés</div>
-                                    <div id="usedCodes" style="font-size: 1.8em; font-weight: bold; color: var(--accent);">0</div>
-                                </div>
-                            </div>
-                            <button id="refreshCodesStats" style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px;">
-                                <i class="fas fa-sync-alt"></i>
-                                ACTUALISER
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="importResult" style="padding: 15px; border-radius: 10px; margin-top: 20px; display: none;"></div>
-            </div>
-            
-            <!-- Admin Tools -->
-            <div style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%); padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 3px solid var(--primary);">
-                <h2 style="color: var(--primary); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; font-size: 1.8em;">
-                    <i class="fas fa-tools"></i>
-                    OUTILS D'ADMINISTRATION
-                </h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                    <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">
-                            <i class="fas fa-download"></i> EXPORT DES DONNÉES
-                        </h3>
-                        <p style="color: #666; margin-bottom: 20px; font-size: 0.95em;">
-                            Téléchargez les résultats complets au format CSV pour analyse.
-                        </p>
-                        <button id="exportData" style="background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fas fa-file-csv"></i>
-                            EXPORTER CSV
-                        </button>
-                    </div>
-                    
-                    <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px;">
-                            <i class="fas fa-trash-alt"></i> RÉINITIALISER
-                        </h3>
-                        <p style="color: #666; margin-bottom: 20px; font-size: 0.95em;">
-                            Remettre à zéro les votes (action irréversible).
-                        </p>
-                        <button id="resetVotes" style="background: #dc3545; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            RÉINITIALISER
-                        </button>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 10px; border: 2px dashed var(--secondary);">
-                    <p style="color: #666; text-align: center; margin: 0;">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <strong>RAPPEL :</strong> Ces outils sont réservés à l'administration du concours.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-        <div class="container">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <h1>Excellentia Academia</h1>
-                    <h2>Éloquence en Scène</h2>
-                </div>
-            </div>
-            
-            <div class="event-info">
-                <div class="info-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>06 Mars 2026</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <span>Fin du vote: 23:59</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-trophy"></i>
-                    <span>Concours d'Éloquence</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Timer -->
-        <div class="timer-section">
-            <div class="timer-title">
-                <i class="fas fa-hourglass-half"></i>
-                <span>TEMPS RESTANT POUR VOTER</span>
-            </div>
-            <div class="timer">
-                <div class="time-unit">
-                    <div class="time-value" id="days">00</div>
-                    <div class="time-label">JOURS</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="hours">00</div>
-                    <div class="time-label">HEURES</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="minutes">00</div>
-                    <div class="time-label">MINUTES</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="seconds">00</div>
-                    <div class="time-label">SECONDES</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Règlement Section -->
-        <div class="card reglement-entrance" style="margin: 40px 0; background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);">
-            <div class="card-header">
-                <i class="fas fa-book"></i>
-                <h3>RÈGLEMENT DU CONCOURS</h3>
-            </div>
-            <div class="card-content">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 10px;">
-                        <i class="fas fa-balance-scale"></i>
-                        Système de notation détaillé
-                    </h3>
-                    <p style="color: #666; font-style: italic;">
-                        Vote du public + Jury = 100% • Chaque voix compte dès la première
-                    </p>
-                </div>
-
-                <!-- NOUVEAU SYSTÈME DE POURCENTAGE -->
-                <div style="background: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; border: 3px solid var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h4 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-calculator"></i>
-                        SYSTÈME DE POURCENTAGE - TOUR ÉLIMINATOIRE
-                    </h4>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
-                            <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">1 voix =</div>
-                            <div style="font-size: 1.8em; font-weight: bold; color: var(--accent);">0,15%</div>
-                        </div>
-                        
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
-                            <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">200 voix =</div>
-                            <div style="font-size: 1.8em; font-weight: bold; color: var(--accent);">30% MAX</div>
-                        </div>
-                        
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
-                            <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">Plafond</div>
-                            <div style="font-size: 1.8em; font-weight: bold; color: #dc3545;">30%</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, #fff8dc 0%, #ffe4b5 100%); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center; font-weight: bold; color: var(--primary-dark); border: 2px dashed var(--secondary);">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        AUCUN CANDIDAT NE PEUT DÉPASSER 30% • LE POURCENTAGE EST AUTOMATIQUEMENT PLAFONNÉ
-                    </div>
-                </div>
-
-                <div style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%); padding: 25px; border-radius: 15px; margin-top: 20px; border: 2px solid var(--primary);">
-                    <h4 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Dispositions importantes
-                    </h4>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                        <div style="display: flex; align-items: flex-start; gap: 10px;">
-                            <div style="background: var(--accent); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div>
-                                <strong style="color: var(--primary);">Toute voix compte</strong>
-                                <p style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                                    Aucune voix n'est perdue ou ignorée
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: flex-start; gap: 10px;">
-                            <div style="background: var(--secondary); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <div>
-                                <strong style="color: var(--primary);">Calcul proportionnel</strong>
-                                <p style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                                    1 voix = 0,15% • Max 30% = 200 voix
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: flex-start; gap: 10px;">
-                            <div style="background: #dc3545; color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="fas fa-ban"></i>
-                            </div>
-                            <div>
-                                <strong style="color: var(--primary);">Plafond automatique</strong>
-                                <p style="font-size: 0.9em; color: #666; margin-top: 5px;">
-                                    Aucun candidat ne dépasse 30%
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(139, 69, 19, 0.1); border-radius: 10px; border-left: 4px solid var(--primary);">
-                        <p style="color: var(--primary-dark); font-style: italic; margin: 0;">
-                            <i class="fas fa-file-contract"></i>
-                            <strong>Article 8 :</strong> Toute participation au concours vaut acceptation pleine et entière du présent règlement.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Bouton pour fermer/ouvrir le règlement -->
-                <div style="text-align: center; margin-top: 30px;">
-                    <button id="toggleReglementBtn" style="background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-chevron-up"></i>
-                        <span>REDUIRE LE RÈGLEMENT</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Voting Interface -->
-        <div class="voting-container">
-            <!-- Code Input Card -->
-            <div class="card" id="codeSection">
-                <div class="card-header">
-                    <i class="fas fa-key"></i>
-                    <h3>ACCÈS AU VOTE</h3>
-                </div>
-                <div class="card-content">
-                    <div class="code-input-group">
-                        <label for="codeInput">
-                            <i class="fas fa-ticket-alt"></i>
-                            VOTRE CODE DE VOTE
-                        </label>
-                        <div class="code-input-wrapper">
-                            <input type="text" 
-                                   id="codeInput" 
-                                   class="code-input" 
-                                   placeholder="EX: "
-                                   maxlength="20"
-                                   style="text-transform: uppercase;">
-                            <div class="code-input-icon">
-                                <i class="fas fa-unlock"></i>
-                            </div>
-                        </div>
-                        <p style="margin-top: 10px; color: #666; font-size: 0.9em;">
-                            <i class="fas fa-info-circle"></i>
-                            Code unique fourni par l'organisation
-                        </p>
-                    </div>
-                    
-                    <div class="alert" id="codeAlert"></div>
-                    
-                    <button class="btn" id="verifyCodeBtn">
-                        <i class="fas fa-check-circle"></i>
-                        VALIDER LE CODE
-                    </button>
-                </div>
-            </div>
-
-            <!-- Voting Card -->
-            <div class="card hidden" id="voteSection">
-                <div class="card-header">
-                    <i class="fas fa-vote-yea"></i>
-                    <h3>VOTER POUR UN ORATEUR</h3>
-                </div>
-                <div class="card-content">
-                    <div style="margin-bottom: 20px;">
-                        <p><strong>Code validé :</strong> <span id="currentCode" style="color: var(--accent); font-weight: bold;"></span></p>
-                        <p style="color: #666; margin-top: 5px;">
-                            <i class="fas fa-exclamation-circle"></i>
-                            Sélectionnez votre candidat préféré
-                        </p>
-                    </div>
-
-                    <!-- Candidates Grid -->
-                    <div class="candidates-grid">
-                        <!-- Candidate 1 -->
-                        <div class="candidate-card" data-choice="Emma Laurent">
-                            <div class="candidate-header">
-                                <div class="candidate-number">1</div>
-                                <div class="candidate-avatar">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
-                                <div>
-                                    <div class="candidate-name">Emma Laurent</div>
-                                    <div class="candidate-theme">"Le pouvoir des mots"</div>
-                                </div>
-                            </div>
-                            <div class="candidate-body">
-                                <div class="candidate-quote">
-                                    "Les mots peuvent changer le monde, une phrase à la fois."
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-weight: 600; margin-bottom: 10px;">
-                                        <i class="fas fa-university"></i> Sciences Po Paris
-                                    </div>
-                                    <div style="font-size: 0.9em; color: #666;">
-                                        Spécialité: Rhétorique classique
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Candidate 2 -->
-                        <div class="candidate-card" data-choice="Thomas Dubois">
-                            <div class="candidate-header">
-                                <div class="candidate-number">2</div>
-                                <div class="candidate-avatar">
-                                    <i class="fas fa-user-graduate"></i>
-                                </div>
-                                <div>
-                                    <div class="candidate-name">Thomas Dubois</div>
-                                    <div class="candidate-theme">"L'éloquence numérique"</div>
-                                </div>
-                            </div>
-                            <div class="candidate-body">
-                                <div class="candidate-quote">
-                                    "Dans un monde connecté, l'éloquence doit trouver sa place digitale."
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-weight: 600; margin-bottom: 10px;">
-                                        <i class="fas fa-laptop-code"></i> École 42
-                                    </div>
-                                    <div style="font-size: 0.9em; color: #666;">
-                                        Spécialité: Communication digitale
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Candidate 3 -->
-                        <div class="candidate-card" data-choice="Sophie Martin">
-                            <div class="candidate-header">
-                                <div class="candidate-number">3</div>
-                                <div class="candidate-avatar">
-                                    <i class="fas fa-user-md"></i>
-                                </div>
-                                <div>
-                                    <div class="candidate-name">Sophie Martin</div>
-                                    <div class="candidate-theme">"La parole qui guérit"</div>
-                                </div>
-                            </div>
-                            <div class="candidate-body">
-                                <div class="candidate-quote">
-                                    "Les mots peuvent soigner, apaiser et réconforter."
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-weight: 600; margin-bottom: 10px;">
-                                        <i class="fas fa-heartbeat"></i> Faculté de Médecine
-                                    </div>
-                                    <div style="font-size: 0.9em; color: #666;">
-                                        Spécialité: Communication thérapeutique
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Candidate 4 -->
-                        <div class="candidate-card" data-choice="Lucas Bernard">
-                            <div class="candidate-header">
-                                <div class="candidate-number">4</div>
-                                <div class="candidate-avatar">
-                                    <i class="fas fa-theater-masks"></i>
-                                </div>
-                                <div>
-                                    <div class="candidate-name">Lucas Bernard</div>
-                                    <div class="candidate-theme">"L'art de la scène"</div>
-                                </div>
-                            </div>
-                            <div class="candidate-body">
-                                <div class="candidate-quote">
-                                    "Chaque discours est une performance, chaque mot un geste."
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-weight: 600; margin-bottom: 10px;">
-                                        <i class="fas fa-drama-masks"></i> Conservatoire National
-                                    </div>
-                                    <div style="font-size: 0.9em; color: #666;">
-                                        Spécialité: Art oratoire théâtral
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert" id="voteAlert"></div>
-
-                    <button class="btn" id="submitVoteBtn" disabled>
-                        <i class="fas fa-paper-plane"></i>
-                        CONFIRMER MON VOTE
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Loading -->
-        <div class="loading hidden" id="loading">
-            <div class="spinner"></div>
-            <p>Traitement en cours...</p>
-        </div>
-
-        <!-- Live Results Section -->
-        <div class="live-results-section" id="liveResultsSection">
-            <div class="live-results-header">
-                <div class="live-results-title">
-                    <i class="fas fa-chart-line"></i>
-                    ÉVOLUTION EN TEMPS RÉEL
-                </div>
-                <button class="btn" id="refreshLiveResultsBtn" style="width: auto;">
-                    <i class="fas fa-sync-alt"></i>
-                    ACTUALISER
-                </button>
-            </div>
-
-            <!-- Information personnelle du vote -->
-            <div class="personal-vote-info" id="personalVoteInfo">
-                <div class="personal-vote-content">
-                    <div class="personal-vote-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="personal-vote-text">
-                        <h4>Votre vote a été enregistré</h4>
-                        <p>Vous avez voté pour : <strong id="yourVoteCandidate">[Nom du candidat]</strong></p>
-                        <p style="font-size: 0.8em; margin-top: 5px;">
-                            <i class="fas fa-clock"></i> 
-                            Votre vote a été enregistré à <span id="yourVoteTime">--:--</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Grille des résultats en direct -->
-            <div class="live-results-grid" id="liveResultsContainer">
-                <!-- Les résultats seront chargés ici -->
-            </div>
-
-            <!-- Disclaimer -->
-            <div class="results-disclaimer">
-                <p>
-                    <i class="fas fa-info-circle"></i>
-                    Ces résultats sont en temps réel mais ne seront définitifs qu'après la fin du vote le 06 Mars 2026 à 23:59
-                </p>
-                <p style="margin-top: 10px; font-size: 0.9em;">
-                    <i class="fas fa-calculator"></i>
-                    Système de pourcentage : 1 voix = 0,15% • Maximum 30% = 200 voix
-                </p>
-            </div>
-        </div>
-
-        <!-- Results Section -->
-        <div class="results-section hidden" id="resultsSection">
-            <div class="results-header">
-                <div class="results-title">
-                    <i class="fas fa-chart-bar"></i>
-                    RÉSULTATS FINAUX DU CONCOURS
-                </div>
-                <button class="btn" id="refreshResultsBtn" style="width: auto;">
-                    <i class="fas fa-sync-alt"></i>
-                    ACTUALISER
-                </button>
-            </div>
-
-            <div class="results-grid" id="resultsContainer">
-                <!-- Results will be loaded here -->
-            </div>
-
-            <div style="text-align: center; margin-top: 30px;">
-                <div class="alert" id="resultsAlert"></div>
-                <p style="color: #666; font-style: italic;">
-                    <i class="fas fa-info-circle"></i>
-                    Les résultats définitifs. Dernière mise à jour : <span id="lastUpdate">--:--</span>
-                </p>
-                <p style="color: var(--accent); margin-top: 10px;">
-                    <i class="fas fa-calculator"></i>
-                    Système de pourcentage : 1 voix = 0,15% • Maximum 30% = 200 voix
-                </p>
-            </div>
-        </div>
-
-        <!-- CHAMPION LIST SECTION -->
-        <div class="champion-list-section hidden" id="championListSection">
-            <div class="champion-list-header">
-                <h2>
-                    <i class="fas fa-trophy"></i>
-                    LISTE DES CHAMPIONS
-                    <i class="fas fa-crown"></i>
-                </h2>
-                <div class="champion-list-subtitle">
-                    Classement final du concours "Éloquence en Scène"
-                </div>
-            </div>
-
-            <div class="podium-container" id="podiumContainer">
-                <!-- Le podium sera généré dynamiquement -->
-            </div>
-
-            <div class="ranking-table">
-                <h3><i class="fas fa-list-ol"></i> CLASSEMENT COMPLET</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Orateur</th>
-                            <th>Votes</th>
-                            <th>Pourcentage</th>
-                            <th>Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rankingTableBody">
-                        <!-- Les données seront ajoutées dynamiquement -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="final-celebration">
-                <h3>FÉLICITATIONS À TOUS LES PARTICIPANTS !</h3>
-                <p>
-                    Le concours "Éloquence en Scène" a été un succès retentissant grâce au talent 
-                    exceptionnel de nos orateurs et à l'engagement de notre public.
-                </p>
-                <p>
-                    La cérémonie de remise des prix aura lieu le 15 Janvier 2026 dans le Grand 
-                    Amphithéâtre de l'Excellentia Academia.
-                </p>
-                <div style="margin-top: 30px;">
-                    <div style="display: inline-block; background: var(--secondary); color: var(--primary-dark); padding: 15px 30px; border-radius: 10px; font-weight: bold; font-size: 1.2em;">
-                        <i class="fas fa-star"></i> MERCI POUR VOTRE PARTICIPATION ! <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- End of Voting Message -->
-        <div class="card hidden" id="endSection">
-            <div class="card-header" style="background: linear-gradient(135deg, #666 0%, #333 100%);">
-                <i class="fas fa-flag-checkered"></i>
-                <h3>VOTE TERMINÉ</h3>
-            </div>
-            <div class="card-content" style="text-align: center; padding: 50px 30px;">
-                <div style="font-size: 5em; color: var(--secondary); margin-bottom: 20px;">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <h2 style="color: var(--primary); margin-bottom: 20px; font-size: 2em;">
-                    Le concours "Éloquence en Scène" est terminé !
-                </h2>
-                <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">
-                    Merci à tous les participants et aux spectateurs d'avoir pris part à cet événement exceptionnel.<br>
-                    Les résultats définitifs et le classement des champions sont disponibles ci-dessous.
-                </p>
-                <div style="background: #f8f4e6; padding: 20px; border-radius: 15px; display: inline-block;">
-                    <div style="font-size: 1.5em; color: var(--primary); font-weight: bold;">
-                        <i class="fas fa-calendar-star"></i>
-                        Cérémonie de remise des prix : 15 Janvier 2026
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <div class="container">
-            <div class="footer-logo">Excellentia Academia</div>
-            
-            <div class="footer-info">
-                <div class="footer-section">
-                    <h4>CONTACT</h4>
-                    <p>contact@excellentia-academia.fr</p>
-                    <p>01 23 45 67 89</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>ADRESSE</h4>
-                    <p>Université de Kinshasa </p>
-                    <p>UNIKIN</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>SUIVEZ-NOUS</h4>
-                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
-                        <i class="fab fa-twitter" style="font-size: 1.5em;"></i>
-                        <i class="fab fa-facebook" style="font-size: 1.5em;"></i>
-                        <i class="fab fa-instagram" style="font-size: 1.5em;"></i>
-                        <i class="fab fa-linkedin" style="font-size: 1.5em;"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                © 2025-2026 Excellentia Academia - Tous droits réservés<br>
-                Système de vote sécurisé - Un vote par participant
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        // Configuration Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAUYpCBlPUnnsCyvqrfMmY5uacjHLGVRh0",
-            authDomain: "match-a2ac6.firebaseapp.com",
-            projectId: "match-a2ac6",
-            storageBucket: "match-a2ac6.firebasestorage.app",
-            messagingSenderId: "376894292796",
-            appId: "1:376894292796:web:1eb138830c92aae8df5439",
-            measurementId: "G-2RSRSSFCDZ"
-        };
-
-        // Initialiser Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Date de fin du vote : 06 Mars 2026, 23:59:59
-        const VOTE_END_DATE = new Date('2026-03-06T23:59:59');
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(13, 71, 161, 0.4);
+        }
         
-        // NOUVEAUX PARAMÈTRES POUR LE POURCENTAGE
-        const VOICE_PERCENTAGE = 0.15; // 1 voix = 0,15%
-        const MAX_VOICES = 200; // 200 voix = 30%
-        const MAX_PERCENTAGE = 30; // Maximum 30%
-
-        // Variables d'état
-        let currentCode = null;
-        let selectedCandidate = null;
-        let userVoteData = null;
-
-        // NOUVELLE FONCTION : Calculer le pourcentage selon le système
-        function calculerPourcentage(voix) {
-            let pourcentage = voix * VOICE_PERCENTAGE;
-            
-            // Plafonner à 30%
-            if (pourcentage > MAX_PERCENTAGE) {
-                pourcentage = MAX_PERCENTAGE;
+        .hidden-form {
+            display: none;
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .form-checkbox input {
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .form-checkbox label {
+            font-size: 0.9rem;
+            color: #cccccc;
+            line-height: 1.4;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #88aabb;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+            text-align: center;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 40px;
             }
             
-            return {
-                pourcentage: pourcentage.toFixed(2),
-                seuilAtteint: pourcentage >= MAX_PERCENTAGE,
-                voixNecessaires: pourcentage >= MAX_PERCENTAGE ? "MAX" : Math.ceil((MAX_PERCENTAGE - pourcentage) / VOICE_PERCENTAGE)
-            };
-        }
-
-        // Mettre à jour le chronomètre
-        function updateCountdown() {
-            const now = new Date();
-            const timeLeft = VOTE_END_DATE - now;
+            .logo {
+                font-size: 2.8rem;
+                flex-direction: row;
+            }
             
-            if (timeLeft <= 0) {
-                document.getElementById('days').textContent = "00";
-                document.getElementById('hours').textContent = "00";
-                document.getElementById('minutes').textContent = "00";
-                document.getElementById('seconds').textContent = "00";
+            .logo-row {
+                flex-direction: row;
+            }
+            
+            .graduation-cap {
+                font-size: 2.5rem;
+            }
+            
+            .event-title {
+                font-size: 2.2rem;
+            }
+            
+            .deadline-date {
+                font-size: 2.5rem;
+            }
+            
+            .time-unit {
+                min-width: 160px;
+                padding: 30px 20px;
+            }
+            
+            .time-value {
+                font-size: 4rem;
+            }
+            
+            .time-label {
+                font-size: 1.3rem;
+            }
+            
+            .prizes-title {
+                font-size: 2.2rem;
+            }
+            
+            .prize-card {
+                padding: 30px 25px;
+            }
+            
+            .prize-amount {
+                font-size: 2.4rem;
+            }
+            
+            .fee-amount {
+                font-size: 2.2rem;
+            }
+            
+            .cta-button {
+                width: auto;
+                max-width: none;
+            }
+            
+            .whatsapp-button {
+                width: auto;
+                max-width: none;
+            }
+            
+            .modal-content {
+                padding: 40px;
+                margin-top: 40px;
+            }
+            
+            .modal-title {
+                font-size: 2.2rem;
+            }
+            
+            .prizes-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 480px) and (max-width: 767px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .time-unit {
+                min-width: 100px;
+                padding: 25px 15px;
+            }
+            
+            .time-value {
+                font-size: 3rem;
+            }
+            
+            .prizes-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 479px) {
+            .prizes-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-row">
+                    <span class="excel">Excel</span><span class="lentia">lentia</span> <span class="academia">Academia</span>
+                    <span class="graduation-cap">🎓</span>
+                </div>
+            </div>
+            <br>
+            <div class="subtitle">Concours d'Éloquence </div>
+        </div>
+        <br>
+        <h1 class="event-title">Éloquence en scène   1ère édition</h1>
+        
+        <div class="deadline-info">
+            <div class="deadline-title">DERNIER JOUR D'INSCRIPTION</div>
+            <div class="deadline-date">20 Janvier 2026</div>
+        </div>
+        
+        <div class="urgent-message">
+            <div class="urgent-title"><i class="fas fa-exclamation-circle"></i> DERNIÈRE CHANCE !</div>
+            <div class="urgent-text">Le temps presse ! Inscrivez-vous avant la date limite pour participer à ce prestigieux concours.</div>
+        </div>
+        
+        <div class="countdown">
+            <div class="time-unit">
+                <div class="time-value" id="jours">00</div>
+                <div class="time-label">Jours</div>
+            </div>
+            
+            <div class="time-unit">
+                <div class="time-value" id="heures">00</div>
+                <div class="time-label">Heures</div>
+            </div>
+            
+            <div class="time-unit">
+                <div class="time-value" id="minutes">00</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            
+            <div class="time-unit">
+                <div class="time-value" id="secondes">00</div>
+                <div class="time-label">Secondes</div>
+            </div>
+        </div>
+        
+        <button class="cta-button" id="openFormButton">
+            <i class="fas fa-pen-fancy"></i> S'INSCRIRE MAINTENANT
+        </button>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">Temps restant avant la fermeture des inscriptions : 100%</div>
+        
+        <!-- Frais d'inscription -->
+        <div class="registration-fee">
+            <div class="fee-title">
+                <i class="fas fa-ticket-alt"></i> Frais de Participation
+            </div>
+            <div class="fee-amount">5.000 Fc</div>
+            <div class="fee-note">Montant unique pour tous les participants</div>
+        </div>
+        
+        <!-- Section des Prix et Récompenses -->
+        <div class="prizes-section">
+            <h2 class="prizes-title">
+                <i class="fas fa-trophy"></i> PRIX ET RÉCOMPENSES
+            </h2>
+            
+            <div class="prizes-container">
+                <!-- Premier Prix -->
+                <div class="prize-card first">
+                    <div class="prize-rank">
+                        <i class="fas fa-crown"></i> 1ère Place
+                    </div>
+                    <div class="prize-amount">1.000.000 Fc</div>
+                    <div class="prize-label">Grand Prix d'Excellence</div>
+                    <ul class="prize-details">
+                        <li><i class="fas fa-medal"></i> Médaille d'Or</li>
+                        <li><i class="fas fa-trophy"></i> Grand Trophée</li>
+                        <li><i class="fas fa-award"></i> Brevet de Mérite</li>
+                        <li><i class="fas fa-certificate"></i> Attestation d'Excellence</li>
+                    </ul>
+                </div>
                 
-                const timerTitle = document.querySelector('.timer-title');
-                timerTitle.innerHTML = '<i class="fas fa-flag-checkered"></i> VOTE TERMINÉ';
-                timerTitle.style.color = '#dc3545';
+                <!-- Deuxième Prix -->
+                <div class="prize-card second">
+                    <div class="prize-rank">
+                        <i class="fas fa-medal"></i> 2ème Place
+                    </div>
+                    <div class="prize-amount">500.000 Fc</div>
+                    <div class="prize-label">Prix d'Honneur</div>
+                    <ul class="prize-details">
+                        <li><i class="fas fa-medal"></i> Médaille d'Argent</li>
+                        <li><i class="fas fa-award"></i> Brevet de Mérite</li>
+                        <li><i class="fas fa-certificate"></i> Attestation de Distinction</li>
+                    </ul>
+                </div>
                 
-                finDuVote();
+                <!-- Troisième Prix -->
+                <div class="prize-card third">
+                    <div class="prize-rank">
+                        <i class="fas fa-award"></i> 3ème Place
+                    </div>
+                    <div class="prize-amount">200.000 Fc</div>
+                    <div class="prize-label">Prix Spécial du Jury</div>
+                    <ul class="prize-details">
+                        <li><i class="fas fa-medal"></i> Médaille de Bronze</li>
+                        <li><i class="fas fa-award"></i> Brevet de Mérite</li>
+                        <li><i class="fas fa-certificate"></i> Attestation de Participation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="other-rewards">
+                <h3 class="rewards-title">
+                    <i class="fas fa-star"></i> AUTRES RÉCOMPENSES
+                </h3>
+                <div class="rewards-grid">
+                    <div class="reward-item">
+                        <div class="reward-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="reward-text">
+                            <span style="color: #f7ef8a;">Médailles</span> pour les 5 finalistes
+                        </div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="reward-text">
+                            <span style="color: #f7ef8a;">Brevets de Participation</span> pour tous les participants
+                        </div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="reward-text">
+                            <span style="color: #f7ef8a;">Attestations officielles</span> de participation
+                        </div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="reward-text">
+                            <span style="color: #f7ef8a;">Formation gratuite</span> en techniques d'éloquence
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Comment s'inscrire -->
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Comment s'inscrire :</h3>
+            <ul>
+                <li><strong>Remplissez le formulaire d'inscription</strong> en cliquant sur le bouton ci-dessus</li>
+                <li><strong>Payez les frais de participation de 5.000 Fc</strong> selon les instructions reçues</li>
+                <li><strong>Préparez un discours de 3 minutes</strong> sur un des thèmes proposés</li>
+                <li><strong>Les participants sélectionnés</strong> seront contactés avant le 20 février 2026</li>
+            </ul>
+        </div>
+        
+        <!-- Section WhatsApp -->
+        <div class="whatsapp-section">
+            <div class="whatsapp-header">
+                <i class="fab fa-whatsapp whatsapp-icon"></i>
+                <h3 class="whatsapp-title">Rejoignez notre groupe WhatsApp</h3>
+            </div>
+            
+            <p class="whatsapp-description">
+                Ne ratez aucune information importante ! Rejoignez la communauté officielle :
+            </p>
+            
+            <ul class="whatsapp-benefits">
+                <li><i class="fas fa-check-circle" style="color: #25d366;"></i> Annonces en temps réel</li>
+                <li><i class="fas fa-check-circle" style="color: #25d366;"></i> Rappels des dates importantes</li>
+                <li><i class="fas fa-check-circle" style="color: #25d366;"></i> Conseils des organisateurs</li>
+                <li><i class="fas fa-check-circle" style="color: #25d366;"></i> Échanges avec les participants</li>
+                <li><i class="fas fa-check-circle" style="color: #25d366;"></i> Questions/réponses en direct</li>
+            </ul>
+            
+            <button class="whatsapp-button" onclick="joinWhatsAppGroup()">
+                <i class="fab fa-whatsapp"></i> REJOINDRE LE GROUPE
+            </button>
+            
+            <p style="margin-top: 15px; color: #a0ffc0; font-size: 0.9rem; font-style: italic;">
+                <i class="fas fa-exclamation-circle"></i> Accès réservé aux participants et personnes intéressées
+            </p>
+        </div>
+        
+        <footer>
+            <p><i class="far fa-clock"></i> Compte à rebours en temps réel</p>
+            <p>Excellentia Academia © 2025-2026 | "Concours d'éloquence"</p>
+        </footer>
+    </div>
+    
+    <!-- Modal pour le formulaire d'inscription -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <h2 class="modal-title">
+                <span class="excel">Excel</span><span class="lentia">lentia</span> <span class="academia">Academia</span>
+                <span class="graduation-cap">🎓</span>
+            </h2>
+            
+            <h3 style="color: #f7ef8a; text-align: center; margin-bottom: 25px; font-size: 1.4rem;">
+                Formulaire d'Inscription
+            </h3>
+            
+            <!-- Formulaire intégré via iframe -->
+            <iframe name="hiddenIframe" class="hidden-form"></iframe>
+            
+            <!-- Formulaire visible -->
+            <form id="inscriptionForm" class="form-container" action="https://formspree.io/f/mldqkngp" method="POST" target="hiddenIframe">
+                <div class="form-group">
+                    <label class="form-label" for="nom">Nom complet *</label>
+                    <input type="text" id="nom" name="nom" class="form-input" required placeholder="Votre nom, postnom et prénom">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Adresse email *</label>
+                    <input type="email" id="email" name="email" class="form-input" required placeholder="exemple@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="telephone">Téléphone *</label>
+                    <input type="tel" id="telephone" name="telephone" class="form-input" required placeholder="+243 970 501 523 ">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="whatsapp">Avez-vous WhatsApp ? *</label>
+                    <select id="whatsapp" name="whatsapp" class="form-select" required>
+                        <option value="" disabled selected>Choisissez une option</option>
+                        <option value="oui">Oui, je l'utilise</option>
+                        <option value="non">Non</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="universite">Établissement *</label>
+                    <input type="text" id="universite" name="universite" class="form-input" required placeholder="Votre université/école">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="theme">Thème du discours *</label>
+                    <select id="theme" name="theme" class="form-select" required>
+                        <option value="" disabled selected>Sélectionnez un thème</option>
+                        <option value="liberte">La liberté d'expression numérique</option>
+                        <option value="education">Éducation et émancipation</option>
+                        <option value="environnement">Responsabilité envers les générations futures</option>
+                        <option value="autre">Autre (précisez ci-dessous)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="message">Votre motivation *</label>
+                    <textarea id="message" name="message" class="form-textarea" required 
+                              placeholder="Expliquez pourquoi vous souhaitez participer... (5-10 lignes)"></textarea>
+                </div>
+                
+                <div class="form-checkbox">
+                    <input type="checkbox" id="conditions" name="conditions" required>
+                    <label for="conditions">
+                        Je comprends et j'accepte les frais de participation de 5.000 Fc *
+                    </label>
+                </div>
+                
+                <div class="form-checkbox">
+                    <input type="checkbox" id="whatsapp_group" name="whatsapp_group">
+                    <label for="whatsapp_group">
+                        Je souhaite rejoindre le groupe WhatsApp pour recevoir les dernières informations
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-paper-plane"></i> ENVOYER MON INSCRIPTION
+                </button>
+            </form>
+            
+            <div id="confirmationMessage" class="hidden-form" style="text-align: center; padding: 20px;">
+                <div style="font-size: 3rem; color: #d4af37; margin-bottom: 15px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="color: #f7ef8a; font-size: 1.6rem; margin-bottom: 15px;">
+                    Inscription envoyée !
+                </h3>
+                <p style="color: #a0c8ff; font-size: 1rem; line-height: 1.5; margin-bottom: 15px;">
+                    Merci pour votre inscription au Concours d'Éloquence 2026.
+                    Vous recevrez un message whatsapp avec les détails pour le paiement des frais de participation (5.000 Fc).
+                </p>
+                <p style="color: #25d366; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px;">
+                    <i class="fab fa-whatsapp"></i> Rejoignez notre groupe WhatsApp !
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button id="closeAfterSubmit" class="whatsapp-button" style="background: linear-gradient(90deg, #d4af37, #f7ef8a);">
+                        <i class="fas fa-home"></i> RETOUR À L'ACCUEIL
+                    </button>
+                    <button class="whatsapp-button" onclick="joinWhatsAppGroup()">
+                        <i class="fab fa-whatsapp"></i> REJOINDRE WHATSAPP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Date limite d'inscription : 20 janvier 2026 à 23h59
+        const targetDate = new Date('January 20, 2026 23:59:59').getTime();
+        
+        // Date de début des inscriptions (1 an avant)
+        const startDate = new Date('January 20, 2025 00:00:00').getTime();
+        const totalDuration = targetDate - startDate;
+        
+        // Mettre à jour le compte à rebours toutes les secondes
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        
+        // Éléments du modal
+        const formModal = document.getElementById('formModal');
+        const openFormButton = document.getElementById('openFormButton');
+        const closeModal = document.getElementById('closeModal');
+        const closeAfterSubmit = document.getElementById('closeAfterSubmit');
+        const inscriptionForm = document.getElementById('inscriptionForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        // Fonction pour rejoindre le groupe WhatsApp
+        function joinWhatsAppGroup() {
+            const whatsappLink = "https://chat.whatsapp.com/EuFshU5EEZ7LpxQrC7OQuM";
+            window.open(whatsappLink, '_blank');
+        }
+        
+        // Ouvrir le modal
+        openFormButton.addEventListener('click', () => {
+            formModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Fermer le modal
+        const closeModalFunc = () => {
+            formModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        // Fermer le modal après soumission
+        closeAfterSubmit.addEventListener('click', () => {
+            closeModalFunc();
+            // Réinitialiser le formulaire
+            inscriptionForm.reset();
+            // Revenir au formulaire
+            inscriptionForm.classList.remove('hidden-form');
+            confirmationMessage.classList.add('hidden-form');
+        });
+        
+        // Fermer le modal en cliquant à l'extérieur
+        formModal.addEventListener('click', (e) => {
+            if (e.target === formModal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Fermer le modal avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && formModal.style.display === 'flex') {
+                closeModalFunc();
+            }
+        });
+        
+        // Gérer la soumission du formulaire
+        inscriptionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validation rapide
+            const telephone = document.getElementById('telephone').value;
+            if (telephone.length < 8) {
+                alert("Veuillez entrer un numéro de téléphone valide.");
                 return;
             }
             
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            
-            // Animation de pulse pour les dernières minutes
-            if (timeLeft < 5 * 60 * 1000) { // 5 minutes restantes
-                document.querySelector('.timer-section').classList.add('pulse');
-            }
-        }
-
-        // Fonction appelée à la fin du vote
-        function finDuVote() {
-            document.getElementById('codeSection').classList.add('hidden');
-            document.getElementById('voteSection').classList.add('hidden');
-            document.getElementById('endSection').classList.remove('hidden');
-            document.getElementById('resultsSection').classList.remove('hidden');
-            document.getElementById('liveResultsSection').classList.add('hidden');
-            
-            // Désactiver les boutons
-            document.getElementById('verifyCodeBtn').disabled = true;
-            document.getElementById('codeInput').disabled = true;
-            
-            // Afficher les résultats finaux AVEC CLASSEMENT
-            afficherResultatsFinauxAvecClassement();
-            
-            // Afficher la liste des champions
-            afficherListeDesChampions();
-            
-            // Créer des confettis pour célébrer
-            createConfetti();
-        }
-
-        // Fonction pour afficher la liste des champions (podium + classement)
-        async function afficherListeDesChampions() {
-            try {
-                const votesRef = db.collection('votes');
-                const snapshot = await votesRef.get();
-                
-                const resultats = {
-                    'Emma Laurent': 0,
-                    'Thomas Dubois': 0,
-                    'Sophie Martin': 0,
-                    'Lucas Bernard': 0
-                };
-                
-                let totalVotes = 0;
-                snapshot.forEach(doc => {
-                    const vote = doc.data();
-                    if (resultats[vote.candidat] !== undefined) {
-                        resultats[vote.candidat]++;
-                        totalVotes++;
+            // Envoyer les données
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Afficher le message de confirmation
+                    inscriptionForm.classList.add('hidden-form');
+                    confirmationMessage.classList.remove('hidden-form');
+                    
+                    // Réinitialiser le formulaire
+                    this.reset();
+                    
+                    // Mettre à jour le bouton d'inscription principal
+                    if (Date.now() < targetDate) {
+                        openFormButton.innerHTML = '<i class="fas fa-check-circle"></i> INSCRIPTION ENVOYÉE';
+                        openFormButton.style.background = 'linear-gradient(90deg, #4CAF50, #2E7D32)';
+                        openFormButton.style.cursor = 'default';
+                        openFormButton.onclick = null;
                     }
-                });
-                
-                // Trier les résultats
-                const sortedResults = Object.entries(resultats)
-                    .sort((a, b) => b[1] - a[1]);
-                
-                // Afficher la section champion
-                document.getElementById('championListSection').classList.remove('hidden');
-                
-                // Générer le podium
-                genererPodium(sortedResults.slice(0, 3));
-                
-                // Générer le tableau de classement complet
-                genererTableauClassement(sortedResults, totalVotes);
-                
-            } catch (error) {
-                console.error('Erreur lors de la génération du classement:', error);
-            }
-        }
-
-        // Fonction pour générer le podium
-        function genererPodium(top3) {
-            const podiumContainer = document.getElementById('podiumContainer');
-            let podiumHTML = '';
-            
-            // Si nous avons au moins 3 résultats
-            if (top3.length >= 3) {
-                // Calculer les pourcentages
-                const pourcentage2 = calculerPourcentage(top3[1][1]);
-                const pourcentage1 = calculerPourcentage(top3[0][1]);
-                const pourcentage3 = calculerPourcentage(top3[2][1]);
-                
-                // 2ème place
-                podiumHTML += `
-                    <div class="podium-place second-place ${pourcentage2.seuilAtteint ? 'threshold-reached' : ''}">
-                        <div class="podium-rank" style="font-size: 3em; font-weight: bold; margin-bottom: 10px;">2</div>
-                        <div class="podium-name" style="font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">${top3[1][0]}</div>
-                        <div class="podium-votes" style="font-size: 1.8em; font-weight: bold;">${top3[1][1]}</div>
-                        <div class="podium-percentage" style="font-size: 1.1em; margin-top: 5px;">
-                            ${pourcentage2.pourcentage}%
-                            ${pourcentage2.seuilAtteint ? '<span class="max-badge">MAX</span>' : ''}
-                        </div>
-                    </div>
-                `;
-                
-                // 1ère place
-                podiumHTML += `
-                    <div class="podium-place first-place ${pourcentage1.seuilAtteint ? 'threshold-reached' : ''}">
-                        <div style="position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-size: 3em;">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="podium-rank" style="font-size: 3.5em; font-weight: bold; margin-bottom: 10px;">1</div>
-                        <div class="podium-name" style="font-size: 1.4em; font-weight: bold; margin-bottom: 10px;">${top3[0][0]}</div>
-                        <div class="podium-votes" style="font-size: 2.2em; font-weight: bold;">${top3[0][1]}</div>
-                        <div class="podium-percentage" style="font-size: 1.2em; margin-top: 5px;">
-                            ${pourcentage1.pourcentage}%
-                            ${pourcentage1.seuilAtteint ? '<span class="max-badge">MAX</span>' : ''}
-                        </div>
-                    </div>
-                `;
-                
-                // 3ème place
-                podiumHTML += `
-                    <div class="podium-place third-place ${pourcentage3.seuilAtteint ? 'threshold-reached' : ''}">
-                        <div class="podium-rank" style="font-size: 2.5em; font-weight: bold; margin-bottom: 10px;">3</div>
-                        <div class="podium-name" style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;">${top3[2][0]}</div>
-                        <div class="podium-votes" style="font-size: 1.5em; font-weight: bold;">${top3[2][1]}</div>
-                        <div class="podium-percentage" style="font-size: 1em; margin-top: 5px;">
-                            ${pourcentage3.pourcentage}%
-                            ${pourcentage3.seuilAtteint ? '<span class="max-badge">MAX</span>' : ''}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            podiumContainer.innerHTML = podiumHTML;
-        }
-
-        // Fonction pour générer le tableau de classement complet
-        function genererTableauClassement(sortedResults, totalVotes) {
-            const tableBody = document.getElementById('rankingTableBody');
-            let tableHTML = '';
-            
-            sortedResults.forEach(([candidat, votes], index) => {
-                const pourcentageData = calculerPourcentage(votes);
-                
-                // Icônes pour les 3 premières places
-                let positionIcon = '';
-                if (index === 0) positionIcon = '<i class="fas fa-trophy" style="color: var(--secondary);"></i>';
-                else if (index === 1) positionIcon = '<i class="fas fa-medal" style="color: #C0C0C0;"></i>';
-                else if (index === 2) positionIcon = '<i class="fas fa-medal" style="color: #CD7F32;"></i>';
-                else positionIcon = `<span style="color: #666;">${index + 1}</span>`;
-                
-                // Statut pour le seuil maximum
-                let statutHTML = '';
-                if (pourcentageData.seuilAtteint) {
-                    statutHTML = '<span class="max-badge">MAX ATTEINT</span>';
-                }
-                
-                tableHTML += `
-                    <tr ${pourcentageData.seuilAtteint ? 'style="background: #fff5f5;"' : ''}>
-                        <td class="ranking-position">${positionIcon}</td>
-                        <td class="ranking-name">${candidat}</td>
-                        <td class="ranking-votes">${votes}</td>
-                        <td class="ranking-percentage">${pourcentageData.pourcentage}%</td>
-                        <td style="text-align: center;">${statutHTML}</td>
-                    </tr>
-                `;
-            });
-            
-            tableBody.innerHTML = tableHTML;
-        }
-
-        // Créer des confettis pour célébrer
-        function createConfetti() {
-            const colors = ['#8B4513', '#D4AF37', '#228B22', '#654321', '#8B4513', '#D4AF37'];
-            const confettiCount = 200;
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.opacity = Math.random() * 0.8 + 0.2;
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                confetti.style.width = Math.random() * 15 + 5 + 'px';
-                confetti.style.height = Math.random() * 15 + 5 + 'px';
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                
-                document.body.appendChild(confetti);
-                
-                // Animation
-                const animation = confetti.animate([
-                    { 
-                        top: '-20px', 
-                        opacity: 1,
-                        transform: `rotate(0deg) translateX(${Math.random() * 100 - 50}px)`
-                    },
-                    { 
-                        top: '100vh', 
-                        opacity: 0,
-                        transform: `rotate(${Math.random() * 720}deg) translateX(${Math.random() * 100 - 50}px)`
-                    }
-                ], {
-                    duration: Math.random() * 3000 + 2000,
-                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)',
-                    delay: Math.random() * 1000
-                });
-                
-                animation.onfinish = () => confetti.remove();
-            }
-        }
-
-        // Vérifier si le code est valide
-        async function verifierCode(code) {
-            try {
-                showLoading(true);
-                
-                const codeRef = db.collection('codes').doc(code);
-                const doc = await codeRef.get();
-                
-                if (!doc.exists) {
-                    showAlert('codeAlert', 'error', '❌ Code invalide. Vérifiez votre code de vote.');
-                    return false;
-                }
-                
-                const codeData = doc.data();
-                
-                if (!codeData.estValide) {
-                    showAlert('codeAlert', 'error', '❌ Ce code a été désactivé par l\'administration.');
-                    return false;
-                }
-                
-                if (codeData.utilise) {
-                    // Si le code a déjà été utilisé, récupérer les infos du vote
-                    const voteInfo = await getVoteInfoByCode(code);
-                    if (voteInfo) {
-                        userVoteData = voteInfo;
-                        showAlert('codeAlert', 'success', '✅ Vous avez déjà voté pour ' + voteInfo.candidat + '. Consultez les résultats en direct ci-dessous.');
-                        
-                        // Afficher la section résultats en direct
-                        document.getElementById('liveResultsSection').style.display = 'block';
-                        afficherInfoVotePersonnel(voteInfo);
-                        afficherResultatsEnDirect();
-                        return 'deja_vote';
-                    } else {
-                        showAlert('codeAlert', 'error', '❌ Ce code a déjà été utilisé.');
-                        return false;
-                    }
-                }
-                
-                showAlert('codeAlert', 'success', '✅ Code validé ! Sélectionnez maintenant votre orateur préféré.');
-                return true;
-            } catch (error) {
-                console.error('Erreur de vérification:', error);
-                showAlert('codeAlert', 'error', '⚠️ Erreur de connexion. Veuillez réessayer.');
-                return false;
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Récupérer les informations d'un vote par code
-        async function getVoteInfoByCode(code) {
-            try {
-                const votesRef = db.collection('votes');
-                const querySnapshot = await votesRef.where('code', '==', code).get();
-                
-                if (!querySnapshot.empty) {
-                    const voteDoc = querySnapshot.docs[0];
-                    return voteDoc.data();
-                }
-                return null;
-            } catch (error) {
-                console.error('Erreur:', error);
-                return null;
-            }
-        }
-
-        // Afficher les informations du vote personnel
-        function afficherInfoVotePersonnel(voteData) {
-            const personalVoteInfo = document.getElementById('personalVoteInfo');
-            const candidateName = document.getElementById('yourVoteCandidate');
-            const voteTime = document.getElementById('yourVoteTime');
-            
-            candidateName.textContent = voteData.candidat;
-            
-            if (voteData.dateVote && voteData.dateVote.toDate) {
-                const date = voteData.dateVote.toDate();
-                voteTime.textContent = date.toLocaleTimeString('fr-FR', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-            } else {
-                voteTime.textContent = new Date().toLocaleTimeString('fr-FR', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-            }
-            
-            personalVoteInfo.style.display = 'block';
-        }
-
-        // Enregistrer le vote
-        async function enregistrerVote(code, candidat) {
-            try {
-                showLoading(true);
-                
-                // Vérifier que le vote n'est pas terminé
-                if (new Date() > VOTE_END_DATE) {
-                    showAlert('voteAlert', 'error', '⏰ Le vote est terminé. Merci de votre participation.');
-                    return false;
-                }
-
-                const batch = db.batch();
-                const codeRef = db.collection('codes').doc(code);
-                const voteRef = db.collection('votes').doc();
-                
-                // Marquer le code comme utilisé
-                batch.update(codeRef, {
-                    utilise: true,
-                    dateUtilisation: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                // Enregistrer le vote
-                batch.set(voteRef, {
-                    code: code,
-                    candidat: candidat,
-                    dateVote: firebase.firestore.FieldValue.serverTimestamp(),
-                    userAgent: navigator.userAgent.substring(0, 100)
-                });
-                
-                await batch.commit();
-                
-                // Stocker les données du vote pour affichage
-                userVoteData = {
-                    code: code,
-                    candidat: candidat,
-                    dateVote: new Date()
-                };
-                
-                showAlert('voteAlert', 'success', '🎉 Votre vote a été enregistré avec succès ! Merci pour votre participation.');
-                return true;
-            } catch (error) {
-                console.error('Erreur d\'enregistrement:', error);
-                showAlert('voteAlert', 'error', '❌ Erreur lors de l\'enregistrement. Veuillez réessayer.');
-                return false;
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // NOUVELLE FONCTION : Afficher les résultats en direct avec le nouveau système de pourcentage
-        async function afficherResultatsEnDirect() {
-            try {
-                const votesRef = db.collection('votes');
-                const snapshot = await votesRef.get();
-                
-                const resultats = {
-                    'Emma Laurent': 0,
-                    'Thomas Dubois': 0,
-                    'Sophie Martin': 0,
-                    'Lucas Bernard': 0
-                };
-                
-                let totalVotes = 0;
-                snapshot.forEach(doc => {
-                    const vote = doc.data();
-                    if (resultats[vote.candidat] !== undefined) {
-                        resultats[vote.candidat]++;
-                        totalVotes++;
-                    }
-                });
-                
-                // Trier les résultats
-                const sortedResults = Object.entries(resultats)
-                    .sort((a, b) => b[1] - a[1]);
-                
-                const container = document.getElementById('liveResultsContainer');
-                let html = '';
-                
-                sortedResults.forEach(([candidat, votes], index) => {
-                    // NOUVEAU CALCUL DE POURCENTAGE
-                    const pourcentageData = calculerPourcentage(votes);
-                    const isUserVote = userVoteData && userVoteData.candidat === candidat;
-                    
-                    html += `
-                        <div class="live-result-item ${pourcentageData.seuilAtteint ? 'threshold-reached' : ''}" ${isUserVote ? 'style="border: 2px solid var(--primary);"' : ''}>
-                            <div class="live-result-name">
-                                ${candidat}
-                                ${pourcentageData.seuilAtteint ? '<span class="max-badge">MAX ATTEINT</span>' : ''}
-                            </div>
-                            ${isUserVote ? '<div style="color: var(--primary); font-size: 0.9em; margin-bottom: 5px;"><i class="fas fa-user-check"></i> Votre choix</div>' : ''}
-                            <div class="live-result-votes">${votes}</div>
-                            <div class="live-result-percentage">
-                                ${pourcentageData.pourcentage}%
-                                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                                    ${votes} voix × 0,15%
-                                </div>
-                            </div>
-                            <div class="live-result-bar">
-                                <div class="live-result-fill" style="width: ${Math.min(parseFloat(pourcentageData.pourcentage), MAX_PERCENTAGE)}%"></div>
-                            </div>
-                            ${pourcentageData.seuilAtteint ? 
-                                `<div style="color: #dc3545; font-size: 0.8em; margin-top: 5px;">
-                                    <i class="fas fa-exclamation-circle"></i> Maximum atteint (30%)
-                                </div>` : 
-                                `<div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                                    Vers 30%: ${pourcentageData.voixNecessaires} voix restantes
-                                </div>`
-                            }
-                        </div>
-                    `;
-                });
-                
-                container.innerHTML = html;
-                
-                // Afficher la section si elle ne l'est pas déjà
-                document.getElementById('liveResultsSection').style.display = 'block';
-                
-            } catch (error) {
-                console.error('Erreur de calcul:', error);
-            }
-        }
-
-        // NOUVELLE FONCTION : Afficher les résultats finaux avec le nouveau système de pourcentage
-        async function afficherResultatsFinauxAvecClassement() {
-            try {
-                const votesRef = db.collection('votes');
-                const snapshot = await votesRef.get();
-                
-                const resultats = {
-                    'Emma Laurent': 0,
-                    'Thomas Dubois': 0,
-                    'Sophie Martin': 0,
-                    'Lucas Bernard': 0
-                };
-                
-                let totalVotes = 0;
-                snapshot.forEach(doc => {
-                    const vote = doc.data();
-                    if (resultats[vote.candidat] !== undefined) {
-                        resultats[vote.candidat]++;
-                        totalVotes++;
-                    }
-                });
-                
-                // Trier les résultats
-                const sortedResults = Object.entries(resultats)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 4);
-                
-                const container = document.getElementById('resultsContainer');
-                let html = '';
-                
-                // Ajouter le total des votes
-                html += `
-                    <div class="result-item" style="grid-column: 1 / -1; background: linear-gradient(135deg, #f8f4e6 0%, #f0e8d6 100%);">
-                        <div class="result-name" style="font-size: 1.5em;">
-                            <i class="fas fa-chart-pie"></i> TOTAL DES VOTES
-                        </div>
-                        <div class="result-votes" style="font-size: 4em; color: var(--primary);">
-                            ${totalVotes}
-                        </div>
-                        <div style="color: #666; margin-top: 10px;">
-                            ${totalVotes} votes enregistrés • 1 voix = 0,15%
-                        </div>
-                    </div>
-                `;
-                
-                sortedResults.forEach(([candidat, votes], index) => {
-                    // NOUVEAU CALCUL DE POURCENTAGE
-                    const pourcentageData = calculerPourcentage(votes);
-                    const isWinner = index === 0 && totalVotes > 0;
-                    
-                    html += `
-                        <div class="result-item ${isWinner ? 'winner' : ''} ${pourcentageData.seuilAtteint ? 'threshold-reached' : ''}">
-                            <div class="result-rank">${index + 1}</div>
-                            <div class="result-name">
-                                ${candidat}
-                                ${pourcentageData.seuilAtteint ? '<span class="max-badge">MAX</span>' : ''}
-                            </div>
-                            <div class="result-votes">${votes}</div>
-                            <div class="result-percentage">
-                                ${pourcentageData.pourcentage}%
-                                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                                    ${votes} voix × 0,15%
-                                </div>
-                            </div>
-                            <div class="result-bar">
-                                <div class="result-fill" style="width: ${Math.min(parseFloat(pourcentageData.pourcentage), MAX_PERCENTAGE)}%"></div>
-                            </div>
-                            <div style="margin-top: 10px; font-size: 0.9em; color: ${pourcentageData.seuilAtteint ? '#dc3545' : '#666'};">
-                                <i class="fas ${pourcentageData.seuilAtteint ? 'fa-exclamation-circle' : 'fa-microphone'}"></i> 
-                                ${pourcentageData.seuilAtteint ? 'Maximum atteint (30%)' : candidat.split(' ')[0]}
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                container.innerHTML = html;
-                
-                // Mettre à jour l'heure
-                const updateTime = new Date();
-                document.getElementById('lastUpdate').textContent = 
-                    `${updateTime.getHours().toString().padStart(2, '0')}:${updateTime.getMinutes().toString().padStart(2, '0')}`;
-                
-            } catch (error) {
-                console.error('Erreur de calcul:', error);
-            }
-        }
-
-        // Afficher une alerte
-        function showAlert(elementId, type, message) {
-            const alert = document.getElementById(elementId);
-            alert.textContent = message;
-            alert.className = `alert ${type}`;
-            alert.style.display = 'block';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 5000);
-        }
-
-        // Afficher/masquer le loading
-        function showLoading(show) {
-            document.getElementById('loading').classList.toggle('hidden', !show);
-        }
-
-        /* ============================================
-           NOUVELLES FONCTIONS POUR LA GESTION DES CODES
-           ============================================ */
-
-        // Fonction pour importer des codes CSV
-        async function importerCodesCSV(csvText) {
-            try {
-                // Convertir CSV en tableau
-                const codes = csvText.split('\n')
-                    .map(code => code.trim())
-                    .filter(code => code !== '' && !code.toLowerCase().includes('code'));
-                
-                if (codes.length === 0) {
-                    throw new Error('Aucun code valide trouvé dans le CSV');
-                }
-                
-                console.log(`📊 ${codes.length} codes à importer`);
-                
-                // Importer par lots de 500 (limite Firebase)
-                const batchSize = 500;
-                let importedCount = 0;
-                let errorCount = 0;
-                
-                for (let i = 0; i < codes.length; i += batchSize) {
-                    const batchCodes = codes.slice(i, i + batchSize);
-                    
-                    try {
-                        const batch = db.batch();
-                        
-                        batchCodes.forEach(code => {
-                            const codeRef = db.collection('codes').doc(code);
-                            batch.set(codeRef, {
-                                code: code,
-                                estValide: true,
-                                utilise: false,
-                                dateCreation: firebase.firestore.FieldValue.serverTimestamp(),
-                                dateUtilisation: null,
-                                source: 'CSV_import',
-                                importedAt: new Date().toISOString()
-                            });
-                        });
-                        
-                        await batch.commit();
-                        importedCount += batchCodes.length;
-                        
-                    } catch (error) {
-                        console.error('Erreur batch:', error);
-                        errorCount += batchCodes.length;
-                    }
-                }
-                
-                return {
-                    success: true,
-                    importedCount: importedCount,
-                    errorCount: errorCount,
-                    totalCount: codes.length
-                };
-                
-            } catch (error) {
-                console.error('Erreur d\'import:', error);
-                return {
-                    success: false,
-                    error: error.message
-                };
-            }
-        }
-
-        // Fonction pour générer des codes
-        async function genererCodes(nombre, prefix = 'VOTE') {
-            try {
-                const batch = db.batch();
-                const codes = [];
-                
-                for (let i = 1; i <= nombre; i++) {
-                    // Générer un code unique
-                    const timestamp = Date.now().toString(36).slice(-4);
-                    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-                    const code = `${prefix}-${timestamp}-${random}`;
-                    
-                    codes.push(code);
-                    
-                    const codeRef = db.collection('codes').doc(code);
-                    batch.set(codeRef, {
-                        code: code,
-                        estValide: true,
-                        utilise: false,
-                        dateCreation: firebase.firestore.FieldValue.serverTimestamp(),
-                        dateUtilisation: null,
-                        source: 'generated',
-                        prefix: prefix
-                    });
-                }
-                
-                await batch.commit();
-                
-                return {
-                    success: true,
-                    codes: codes,
-                    count: nombre
-                };
-                
-            } catch (error) {
-                console.error('Erreur de génération:', error);
-                return {
-                    success: false,
-                    error: error.message
-                };
-            }
-        }
-
-        // Fonction pour obtenir les statistiques des codes
-        async function getCodesStats() {
-            try {
-                const codesRef = db.collection('codes');
-                const snapshot = await codesRef.get();
-                
-                let totalCodes = 0;
-                let usedCodes = 0;
-                let validCodes = 0;
-                
-                snapshot.forEach(doc => {
-                    const codeData = doc.data();
-                    totalCodes++;
-                    if (codeData.utilise) usedCodes++;
-                    if (codeData.estValide) validCodes++;
-                });
-                
-                return {
-                    totalCodes: totalCodes,
-                    usedCodes: usedCodes,
-                    validCodes: validCodes,
-                    unusedCodes: totalCodes - usedCodes
-                };
-                
-            } catch (error) {
-                console.error('Erreur statistiques:', error);
-                return null;
-            }
-        }
-
-        // Fonction pour afficher le résultat d'import
-        function showImportResult(type, message, details = null) {
-            const resultDiv = document.getElementById('importResult');
-            
-            let html = '';
-            if (type === 'success') {
-                html = `
-                    <div style="display: flex; align-items: center; gap: 10px; color: var(--accent);">
-                        <i class="fas fa-check-circle" style="font-size: 1.2em;"></i>
-                        <div style="font-weight: bold;">${message}</div>
-                    </div>
-                `;
-                resultDiv.style.background = '#d4edda';
-                resultDiv.style.color = '#155724';
-            } else if (type === 'error') {
-                html = `
-                    <div style="color: #721c24;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        ${message}
-                    </div>
-                `;
-                resultDiv.style.background = '#f8d7da';
-                resultDiv.style.color = '#721c24';
-            } else if (type === 'info') {
-                html = `
-                    <div style="color: #0c5460;">
-                        <i class="fas fa-info-circle"></i>
-                        ${message}
-                    </div>
-                `;
-                resultDiv.style.background = '#d1ecf1';
-                resultDiv.style.color = '#0c5460';
-            }
-            
-            if (details) {
-                html += `
-                    <div style="margin-top: 10px; font-size: 0.9em;">
-                        ${details}
-                    </div>
-                `;
-            }
-            
-            resultDiv.innerHTML = html;
-            resultDiv.style.display = 'block';
-            
-            // Masquer après 10 secondes
-            setTimeout(() => {
-                resultDiv.style.display = 'none';
-            }, 10000);
-        }
-
-        /* ============================================
-           FONCTIONS ADMIN EXISTANTES - MODIFIÉES POUR LE NOUVEAU SYSTÈME
-           ============================================ */
-
-        const ADMIN_PASSWORD = "EXCELLENTIAACADEMIA05/05/UNIKIN";
-        let isAdmin = false;
-        let adminInterval = null;
-
-        // Fonction pour vérifier le mot de passe admin
-        function checkAdminPassword(password) {
-            return password === ADMIN_PASSWORD;
-        }
-
-        // Fonction pour afficher le panel admin
-        function showAdminPanel() {
-            document.getElementById('adminPanel').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            loadAdminData();
-            
-            // Rafraîchir automatiquement toutes les 10 secondes
-            adminInterval = setInterval(loadAdminData, 10000);
-        }
-
-        // Fonction pour charger les données admin AVEC LE NOUVEAU SYSTÈME
-        async function loadAdminData() {
-            try {
-                const votesRef = db.collection('votes');
-                const codesRef = db.collection('codes');
-                
-                const [votesSnapshot, codesSnapshot] = await Promise.all([
-                    votesRef.get(),
-                    codesRef.where('estValide', '==', true).get()
-                ]);
-                
-                // Calculer les totaux
-                const resultats = {
-                    'Emma Laurent': 0,
-                    'Thomas Dubois': 0,
-                    'Sophie Martin': 0,
-                    'Lucas Bernard': 0
-                };
-                
-                let totalVotes = 0;
-                votesSnapshot.forEach(doc => {
-                    const vote = doc.data();
-                    if (resultats[vote.candidat] !== undefined) {
-                        resultats[vote.candidat]++;
-                        totalVotes++;
-                    }
-                });
-                
-                const totalCodes = codesSnapshot.size;
-                const participation = totalCodes > 0 ? ((totalVotes / totalCodes) * 100).toFixed(1) : 0;
-                
-                // Mettre à jour les statistiques
-                document.getElementById('adminTotalVotes').textContent = totalVotes;
-                document.getElementById('adminParticipation').textContent = participation + '%';
-                
-                // Trouver le vainqueur
-                let winner = 'Aucun';
-                let maxVotes = 0;
-                
-                for (const [candidat, votes] of Object.entries(resultats)) {
-                    if (votes > maxVotes) {
-                        maxVotes = votes;
-                        winner = candidat;
-                    }
-                }
-                
-                document.getElementById('adminWinner').textContent = winner;
-                
-                // Mettre à jour l'heure
-                const now = new Date();
-                document.getElementById('adminLastUpdate').textContent = 
-                    `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-                
-                // Générer les résultats détaillés AVEC LE NOUVEAU SYSTÈME
-                const detailedContainer = document.getElementById('adminDetailedResults');
-                let detailedHTML = '';
-                
-                const sortedResults = Object.entries(resultats)
-                    .sort((a, b) => b[1] - a[1]);
-                
-                sortedResults.forEach(([candidat, votes]) => {
-                    // NOUVEAU CALCUL
-                    const pourcentageData = calculerPourcentage(votes);
-                    
-                    detailedHTML += `
-                        <div style="background: ${candidat === winner ? 'linear-gradient(135deg, #fff8dc 0%, #ffe4b5 100%)' : '#f8f8f8'}; padding: 25px; border-radius: 15px; border: ${candidat === winner ? '3px solid var(--secondary)' : '2px solid #e0e0e0'}; ${pourcentageData.seuilAtteint ? 'border: 3px solid #dc3545;' : ''}">
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                                <h3 style="color: var(--primary); font-size: 1.3em; margin: 0;">
-                                    ${candidat}
-                                    ${candidat === winner ? '<span style="color: var(--secondary); margin-left: 10px;"><i class="fas fa-crown"></i></span>' : ''}
-                                    ${pourcentageData.seuilAtteint ? '<span style="background: #dc3545; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.7em; margin-left: 10px;">MAX</span>' : ''}
-                                </h3>
-                                <span style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9em;">
-                                    #${sortedResults.findIndex(r => r[0] === candidat) + 1}
-                                </span>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                                <div>
-                                    <div style="font-size: 0.9em; color: #666;">Votes</div>
-                                    <div style="font-size: 2.5em; font-weight: bold; color: var(--primary-dark);">
-                                        ${votes}
-                                    </div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 0.9em; color: #666;">Pourcentage</div>
-                                    <div style="font-size: 2em; font-weight: bold; color: ${pourcentageData.seuilAtteint ? '#dc3545' : 'var(--accent)'};">
-                                        ${pourcentageData.pourcentage}%
-                                        <div style="font-size: 0.6em; color: #666;">
-                                            (${votes} × 0,15%)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div style="height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; margin-bottom: 10px;">
-                                <div style="height: 100%; background: ${pourcentageData.seuilAtteint ? 'linear-gradient(90deg, #dc3545 0%, #c82333 100%)' : candidat === winner ? 'linear-gradient(90deg, var(--secondary) 0%, #DAA520 100%)' : 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)'}; border-radius: 5px; width: ${Math.min(parseFloat(pourcentageData.pourcentage), MAX_PERCENTAGE)}%; transition: width 0.5s ease;"></div>
-                            </div>
-                            
-                            ${pourcentageData.seuilAtteint ? 
-                                `<div style="color: #dc3545; font-size: 0.8em; text-align: center; padding: 8px; background: #fff5f5; border-radius: 5px;">
-                                    <i class="fas fa-exclamation-circle"></i> Maximum atteint (30% = 200 voix)
-                                </div>` : 
-                                `<div style="font-size: 0.8em; color: #666; text-align: center;">
-                                    Progression: ${pourcentageData.pourcentage}% / 30% (${pourcentageData.voixNecessaires} voix restantes)
-                                </div>`
-                            }
-                        </div>
-                    `;
-                });
-                
-                detailedContainer.innerHTML = detailedHTML;
-                
-                // Mettre à jour les statistiques des codes
-                const codesStats = await getCodesStats();
-                if (codesStats) {
-                    document.getElementById('totalCodes').textContent = codesStats.totalCodes;
-                    document.getElementById('usedCodes').textContent = codesStats.usedCodes;
-                }
-                
-            } catch (error) {
-                console.error('Erreur lors du chargement des données admin:', error);
-                showAdminAlert('error', 'Erreur de chargement des données');
-            }
-        }
-
-        // Fonction pour afficher des alertes dans le panel admin
-        function showAdminAlert(type, message) {
-            const alertDiv = document.getElementById('adminAlert');
-            alertDiv.textContent = message;
-            alertDiv.style.display = 'block';
-            alertDiv.style.background = type === 'error' ? '#f8d7da' : '#d4edda';
-            alertDiv.style.color = type === 'error' ? '#721c24' : '#155724';
-            alertDiv.style.border = type === 'error' ? '1px solid #f5c6cb' : '1px solid #c3e6cb';
-            
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-            }, 5000);
-        }
-
-        // Fonction pour exporter les données en CSV
-        async function exportDataToCSV() {
-            try {
-                const votesRef = db.collection('votes');
-                const snapshot = await votesRef.get();
-                
-                let csvContent = "data:text/csv;charset=utf-8,";
-                csvContent += "ID,Voteur,Candidat,Date et Heure,Code\n";
-                
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const date = data.dateVote && data.dateVote.toDate 
-                        ? data.dateVote.toDate().toLocaleString('fr-FR')
-                        : new Date().toLocaleString('fr-FR');
-                    
-                    csvContent += `${doc.id},${data.code},${data.candidat},"${date}","${data.userAgent || ''}"\n`;
-                });
-                
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `resultats_votes_${new Date().toISOString().split('T')[0]}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showAdminAlert('success', 'Export CSV réussi !');
-                
-            } catch (error) {
-                console.error('Erreur lors de l\'export:', error);
-                showAdminAlert('error', 'Erreur lors de l\'export des données');
-            }
-        }
-
-        // Fonction pour réinitialiser les votes (DEMANDER CONFIRMATION)
-        function resetAllVotes() {
-            if (confirm("⚠️ ATTENTION : Cette action est irréversible !\n\nVoulez-vous vraiment réinitialiser TOUS les votes ?\n\nCette action supprimera tous les votes et réactivera tous les codes.")) {
-                if (confirm("Êtes-vous ABSOLUMENT sûr ? Tapez 'CONFIRMER' pour continuer.")) {
-                    const confirmation = prompt("Tapez 'CONFIRMER' pour réinitialiser tous les votes :");
-                    if (confirmation === 'CONFIRMER') {
-                        showAdminAlert('warning', 'Fonction de réinitialisation désactivée pour des raisons de sécurité.');
-                    } else {
-                        showAdminAlert('error', 'Réinitialisation annulée.');
-                    }
-                }
-            }
-        }
-
-        // Gestionnaires d'événements
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialisation
-            updateCountdown();
-            const countdownInterval = setInterval(updateCountdown, 1000);
-            
-            // Vérifier si le vote est terminé
-            if (new Date() > VOTE_END_DATE) {
-                clearInterval(countdownInterval);
-                finDuVote();
-            }
-            
-            // Gestion du règlement (ouvrir/fermer)
-            let reglementReduit = false;
-            const reglementContent = document.querySelector('.card:has(.fa-book) .card-content');
-            const toggleBtn = document.getElementById('toggleReglementBtn');
-            const reglementCard = document.querySelector('.card:has(.fa-book)');
-            
-            if (toggleBtn && reglementContent) {
-                toggleBtn.addEventListener('click', () => {
-                    reglementReduit = !reglementReduit;
-                    
-                    if (reglementReduit) {
-                        reglementContent.style.display = 'none';
-                        toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i><span>VOIR LE RÈGLEMENT COMPLET</span>';
-                        reglementCard.style.maxHeight = '100px';
-                        reglementCard.style.transition = 'all 0.3s ease';
-                    } else {
-                        reglementContent.style.display = 'block';
-                        toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i><span>REDUIRE LE RÈGLEMENT</span>';
-                        reglementCard.style.maxHeight = 'none';
-                    }
-                    
-                    // Animation
-                    reglementCard.style.animation = 'none';
-                    setTimeout(() => {
-                        reglementCard.style.animation = 'pulse 0.5s';
-                    }, 10);
-                });
-            }
-            
-            // Bouton de vérification du code
-            document.getElementById('verifyCodeBtn').addEventListener('click', async () => {
-                const codeInput = document.getElementById('codeInput');
-                const code = codeInput.value.trim().toUpperCase();
-                
-                if (!code) {
-                    showAlert('codeAlert', 'error', '⚠️ Veuillez entrer votre code de vote.');
-                    codeInput.focus();
-                    return;
-                }
-                
-                const isValid = await verifierCode(code);
-                
-                if (isValid === true) {
-                    currentCode = code;
-                    document.getElementById('currentCode').textContent = code;
-                    document.getElementById('codeSection').classList.add('hidden');
-                    document.getElementById('voteSection').classList.remove('hidden');
-                    document.getElementById('voteSection').classList.add('fade-in');
-                } else if (isValid === 'deja_vote') {
-                    // L'utilisateur a déjà voté, on affiche juste les résultats
-                    currentCode = code;
-                    document.getElementById('currentCode').textContent = code;
-                    document.getElementById('codeSection').classList.add('hidden');
-                    document.getElementById('voteSection').classList.add('hidden');
-                }
-            });
-            
-            // Sélection des candidats
-            document.querySelectorAll('.candidate-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    // Retirer la sélection précédente
-                    document.querySelectorAll('.candidate-card').forEach(c => {
-                        c.classList.remove('selected');
-                    });
-                    
-                    // Ajouter la nouvelle sélection
-                    card.classList.add('selected');
-                    selectedCandidate = card.dataset.choice;
-                    document.getElementById('submitVoteBtn').disabled = false;
-                    
-                    // Animation
-                    card.style.animation = 'none';
-                    setTimeout(() => {
-                        card.style.animation = 'pulse 0.5s';
-                    }, 10);
-                });
-            });
-            
-            // Soumission du vote
-            document.getElementById('submitVoteBtn').addEventListener('click', async () => {
-                if (!currentCode || !selectedCandidate) {
-                    showAlert('voteAlert', 'error', '⚠️ Veuillez sélectionner un candidat.');
-                    return;
-                }
-                
-                // Confirmation
-                if (!confirm(`Confirmez-vous votre vote pour ${selectedCandidate} ?\n\nCette action est définitive.`)) {
-                    return;
-                }
-                
-                const success = await enregistrerVote(currentCode, selectedCandidate);
-                
-                if (success) {
-                    // Afficher les informations du vote personnel
-                    afficherInfoVotePersonnel({
-                        code: currentCode,
-                        candidat: selectedCandidate,
-                        dateVote: new Date()
-                    });
-                    
-                    // Afficher les résultats en direct AVEC LE NOUVEAU SYSTÈME
-                    afficherResultatsEnDirect();
-                    
-                    // Animation de transition
-                    document.getElementById('voteSection').style.animation = 'fadeOut 0.5s';
-                    
-                    setTimeout(() => {
-                        document.getElementById('voteSection').classList.add('hidden');
-                        document.getElementById('liveResultsSection').style.display = 'block';
-                        document.getElementById('liveResultsSection').classList.add('fade-in');
-                    }, 500);
-                }
-            });
-            
-            // Rafraîchir les résultats en direct
-            document.getElementById('refreshLiveResultsBtn').addEventListener('click', afficherResultatsEnDirect);
-            
-            // Rafraîchir les résultats finaux
-            document.getElementById('refreshResultsBtn').addEventListener('click', afficherResultatsFinauxAvecClassement);
-            
-            // Entrée pour valider le code
-            document.getElementById('codeInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    document.getElementById('verifyCodeBtn').click();
-                }
-            });
-            
-            // Auto-format du code
-            document.getElementById('codeInput').addEventListener('input', function(e) {
-                this.value = this.value.toUpperCase();
-            });
-
-            /* ============================================
-               GESTIONNAIRES D'ÉVÉNEMENTS ADMIN
-               ============================================ */
-
-            // Ouvrir le modal admin
-            document.getElementById('adminBtn').addEventListener('click', () => {
-                document.getElementById('adminModal').style.display = 'flex';
-                document.getElementById('adminPassword').focus();
-            });
-            
-            // Valider le mot de passe
-            document.getElementById('submitAdminPassword').addEventListener('click', () => {
-                const password = document.getElementById('adminPassword').value;
-                
-                if (checkAdminPassword(password)) {
-                    document.getElementById('adminModal').style.display = 'none';
-                    document.getElementById('adminPassword').value = '';
-                    showAdminPanel();
-                    isAdmin = true;
                 } else {
-                    document.getElementById('adminAlert').textContent = '❌ Mot de passe incorrect';
-                    document.getElementById('adminAlert').style.display = 'block';
-                    document.getElementById('adminAlert').style.background = '#f8d7da';
-                    document.getElementById('adminAlert').style.color = '#721c24';
-                    document.getElementById('adminPassword').value = '';
-                    document.getElementById('adminPassword').focus();
+                    alert("Erreur lors de l'envoi. Veuillez réessayer.");
                 }
-            });
-            
-            // Annuler l'accès admin
-            document.getElementById('cancelAdmin').addEventListener('click', () => {
-                document.getElementById('adminModal').style.display = 'none';
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminAlert').style.display = 'none';
-            });
-            
-            // Entrée pour valider le mot de passe
-            document.getElementById('adminPassword').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    document.getElementById('submitAdminPassword').click();
-                }
-            });
-            
-            // Fermer le panel admin
-            document.getElementById('closeAdminPanel').addEventListener('click', () => {
-                document.getElementById('adminPanel').style.display = 'none';
-                document.body.style.overflow = 'auto';
-                
-                if (adminInterval) {
-                    clearInterval(adminInterval);
-                    adminInterval = null;
-                }
-            });
-            
-            // Rafraîchir les données admin
-            document.getElementById('refreshAdminResults').addEventListener('click', loadAdminData);
-            
-            // Exporter les données
-            document.getElementById('exportData').addEventListener('click', exportDataToCSV);
-            
-            // Réinitialiser les votes
-            document.getElementById('resetVotes').addEventListener('click', resetAllVotes);
-            
-            /* ============================================
-               NOUVEAUX GESTIONNAIRES POUR LA GESTION DES CODES
-               ============================================ */
-            
-            // Importer des codes CSV
-            document.getElementById('importCSVBtn').addEventListener('click', async () => {
-                const csvText = document.getElementById('csvCodesTextarea').value;
-                
-                if (!csvText.trim()) {
-                    showImportResult('error', 'Veuillez coller des codes CSV');
-                    return;
-                }
-                
-                // Désactiver le bouton
-                const importBtn = document.getElementById('importCSVBtn');
-                importBtn.disabled = true;
-                importBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> IMPORT EN COURS...';
-                
-                // Afficher le statut
-                showImportResult('info', 'Import des codes en cours...');
-                
-                // Importer les codes
-                const result = await importerCodesCSV(csvText);
-                
-                // Réactiver le bouton
-                importBtn.disabled = false;
-                importBtn.innerHTML = '<i class="fas fa-upload"></i> IMPORTER CSV';
-                
-                // Afficher le résultat
-                if (result.success) {
-                    showImportResult('success', 
-                        `${result.importedCount} codes importés avec succès !`,
-                        `Total: ${result.totalCount} | Importés: ${result.importedCount} | Erreurs: ${result.errorCount}`
-                    );
-                    
-                    // Vider le textarea
-                    document.getElementById('csvCodesTextarea').value = '';
-                    
-                    // Actualiser les statistiques
-                    loadAdminData();
-                } else {
-                    showImportResult('error', `Erreur: ${result.error}`);
-                }
-            });
-            
-            // Générer des codes
-            document.getElementById('generateCodesBtn').addEventListener('click', async () => {
-                const count = parseInt(document.getElementById('codeCount').value) || 10;
-                const prefix = document.getElementById('codePrefix').value.trim() || 'VOTE';
-                
-                if (count < 1 || count > 1000) {
-                    showImportResult('error', 'Le nombre de codes doit être entre 1 et 1000');
-                    return;
-                }
-                
-                // Désactiver le bouton
-                const generateBtn = document.getElementById('generateCodesBtn');
-                generateBtn.disabled = true;
-                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GÉNÉRATION...';
-                
-                // Afficher le statut
-                showImportResult('info', `Génération de ${count} codes en cours...`);
-                
-                // Générer les codes
-                const result = await genererCodes(count, prefix);
-                
-                // Réactiver le bouton
-                generateBtn.disabled = false;
-                generateBtn.innerHTML = '<i class="fas fa-cogs"></i> GÉNÉRER';
-                
-                // Afficher le résultat
-                if (result.success) {
-                    showImportResult('success', 
-                        `${result.count} codes générés avec succès !`,
-                        `Préfixe: ${prefix} | Exemple: ${result.codes[0]}`
-                    );
-                    
-                    // Actualiser les statistiques
-                    loadAdminData();
-                } else {
-                    showImportResult('error', `Erreur: ${result.error}`);
-                }
-            });
-            
-            // Actualiser les statistiques des codes
-            document.getElementById('refreshCodesStats').addEventListener('click', () => {
-                loadAdminData();
-                showImportResult('info', 'Statistiques actualisées');
+            })
+            .catch(() => {
+                alert("Erreur de connexion. Vérifiez votre internet.");
             });
         });
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            // Calculer la progression
+            let progress = 0;
+            let remainingPercentage = 100;
+            
+            if (now >= startDate) {
+                const elapsed = now - startDate;
+                progress = Math.min(100, (elapsed / totalDuration) * 100);
+                remainingPercentage = 100 - progress;
+            }
+            
+            // Si la date limite est dépassée
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('jours').innerHTML = '00';
+                document.getElementById('heures').innerHTML = '00';
+                document.getElementById('minutes').innerHTML = '00';
+                document.getElementById('secondes').innerHTML = '00';
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('progress-text').innerHTML = 'INSCRIPTIONS TERMINÉES';
+                document.getElementById('progress-text').style.color = '#ff6b6b';
+                document.querySelector('.urgent-message').innerHTML = `
+                    <div class="urgent-title"><i class="fas fa-times-circle"></i> INSCRIPTIONS FERMÉES</div>
+                    <div class="urgent-text">Les inscriptions sont closes. Rendez-vous l'année prochaine !</div>
+                `;
+                openFormButton.innerHTML = '<i class="fas fa-lock"></i> INSCRIPTIONS TERMINÉES';
+                openFormButton.style.background = 'linear-gradient(90deg, #666, #999)';
+                openFormButton.style.cursor = 'not-allowed';
+                openFormButton.onclick = null;
+                return;
+            }
+            
+            // Calculer le temps restant
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Afficher les résultats
+            document.getElementById('jours').innerHTML = formatTime(jours);
+            document.getElementById('heures').innerHTML = formatTime(heures);
+            document.getElementById('minutes').innerHTML = formatTime(minutes);
+            document.getElementById('secondes').innerHTML = formatTime(secondes);
+            
+            // Mettre à jour la progression
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').innerHTML = `Temps restant : ${remainingPercentage.toFixed(2)}%`;
+            
+            // Mode urgence (dernière semaine)
+            if (jours < 7) {
+                document.getElementById('progress-text').style.color = '#ff6b6b';
+                document.querySelector('.urgent-title').innerHTML = '<i class="fas fa-hourglass-end"></i> DERNIÈRE SEMAINE !';
+            }
+        }
+        
+        // Fonction pour formater le temps
+        function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+        
+        // Démarrer le compte à rebours
+        updateCountdown();
     </script>
 </body>
 </html>
