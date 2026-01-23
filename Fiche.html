@@ -5,371 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Générateur de Reçus - Concours d'Éloquence</title>
     
-    <!-- Bibliothèques nécessaires -->
+    <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
-        /* === RESET === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* === CONTAINER === */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        /* === HEADER === */
-        .header {
-            background: linear-gradient(to right, #2c3e50, #34495e);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        /* === MAIN CONTENT === */
-        .main-content {
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
-
-        @media (max-width: 992px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* === FORM === */
-        .form-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 18px;
-        }
-
-        .code-input {
-            width: 100%;
-            padding: 20px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            resize: vertical;
-            min-height: 200px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-        }
-
-        .code-input:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .counter {
-            text-align: right;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-
-        /* === BUTTONS === */
-        .button-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #27ae60, #229954);
-            color: white;
-        }
-
-        /* === OPTIONS === */
-        .options-section {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .option-item:hover {
-            background: #e9ecef;
-        }
-
-        .option-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #3498db;
-        }
-
-        .option-item label {
-            cursor: pointer;
-            margin: 0;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-        }
-
-        /* === DOWNLOAD SECTION === */
-        .download-section {
-            margin-top: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            border-radius: 15px;
-            display: none;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .download-info {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .download-icon {
-            font-size: 60px;
-            color: #28a745;
-        }
-
-        .file-details {
-            flex: 1;
-        }
-
-        .file-details h3 {
-            color: #155724;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        .file-size {
-            color: #0c5460;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .download-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        /* === LOADER === */
-        .loader {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loader-content {
-            text-align: center;
-            max-width: 400px;
-            padding: 40px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .spinner {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .progress {
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            margin: 30px 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #3498db, #9b59b6);
-            width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 4px;
-        }
-
-        /* === FOOTER === */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 30px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        /* === NOTIFICATION === */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 1001;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 20px;
-            }
-            
-            .button-group {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
+        /* === STYLES DE BASE (inchangés) === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(to right, #2c3e50, #34495e); color: white; padding: 30px; text-align: center; }
+        .main-content { padding: 40px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        @media (max-width: 992px) { .main-content { grid-template-columns: 1fr; } }
+        .form-section { background: #f8f9fa; padding: 30px; border-radius: 10px; border: 2px solid #e9ecef; }
+        .code-input { width: 100%; padding: 20px; border: 2px solid #ddd; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 16px; resize: vertical; min-height: 200px; margin-bottom: 15px; }
+        .button-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 30px; }
+        .btn { padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary { background: linear-gradient(135deg, #3498db, #2980b9); color: white; }
+        .download-section { margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #d4edda, #c3e6cb); border-radius: 15px; display: none; }
+        .loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 1000; align-items: center; justify-content: center; }
+        .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1001; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        <!-- En-tête -->
         <div class="header">
             <h1>🎤 Générateur de Reçus de Paiement</h1>
             <p>Concours d'Éloquence 2024 • 10 reçus par page A4</p>
         </div>
 
-        <!-- Main Content -->
+        <!-- Contenu principal -->
         <div class="main-content">
-            <!-- Left Column -->
+            <!-- Colonne gauche -->
             <div>
-                <!-- Form Section -->
+                <!-- Formulaire -->
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="codeInput">📝 Codes de vote (un par ligne)</label>
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 18px;">
+                            📝 Codes de vote (un par ligne)
+                        </label>
                         <textarea 
                             id="codeInput" 
                             class="code-input" 
@@ -385,75 +59,67 @@ ELOQ-2024-007
 ELOQ-2024-008
 ELOQ-2024-009
 ELOQ-2024-010</textarea>
-                        <div class="counter">
+                        <div style="text-align: right; font-size: 14px; color: #7f8c8d;">
                             <span id="codeCount">10</span> codes saisis
                         </div>
                     </div>
 
                     <!-- Options -->
-                    <div class="form-group">
-                        <label>⚙️ Options de génération</label>
-                        <div class="option-item">
-                            <input type="checkbox" id="optionWatermark" checked>
-                            <label for="optionWatermark">
-                                <div style="width: 20px; height: 20px; background: #3498db; opacity: 0.3; margin-right: 10px;"></div>
-                                Appliquer le filigrane (IMG_1812.jpeg)
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 18px;">
+                            ⚙️ Options de génération
+                        </label>
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <input type="checkbox" id="optionWatermark" checked style="width: 20px; height: 20px;">
+                            <label for="optionWatermark" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <div style="width: 20px; height: 20px; background: #3498db; opacity: 0.3;"></div>
+                                Filigrane (IMG_1812.jpeg)
                             </label>
                         </div>
-                        <div class="option-item">
-                            <input type="checkbox" id="optionSeal" checked>
-                            <label for="optionSeal">
-                                <div style="width: 20px; height: 20px; border: 2px solid #000; border-radius: 50%; margin-right: 10px;"></div>
-                                Ajouter le sceau officiel (Times_New_Roman.png)
-                            </label>
-                        </div>
-                        <div class="option-item">
-                            <input type="checkbox" id="optionQRCode" checked>
-                            <label for="optionQRCode">
-                                <div style="width: 20px; height: 20px; border: 2px solid #000; margin-right: 10px; position: relative;">
-                                    <div style="position: absolute; width: 12px; height: 12px; background: #000; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                                </div>
-                                Inclure les codes QR
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <input type="checkbox" id="optionSeal" checked style="width: 20px; height: 20px;">
+                            <label for="optionSeal" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <div style="width: 20px; height: 20px; border: 2px solid #000; border-radius: 50%;"></div>
+                                Sceau officiel (Times_New_Roman.png)
                             </label>
                         </div>
                     </div>
 
-                    <!-- Buttons -->
+                    <!-- Boutons -->
                     <div class="button-group">
                         <button class="btn btn-primary" id="generateBtn">
                             🚀 Générer les Reçus PDF
                         </button>
-                        <button class="btn btn-secondary" id="previewBtn">
-                            👁️ Aperçu Rapide
+                        <button class="btn" style="background: #95a5a6; color: white;" id="previewBtn">
+                            👁️ Aperçu
                         </button>
-                        <button class="btn btn-secondary" id="clearBtn">
-                            🗑️ Effacer Tout
-                        </button>
-                        <button class="btn btn-success" id="exampleBtn">
-                            📋 Charger Exemple
+                        <button class="btn" style="background: #95a5a6; color: white;" id="clearBtn">
+                            🗑️ Effacer
                         </button>
                     </div>
                 </div>
 
-                <!-- Download Section -->
+                <!-- Section téléchargement -->
                 <div class="download-section" id="downloadSection">
-                    <div class="download-info">
-                        <div class="download-icon">✅</div>
-                        <div class="file-details">
-                            <h3>Reçus générés avec succès !</h3>
+                    <div style="display: flex; align-items: center; gap: 25px;">
+                        <div style="font-size: 60px; color: #28a745;">✅</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #155724; margin-bottom: 10px; font-size: 24px;">
+                                Reçus générés avec succès !
+                            </h3>
                             <p id="downloadMessage">10 reçus prêts à télécharger</p>
-                            <div class="file-size">
+                            <div style="color: #0c5460; display: flex; align-items: center; gap: 10px; margin-top: 10px;">
                                 <span>📄</span>
-                                <span id="fileName">receipts.pdf</span>
+                                <span id="fileName">recus_eloquence.pdf</span>
                                 •
                                 <span id="fileSize">~250 KB</span>
                             </div>
                         </div>
-                        <div class="download-actions">
+                        <div style="display: flex; gap: 15px;">
                             <button class="btn btn-primary" id="downloadPDFBtn">
                                 📥 Télécharger PDF
                             </button>
-                            <button class="btn btn-secondary" id="printBtn">
+                            <button class="btn" style="background: #95a5a6; color: white;" id="printBtn">
                                 🖨️ Imprimer
                             </button>
                         </div>
@@ -461,210 +127,232 @@ ELOQ-2024-010</textarea>
                 </div>
             </div>
 
-            <!-- Right Column -->
-            <div class="options-section">
-                <h3 style="margin-bottom: 20px; color: #2c3e50;">📊 Informations</h3>
+            <!-- Colonne droite -->
+            <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">📊 Configuration du Sceau</h3>
                 
-                <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                    <h4 style="color: #3498db; margin-bottom: 10px;">📝 Format des reçus</h4>
-                    <ul style="padding-left: 20px; color: #2c3e50;">
-                        <li>10 reçus par page A4</li>
-                        <li>2 colonnes × 5 lignes</li>
-                        <li>Taille : 85mm × 45mm</li>
-                        <li>Optimisé pour impression</li>
-                    </ul>
+                <!-- Upload du sceau -->
+                <div style="margin-bottom: 25px;">
+                    <p style="color: #666; margin-bottom: 15px;">
+                        Pour que le sceau s'affiche correctement :
+                    </p>
+                    <div style="border: 2px dashed #3498db; border-radius: 10px; padding: 20px; text-align: center; background: #f8f9fa;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🖼️</div>
+                        <p style="color: #2c3e50; margin-bottom: 10px;">
+                            <strong>Étape 1 :</strong> Assurez-vous que l'image est dans le dossier
+                        </p>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
+                            Nom : <code>Times_New_Roman.png</code><br>
+                            Format : PNG recommandé
+                        </p>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button id="testSealBtn" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                Tester le chargement
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="background: #f0f8f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                    <h4 style="color: #27ae60; margin-bottom: 10px;">🔒 Sécurité intégrée</h4>
-                    <ul style="padding-left: 20px; color: #2c3e50;">
-                        <li>Filigrane (IMG_1812.jpeg)</li>
-                        <li>Sceau officiel (Times_New_Roman.png)</li>
-                        <li>Code QR de vérification</li>
-                        <li>Numéro de série unique</li>
-                    </ul>
+                <!-- Prévisualisation du sceau -->
+                <div style="margin-bottom: 25px;">
+                    <p style="color: #2c3e50; margin-bottom: 10px; font-weight: 600;">
+                        Aperçu du sceau :
+                    </p>
+                    <div id="sealPreview" style="border: 2px solid #ddd; border-radius: 5px; padding: 20px; text-align: center; background: white; min-height: 100px; display: flex; align-items: center; justify-content: center;">
+                        <div style="color: #999;">
+                            <div>📷</div>
+                            <div style="font-size: 12px; margin-top: 5px;">Chargement...</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="background: #fff8e1; padding: 20px; border-radius: 8px;">
-                    <h4 style="color: #f39c12; margin-bottom: 10px;">💡 Conseils</h4>
-                    <ul style="padding-left: 20px; color: #2c3e50;">
-                        <li>Utilisez du papier A4 standard</li>
-                        <li>Imprimez en haute qualité</li>
-                        <li>Conservez une copie numérique</li>
-                        <li>Vérifiez avant distribution</li>
-                    </ul>
+                <!-- Statut du sceau -->
+                <div id="sealStatus" style="background: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107;">
+                    <p style="color: #856404; margin: 0;">
+                        <strong>⚠️ Important :</strong> Le sceau doit être accessible via URL publique
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
+        <!-- Pied de page -->
+        <div style="background: #2c3e50; color: white; padding: 30px; text-align: center; margin-top: 40px;">
             <p>© 2024 Concours d'Éloquence • Tous droits réservés</p>
             <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">
-                Générateur officiel de reçus • Version 3.0 • Sceau officiel intégré
+                Générateur officiel de reçus • Version 3.1 • Sceau officiel intégré
             </p>
         </div>
     </div>
 
     <!-- Loader -->
     <div class="loader" id="loader">
-        <div class="loader-content">
-            <div class="spinner"></div>
+        <div style="text-align: center; max-width: 400px; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <div style="width: 80px; height: 80px; margin: 0 auto 30px; border: 5px solid #f3f3f3; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
             <h3>Génération en cours...</h3>
-            <p>Création des reçus PDF avec sceau officiel</p>
-            <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
+            <p id="loaderStatus">Préparation des reçus</p>
+            <div style="height: 8px; background: #eee; border-radius: 4px; margin: 30px 0; overflow: hidden;">
+                <div id="progressBar" style="height: 100%; background: linear-gradient(to right, #3498db, #9b59b6); width: 0%; transition: width 0.3s ease; border-radius: 4px;"></div>
             </div>
-            <p id="loaderStatus">Initialisation</p>
         </div>
     </div>
 
-    <!-- Sceau officiel caché pour préchargement -->
-    <img id="officialSeal" src="Times_New_Roman.png" style="display: none;" alt="Sceau Officiel" 
-         onload="console.log('✅ Sceau officiel chargé: Times_New_Roman.png')"
-         onerror="console.error('❌ Erreur chargement sceau officiel')" />
+    <!-- Image cachée pour le sceau -->
+    <img id="sealImage" src="Times_New_Roman.png" style="display: none;" 
+         onload="console.log('✅ Image du sceau chargée'); sealLoaded=true; updateSealPreview();"
+         onerror="console.log('❌ Erreur chargement sceau'); sealLoaded=false; updateSealPreview();" />
 
     <script>
         // ============ VARIABLES GLOBALES ============
         let codes = [];
-        let pdfBlob = null;
-        let generatedPDF = null;
-        let sealImage = null;
         let sealLoaded = false;
+        let sealImageBase64 = null;
+        let generatedPDF = null;
 
         // ============ INITIALISATION ============
         document.addEventListener('DOMContentLoaded', function() {
-            updateCodeCount();
-            loadFromLocalStorage();
+            console.log('🚀 Initialisation du générateur');
             
-            // Précharger le sceau officiel
-            preloadOfficialSeal();
+            updateCodeCount();
+            loadSealImage();
             
             // Événements
             document.getElementById('codeInput').addEventListener('input', updateCodeCount);
-            document.getElementById('generateBtn').addEventListener('click', generateReceiptsPDF);
-            document.getElementById('previewBtn').addEventListener('click', showQuickPreview);
+            document.getElementById('generateBtn').addEventListener('click', generatePDFWithSeal);
+            document.getElementById('previewBtn').addEventListener('click', showPreview);
             document.getElementById('clearBtn').addEventListener('click', clearAll);
-            document.getElementById('exampleBtn').addEventListener('click', loadExample);
             document.getElementById('downloadPDFBtn').addEventListener('click', downloadPDF);
             document.getElementById('printBtn').addEventListener('click', printPDF);
-            
-            // Raccourcis clavier
-            document.addEventListener('keydown', handleKeyboardShortcuts);
-            
-            console.log('✅ Générateur de reçus initialisé');
+            document.getElementById('testSealBtn').addEventListener('click', testSealLoading);
         });
 
-        // ============ PRÉCHARGEMENT DU SCEAU OFFICIEL ============
-        function preloadOfficialSeal() {
-            sealImage = new Image();
-            sealImage.crossOrigin = "anonymous"; // Permet l'accès CORS si nécessaire
+        // ============ CHARGEMENT DU SCEAU ============
+        function loadSealImage() {
+            console.log('🔄 Chargement du sceau officiel...');
             
-            sealImage.onload = function() {
-                sealLoaded = true;
-                console.log('✅ Sceau officiel chargé avec succès:', sealImage.src);
-                console.log('📏 Dimensions sceau:', sealImage.width + 'x' + sealImage.height);
-                showNotification('✅ Sceau officiel chargé: Times_New_Roman.png', 'success');
-            };
+            const img = document.getElementById('sealImage');
+            const sealPreview = document.getElementById('sealPreview');
             
-            sealImage.onerror = function() {
-                sealLoaded = false;
-                console.error('❌ Erreur chargement sceau officiel: Times_New_Roman.png');
-                console.log('🔄 Tentative avec chemin absolu...');
-                
-                // Tentative avec chemin différent
-                setTimeout(() => {
-                    sealImage.src = './Times_New_Roman.png';
-                }, 1000);
-                
-                showNotification('⚠️ Chargement du sceau...', 'info');
-            };
-            
-            // Essayer plusieurs chemins possibles
-            const possiblePaths = [
-                'Times_New_Roman.png',
-                './Times_New_Roman.png',
-                'Times_New_Roman.PNG',
-                './Times_New_Roman.PNG',
-                'times_new_roman.png',
-                './times_new_roman.png'
-            ];
-            
-            // Essayer chaque chemin jusqu'à ce qu'un fonctionne
-            let currentPathIndex = 0;
-            
-            function tryNextPath() {
-                if (currentPathIndex < possiblePaths.length) {
-                    console.log(`🔄 Essai chargement sceau: ${possiblePaths[currentPathIndex]}`);
-                    sealImage.src = possiblePaths[currentPathIndex];
-                    currentPathIndex++;
+            // Convertir l'image en Base64 pour jsPDF
+            convertImageToBase64('Times_New_Roman.png')
+                .then(base64 => {
+                    sealImageBase64 = base64;
+                    sealLoaded = true;
+                    console.log('✅ Sceau converti en Base64');
                     
-                    // Essayer le prochain chemin après 2 secondes si échec
-                    setTimeout(() => {
-                        if (!sealLoaded && currentPathIndex < possiblePaths.length) {
-                            tryNextPath();
-                        }
-                    }, 2000);
-                }
+                    // Afficher la prévisualisation
+                    sealPreview.innerHTML = `
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #28a745; margin-bottom: 10px;">✅</div>
+                            <p style="color: #28a745; font-weight: 600; margin-bottom: 5px;">Sceau chargé avec succès !</p>
+                            <p style="color: #666; font-size: 12px;">Prêt pour l'intégration PDF</p>
+                        </div>
+                    `;
+                    
+                    // Mettre à jour le statut
+                    document.getElementById('sealStatus').innerHTML = `
+                        <p style="color: #155724; margin: 0;">
+                            <strong>✅ Prêt :</strong> Le sceau sera intégré dans tous les reçus
+                        </p>
+                    `;
+                    
+                    showNotification('✅ Sceau officiel chargé avec succès', 'success');
+                })
+                .catch(error => {
+                    console.error('❌ Erreur conversion sceau:', error);
+                    sealPreview.innerHTML = `
+                        <div style="text-align: center; color: #dc3545;">
+                            <div style="font-size: 30px;">❌</div>
+                            <p style="font-weight: 600; margin: 10px 0;">Sceau non trouvé</p>
+                            <p style="font-size: 12px;">Vérifiez que Times_New_Roman.png est dans le dossier</p>
+                        </div>
+                    `;
+                    
+                    showNotification('❌ Sceau officiel non trouvé', 'error');
+                });
+        }
+
+        // Convertir image en Base64
+        function convertImageToBase64(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    try {
+                        const base64 = canvas.toDataURL('image/png');
+                        resolve(base64);
+                    } catch (e) {
+                        reject(new Error('Erreur conversion Base64'));
+                    }
+                };
+                
+                img.onerror = function() {
+                    reject(new Error('Erreur chargement image'));
+                };
+                
+                img.src = url + '?t=' + new Date().getTime();
+            });
+        }
+
+        // Tester le chargement du sceau
+        function testSealLoading() {
+            showNotification('🔄 Test du chargement du sceau...', 'info');
+            loadSealImage();
+        }
+
+        // Mettre à jour la prévisualisation
+        function updateSealPreview() {
+            const sealPreview = document.getElementById('sealPreview');
+            if (sealLoaded) {
+                sealPreview.innerHTML = `
+                    <img src="Times_New_Roman.png" style="max-width: 150px; max-height: 80px; border: 1px solid #ddd; padding: 5px; background: white;" 
+                         onerror="this.style.display='none'" />
+                `;
             }
-            
-            tryNextPath();
         }
 
-        // ============ FONCTIONS PRINCIPALES ============
-
-        // Mettre à jour le compteur de codes
-        function updateCodeCount() {
-            const text = document.getElementById('codeInput').value.trim();
-            codes = text.split('\n')
-                .map(code => code.trim())
-                .filter(code => code.length > 0);
-            
-            document.getElementById('codeCount').textContent = codes.length;
-            saveToLocalStorage();
-        }
-
-        // Générer les reçus PDF AVEC SCEAU
-        async function generateReceiptsPDF() {
+        // ============ GÉNÉRATION PDF ============
+        async function generatePDFWithSeal() {
             if (codes.length === 0) {
                 showNotification('❌ Veuillez entrer au moins un code', 'error');
                 return;
             }
 
-            showLoader('Préparation des reçus...');
+            showLoader('Création des reçus...');
             
             try {
                 // Options
-                const options = {
-                    watermark: document.getElementById('optionWatermark').checked,
-                    seal: document.getElementById('optionSeal').checked,
-                    qrcode: document.getElementById('optionQRCode').checked
-                };
-
-                // Générer le PDF
-                const pdf = await createPDFWithSeal(codes, options);
+                const useWatermark = document.getElementById('optionWatermark').checked;
+                const useSeal = document.getElementById('optionSeal').checked;
                 
-                // Sauvegarder le PDF
-                pdfBlob = pdf.output('blob');
+                // Créer le PDF
+                const pdf = await createReceiptsPDF(codes, useWatermark, useSeal);
                 generatedPDF = pdf;
                 
                 // Mettre à jour l'interface
                 updateDownloadSection();
-                showDownloadSection();
+                document.getElementById('downloadSection').style.display = 'block';
                 
                 hideLoader();
-                showNotification(`✅ ${codes.length} reçu(s) généré(s) avec succès`, 'success');
+                showNotification(`✅ ${codes.length} reçu(s) généré(s)`, 'success');
                 
             } catch (error) {
-                console.error('Erreur génération PDF:', error);
+                console.error('Erreur:', error);
                 hideLoader();
-                showNotification('❌ Erreur lors de la génération: ' + error.message, 'error');
+                showNotification('❌ Erreur génération PDF: ' + error.message, 'error');
             }
         }
 
-        // Créer le PDF AVEC SCEAU OFFICIEL
-        async function createPDFWithSeal(codes, options) {
-            return new Promise(async (resolve, reject) => {
+        // Créer les reçus PDF
+        async function createReceiptsPDF(codes, useWatermark, useSeal) {
+            return new Promise((resolve, reject) => {
                 try {
                     const { jsPDF } = window.jspdf;
                     const pdf = new jsPDF({
@@ -685,25 +373,16 @@ ELOQ-2024-010</textarea>
 
                     let receiptIndex = 0;
 
-                    // Vérifier si le sceau est disponible
-                    const useSeal = options.seal && sealLoaded;
-                    
-                    if (options.seal && !sealLoaded) {
-                        console.warn('⚠️ Sceau non chargé, utilisation de texte');
-                        showNotification('⚠️ Sceau non trouvé, utilisation du texte', 'warning');
-                    }
-
-                    // Générer les reçus page par page
+                    // Générer page par page
                     for (let page = 0; page < Math.ceil(codes.length / 10); page++) {
                         if (page > 0) {
                             pdf.addPage();
                         }
 
-                        // Définir la police
                         pdf.setFont('helvetica');
                         pdf.setFontSize(8);
 
-                        // Générer 10 reçus par page
+                        // 10 reçus par page
                         for (let row = 0; row < rows; row++) {
                             for (let col = 0; col < cols; col++) {
                                 if (receiptIndex >= codes.length) break;
@@ -712,13 +391,13 @@ ELOQ-2024-010</textarea>
                                 const y = margin + row * (receiptHeight + verticalGap);
                                 const code = codes[receiptIndex];
                                 
-                                // Dessiner le cadre du reçu
+                                // Cadre du reçu
                                 pdf.setDrawColor(0, 0, 0);
                                 pdf.setLineWidth(0.5);
                                 pdf.rect(x, y, receiptWidth, receiptHeight);
 
-                                // Ajouter le filigrane (si activé)
-                                if (options.watermark) {
+                                // Filigrane
+                                if (useWatermark) {
                                     pdf.setTextColor(200, 200, 200);
                                     pdf.setFontSize(40);
                                     pdf.text('ÉLOQUENCE', x + receiptWidth/2, y + receiptHeight/2, { 
@@ -762,61 +441,43 @@ ELOQ-2024-010</textarea>
                                 pdf.setFont('helvetica', 'normal');
                                 pdf.setFontSize(8);
 
-                                // QR Code (simulé - si activé)
-                                if (options.qrcode) {
-                                    pdf.setDrawColor(100, 100, 100);
-                                    pdf.rect(x + receiptWidth - 20, y + 28, 15, 15);
-                                    pdf.text('QR', x + receiptWidth - 12.5, y + 35.5, { align: 'center' });
-                                }
-
-                                // SCEAU OFFICIEL - Times_New_Roman.png
-                                if (useSeal) {
+                                // SCEAU OFFICIEL - CORRECTION ICI
+                                if (useSeal && sealImageBase64) {
                                     try {
-                                        // Calculer la taille du sceau (proportionnellement)
-                                        const sealMaxWidth = 25; // mm
-                                        const sealMaxHeight = 12; // mm
+                                        // Dimensions du sceau
+                                        const sealWidth = 20;
+                                        const sealHeight = 10;
                                         
-                                        // Calculer les dimensions proportionnelles
-                                        let sealWidth = sealMaxWidth;
-                                        let sealHeight = (sealImage.height / sealImage.width) * sealWidth;
-                                        
-                                        if (sealHeight > sealMaxHeight) {
-                                            sealHeight = sealMaxHeight;
-                                            sealWidth = (sealImage.width / sealImage.height) * sealHeight;
-                                        }
-                                        
-                                        // Position du sceau (en bas à droite)
+                                        // Position (en bas à droite)
                                         const sealX = x + receiptWidth - sealWidth - 5;
                                         const sealY = y + receiptHeight - sealHeight - 5;
                                         
-                                        // Ajouter l'image du sceau
+                                        // IMPORTANT: Utiliser addImage avec Base64
                                         pdf.addImage(
-                                            sealImage,
-                                            'PNG',
-                                            sealX,
-                                            sealY,
-                                            sealWidth,
-                                            sealHeight
+                                            sealImageBase64, // Base64 de l'image
+                                            'PNG',           // Format
+                                            sealX,           // X
+                                            sealY,           // Y
+                                            sealWidth,       // Largeur
+                                            sealHeight       // Hauteur
                                         );
                                         
-                                        // Ajouter un texte descriptif
+                                        // Texte sous le sceau
                                         pdf.setFontSize(6);
                                         pdf.setTextColor(100, 100, 100);
                                         pdf.text('Sceau Officiel', sealX + sealWidth/2, sealY - 1, { align: 'center' });
                                         pdf.setTextColor(0, 0, 0);
                                         
-                                    } catch (imageError) {
-                                        console.error('❌ Erreur ajout sceau:', imageError);
-                                        // Fallback: texte si l'image ne peut être ajoutée
+                                    } catch (sealError) {
+                                        console.error('Erreur ajout sceau:', sealError);
+                                        // Fallback texte
                                         pdf.setFontSize(8);
                                         pdf.text('SCEAU OFFICIEL', x + receiptWidth - 40, y + receiptHeight - 5);
-                                        pdf.line(x + receiptWidth - 40, y + receiptHeight - 6, x + receiptWidth - 10, y + receiptHeight - 6);
                                     }
-                                } else if (options.seal) {
-                                    // Fallback: texte si l'option est cochée mais l'image n'est pas chargée
+                                } else if (useSeal) {
+                                    // Sceau texte si pas d'image
                                     pdf.setFontSize(8);
                                     pdf.text('SCEAU OFFICIEL', x + receiptWidth - 40, y + receiptHeight - 5);
-                                    pdf.line(x + receiptWidth - 40, y + receiptHeight - 6, x + receiptWidth - 10, y + receiptHeight - 6);
                                 }
 
                                 // Numéro de séquence
@@ -826,19 +487,15 @@ ELOQ-2024-010</textarea>
                                 pdf.setTextColor(0, 0, 0);
 
                                 receiptIndex++;
+                                
+                                // Mettre à jour la progression
+                                updateProgress(Math.min((receiptIndex / codes.length) * 100, 90));
                             }
                         }
 
                         // Numéro de page
                         pdf.setFontSize(10);
                         pdf.text(`Page ${page + 1}`, pageWidth/2, pageHeight - 10, { align: 'center' });
-
-                        // Mettre à jour la progression
-                        const progress = Math.min((receiptIndex / codes.length) * 100, 90);
-                        updateProgress(progress);
-                        
-                        // Petit délai pour éviter le blocage
-                        await new Promise(resolve => setTimeout(resolve, 50));
                     }
 
                     updateProgress(100);
@@ -850,188 +507,97 @@ ELOQ-2024-010</textarea>
             });
         }
 
-        // Mettre à jour la section de téléchargement
-        function updateDownloadSection() {
-            const fileSize = pdfBlob ? Math.round(pdfBlob.size / 1024) : 0;
-            const pageCount = Math.ceil(codes.length / 10);
-            
-            document.getElementById('downloadMessage').textContent = 
-                `${codes.length} reçu(s) • ${pageCount} page(s) A4`;
-            document.getElementById('fileName').textContent = 
-                `recus_eloquence_${new Date().toISOString().slice(0,10)}.pdf`;
-            document.getElementById('fileSize').textContent = `${fileSize} KB`;
+        // ============ FONCTIONS UTILITAIRES ============
+
+        function updateCodeCount() {
+            const text = document.getElementById('codeInput').value.trim();
+            codes = text.split('\n')
+                .map(code => code.trim())
+                .filter(code => code.length > 0);
+            document.getElementById('codeCount').textContent = codes.length;
         }
 
-        // Télécharger le PDF
-        function downloadPDF() {
-            if (!generatedPDF) {
-                showNotification('❌ Aucun PDF à télécharger', 'error');
+        function showPreview() {
+            if (codes.length === 0) {
+                showNotification('❌ Entrez d\'abord des codes', 'error');
                 return;
             }
+            
+            const previewWindow = window.open('', '_blank', 'width=600,height=800');
+            previewWindow.document.write(`
+                <html>
+                <head><title>Aperçu Reçu</title></head>
+                <body style="font-family: Arial; padding: 20px;">
+                    <h1>📋 Aperçu du Reçu avec Sceau</h1>
+                    <div style="border: 2px solid #000; padding: 20px; width: 300px; margin: 20px auto; position: relative;">
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <h2 style="margin: 0;">REÇU DE PAIEMENT</h2>
+                            <p style="color: #666;">Concours d'Éloquence 2024</p>
+                        </div>
+                        <div style="border-top: 1px solid #000; padding-top: 15px;">
+                            <p><strong>Date:</strong> ${new Date().toLocaleDateString('fr-FR')}</p>
+                            <p><strong>Code:</strong> <span style="color: red; font-weight: bold;">${codes[0]}</span></p>
+                            <p><strong>Montant:</strong> 50,00 €</p>
+                        </div>
+                        <div style="text-align: right; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000;">
+                            <div style="border: 1px dashed #3498db; width: 100px; height: 50px; margin-left: auto; display: flex; align-items: center; justify-content: center; color: #666;">
+                                SCEAU OFFICIEL
+                            </div>
+                            <p style="font-size: 12px; color: #666; margin-top: 5px;">(Times_New_Roman.png sera intégré)</p>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; margin-top: 30px;">
+                        ✅ Le PDF final contiendra ${codes.length} reçu(s) avec le sceau officiel
+                    </p>
+                </body>
+                </html>
+            `);
+        }
 
+        function clearAll() {
+            if (codes.length > 0 && confirm('Effacer tous les codes ?')) {
+                document.getElementById('codeInput').value = '';
+                codes = [];
+                updateCodeCount();
+                document.getElementById('downloadSection').style.display = 'none';
+                showNotification('🗑️ Codes effacés', 'info');
+            }
+        }
+
+        function downloadPDF() {
+            if (!generatedPDF) {
+                showNotification('❌ Générer d\'abord les reçus', 'error');
+                return;
+            }
+            
             const filename = `recus_concours_eloquence_${new Date().toISOString().slice(0,19).replace(/[:]/g, '-')}.pdf`;
             generatedPDF.save(filename);
             showNotification('📥 Téléchargement démarré', 'success');
         }
 
-        // Imprimer le PDF
         function printPDF() {
             if (!generatedPDF) {
-                showNotification('❌ Aucun PDF à imprimer', 'error');
+                showNotification('❌ Générer d\'abord les reçus', 'error');
                 return;
             }
-
-            // Créer une nouvelle fenêtre pour l'impression
+            
             const printWindow = window.open('', '_blank');
             const pdfDataUri = generatedPDF.output('datauristring');
-            
             printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Impression des Reçus</title>
-                    <style>
-                        body { margin: 0; padding: 0; }
-                        iframe { width: 100%; height: 100vh; border: none; }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${pdfDataUri}"></iframe>
-                    <script>
-                        window.onload = function() {
-                            setTimeout(function() {
-                                document.querySelector('iframe').contentWindow.print();
-                            }, 1000);
-                        };
-                    <\/script>
-                </body>
-                </html>
+                <html><head><title>Impression</title></head>
+                <body><iframe src="${pdfDataUri}" width="100%" height="100%" style="border: none;"></iframe>
+                <script>setTimeout(() => window.print(), 1000);<\/script>
+                </body></html>
             `);
         }
 
-        // ============ FONCTIONS UTILITAIRES ============
-
-        // Afficher l'aperçu rapide
-        function showQuickPreview() {
-            if (codes.length === 0) {
-                showNotification('❌ Veuillez entrer des codes', 'error');
-                return;
-            }
-
-            // Créer un aperçu avec le sceau
-            const previewWindow = window.open('', '_blank', 'width=600,height=800');
-            previewWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Aperçu Reçu - Avec Sceau Officiel</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
-                        .preview-container { 
-                            width: 400px; 
-                            margin: 0 auto; 
-                            background: white;
-                            padding: 20px;
-                            border-radius: 10px;
-                            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                        }
-                        .receipt { 
-                            width: 300px; 
-                            border: 2px solid #000; 
-                            padding: 20px; 
-                            margin: 20px auto;
-                            position: relative;
-                            background: white;
-                        }
-                        .seal-preview {
-                            width: 100px;
-                            height: 50px;
-                            border: 2px dashed #3498db;
-                            margin: 20px auto;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: #f8f9fa;
-                        }
-                        h2 { text-align: center; margin: 0 0 10px 0; color: #2c3e50; }
-                        .code { 
-                            text-align: center; 
-                            font-size: 24px; 
-                            font-weight: bold; 
-                            color: #c00; 
-                            margin: 20px 0; 
-                            font-family: monospace;
-                            padding: 10px;
-                            background: #f8f9fa;
-                            border-radius: 5px;
-                        }
-                        .info { 
-                            margin: 10px 0; 
-                            padding: 8px;
-                            border-bottom: 1px solid #eee;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="preview-container">
-                        <h1>📋 Aperçu du Reçu</h1>
-                        
-                        <div class="receipt">
-                            <h2>REÇU DE PAIEMENT</h2>
-                            <div class="info"><strong>Concours d'Éloquence 2024</strong></div>
-                            <div class="info">Date: ${new Date().toLocaleDateString('fr-FR')}</div>
-                            <div class="info">Heure: ${new Date().toLocaleTimeString('fr-FR').slice(0,5)}</div>
-                            <div class="info">Code: <span class="code">${codes[0]}</span></div>
-                            <div class="info">Montant: 50,00 €</div>
-                            
-                            <div style="text-align: center; margin-top: 30px;">
-                                <div class="seal-preview">
-                                    SCEAU OFFICIEL<br>
-                                    <small>(Times_New_Roman.png)</small>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
-                            <p>✅ Le PDF final inclura le vrai sceau officiel</p>
-                            <p>📄 ${codes.length} reçu(s) seront générés</p>
-                            <p>📑 ${Math.ceil(codes.length / 10)} page(s) A4</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `);
+        function updateDownloadSection() {
+            const pageCount = Math.ceil(codes.length / 10);
+            document.getElementById('downloadMessage').textContent = 
+                `${codes.length} reçu(s) • ${pageCount} page(s) A4`;
+            document.getElementById('fileName').textContent = 
+                `recus_eloquence_${new Date().toISOString().slice(0,10)}.pdf`;
         }
-
-        // Effacer tout
-        function clearAll() {
-            if (codes.length > 0 && confirm('Êtes-vous sûr de vouloir tout effacer ?')) {
-                document.getElementById('codeInput').value = '';
-                codes = [];
-                updateCodeCount();
-                document.getElementById('downloadSection').style.display = 'none';
-                showNotification('🗑️ Tous les codes ont été effacés', 'info');
-            }
-        }
-
-        // Charger un exemple
-        function loadExample() {
-            const example = [];
-            for (let i = 1; i <= 12; i++) {
-                example.push(`ELOQ-2024-${String(i).padStart(3, '0')}`);
-            }
-            document.getElementById('codeInput').value = example.join('\n');
-            updateCodeCount();
-            showNotification('📋 Exemple chargé (12 codes)', 'success');
-        }
-
-        // Afficher la section de téléchargement
-        function showDownloadSection() {
-            document.getElementById('downloadSection').style.display = 'block';
-            document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // ============ GESTION DU LOADER ============
 
         function showLoader(message) {
             document.getElementById('loaderStatus').textContent = message;
@@ -1041,106 +607,42 @@ ELOQ-2024-010</textarea>
 
         function hideLoader() {
             document.getElementById('loader').style.display = 'none';
+            document.getElementById('progressBar').style.width = '100%';
         }
 
         function updateProgress(percent) {
             document.getElementById('progressBar').style.width = `${percent}%`;
-            document.getElementById('loaderStatus').textContent = 
-                `Génération... ${Math.round(percent)}%`;
         }
 
-        // ============ NOTIFICATIONS ============
-
-        function showNotification(message, type = 'info') {
+        function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            
-            const icons = {
-                success: '✅',
-                error: '❌',
-                warning: '⚠️',
-                info: 'ℹ️'
-            };
+            notification.className = 'notification';
+            notification.style.background = type === 'error' ? '#f8d7da' : 
+                                          type === 'success' ? '#d4edda' : '#d1ecf1';
+            notification.style.color = type === 'error' ? '#721c24' : 
+                                      type === 'success' ? '#155724' : '#0c5460';
+            notification.style.borderLeft = type === 'error' ? '4px solid #dc3545' : 
+                                           type === 'success' ? '4px solid #28a745' : '4px solid #17a2b8';
             
             notification.innerHTML = `
-                <span style="font-size: 24px;">${icons[type] || 'ℹ️'}</span>
+                <span style="font-size: 20px;">${type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️'}</span>
                 <span>${message}</span>
-                <button onclick="this.parentElement.remove()" style="background:none; border:none; font-size:24px; cursor:pointer; margin-left:auto; color: #666;">×</button>
+                <button onclick="this.parentElement.remove()" style="background:none; border:none; font-size:20px; cursor:pointer; margin-left:auto;">×</button>
             `;
             
             document.body.appendChild(notification);
-            setTimeout(() => notification.classList.add('show'), 10);
-            
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.classList.remove('show');
-                    setTimeout(() => notification.remove(), 300);
-                }
-            }, 5000);
+            setTimeout(() => notification.remove(), 5000);
         }
 
-        // ============ LOCAL STORAGE ============
-
-        function saveToLocalStorage() {
-            localStorage.setItem('eloquenceCodes', JSON.stringify(codes));
-            localStorage.setItem('eloquenceOptions', JSON.stringify({
-                watermark: document.getElementById('optionWatermark').checked,
-                seal: document.getElementById('optionSeal').checked,
-                qrcode: document.getElementById('optionQRCode').checked
-            }));
-        }
-
-        function loadFromLocalStorage() {
-            const savedCodes = localStorage.getItem('eloquenceCodes');
-            const savedOptions = localStorage.getItem('eloquenceOptions');
-            
-            if (savedCodes) {
-                codes = JSON.parse(savedCodes);
-                if (codes.length > 0) {
-                    document.getElementById('codeInput').value = codes.join('\n');
-                    updateCodeCount();
-                }
+        // CSS pour l'animation du spinner
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
             }
-            
-            if (savedOptions) {
-                const options = JSON.parse(savedOptions);
-                document.getElementById('optionWatermark').checked = options.watermark;
-                document.getElementById('optionSeal').checked = options.seal;
-                document.getElementById('optionQRCode').checked = options.qrcode;
-            }
-        }
-
-        // ============ RACCOURCIS CLAVIER ============
-
-        function handleKeyboardShortcuts(e) {
-            // Ctrl+Enter : Générer
-            if (e.ctrlKey && e.key === 'Enter') {
-                e.preventDefault();
-                generateReceiptsPDF();
-            }
-            
-            // Ctrl+E : Exemple
-            if (e.ctrlKey && e.key === 'e') {
-                e.preventDefault();
-                loadExample();
-            }
-            
-            // Ctrl+D : Télécharger
-            if (e.ctrlKey && e.key === 'd' && generatedPDF) {
-                e.preventDefault();
-                downloadPDF();
-            }
-            
-            // Ctrl+P : Imprimer
-            if (e.ctrlKey && e.key === 'p' && generatedPDF) {
-                e.preventDefault();
-                printPDF();
-            }
-        }
-
-        // ============ FONCTIONS EXPORTÉES ============
-        window.downloadPDF = downloadPDF;
-        window.printPDF = printPDF;
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
