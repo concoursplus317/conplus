@@ -7,8 +7,6 @@
     
     <!-- Bibliothèques nécessaires -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         /* === RESET === */
@@ -159,18 +157,6 @@
         .btn-success {
             background: linear-gradient(135deg, #27ae60, #229954);
             color: white;
-        }
-
-        /* === RECEIPT PREVIEW === */
-        .receipt-preview-container {
-            position: relative;
-            width: 400px;
-            height: 600px;
-            margin: 0 auto;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            background: white;
         }
 
         /* === OPTIONS === */
@@ -331,131 +317,6 @@
             margin-top: 40px;
         }
 
-        /* === RECEIPT STYLES (Pour le PDF) === */
-        .receipt-page {
-            width: 210mm;
-            min-height: 297mm;
-            padding: 20mm;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .receipt-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 15mm 20mm;
-            height: 257mm;
-        }
-
-        .receipt {
-            width: 85mm;
-            height: 45mm;
-            border: 1px solid #000;
-            padding: 5mm;
-            position: relative;
-            font-size: 10px;
-            font-family: 'Times New Roman', serif;
-            page-break-inside: avoid;
-            background: white;
-            overflow: hidden;
-        }
-
-        .watermark-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            z-index: 0;
-            background-image: url('IMG_1812.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .receipt-content {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .receipt-header {
-            text-align: center;
-            margin-bottom: 2mm;
-            padding-bottom: 1mm;
-            border-bottom: 0.5px solid #000;
-        }
-
-        .receipt-header h3 {
-            font-size: 12px;
-            font-weight: bold;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .receipt-info {
-            margin-bottom: 2mm;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1mm;
-            font-size: 9px;
-        }
-
-        .info-label {
-            font-weight: bold;
-        }
-
-        .code-display {
-            text-align: center;
-            margin: 2mm 0;
-            padding: 2mm;
-            border: 1px solid #ccc;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 11px;
-            background: #f8f9fa;
-        }
-
-        .qrcode-container {
-            text-align: center;
-            margin: 2mm 0;
-        }
-
-        .signature-container {
-            text-align: right;
-            margin-top: auto;
-            padding-top: 2mm;
-            border-top: 0.5px solid #000;
-        }
-
-        .signature-img {
-            height: 12mm;
-            display: block;
-            margin-left: auto;
-            opacity: 0.8;
-        }
-
-        .receipt-number {
-            position: absolute;
-            top: 1mm;
-            right: 1mm;
-            font-size: 8px;
-            color: #666;
-            background: white;
-            padding: 1mm 2mm;
-            border-radius: 2mm;
-            border: 0.5px solid #ddd;
-        }
-
         /* === NOTIFICATION === */
         .notification {
             position: fixed;
@@ -477,32 +338,7 @@
             transform: translateX(0);
         }
 
-        .notification i {
-            font-size: 24px;
-        }
-
-        .notification-success i { color: #28a745; }
-        .notification-error i { color: #dc3545; }
-        .notification-info i { color: #17a2b8; }
-
         /* === RESPONSIVE === */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            
-            .receipt-page, .receipt-page * {
-                visibility: visible;
-            }
-            
-            .receipt-page {
-                position: absolute;
-                left: 0;
-                top: 0;
-                box-shadow: none;
-            }
-        }
-
         @media (max-width: 768px) {
             .main-content {
                 padding: 20px;
@@ -565,9 +401,9 @@ ELOQ-2024-010</textarea>
                             </label>
                         </div>
                         <div class="option-item">
-                            <input type="checkbox" id="optionSignature" checked>
-                            <label for="optionSignature">
-                                <div style="width: 20px; height: 20px; border-bottom: 2px solid #000; margin-right: 10px;"></div>
+                            <input type="checkbox" id="optionSeal" checked>
+                            <label for="optionSeal">
+                                <div style="width: 20px; height: 20px; border: 2px solid #000; border-radius: 50%; margin-right: 10px;"></div>
                                 Ajouter le sceau officiel (Times_New_Roman.png)
                             </label>
                         </div>
@@ -642,8 +478,8 @@ ELOQ-2024-010</textarea>
                 <div style="background: #f0f8f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                     <h4 style="color: #27ae60; margin-bottom: 10px;">🔒 Sécurité intégrée</h4>
                     <ul style="padding-left: 20px; color: #2c3e50;">
-                        <li>Filigrane unique par reçu</li>
-                        <li>Sceau officiel intégré</li>
+                        <li>Filigrane (IMG_1812.jpeg)</li>
+                        <li>Sceau officiel (Times_New_Roman.png)</li>
                         <li>Code QR de vérification</li>
                         <li>Numéro de série unique</li>
                     </ul>
@@ -683,11 +519,10 @@ ELOQ-2024-010</textarea>
         </div>
     </div>
 
-    <!-- Hidden receipt container for PDF generation -->
-    <div id="pdfContainer" style="position: absolute; left: -9999px; top: -9999px; width: 210mm;"></div>
-
-    <!-- Image du sceau pour préchargement -->
-    <img id="sealImage" src="Times_New_Roman.png" style="display: none;" onerror="console.warn('Sceau non chargé');" />
+    <!-- Sceau officiel caché pour préchargement -->
+    <img id="officialSeal" src="Times_New_Roman.png" style="display: none;" alt="Sceau Officiel" 
+         onload="console.log('✅ Sceau officiel chargé: Times_New_Roman.png')"
+         onerror="console.error('❌ Erreur chargement sceau officiel')" />
 
     <script>
         // ============ VARIABLES GLOBALES ============
@@ -702,8 +537,8 @@ ELOQ-2024-010</textarea>
             updateCodeCount();
             loadFromLocalStorage();
             
-            // Précharger l'image du sceau
-            preloadSealImage();
+            // Précharger le sceau officiel
+            preloadOfficialSeal();
             
             // Événements
             document.getElementById('codeInput').addEventListener('input', updateCodeCount);
@@ -720,18 +555,60 @@ ELOQ-2024-010</textarea>
             console.log('✅ Générateur de reçus initialisé');
         });
 
-        // ============ PRÉCHARGEMENT DU SCEAU ============
-        function preloadSealImage() {
+        // ============ PRÉCHARGEMENT DU SCEAU OFFICIEL ============
+        function preloadOfficialSeal() {
             sealImage = new Image();
+            sealImage.crossOrigin = "anonymous"; // Permet l'accès CORS si nécessaire
+            
             sealImage.onload = function() {
                 sealLoaded = true;
-                console.log('✅ Sceau officiel chargé avec succès');
+                console.log('✅ Sceau officiel chargé avec succès:', sealImage.src);
+                console.log('📏 Dimensions sceau:', sealImage.width + 'x' + sealImage.height);
+                showNotification('✅ Sceau officiel chargé: Times_New_Roman.png', 'success');
             };
+            
             sealImage.onerror = function() {
                 sealLoaded = false;
-                console.warn('⚠️ Sceau officiel non trouvé. Utilisation du texte.');
+                console.error('❌ Erreur chargement sceau officiel: Times_New_Roman.png');
+                console.log('🔄 Tentative avec chemin absolu...');
+                
+                // Tentative avec chemin différent
+                setTimeout(() => {
+                    sealImage.src = './Times_New_Roman.png';
+                }, 1000);
+                
+                showNotification('⚠️ Chargement du sceau...', 'info');
             };
-            sealImage.src = 'Times_New_Roman.png';
+            
+            // Essayer plusieurs chemins possibles
+            const possiblePaths = [
+                'Times_New_Roman.png',
+                './Times_New_Roman.png',
+                'Times_New_Roman.PNG',
+                './Times_New_Roman.PNG',
+                'times_new_roman.png',
+                './times_new_roman.png'
+            ];
+            
+            // Essayer chaque chemin jusqu'à ce qu'un fonctionne
+            let currentPathIndex = 0;
+            
+            function tryNextPath() {
+                if (currentPathIndex < possiblePaths.length) {
+                    console.log(`🔄 Essai chargement sceau: ${possiblePaths[currentPathIndex]}`);
+                    sealImage.src = possiblePaths[currentPathIndex];
+                    currentPathIndex++;
+                    
+                    // Essayer le prochain chemin après 2 secondes si échec
+                    setTimeout(() => {
+                        if (!sealLoaded && currentPathIndex < possiblePaths.length) {
+                            tryNextPath();
+                        }
+                    }, 2000);
+                }
+            }
+            
+            tryNextPath();
         }
 
         // ============ FONCTIONS PRINCIPALES ============
@@ -747,7 +624,7 @@ ELOQ-2024-010</textarea>
             saveToLocalStorage();
         }
 
-        // Générer les reçus PDF
+        // Générer les reçus PDF AVEC SCEAU
         async function generateReceiptsPDF() {
             if (codes.length === 0) {
                 showNotification('❌ Veuillez entrer au moins un code', 'error');
@@ -760,12 +637,12 @@ ELOQ-2024-010</textarea>
                 // Options
                 const options = {
                     watermark: document.getElementById('optionWatermark').checked,
-                    signature: document.getElementById('optionSignature').checked,
+                    seal: document.getElementById('optionSeal').checked,
                     qrcode: document.getElementById('optionQRCode').checked
                 };
 
                 // Générer le PDF
-                const pdf = await createPDF(codes, options);
+                const pdf = await createPDFWithSeal(codes, options);
                 
                 // Sauvegarder le PDF
                 pdfBlob = pdf.output('blob');
@@ -781,12 +658,12 @@ ELOQ-2024-010</textarea>
             } catch (error) {
                 console.error('Erreur génération PDF:', error);
                 hideLoader();
-                showNotification('❌ Erreur lors de la génération', 'error');
+                showNotification('❌ Erreur lors de la génération: ' + error.message, 'error');
             }
         }
 
-        // Créer le PDF AVEC SCEAU
-        async function createPDF(codes, options) {
+        // Créer le PDF AVEC SCEAU OFFICIEL
+        async function createPDFWithSeal(codes, options) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const { jsPDF } = window.jspdf;
@@ -807,6 +684,14 @@ ELOQ-2024-010</textarea>
                     const verticalGap = (pageHeight - 2 * margin - rows * receiptHeight) / (rows - 1);
 
                     let receiptIndex = 0;
+
+                    // Vérifier si le sceau est disponible
+                    const useSeal = options.seal && sealLoaded;
+                    
+                    if (options.seal && !sealLoaded) {
+                        console.warn('⚠️ Sceau non chargé, utilisation de texte');
+                        showNotification('⚠️ Sceau non trouvé, utilisation du texte', 'warning');
+                    }
 
                     // Générer les reçus page par page
                     for (let page = 0; page < Math.ceil(codes.length / 10); page++) {
@@ -884,15 +769,27 @@ ELOQ-2024-010</textarea>
                                     pdf.text('QR', x + receiptWidth - 12.5, y + 35.5, { align: 'center' });
                                 }
 
-                                // SCEAU OFFICIEL (si activé)
-                                if (options.signature && sealLoaded) {
+                                // SCEAU OFFICIEL - Times_New_Roman.png
+                                if (useSeal) {
                                     try {
-                                        // Essayer d'ajouter l'image du sceau
-                                        const sealWidth = 20;
-                                        const sealHeight = 10;
-                                        const sealX = x + receiptWidth - sealWidth - 3;
-                                        const sealY = y + receiptHeight - sealHeight - 3;
+                                        // Calculer la taille du sceau (proportionnellement)
+                                        const sealMaxWidth = 25; // mm
+                                        const sealMaxHeight = 12; // mm
                                         
+                                        // Calculer les dimensions proportionnelles
+                                        let sealWidth = sealMaxWidth;
+                                        let sealHeight = (sealImage.height / sealImage.width) * sealWidth;
+                                        
+                                        if (sealHeight > sealMaxHeight) {
+                                            sealHeight = sealMaxHeight;
+                                            sealWidth = (sealImage.width / sealImage.height) * sealHeight;
+                                        }
+                                        
+                                        // Position du sceau (en bas à droite)
+                                        const sealX = x + receiptWidth - sealWidth - 5;
+                                        const sealY = y + receiptHeight - sealHeight - 5;
+                                        
+                                        // Ajouter l'image du sceau
                                         pdf.addImage(
                                             sealImage,
                                             'PNG',
@@ -902,21 +799,23 @@ ELOQ-2024-010</textarea>
                                             sealHeight
                                         );
                                         
-                                        // Texte sous le sceau
+                                        // Ajouter un texte descriptif
                                         pdf.setFontSize(6);
-                                        pdf.text('Sceau Officiel', sealX + sealWidth/2, sealY + sealHeight + 2, { align: 'center' });
+                                        pdf.setTextColor(100, 100, 100);
+                                        pdf.text('Sceau Officiel', sealX + sealWidth/2, sealY - 1, { align: 'center' });
+                                        pdf.setTextColor(0, 0, 0);
                                         
                                     } catch (imageError) {
-                                        // Fallback: texte si l'image ne charge pas
-                                        console.warn('Image du sceau non utilisable, fallback texte');
+                                        console.error('❌ Erreur ajout sceau:', imageError);
+                                        // Fallback: texte si l'image ne peut être ajoutée
                                         pdf.setFontSize(8);
-                                        pdf.text('LE PRÉSIDENT DU JURY', x + receiptWidth - 40, y + receiptHeight - 5);
+                                        pdf.text('SCEAU OFFICIEL', x + receiptWidth - 40, y + receiptHeight - 5);
                                         pdf.line(x + receiptWidth - 40, y + receiptHeight - 6, x + receiptWidth - 10, y + receiptHeight - 6);
                                     }
-                                } else if (options.signature) {
-                                    // Fallback: signature texte
+                                } else if (options.seal) {
+                                    // Fallback: texte si l'option est cochée mais l'image n'est pas chargée
                                     pdf.setFontSize(8);
-                                    pdf.text('LE PRÉSIDENT DU JURY', x + receiptWidth - 40, y + receiptHeight - 5);
+                                    pdf.text('SCEAU OFFICIEL', x + receiptWidth - 40, y + receiptHeight - 5);
                                     pdf.line(x + receiptWidth - 40, y + receiptHeight - 6, x + receiptWidth - 10, y + receiptHeight - 6);
                                 }
 
@@ -934,7 +833,12 @@ ELOQ-2024-010</textarea>
                         pdf.setFontSize(10);
                         pdf.text(`Page ${page + 1}`, pageWidth/2, pageHeight - 10, { align: 'center' });
 
-                        updateProgress(Math.min((receiptIndex / codes.length) * 100, 90));
+                        // Mettre à jour la progression
+                        const progress = Math.min((receiptIndex / codes.length) * 100, 90);
+                        updateProgress(progress);
+                        
+                        // Petit délai pour éviter le blocage
+                        await new Promise(resolve => setTimeout(resolve, 50));
                     }
 
                     updateProgress(100);
@@ -1022,25 +926,34 @@ ELOQ-2024-010</textarea>
                 <head>
                     <title>Aperçu Reçu - Avec Sceau Officiel</title>
                     <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+                        .preview-container { 
+                            width: 400px; 
+                            margin: 0 auto; 
+                            background: white;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                        }
                         .receipt { 
                             width: 300px; 
                             border: 2px solid #000; 
                             padding: 20px; 
-                            margin: 0 auto;
+                            margin: 20px auto;
                             position: relative;
                             background: white;
                         }
-                        .watermark { 
-                            position: absolute; 
-                            top: 0; left: 0; 
-                            width: 100%; height: 100%; 
-                            opacity: 0.1; 
-                            background: #ccc; 
-                            z-index: 0; 
+                        .seal-preview {
+                            width: 100px;
+                            height: 50px;
+                            border: 2px dashed #3498db;
+                            margin: 20px auto;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #f8f9fa;
                         }
-                        .content { position: relative; z-index: 1; }
-                        h2 { text-align: center; margin: 0 0 10px 0; }
+                        h2 { text-align: center; margin: 0 0 10px 0; color: #2c3e50; }
                         .code { 
                             text-align: center; 
                             font-size: 24px; 
@@ -1048,50 +961,43 @@ ELOQ-2024-010</textarea>
                             color: #c00; 
                             margin: 20px 0; 
                             font-family: monospace;
+                            padding: 10px;
+                            background: #f8f9fa;
+                            border-radius: 5px;
                         }
-                        .seal-area {
-                            text-align: right;
-                            margin-top: 30px;
-                            padding-top: 10px;
-                            border-top: 1px solid #000;
-                        }
-                        .seal-placeholder {
-                            width: 100px;
-                            height: 50px;
-                            border: 1px solid #ccc;
-                            margin-left: auto;
-                            background: #f8f8f8;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: #666;
-                            font-size: 12px;
+                        .info { 
+                            margin: 10px 0; 
+                            padding: 8px;
+                            border-bottom: 1px solid #eee;
                         }
                     </style>
                 </head>
                 <body>
-                    <h1>Aperçu du Reçu avec Sceau Officiel</h1>
-                    <div class="receipt">
-                        <div class="watermark"></div>
-                        <div class="content">
+                    <div class="preview-container">
+                        <h1>📋 Aperçu du Reçu</h1>
+                        
+                        <div class="receipt">
                             <h2>REÇU DE PAIEMENT</h2>
-                            <p><strong>Concours d'Éloquence 2024</strong></p>
-                            <p>Date: ${new Date().toLocaleDateString('fr-FR')}</p>
-                            <p>Code: <span class="code">${codes[0]}</span></p>
-                            <p>Montant: 50,00 €</p>
-                            <div class="seal-area">
-                                <div class="seal-placeholder">
-                                    SCEAU OFFICIEL
+                            <div class="info"><strong>Concours d'Éloquence 2024</strong></div>
+                            <div class="info">Date: ${new Date().toLocaleDateString('fr-FR')}</div>
+                            <div class="info">Heure: ${new Date().toLocaleTimeString('fr-FR').slice(0,5)}</div>
+                            <div class="info">Code: <span class="code">${codes[0]}</span></div>
+                            <div class="info">Montant: 50,00 €</div>
+                            
+                            <div style="text-align: center; margin-top: 30px;">
+                                <div class="seal-preview">
+                                    SCEAU OFFICIEL<br>
+                                    <small>(Times_New_Roman.png)</small>
                                 </div>
-                                <p style="font-size: 10px; color: #666; text-align: center; margin-top: 5px;">
-                                    (Times_New_Roman.png sera intégré)
-                                </p>
                             </div>
                         </div>
+                        
+                        <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+                            <p>✅ Le PDF final inclura le vrai sceau officiel</p>
+                            <p>📄 ${codes.length} reçu(s) seront générés</p>
+                            <p>📑 ${Math.ceil(codes.length / 10)} page(s) A4</p>
+                        </div>
                     </div>
-                    <p style="text-align: center; margin-top: 20px; color: #666;">
-                        ⚠️ L'aperçu montre le placement. Le PDF final inclura le vrai sceau officiel.
-                    </p>
                 </body>
                 </html>
             `);
@@ -1148,18 +1054,28 @@ ELOQ-2024-010</textarea>
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
+            
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            
             notification.innerHTML = `
-                <span style="font-size: 24px;">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span style="font-size: 24px;">${icons[type] || 'ℹ️'}</span>
                 <span>${message}</span>
-                <button onclick="this.parentElement.remove()" style="background:none; border:none; font-size:24px; cursor:pointer; margin-left:auto;">×</button>
+                <button onclick="this.parentElement.remove()" style="background:none; border:none; font-size:24px; cursor:pointer; margin-left:auto; color: #666;">×</button>
             `;
             
             document.body.appendChild(notification);
             setTimeout(() => notification.classList.add('show'), 10);
             
             setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
             }, 5000);
         }
 
@@ -1169,7 +1085,7 @@ ELOQ-2024-010</textarea>
             localStorage.setItem('eloquenceCodes', JSON.stringify(codes));
             localStorage.setItem('eloquenceOptions', JSON.stringify({
                 watermark: document.getElementById('optionWatermark').checked,
-                signature: document.getElementById('optionSignature').checked,
+                seal: document.getElementById('optionSeal').checked,
                 qrcode: document.getElementById('optionQRCode').checked
             }));
         }
@@ -1189,7 +1105,7 @@ ELOQ-2024-010</textarea>
             if (savedOptions) {
                 const options = JSON.parse(savedOptions);
                 document.getElementById('optionWatermark').checked = options.watermark;
-                document.getElementById('optionSignature').checked = options.signature;
+                document.getElementById('optionSeal').checked = options.seal;
                 document.getElementById('optionQRCode').checked = options.qrcode;
             }
         }
