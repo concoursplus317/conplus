@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excellentia Academia - Centre de Contrôle</title>
+    <title>Générateur de Codes Uniques</title>
     <style>
-        :root {
-            --primary: #1a237e;
-            --secondary: #303f9f;
-            --accent: #ff4081;
-            --gold: #ffd700;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -20,95 +13,238 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 800px;
             margin: 0 auto;
+            padding: 20px;
         }
         
-        /* HEADER */
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px;
+        header {
             text-align: center;
-            border-radius: 15px 15px 0 0;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
         
-        .logo {
-            font-size: 2.8em;
-            font-weight: 800;
+        h1 {
+            font-size: 2.5rem;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, var(--gold), #fff);
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
-        /* BOUTONS ADMIN */
-        .admin-buttons {
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+        
+        .example-code {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .generator-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
         
-        .admin-btn {
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 8px;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        input, select, button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid transparent;
             color: white;
-            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00dbde;
+            box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.2);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00dbde, #0093E9);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .result-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .generated-code {
+            font-size: 2.5rem;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            letter-spacing: 4px;
+            border: 2px dashed rgba(0, 219, 222, 0.3);
+            word-break: break-all;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .history-section {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        #historyList {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #00dbde;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .code-display {
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            word-break: break-all;
+            flex: 1;
+            margin-right: 15px;
+        }
+        
+        .timestamp {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 12px 24px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.2em;
-            font-weight: 600;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            transition: background 0.3s;
         }
         
-        .admin-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--accent);
-            transform: translateY(-2px);
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
-        .admin-btn.active {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: var(--gold);
+        .copy-btn.copied {
+            background: rgba(0, 255, 0, 0.2);
         }
         
-        /* CONTENU PRINCIPAL */
-        .main-content {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            min-height: 500px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .copy-single-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            transition: background 0.3s;
         }
         
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
+        .copy-single-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
-        .content-section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* NOTIFICATION */
         .notification {
             position: fixed;
             top: 20px;
@@ -127,657 +263,136 @@
             to { transform: translateX(0); }
         }
         
+        .history-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .history-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .history-buttons button {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
         @media (max-width: 768px) {
-            .admin-buttons {
+            .container {
+                padding: 10px;
+            }
+            
+            .generator-section {
+                padding: 20px;
+            }
+            
+            .generated-code {
+                font-size: 1.8rem;
+                padding: 20px;
+                letter-spacing: 2px;
+            }
+            
+            .controls {
                 grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .history-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .code-display {
+                margin-right: 0;
+                margin-bottom: 5px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">EXCELLENTIA ACADEMIA</div>
-            <div style="opacity: 0.9; font-size: 1.2em;">CENTRE DE CONTRÔLE ADMINISTRATIF</div>
-        </div>
+        <header>
+            <h1>🔐 Générateur de Code Unique</h1>
+            <p class="subtitle">Générez des codes aléatoires uniques comme</p>
+            <div class="example-code">WMT6HP3VJVED</div>
+        </header>
         
-        <!-- BOUTONS ADMIN -->
-        <div class="admin-buttons">
-            <button class="admin-btn active" onclick="showSection('generator')">
-                🔐 Générateur de Codes
-            </button>
-            <button class="admin-btn" onclick="showSection('vote')">
-                🗳️ Système de Vote
-            </button>
-            <button class="admin-btn" onclick="showSection('control')">
-                🎮 Centre de Contrôle
-            </button>
-            <button class="admin-btn" onclick="showSection('website')">
-                🌐 Site Web Intégré
-            </button>
-        </div>
-        
-        <!-- CONTENU PRINCIPAL -->
-        <div class="main-content">
-            <!-- GÉNÉRATEUR DE CODES -->
-            <div class="content-section active" id="generatorSection">
-                <style>
-                    .generator-exact * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    }
-                    
-                    .generator-exact {
-                        background: transparent;
-                        color: #fff;
-                        min-height: 500px;
-                    }
-                    
-                    .generator-exact .container {
-                        max-width: 800px;
-                        margin: 0 auto;
-                        padding: 0;
-                        background: transparent;
-                        box-shadow: none;
-                        border: none;
-                    }
-                    
-                    .generator-exact header {
-                        text-align: center;
-                        margin-bottom: 40px;
-                    }
-                    
-                    .generator-exact h1 {
-                        font-size: 2.5rem;
-                        margin-bottom: 10px;
-                        background: linear-gradient(45deg, #00dbde, #fc00ff);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                    }
-                    
-                    .generator-exact .subtitle {
-                        color: #b0b0b0;
-                        font-size: 1.1rem;
-                    }
-                    
-                    .generator-exact .example-code {
-                        display: inline-block;
-                        background: rgba(255, 255, 255, 0.1);
-                        padding: 10px 20px;
-                        border-radius: 8px;
-                        margin-top: 10px;
-                        font-family: monospace;
-                        font-size: 1.2rem;
-                        letter-spacing: 2px;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                    }
-                    
-                    .generator-exact .generator-section {
-                        background: rgba(255, 255, 255, 0.05);
-                        border-radius: 20px;
-                        padding: 40px;
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(255, 255, 255, 0.1);
-                    }
-                    
-                    .generator-exact .controls {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                        gap: 20px;
-                        margin-bottom: 30px;
-                    }
-                    
-                    .generator-exact .control-group {
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    
-                    .generator-exact label {
-                        margin-bottom: 8px;
-                        color: #a0a0a0;
-                        font-size: 0.9rem;
-                    }
-                    
-                    .generator-exact input, .generator-exact select, .generator-exact button {
-                        padding: 12px 16px;
-                        border: none;
-                        border-radius: 10px;
-                        font-size: 1rem;
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                    }
-                    
-                    .generator-exact input:focus, .generator-exact select:focus {
-                        outline: none;
-                        border-color: #00dbde;
-                        box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.2);
-                    }
-                    
-                    .generator-exact .buttons {
-                        display: flex;
-                        gap: 15px;
-                        margin-top: 20px;
-                        flex-wrap: wrap;
-                    }
-                    
-                    .generator-exact .btn {
-                        padding: 14px 28px;
-                        border-radius: 10px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        border: none;
-                        flex: 1;
-                        min-width: 150px;
-                        text-align: center;
-                    }
-                    
-                    .generator-exact .btn-primary {
-                        background: linear-gradient(45deg, #00dbde, #0093E9);
-                    }
-                    
-                    .generator-exact .btn-secondary {
-                        background: rgba(255, 255, 255, 0.1);
-                    }
-                    
-                    .generator-exact .btn:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                    }
-                    
-                    .generator-exact .result-section {
-                        margin-top: 40px;
-                        text-align: center;
-                    }
-                    
-                    .generator-exact .generated-code {
-                        font-size: 2.5rem;
-                        font-family: 'Courier New', monospace;
-                        background: rgba(0, 0, 0, 0.3);
-                        padding: 30px;
-                        border-radius: 15px;
-                        margin: 20px 0;
-                        letter-spacing: 4px;
-                        border: 2px dashed rgba(0, 219, 222, 0.3);
-                        word-break: break-all;
-                        min-height: 120px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                    
-                    .generator-exact .history-section {
-                        margin-top: 40px;
-                        background: rgba(255, 255, 255, 0.05);
-                        border-radius: 15px;
-                        padding: 25px;
-                    }
-                    
-                    .generator-exact .history-title {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-bottom: 20px;
-                    }
-                    
-                    .generator-exact #historyList {
-                        list-style: none;
-                        max-height: 300px;
-                        overflow-y: auto;
-                    }
-                    
-                    .generator-exact .history-item {
-                        background: rgba(255, 255, 255, 0.05);
-                        padding: 15px;
-                        margin-bottom: 10px;
-                        border-radius: 10px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        border-left: 4px solid #00dbde;
-                    }
-                    
-                    .generator-exact .code-display {
-                        font-family: monospace;
-                        font-size: 1.2rem;
-                        letter-spacing: 1px;
-                    }
-                    
-                    .generator-exact .timestamp {
-                        font-size: 0.8rem;
-                        color: #a0a0a0;
-                    }
-                    
-                    .generator-exact .copy-btn {
-                        margin-top: 20px;
-                        background: rgba(255, 255, 255, 0.1);
-                        border: none;
-                        color: white;
-                        padding: 12px 24px;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 10px;
-                        width: 100%;
-                        max-width: 200px;
-                        margin: 20px auto;
-                        transition: background 0.3s;
-                    }
-                    
-                    .generator-exact .copy-btn:hover {
-                        background: rgba(255, 255, 255, 0.2);
-                    }
-                    
-                    .generator-exact .copy-btn.copied {
-                        background: rgba(0, 255, 0, 0.2);
-                    }
-                    
-                    @media (max-width: 768px) {
-                        .generator-exact .generator-section {
-                            padding: 20px;
-                        }
-                        
-                        .generator-exact .generated-code {
-                            font-size: 1.8rem;
-                            padding: 20px;
-                            letter-spacing: 2px;
-                        }
-                        
-                        .generator-exact .controls {
-                            grid-template-columns: 1fr;
-                        }
-                    }
-                </style>
+        <main class="generator-section">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="codeLength">Longueur du code</label>
+                    <input type="number" id="codeLength" min="6" max="32" value="12">
+                </div>
                 
-                <div class="generator-exact">
-                    <div class="container">
-                        <header>
-                            <h1>🔐 Générateur de Code Unique</h1>
-                            <p class="subtitle">Générez des codes aléatoires uniques comme</p>
-                            <div class="example-code">WMT6HP3VJVED</div>
-                        </header>
-                        
-                        <main class="generator-section">
-                            <div class="controls">
-                                <div class="control-group">
-                                    <label for="codeLength">Longueur du code</label>
-                                    <input type="number" id="codeLength" min="6" max="32" value="12">
-                                </div>
-                                
-                                <div class="control-group">
-                                    <label for="codeCount">Nombre de codes</label>
-                                    <input type="number" id="codeCount" min="1" max="100" value="1">
-                                </div>
-                                
-                                <div class="control-group">
-                                    <label for="codeType">Type de caractères</label>
-                                    <select id="codeType">
-                                        <option value="uppercase">Majuscules seulement</option>
-                                        <option value="mixed" selected>Majuscules + Chiffres</option>
-                                        <option value="alphanumeric">Majuscules + Minuscules + Chiffres</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="buttons">
-                                <button class="btn btn-primary" onclick="generateCode()">
-                                    🎲 Générer un code
-                                </button>
-                                <button class="btn btn-secondary" onclick="generateMultiple()">
-                                    📝 Générer plusieurs codes
-                                </button>
-                                <button class="btn btn-secondary" onclick="clearHistory()">
-                                    🗑️ Effacer l'historique
-                                </button>
-                            </div>
-                            
-                            <div class="result-section">
-                                <h2>Code généré :</h2>
-                                <div class="generated-code" id="generatedCode">
-                                    Cliquez sur "Générer un code"
-                                </div>
-                                
-                                <button class="copy-btn" onclick="copyToClipboard()">
-                                    📋 Copier dans le presse-papier
-                                </button>
-                            </div>
-                            
-                            <div class="history-section">
-                                <div class="history-title">
-                                    <h3>📜 Historique des codes</h3>
-                                    <span id="historyCount">0 codes</span>
-                                </div>
-                                <ul id="historyList"></ul>
-                            </div>
-                        </main>
-                    </div>
+                <div class="control-group">
+                    <label for="codeCount">Nombre de codes</label>
+                    <input type="number" id="codeCount" min="1" max="100" value="1">
+                </div>
+                
+                <div class="control-group">
+                    <label for="codeType">Type de caractères</label>
+                    <select id="codeType">
+                        <option value="uppercase">Majuscules seulement</option>
+                        <option value="mixed" selected>Majuscules + Chiffres</option>
+                        <option value="alphanumeric">Majuscules + Minuscules + Chiffres</option>
+                    </select>
                 </div>
             </div>
             
-            <!-- SYSTÈME DE VOTE -->
-            <div class="content-section" id="voteSection">
-                <div style="text-align: center; padding: 40px 20px;">
-                    <h1 style="font-size: 2.5em; margin-bottom: 20px; color: var(--gold);">🗳️ SYSTÈME DE VOTE ADMIN</h1>
-                    <p style="font-size: 1.2em; opacity: 0.8; margin-bottom: 40px;">Centre de contrôle complet des votes du concours</p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px;">
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 3em; font-weight: bold; color: #4caf50; margin-bottom: 10px;">2,845</div>
-                            <div style="font-size: 1.2em; margin-bottom: 10px;">Votes Totaux</div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">+125 cette semaine</div>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 3em; font-weight: bold; color: #ff4081; margin-bottom: 10px;">156</div>
-                            <div style="font-size: 1.2em; margin-bottom: 10px;">Participants</div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">Actifs dans le vote</div>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 3em; font-weight: bold; color: #ffd700; margin-bottom: 10px;">45</div>
-                            <div style="font-size: 1.2em; margin-bottom: 10px;">Moyenne/Jour</div>
-                            <div style="opacity: 0.7; font-size: 0.9em;">Votes par jour</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; margin-bottom: 30px;">
-                        <h2 style="color: var(--gold); margin-bottom: 25px;">📊 Contrôles Administratifs</h2>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                            <button class="admin-action-btn" onclick="adminAction('resetVotes')">
-                                🔄 Réinitialiser Votes
-                            </button>
-                            <button class="admin-action-btn" onclick="adminAction('exportData')">
-                                📥 Exporter Données
-                            </button>
-                            <button class="admin-action-btn" onclick="adminAction('validateAll')">
-                                ✅ Valider Tous
-                            </button>
-                            <button class="admin-action-btn" onclick="adminAction('analytics')">
-                                📈 Analytics
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px;">
-                        <h2 style="color: var(--gold); margin-bottom: 25px;">👥 Top Participants</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
-                            <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 1.5em;">🥇</div>
-                                <div style="flex-grow: 1;">
-                                    <div style="font-weight: bold;">Marie-Louise K.</div>
-                                    <div style="opacity: 0.7; font-size: 0.9em;">287 votes</div>
-                                </div>
-                                <div style="color: #4caf50;">+24</div>
-                            </div>
-                            
-                            <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 1.5em;">🥈</div>
-                                <div style="flex-grow: 1;">
-                                    <div style="font-weight: bold;">Jean-Paul M.</div>
-                                    <div style="opacity: 0.7; font-size: 0.9em;">254 votes</div>
-                                </div>
-                                <div style="color: #4caf50;">+18</div>
-                            </div>
-                            
-                            <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 1.5em;">🥉</div>
-                                <div style="flex-grow: 1;">
-                                    <div style="font-weight: bold;">Sarah D.</div>
-                                    <div style="opacity: 0.7; font-size: 0.9em;">231 votes</div>
-                                </div>
-                                <div style="color: #4caf50;">+15</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <style>
-                    .admin-action-btn {
-                        background: linear-gradient(45deg, var(--primary), var(--secondary));
-                        color: white;
-                        border: none;
-                        padding: 18px;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        font-size: 1.1em;
-                        font-weight: 600;
-                        transition: all 0.3s;
-                        width: 100%;
-                    }
-                    
-                    .admin-action-btn:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 10px 25px rgba(26, 35, 126, 0.4);
-                    }
-                </style>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="generateCode()">
+                    🎲 Générer un code
+                </button>
+                <button class="btn btn-secondary" onclick="generateMultiple()">
+                    📝 Générer plusieurs codes
+                </button>
+                <button class="btn btn-secondary" onclick="clearHistory()">
+                    🗑️ Effacer l'historique
+                </button>
             </div>
             
-            <!-- CENTRE DE CONTRÔLE -->
-            <div class="content-section" id="controlSection">
-                <div style="text-align: center; padding: 40px 20px;">
-                    <h1 style="font-size: 2.5em; margin-bottom: 20px; color: var(--gold);">🎮 CENTRE DE CONTRÔLE COMPLET</h1>
-                    <p style="font-size: 1.2em; opacity: 0.8; margin-bottom: 40px;">Interface de contrôle administratif intégrée</p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px;">
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 1.8em; margin-bottom: 20px; color: var(--gold);">📋 Gestion Contenu</div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Articles Publiés: <strong style="color: #4caf50;">42</strong>
-                            </div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Pages Actives: <strong style="color: #4caf50;">18</strong>
-                            </div>
-                            <button class="control-btn" onclick="controlAction('manageContent')">
-                                Gérer le Contenu
-                            </button>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 1.8em; margin-bottom: 20px; color: var(--gold);">🔐 Sécurité</div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Sessions Actives: <strong style="color: #4caf50;">23</strong>
-                            </div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Dernier Accès: <strong style="color: #4caf50;">2 min</strong>
-                            </div>
-                            <button class="control-btn" onclick="controlAction('security')">
-                                Panel Sécurité
-                            </button>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size: 1.8em; margin-bottom: 20px; color: var(--gold);">📊 Base de Données</div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Taille: <strong style="color: #4caf50;">24.8 MB</strong>
-                            </div>
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                                Tables: <strong style="color: #4caf50;">12</strong>
-                            </div>
-                            <button class="control-btn" onclick="controlAction('database')">
-                                Gérer DB
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px;">
-                        <h2 style="color: var(--gold); margin-bottom: 25px;">⚙️ Paramètres Système</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                            <button class="system-btn" onclick="systemAction('backup')">
-                                💾 Sauvegarde
-                            </button>
-                            <button class="system-btn" onclick="systemAction('logs')">
-                                📋 Journaux
-                            </button>
-                            <button class="system-btn" onclick="systemAction('cache')">
-                                🗑️ Cache
-                            </button>
-                            <button class="system-btn" onclick="systemAction('update')">
-                                🔄 Mise à jour
-                            </button>
-                        </div>
-                    </div>
+            <div class="result-section">
+                <h2>Code(s) généré(s) :</h2>
+                <div class="generated-code" id="generatedCode">
+                    Cliquez sur "Générer un code"
                 </div>
                 
-                <style>
-                    .control-btn, .system-btn {
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        padding: 12px 20px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-size: 1em;
-                        font-weight: 600;
-                        transition: all 0.3s;
-                        width: 100%;
-                        margin-top: 10px;
-                    }
-                    
-                    .control-btn:hover, .system-btn:hover {
-                        background: rgba(255, 255, 255, 0.15);
-                        border-color: var(--accent);
-                    }
-                    
-                    .system-btn {
-                        padding: 15px;
-                        font-size: 1.1em;
-                    }
-                </style>
+                <button class="copy-btn" onclick="copyToClipboard()">
+                    📋 Copier dans le presse-papier
+                </button>
             </div>
             
-            <!-- SITE WEB INTÉGRÉ -->
-            <div class="content-section" id="websiteSection">
-                <div style="text-align: center; padding: 40px 20px;">
-                    <h1 style="font-size: 2.5em; margin-bottom: 20px; color: var(--gold);">🌐 SITE WEB INTÉGRÉ</h1>
-                    <p style="font-size: 1.2em; opacity: 0.8; margin-bottom: 40px;">Interface de gestion complète du site web</p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 15px; margin-bottom: 30px;">
-                        <h2 style="color: var(--gold); margin-bottom: 30px;">📁 Structure du Site</h2>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
-                            <div style="background: rgba(255,255,255,0.08); padding: 25px; border-radius: 10px; text-align: left;">
-                                <div style="font-size: 1.5em; margin-bottom: 15px; color: #4caf50;">🏠 Accueil</div>
-                                <div style="opacity: 0.8; margin-bottom: 20px;">Page principale du site</div>
-                                <div style="display: flex; gap: 10px;">
-                                    <button class="web-btn" onclick="webAction('editHome')">✏️ Éditer</button>
-                                    <button class="web-btn" onclick="webAction('previewHome')">👁️ Prévisualiser</button>
-                                </div>
-                            </div>
-                            
-                            <div style="background: rgba(255,255,255,0.08); padding: 25px; border-radius: 10px; text-align: left;">
-                                <div style="font-size: 1.5em; margin-bottom: 15px; color: #ff4081;">👥 Participants</div>
-                                <div style="opacity: 0.8; margin-bottom: 20px;">Liste et gestion participants</div>
-                                <div style="display: flex; gap: 10px;">
-                                    <button class="web-btn" onclick="webAction('editParticipants')">✏️ Éditer</button>
-                                    <button class="web-btn" onclick="webAction('previewParticipants')">👁️ Prévisualiser</button>
-                                </div>
-                            </div>
-                            
-                            <div style="background: rgba(255,255,255,0.08); padding: 25px; border-radius: 10px; text-align: left;">
-                                <div style="font-size: 1.5em; margin-bottom: 15px; color: #ffd700;">📜 Résultats</div>
-                                <div style="opacity: 0.8; margin-bottom: 20px;">Classement et résultats</div>
-                                <div style="display: flex; gap: 10px;">
-                                    <button class="web-btn" onclick="webAction('editResults')">✏️ Éditer</button>
-                                    <button class="web-btn" onclick="webAction('previewResults')">👁️ Prévisualiser</button>
-                                </div>
-                            </div>
-                        </div>
+            <div class="history-section">
+                <div class="history-controls">
+                    <div class="history-title">
+                        <h3>📜 Historique des codes</h3>
+                        <span id="historyCount">0 codes</span>
                     </div>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px;">
-                        <h2 style="color: var(--gold); margin-bottom: 25px;">🎨 Personnalisation</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                            <button class="custom-btn" onclick="customize('theme')">
-                                🎭 Thèmes
-                            </button>
-                            <button class="custom-btn" onclick="customize('layout')">
-                                📐 Layout
-                            </button>
-                            <button class="custom-btn" onclick="customize('colors')">
-                                🎨 Couleurs
-                            </button>
-                            <button class="custom-btn" onclick="customize('fonts')">
-                                🔤 Fonts
-                            </button>
-                        </div>
-                        
-                        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 10px;">
-                            <div style="font-weight: bold; margin-bottom: 10px;">Statut du Site: <span style="color: #4caf50;">● En ligne</span></div>
-                            <div style="opacity: 0.8; font-size: 0.9em;">Dernière mise à jour: Aujourd'hui, 14:30</div>
-                        </div>
+                    <div class="history-buttons">
+                        <button onclick="exportHistory()">📥 Exporter</button>
+                        <button onclick="toggleHistory()">🔄 Masquer/Afficher</button>
                     </div>
                 </div>
-                
-                <style>
-                    .web-btn, .custom-btn {
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        padding: 10px 15px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-size: 0.9em;
-                        transition: all 0.3s;
-                    }
-                    
-                    .web-btn:hover, .custom-btn:hover {
-                        background: rgba(255, 255, 255, 0.15);
-                        border-color: var(--accent);
-                    }
-                    
-                    .custom-btn {
-                        padding: 15px;
-                        font-size: 1.1em;
-                        font-weight: 600;
-                    }
-                </style>
+                <ul id="historyList"></ul>
             </div>
-        </div>
+        </main>
     </div>
     
     <!-- NOTIFICATION -->
     <div class="notification" id="notification"></div>
 
     <script>
-        // Navigation entre les sections
-        function showSection(sectionId) {
-            // Mettre à jour les boutons
-            document.querySelectorAll('.admin-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Cacher toutes les sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Afficher la section sélectionnée
-            document.getElementById(sectionId + 'Section').classList.add('active');
-        }
-
-        // Fonction de notification
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-
-        // ============================================================================
-        // GÉNÉRATEUR DE CODE UNIQUE ET PARFAIT - CODE EXACT
-        // ============================================================================
-        
         // Caractères disponibles
         const CHAR_SETS = {
             uppercase: 'ABCDEFGHJKLMNPQRSTUVWXYZ', // Sans I, O
@@ -787,6 +402,7 @@
         
         // Stockage local pour l'historique
         let codeHistory = JSON.parse(localStorage.getItem('codeHistory')) || [];
+        let historyVisible = true;
         
         // Mettre à jour l'affichage de l'historique
         function updateHistoryDisplay() {
@@ -796,21 +412,45 @@
             historyList.innerHTML = '';
             historyCount.textContent = `${codeHistory.length} code${codeHistory.length > 1 ? 's' : ''}`;
             
-            // Afficher les 50 derniers codes
-            const recentHistory = codeHistory.slice(-50).reverse();
+            if (codeHistory.length === 0) {
+                historyList.innerHTML = '<li style="text-align: center; opacity: 0.7; padding: 20px;">Aucun code généré</li>';
+                return;
+            }
             
-            recentHistory.forEach(item => {
+            // Afficher TOUS les codes (pas seulement les 50 derniers)
+            codeHistory.slice().reverse().forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'history-item';
-                li.innerHTML = `
-                    <div>
-                        <div class="code-display">${item.code}</div>
-                        <div class="timestamp">${new Date(item.timestamp).toLocaleString('fr-FR')}</div>
-                    </div>
-                    <button onclick="copySingleCode('${item.code}')" class="copy-btn" style="padding: 5px 10px; font-size: 0.8rem;">
-                        📋
-                    </button>
-                `;
+                
+                const codeContent = document.createElement('div');
+                codeContent.style.display = 'flex';
+                codeContent.style.alignItems = 'center';
+                codeContent.style.justifyContent = 'space-between';
+                codeContent.style.width = '100%';
+                
+                const codeInfo = document.createElement('div');
+                codeInfo.style.flex = '1';
+                
+                const codeDisplay = document.createElement('div');
+                codeDisplay.className = 'code-display';
+                codeDisplay.textContent = item.code;
+                
+                const timestamp = document.createElement('div');
+                timestamp.className = 'timestamp';
+                timestamp.textContent = new Date(item.timestamp).toLocaleString('fr-FR');
+                
+                codeInfo.appendChild(codeDisplay);
+                codeInfo.appendChild(timestamp);
+                
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-single-btn';
+                copyButton.innerHTML = '📋';
+                copyButton.onclick = () => copySingleCode(item.code);
+                copyButton.title = 'Copier ce code';
+                
+                codeContent.appendChild(codeInfo);
+                codeContent.appendChild(copyButton);
+                li.appendChild(codeContent);
                 historyList.appendChild(li);
             });
         }
@@ -831,9 +471,11 @@
             
             // Ajouter à l'historique
             addToHistory(code);
+            
+            showNotification('✅ Code unique généré !');
         }
         
-        // Générer plusieurs codes
+        // Générer plusieurs codes - CORRIGÉ POUR L'HISTORIQUE
         function generateMultiple() {
             const length = parseInt(document.getElementById('codeLength').value);
             const count = parseInt(document.getElementById('codeCount').value);
@@ -847,12 +489,18 @@
                     code += chars.charAt(Math.floor(Math.random() * chars.length));
                 }
                 codes.push(code);
-                addToHistory(code);
+                addToHistory(code); // Ajouter CHAQUE code à l'historique
             }
             
             // Afficher tous les codes
-            document.getElementById('generatedCode').innerHTML = 
-                codes.map(code => `<div style="margin: 10px 0;">${code}</div>`).join('');
+            if (count === 1) {
+                document.getElementById('generatedCode').textContent = codes[0];
+            } else {
+                document.getElementById('generatedCode').innerHTML = 
+                    codes.map(code => `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">${code}</div>`).join('');
+            }
+            
+            showNotification(`✅ ${count} code${count > 1 ? 's' : ''} généré${count > 1 ? 's' : ''} !`);
         }
         
         // Ajouter un code à l'historique
@@ -862,9 +510,9 @@
                 timestamp: new Date().toISOString()
             });
             
-            // Limiter l'historique à 1000 entrées
-            if (codeHistory.length > 1000) {
-                codeHistory = codeHistory.slice(-1000);
+            // Limiter l'historique à 500 entrées (au lieu de 1000)
+            if (codeHistory.length > 500) {
+                codeHistory = codeHistory.slice(-500);
             }
             
             // Sauvegarder dans le localStorage
@@ -882,7 +530,7 @@
             if (code && code !== 'Cliquez sur "Générer un code"') {
                 try {
                     await navigator.clipboard.writeText(code);
-                    showNotification('✅ Code copié dans le presse-papier !');
+                    showNotification('✅ Code(s) copié(s) dans le presse-papier !');
                     
                     // Animation du bouton
                     const btn = document.querySelector('.copy-btn');
@@ -906,12 +554,69 @@
         
         // Effacer l'historique
         function clearHistory() {
-            if (confirm('Voulez-vous vraiment effacer tout l\'historique ?')) {
+            if (confirm('Voulez-vous vraiment effacer tout l\'historique ? Cette action est irréversible.')) {
                 codeHistory = [];
                 localStorage.removeItem('codeHistory');
                 updateHistoryDisplay();
-                showNotification('🗑️ Historique effacé');
+                document.getElementById('generatedCode').textContent = 'Cliquez sur "Générer un code"';
+                showNotification('🗑️ Historique effacé avec succès');
             }
+        }
+        
+        // Exporter l'historique
+        function exportHistory() {
+            if (codeHistory.length === 0) {
+                showNotification('📭 Aucun code à exporter');
+                return;
+            }
+            
+            let exportText = '=== HISTORIQUE DES CODES GÉNÉRÉS ===\n\n';
+            exportText += `Date d'export: ${new Date().toLocaleString('fr-FR')}\n`;
+            exportText += `Total: ${codeHistory.length} codes\n\n`;
+            
+            codeHistory.forEach((item, index) => {
+                exportText += `${index + 1}. ${item.code} - ${new Date(item.timestamp).toLocaleString('fr-FR')}\n`;
+            });
+            
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `codes_${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('📥 Historique exporté !');
+        }
+        
+        // Basculer l'affichage de l'historique
+        function toggleHistory() {
+            const historyList = document.getElementById('historyList');
+            const toggleBtn = document.querySelector('.history-buttons button:last-child');
+            
+            historyVisible = !historyVisible;
+            
+            if (historyVisible) {
+                historyList.style.display = 'block';
+                toggleBtn.textContent = '🔄 Masquer';
+                updateHistoryDisplay();
+            } else {
+                historyList.style.display = 'none';
+                toggleBtn.textContent = '🔄 Afficher';
+            }
+        }
+        
+        // Fonction de notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
         
         // Initialiser l'historique au chargement
@@ -921,52 +626,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(generateCode, 500);
         });
-        
-        // ============================================================================
-        // SYSTÈME ADMIN DE VOTE
-        // ============================================================================
-        
-        function adminAction(action) {
-            const actions = {
-                'resetVotes': { msg: '⚠️ Réinitialisation des votes en cours...', delay: 2000 },
-                'exportData': { msg: '📥 Export des données de vote...', delay: 1500 },
-                'validateAll': { msg: '✅ Validation de tous les votes...', delay: 1000 },
-                'analytics': { msg: '📈 Génération des analytics...', delay: 2500 }
-            };
-            
-            if (actions[action]) {
-                showNotification(actions[action].msg);
-                setTimeout(() => {
-                    showNotification('✅ Action terminée avec succès !');
-                }, actions[action].delay);
-            }
-        }
-        
-        function controlAction(action) {
-            showNotification(`🎮 Ouverture du panel ${action}...`);
-        }
-        
-        function systemAction(action) {
-            const msgs = {
-                'backup': '💾 Création de la sauvegarde...',
-                'logs': '📋 Ouverture des journaux système...',
-                'cache': '🗑️ Nettoyage du cache...',
-                'update': '🔄 Vérification des mises à jour...'
-            };
-            showNotification(msgs[action] || 'Action système exécutée');
-        }
-        
-        function webAction(action) {
-            showNotification(`🌐 Action site web: ${action}`);
-        }
-        
-        function customize(element) {
-            showNotification(`🎨 Personnalisation: ${element}`);
-        }
-        
-        // ============================================================================
-        // FIN DU CODE
-        // ============================================================================
     </script>
 </body>
 </html>
