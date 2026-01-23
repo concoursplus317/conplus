@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Fiches de Paiement - Concours d'Éloquence</title>
+    <style>
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #c0392b;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        /* === CONTAINER === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* === HEADER === */
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--dark));
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--warning));
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .logo i {
+            font-size: 50px;
+            color: var(--accent);
+            background: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* === MAIN CONTENT === */
+        .main-content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === CARD === */
+        .card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card h2 i {
+            color: var(--secondary);
+        }
+
+        /* === FORM === */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group label i {
+            color: var(--secondary);
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 150px;
+            transition: all 0.3s;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .code-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* === OPTIONS === */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .option-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--secondary);
+        }
+
+        .option-item label {
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        /* === BUTTONS === */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed #dee2e6;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #2980b9);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid #dee2e6;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #229954);
+            color: white;
+        }
+
+        .btn-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* === SIDEBAR === */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-box h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions {
+            list-style: none;
+        }
+
+        .instructions li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .instructions li:last-child {
+            border-bottom: none;
+        }
+
+        .instructions li i {
+            color: var(--secondary);
+            width: 20px;
+        }
+
+        /* === STATISTICS === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* === PREVIEW === */
+        .preview-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .preview-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWYyZjQiIGZpbGwtcnVsZT0ibm9uemVybyI+PHBhdGggZD0iTTM2IDM0LjVIMjRWMjZoMTJ2OC41em0wLTEzSDI0VjloMTJ2MTIuNXptMTMtMTNIMzdWMjl2Mi41aDEydi0xM3ptLTEzIDI5SDI0VjM3aDEydjguNXoiLz48L2c+PC9nPjwvc3ZnPg==');
+            background-size: 60px 60px;
+        }
+
+        .preview-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(0,0,0,0.05);
+            font-weight: bold;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .preview-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preview-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .preview-value {
+            font-weight: 500;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* === DOWNLOAD SECTION === */
+        .download-section {
+            display: none;
+            margin-top: 40px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .download-icon {
+            font-size: 60px;
+            color: var(--success);
+        }
+
+        .download-info h4 {
+            font-size: 24px;
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            color: #0c5460;
+        }
+
+        .download-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* === LOADER === */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-content {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === NOTIFICATIONS === */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 24px;
+        }
+
+        .notification-success i { color: var(--success); }
+        .notification-error i { color: var(--danger); }
+        .notification-warning i { color: var(--warning); }
+        .notification-info i { color: var(--secondary); }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-microphone-alt"></i>
+                <h1>Concours d'Éloquence 2024</h1>
+            </div>
+            <p class="subtitle">Générateur Officiel de Fiches de Paiement</p>
+        </header>
+
+        <!-- Contenu principal -->
+        <main class="main-content">
+            <!-- Section principale -->
+            <div class="card">
+                <h2><i class="fas fa-file-invoice-dollar"></i> Générer des Fiches de Paiement</h2>
+                
+                <!-- Formulaire -->
+                <div class="form-group">
+                    <label for="codeInput">
+                        <i class="fas fa-key"></i> Codes de Vote
+                    </label>
+                    <textarea 
+                        id="codeInput" 
+                        class="code-input" 
+                        placeholder="Entrez un code par ligne. Exemple :&#10;ELOQ-2024-001&#10;ELOQ-2024-002&#10;ELOQ-2024-003"
+                        rows="6"
+                    >ELOQ-2024-001
+ELOQ-2024-002
+ELOQ-2024-003</textarea>
+                    <div class="code-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Vous pouvez entrer jusqu'à 100 codes (un par ligne)
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="form-group">
+                    <label><i class="fas fa-cog"></i> Options de Génération</label>
+                    <div class="options-grid">
+                        <div class="option-item">
+                            <input type="checkbox" id="watermark" checked>
+                            <label for="watermark">
+                                <i class="fas fa-water"></i>
+                                Filigrane de sécurité
+                            </label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="signature" checked>
+                            <label for="signature">
+                                <i class="fas fa-signature"></i>
+                                Signature officielle
+                            </label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="qrcode" checked>
+                            <label for="qrcode">
+                                <i class="fas fa-qrcode"></i>
+                                Code QR de validation
+                            </label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="datestamp" checked>
+                            <label for="datestamp">
+                                <i class="fas fa-calendar-alt"></i>
+                                Horodatage sécurisé
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boutons -->
+                <div class="button-group">
+                    <button class="btn btn-primary" id="generateBtn">
+                        <i class="fas fa-magic"></i>
+                        Générer les Fiches
+                        <span class="btn-badge" id="codeCount">3 codes</span>
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="previewBtn">
+                        <i class="fas fa-eye"></i>
+                        Aperçu
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="clearBtn">
+                        <i class="fas fa-broom"></i>
+                        Effacer tout
+                    </button>
+                    
+                    <button class="btn btn-success" id="exampleBtn">
+                        <i class="fas fa-vial"></i>
+                        Exemple rapide
+                    </button>
+                </div>
+
+                <!-- Aperçu -->
+                <div class="preview-section" id="previewSection">
+                    <h2><i class="fas fa-eye"></i> Aperçu de la Fiche</h2>
+                    <div class="preview-container">
+                        <div class="preview-watermark">CONCOURS ÉLOQUENCE</div>
+                        <div class="preview-content">
+                            <div class="preview-row">
+                                <span class="preview-label">Code :</span>
+                                <span class="preview-value" id="previewCode">ELOQ-2024-001</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-label">Date :</span>
+                                <span class="preview-value" id="previewDate">01/01/2024</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-label">Montant :</span>
+                                <span class="preview-value">50 €</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-label">Statut :</span>
+                                <span style="color: #e74c3c; font-weight: bold;">EN ATTENTE</span>
+                            </div>
+                            <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-qrcode" style="font-size: 50px; color: #666; margin-bottom: 10px;"></i>
+                                <div style="color: #666; font-size: 14px;">Code QR de validation</div>
+                            </div>
+                            <div style="text-align: right; margin-top: 40px;">
+                                <div style="width: 250px; height: 2px; background: #000; margin-left: auto; margin-bottom: 5px;"></div>
+                                <div style="font-weight: bold;">Signature officielle</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Téléchargement -->
+                <div class="download-section" id="downloadSection">
+                    <h2><i class="fas fa-download"></i> Fiches Générées</h2>
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="download-info">
+                            <h4>Génération réussie !</h4>
+                            <p id="downloadMessage">3 fiches ont été générées avec succès</p>
+                            <div class="file-info">
+                                <i class="fas fa-file-pdf"></i>
+                                <span id="fileName">fiches_paiement_20240101_120000.pdf • 456 KB</span>
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn btn-primary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Télécharger
+                            </button>
+                            <button class="btn btn-secondary" id="printBtn">
+                                <i class="fas fa-print"></i> Imprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Instructions -->
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+                    <ul class="instructions">
+                        <li>
+                            <i class="fas fa-key"></i>
+                            <strong>Format des codes :</strong> ELOQ-2024-XXX
+                        </li>
+                        <li>
+                            <i class="fas fa-file-import"></i>
+                            <strong>Import multiple :</strong> Un code par ligne
+                        </li>
+                        <li>
+                            <i class="fas fa-water"></i>
+                            <strong>Filigrane :</strong> IMG_1812.jpeg appliqué
+                        </li>
+                        <li>
+                            <i class="fas fa-signature"></i>
+                            <strong>Signature :</strong> Times_New_Roman.png
+                        </li>
+                        <li>
+                            <i class="fas fa-lock"></i>
+                            <strong>Sécurité :</strong> Documents infalsifiables
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="info-box">
+                    <h3><i class="fas fa-chart-bar"></i> Statistiques</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalGenerated">0</div>
+                            <div class="stat-label">Total généré</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="todayGenerated">0</div>
+                            <div class="stat-label">Aujourd'hui</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Sécurisé</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions rapides -->
+                <div class="info-box">
+                    <h3><i class="fas fa-bolt"></i> Actions Rapides</h3>
+                    <div style="display: grid; gap: 10px;">
+                        <button class="btn btn-secondary" id="batchBtn">
+                            <i class="fas fa-layer-group"></i> Génération par lot
+                        </button>
+                        <button class="btn btn-secondary" id="templateBtn">
+                            <i class="fas fa-download"></i> Télécharger modèle
+                        </button>
+                        <button class="btn btn-secondary" id="historyBtn">
+                            <i class="fas fa-history"></i> Voir l'historique
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pied de page -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-graduation-cap"></i> Concours d'Éloquence 2024</h4>
+                    <p>Édition spéciale • Tous droits réservés</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-headset"></i> Support</h4>
+                    <p>contact@eloquence-concours.fr</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-shield-alt"></i> Sécurité</h4>
+                    <div class="security-badges">
+                        <span class="badge"><i class="fas fa-lock"></i> SSL</span>
+                        <span class="badge"><i class="fas fa-water"></i> Filigrane</span>
+                        <span class="badge"><i class="fas fa-signature"></i> Signature</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
+                <p>© 2024 Générateur de Fiches de Paiement • Version 2.1.0</p>
+                <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">
+                    <i class="fas fa-sync-alt"></i> 
+                    Dernière mise à jour : <span id="currentDate">01/01/2024 12:00:00</span>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h3>Génération en cours</h3>
+            <p>Veuillez patienter...</p>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p id="loaderStatus">Préparation des fiches</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // === VARIABLES GLOBALES ===
+        let codes = [];
+        let statistics = {
+            total: 0,
+            today: 0
+        };
+
+        // === INITIALISATION ===
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            setupEventListeners();
+            updateCodeCount();
+            updateClock();
+            loadStatistics();
+        });
+
+        // === FONCTIONS PRINCIPALES ===
+        function initApp() {
+            console.log('🎤 Générateur de Fiches d\'Éloquence initialisé');
+            
+            // Charger depuis le localStorage
+            loadFromStorage();
+            
+            // Mettre à jour l'interface
+            updateUI();
+        }
+
+        function setupEventListeners() {
+            // Code input
+            document.getElementById('codeInput').addEventListener('input', updateCodeCount);
+            
+            // Boutons principaux
+            document.getElementById('generateBtn').addEventListener('click', handleGenerate);
+            document.getElementById('previewBtn').addEventListener('click', togglePreview);
+            document.getElementById('clearBtn').addEventListener('click', clearInput);
+            document.getElementById('exampleBtn').addEventListener('click', loadExample);
+            
+            // Actions download
+            document.getElementById('downloadBtn').addEventListener('click', handleDownload);
+            document.getElementById('printBtn').addEventListener('click', handlePrint);
+            
+            // Actions rapides
+            document.getElementById('batchBtn').addEventListener('click', showBatchModal);
+            document.getElementById('templateBtn').addEventListener('click', downloadTemplate);
+            document.getElementById('historyBtn').addEventListener('click', showHistory);
+        }
+
+        // === GESTION DES CODES ===
+        function updateCodeCount() {
+            const text = document.getElementById('codeInput').value.trim();
+            if (text === '') {
+                codes = [];
+            } else {
+                codes = text.split('\n')
+                    .map(code => code.trim())
+                    .filter(code => code.length > 0);
+            }
+            
+            // Limiter à 100 codes
+            if (codes.length > 100) {
+                codes = codes.slice(0, 100);
+                document.getElementById('codeInput').value = codes.join('\n');
+                showNotification('Limite de 100 codes atteinte', 'warning');
+            }
+            
+            updateUI();
+            saveToStorage();
+        }
+
+        function updateUI() {
+            // Mettre à jour le compteur
+            const count = codes.length;
+            document.getElementById('codeCount').textContent = `${count} code${count !== 1 ? 's' : ''}`;
+            
+            // Activer/désactiver les boutons
+            const hasCodes = count > 0;
+            document.getElementById('generateBtn').disabled = !hasCodes;
+            document.getElementById('previewBtn').disabled = !hasCodes;
+        }
+
+        // === GÉNÉRATION ===
+        async function handleGenerate() {
+            if (codes.length === 0) {
+                showNotification('Veuillez entrer au moins un code', 'error');
+                return;
+            }
+            
+            // Options
+            const options = {
+                watermark: document.getElementById('watermark').checked,
+                signature: document.getElementById('signature').checked,
+                qrcode: document.getElementById('qrcode').checked,
+                datestamp: document.getElementById('datestamp').checked
+            };
+            
+            // Afficher le loader
+            showLoader('Génération des fiches...');
+            
+            // Simuler la génération (dans un vrai projet, vous appelleriez votre API)
+            setTimeout(() => {
+                // Simuler le succès
+                hideLoader();
+                
+                // Mettre à jour les statistiques
+                statistics.total += codes.length;
+                statistics.today += codes.length;
+                saveStatistics();
+                
+                // Mettre à jour l'interface de téléchargement
+                const filename = `fiches_paiement_${new Date().toISOString().slice(0,19).replace(/[:]/g,'-')}.pdf`;
+                const filesize = Math.round(codes.length * 150); // Taille approximative
+                
+                document.getElementById('downloadMessage').textContent = 
+                    `${codes.length} fiche${codes.length > 1 ? 's' : ''} générée${codes.length > 1 ? 's' : ''} avec succès`;
+                document.getElementById('fileName').textContent = 
+                    `${filename} • ${filesize} KB`;
+                
+                // Afficher la section de téléchargement
+                document.getElementById('previewSection').style.display = 'none';
+                document.getElementById('downloadSection').style.display = 'block';
+                
+                // Notifier l'utilisateur
+                showNotification(`Génération réussie ! ${codes.length} fiche(s) créée(s)`, 'success');
+                
+                // Sauvegarder
+                saveToStorage();
+                
+            }, 2000); // Simulation de 2 secondes
+        }
+
+        // === APERÇU ===
+        function togglePreview() {
+            if (codes.length === 0) {
+                showNotification('Veuillez entrer au moins un code', 'error');
+                return;
+            }
+            
+            const previewSection = document.getElementById('previewSection');
+            const isVisible = previewSection.style.display === 'block';
+            
+            previewSection.style.display = isVisible ? 'none' : 'block';
+            document.getElementById('downloadSection').style.display = 'none';
+            
+            if (!isVisible) {
+                updatePreview();
+            }
+        }
+
+        function updatePreview() {
+            if (codes.length === 0) return;
+            
+            const code = codes[0]; // Premier code pour l'aperçu
+            const date = new Date().toLocaleDateString('fr-FR');
+            
+            document.getElementById('previewCode').textContent = code;
+            document.getElementById('previewDate').textContent = date;
+        }
+
+        // === TÉLÉCHARGEMENT ===
+        function handleDownload() {
+            // Dans un vrai projet, vous généreriez un PDF ici
+            // Pour l'exemple, nous créons un fichier texte simulé
+            
+            const content = `Fiches de Paiement - Concours d'Éloquence 2024\n\n`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fiches_paiement.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('Téléchargement démarré', 'success');
+        }
+
+        function handlePrint() {
+            window.print();
+        }
+
+        // === ACTIONS UTILITAIRES ===
+        function clearInput() {
+            if (codes.length > 0) {
+                if (confirm('Êtes-vous sûr de vouloir effacer tous les codes ?')) {
+                    document.getElementById('codeInput').value = '';
+                    updateCodeCount();
+                    showNotification('Saisie effacée', 'info');
+                }
+            }
+        }
+
+        function loadExample() {
+            const exampleCodes = [
+                'ELOQ-2024-101',
+                'ELOQ-2024-102',
+                'ELOQ-2024-103',
+                'ELOQ-2024-104',
+                'ELOQ-2024-105'
+            ];
+            
+            document.getElementById('codeInput').value = exampleCodes.join('\n');
+            updateCodeCount();
+            showNotification('Exemple de codes chargé', 'success');
+        }
+
+        function showBatchModal() {
+            // Créer un input file
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.txt,.csv';
+            input.style.display = 'none';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    const newCodes = content.split('\n')
+                        .map(code => code.trim())
+                        .filter(code => code.length > 0 && !code.startsWith('#'));
+                    
+                    const currentCodes = document.getElementById('codeInput').value;
+                    const allCodes = [...new Set([...codes, ...newCodes])];
+                    document.getElementById('codeInput').value = allCodes.join('\n');
+                    updateCodeCount();
+                    
+                    showNotification(`${newCodes.length} code(s) ajouté(s) depuis le fichier`, 'success');
+                };
+                reader.readAsText(file);
+            };
+            
+            document.body.appendChild(input);
+            input.click();
+            document.body.removeChild(input);
+        }
+
+        function downloadTemplate() {
+            const template = `# Modèle de codes pour le Concours d'Éloquence
+# Un code par ligne
+# Format recommandé: ELOQ-2024-XXX
+
+ELOQ-2024-001
+ELOQ-2024-002
+ELOQ-2024-003
+ELOQ-2024-004
+ELOQ-2024-005`;
+            
+            const blob = new Blob([template], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'modele_codes_eloquence.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('Modèle téléchargé', 'success');
+        }
+
+        function showHistory() {
+            showNotification('Historique à venir dans la prochaine version', 'info');
+        }
+
+        // === STATISTIQUES ===
+        function loadStatistics() {
+            const saved = localStorage.getItem('eloquenceStats');
+            if (saved) {
+                statistics = JSON.parse(saved);
+            }
+            
+            document.getElementById('totalGenerated').textContent = statistics.total;
+            document.getElementById('todayGenerated').textContent = statistics.today;
+        }
+
+        function saveStatistics() {
+            localStorage.setItem('eloquenceStats', JSON.stringify(statistics));
+            loadStatistics();
+        }
+
+        // === STOCKAGE LOCAL ===
+        function saveToStorage() {
+            localStorage.setItem('eloquenceCodes', JSON.stringify(codes));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('eloquenceCodes');
+            if (saved) {
+                codes = JSON.parse(saved);
+                if (codes.length > 0) {
+                    document.getElementById('codeInput').value = codes.join('\n');
+                }
+            }
+        }
+
+        // === LOADER ===
+        function showLoader(message) {
+            document.getElementById('loaderStatus').textContent = message;
+            document.getElementById('loader').style.display = 'flex';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            // Simuler la progression
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress > 90) progress = 90;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+                
+                if (progress >= 90) {
+                    clearInterval(interval);
+                }
+            }, 200);
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('progressBar').style.width = '100%';
+        }
+
+        // === NOTIFICATIONS ===
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <button class="notification-close">&times;</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Afficher avec animation
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            // Fermer au clic
+            notification.querySelector('.notification-close').onclick = () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            };
+            
+            // Fermer automatiquement après 5 secondes
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // === HORLOGE ===
+        function updateClock() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('fr-FR', options);
+            
+            setTimeout(updateClock, 1000);
+        }
+
+        // === SHORTCUTS ===
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Enter pour générer
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                handleGenerate();
+            }
+            
+            // Ctrl+A pour sélectionner tout
+            if (e.ctrlKey && e.key === 'a' && e.target.id === 'codeInput') {
+                e.preventDefault();
+                e.target.select();
+            }
+        });
+    </script>
+</body>
+</html>
