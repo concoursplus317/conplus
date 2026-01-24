@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Générateur de Codes Uniques</title>
+    <!-- Bibliothèque SheetJS pour Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -122,6 +124,10 @@
         
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-excel {
+            background: linear-gradient(45deg, #21a366, #107c41);
         }
         
         .btn:hover {
@@ -268,16 +274,51 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .history-buttons {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .history-buttons button {
             padding: 8px 15px;
             font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .export-options {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .export-options h4 {
+            margin-bottom: 10px;
+            color: #00dbde;
+        }
+        
+        .export-checkboxes {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00dbde;
         }
         
         @media (max-width: 768px) {
@@ -316,6 +357,16 @@
             .code-display {
                 margin-right: 0;
                 margin-bottom: 5px;
+            }
+            
+            .history-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .history-buttons {
+                width: 100%;
+                justify-content: flex-start;
             }
         }
     </style>
@@ -357,9 +408,30 @@
                 <button class="btn btn-secondary" onclick="generateMultiple()">
                     📝 Générer plusieurs codes
                 </button>
+                <button class="btn btn-excel" onclick="exportExcel()">
+                    📊 Exporter en Excel
+                </button>
                 <button class="btn btn-secondary" onclick="clearHistory()">
                     🗑️ Effacer l'historique
                 </button>
+            </div>
+            
+            <div class="export-options">
+                <h4>Options d'export Excel :</h4>
+                <div class="export-checkboxes">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeDates" checked>
+                        <label for="includeDates">Inclure les dates</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeIndex" checked>
+                        <label for="includeIndex">Inclure les numéros</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="onlyUnique" checked>
+                        <label for="onlyUnique">Codes uniques seulement</label>
+                    </div>
+                </div>
             </div>
             
             <div class="result-section">
@@ -380,7 +452,6 @@
                         <span id="historyCount">0 codes</span>
                     </div>
                     <div class="history-buttons">
-                        <button onclick="exportUniqueCodes()">📥 Exporter codes uniques</button>
                         <button onclick="toggleHistory()">🔄 Masquer/Afficher</button>
                     </div>
                 </div>
@@ -417,8 +488,8 @@
                 return;
             }
             
-            // Afficher TOUS les codes (pas seulement les 50 derniers)
-            codeHistory.slice().reverse().forEach(item => {
+            // Afficher TOUS les codes
+            codeHistory.slice().reverse().forEach((item, index) => {
                 const li = document.createElement('li');
                 li.className = 'history-item';
                 
@@ -481,7 +552,7 @@
             showNotification('✅ Code unique généré !');
         }
         
-        // Générer plusieurs codes - CORRIGÉ POUR L'HISTORIQUE
+        // Générer plusieurs codes
         function generateMultiple() {
             const length = parseInt(document.getElementById('codeLength').value);
             const count = parseInt(document.getElementById('codeCount').value);
@@ -581,44 +652,98 @@
             }
         }
         
-        // Exporter uniquement les codes uniques sans doublons
-        function exportUniqueCodes() {
+        // Exporter en Excel
+        function exportExcel() {
             if (codeHistory.length === 0) {
                 showNotification('📭 Aucun code à exporter');
                 return;
             }
             
-            // Récupérer tous les codes UNIQUES de l'historique
-            const uniqueCodes = [];
-            const seenCodes = new Set();
-            
-            codeHistory.forEach(item => {
-                if (!seenCodes.has(item.code)) {
-                    seenCodes.add(item.code);
-                    uniqueCodes.push(item.code);
+            try {
+                const includeDates = document.getElementById('includeDates').checked;
+                const includeIndex = document.getElementById('includeIndex').checked;
+                const onlyUnique = document.getElementById('onlyUnique').checked;
+                
+                // Préparer les données
+                let data = [];
+                let uniqueCodes = new Set();
+                
+                // Filtrer les codes uniques si nécessaire
+                const filteredHistory = onlyUnique 
+                    ? codeHistory.filter(item => {
+                        if (!uniqueCodes.has(item.code)) {
+                            uniqueCodes.add(item.code);
+                            return true;
+                        }
+                        return false;
+                    })
+                    : codeHistory;
+                
+                // Créer les en-têtes
+                const headers = [];
+                if (includeIndex) headers.push('N°');
+                headers.push('Code');
+                if (includeDates) headers.push('Date de création');
+                data.push(headers);
+                
+                // Ajouter les données
+                filteredHistory.forEach((item, index) => {
+                    const row = [];
+                    if (includeIndex) row.push(index + 1);
+                    row.push(item.code);
+                    if (includeDates) row.push(new Date(item.timestamp).toLocaleString('fr-FR'));
+                    data.push(row);
+                });
+                
+                // Créer le workbook Excel
+                const ws = XLSX.utils.aoa_to_sheet(data);
+                
+                // Mettre en forme les en-têtes
+                if (ws['!ref']) {
+                    const range = XLSX.utils.decode_range(ws['!ref']);
+                    for (let C = range.s.c; C <= range.e.c; ++C) {
+                        const cell_address = XLSX.utils.encode_cell({r: 0, c: C});
+                        if (!ws[cell_address]) continue;
+                        ws[cell_address].s = {
+                            font: { bold: true, color: { rgb: "FFFFFF" } },
+                            fill: { fgColor: { rgb: "4472C4" } },
+                            alignment: { horizontal: "center" }
+                        };
+                    }
+                    
+                    // Ajuster la largeur des colonnes
+                    const colWidths = [];
+                    for (let i = 0; i < data[0].length; i++) {
+                        let maxLength = 0;
+                        for (let j = 0; j < data.length; j++) {
+                            if (data[j][i]) {
+                                maxLength = Math.max(maxLength, data[j][i].toString().length);
+                            }
+                        }
+                        colWidths.push({ wch: Math.min(maxLength + 2, 50) });
+                    }
+                    ws['!cols'] = colWidths;
                 }
-            });
-            
-            // Créer le texte d'export (codes seulement, sans dates)
-            let exportText = uniqueCodes.join('\n');
-            
-            const blob = new Blob([exportText], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `codes_uniques_${uniqueCodes.length}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification(`📥 ${uniqueCodes.length} code${uniqueCodes.length > 1 ? 's' : ''} unique${uniqueCodes.length > 1 ? 's' : ''} exporté${uniqueCodes.length > 1 ? 's' : ''} !`);
+                
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Codes Générés');
+                
+                // Générer le fichier Excel
+                const fileName = `codes_${filteredHistory.length}_${new Date().toISOString().split('T')[0]}.xlsx`;
+                XLSX.writeFile(wb, fileName);
+                
+                showNotification(`📊 ${filteredHistory.length} code${filteredHistory.length > 1 ? 's' : ''} exporté${filteredHistory.length > 1 ? 's' : ''} en Excel !`);
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'export Excel:', error);
+                showNotification('❌ Erreur lors de l\'export Excel');
+            }
         }
         
         // Basculer l'affichage de l'historique
         function toggleHistory() {
             const historyList = document.getElementById('historyList');
-            const toggleBtn = document.querySelector('.history-buttons button:last-child');
+            const toggleBtn = document.querySelector('.history-buttons button');
             
             historyVisible = !historyVisible;
             
