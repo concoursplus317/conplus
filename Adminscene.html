@@ -22,7 +22,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -130,6 +130,10 @@
             background: linear-gradient(45deg, #21a366, #107c41);
         }
         
+        .btn-bulk {
+            background: linear-gradient(45deg, #FF416C, #FF4B2B);
+        }
+        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -141,19 +145,33 @@
         }
         
         .generated-code {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.3);
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             margin: 20px 0;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             border: 2px dashed rgba(0, 219, 222, 0.3);
             word-break: break-all;
             min-height: 120px;
+            max-height: 400px;
+            overflow-y: auto;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+        }
+        
+        .code-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            word-break: break-all;
         }
         
         .history-section {
@@ -321,6 +339,26 @@
             accent-color: #00dbde;
         }
         
+        .bulk-generator {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 65, 108, 0.1), rgba(255, 75, 43, 0.1));
+            border-radius: 15px;
+            border: 1px solid rgba(255, 65, 108, 0.3);
+        }
+        
+        .bulk-controls {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        
+        .bulk-input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -331,9 +369,13 @@
             }
             
             .generated-code {
-                font-size: 1.8rem;
-                padding: 20px;
+                font-size: 1.4rem;
+                padding: 15px;
                 letter-spacing: 2px;
+            }
+            
+            .code-item {
+                font-size: 1.2rem;
             }
             
             .controls {
@@ -368,6 +410,52 @@
                 width: 100%;
                 justify-content: flex-start;
             }
+            
+            .bulk-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .bulk-input {
+                width: 100%;
+            }
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #00dbde;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            width: 0%;
+            transition: width 0.3s ease;
         }
     </style>
 </head>
@@ -375,7 +463,7 @@
     <div class="container">
         <header>
             <h1>🔐 Générateur de Code Unique</h1>
-            <p class="subtitle">Générez des codes aléatoires uniques comme</p>
+            <p class="subtitle">Générez jusqu'à 1000 codes aléatoires uniques instantanément</p>
             <div class="example-code">WMT6HP3VJVED</div>
         </header>
         
@@ -388,7 +476,7 @@
                 
                 <div class="control-group">
                     <label for="codeCount">Nombre de codes</label>
-                    <input type="number" id="codeCount" min="1" max="100" value="1">
+                    <input type="number" id="codeCount" min="1" max="1000" value="1">
                 </div>
                 
                 <div class="control-group">
@@ -408,12 +496,31 @@
                 <button class="btn btn-secondary" onclick="generateMultiple()">
                     📝 Générer plusieurs codes
                 </button>
+                <button class="btn btn-bulk" onclick="generateBulk()">
+                    ⚡ Générer 1000 codes
+                </button>
                 <button class="btn btn-excel" onclick="exportExcel()">
                     📊 Exporter en Excel
                 </button>
                 <button class="btn btn-secondary" onclick="clearHistory()">
                     🗑️ Effacer l'historique
                 </button>
+            </div>
+            
+            <div class="bulk-generator">
+                <h3>⚡ Génération massive</h3>
+                <div class="bulk-controls">
+                    <div class="control-group bulk-input">
+                        <label for="bulkCount">Nombre de codes (max 1000)</label>
+                        <input type="number" id="bulkCount" min="1" max="1000" value="100" placeholder="Ex: 500">
+                    </div>
+                    <button class="btn btn-bulk" onclick="generateCustomBulk()" style="min-width: 200px;">
+                        🚀 Générer en masse
+                    </button>
+                </div>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
             </div>
             
             <div class="export-options">
@@ -443,6 +550,11 @@
                 <button class="copy-btn" onclick="copyToClipboard()">
                     📋 Copier dans le presse-papier
                 </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Génération en cours...</p>
             </div>
             
             <div class="history-section">
@@ -488,8 +600,9 @@
                 return;
             }
             
-            // Afficher TOUS les codes
-            codeHistory.slice().reverse().forEach((item, index) => {
+            // Afficher les 50 derniers codes seulement pour la performance
+            const displayCount = Math.min(codeHistory.length, 50);
+            codeHistory.slice(-displayCount).reverse().forEach((item, index) => {
                 const li = document.createElement('li');
                 li.className = 'history-item';
                 
@@ -524,32 +637,84 @@
                 li.appendChild(codeContent);
                 historyList.appendChild(li);
             });
+            
+            if (codeHistory.length > 50) {
+                const moreItem = document.createElement('li');
+                moreItem.style.textAlign = 'center';
+                moreItem.style.opacity = '0.7';
+                moreItem.style.padding = '10px';
+                moreItem.textContent = `... et ${codeHistory.length - 50} autres codes`;
+                historyList.appendChild(moreItem);
+            }
+        }
+        
+        // Fonction optimisée pour générer des codes uniques
+        function generateUniqueCodes(count, length, type) {
+            const chars = CHAR_SETS[type];
+            const charLength = chars.length;
+            const codes = new Set();
+            const generatedCodes = [];
+            
+            // Optimisation : pré-calcul des possibilités
+            const maxAttempts = count * 10; // Limite de sécurité
+            
+            for (let i = 0; i < maxAttempts && generatedCodes.length < count; i++) {
+                let code = '';
+                
+                // Génération plus rapide avec boucle optimisée
+                for (let j = 0; j < length; j++) {
+                    code += chars.charAt(Math.floor(Math.random() * charLength));
+                }
+                
+                // Vérifier l'unicité
+                if (!codes.has(code) && !codeHistory.some(item => item.code === code)) {
+                    codes.add(code);
+                    generatedCodes.push(code);
+                    
+                    // Mettre à jour la barre de progression
+                    if (count > 100) {
+                        updateProgress(generatedCodes.length, count);
+                    }
+                }
+            }
+            
+            return generatedCodes;
+        }
+        
+        // Mettre à jour la barre de progression
+        function updateProgress(current, total) {
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            const percentage = Math.round((current / total) * 100);
+            
+            progressBar.style.display = 'block';
+            progressFill.style.width = `${percentage}%`;
+            
+            if (current === total) {
+                setTimeout(() => {
+                    progressBar.style.display = 'none';
+                    progressFill.style.width = '0%';
+                }, 500);
+            }
         }
         
         // Générer un seul code
         function generateCode() {
             const length = parseInt(document.getElementById('codeLength').value);
             const type = document.getElementById('codeType').value;
-            const chars = CHAR_SETS[type];
             
-            let code = '';
-            for (let i = 0; i < length; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            const codes = generateUniqueCodes(1, length, type);
+            
+            if (codes.length > 0) {
+                // Afficher le code
+                document.getElementById('generatedCode').innerHTML = 
+                    `<div class="code-item">${codes[0]}</div>`;
+                
+                // Ajouter à l'historique
+                addToHistory(codes[0]);
+                
+                showNotification('✅ Code unique généré !');
             }
-            
-            // Vérifier si le code existe déjà
-            if (codeHistory.some(item => item.code === code)) {
-                showNotification('⚠️ Code déjà existant, nouvelle génération...');
-                return generateCode(); // Régénérer
-            }
-            
-            // Afficher le code
-            document.getElementById('generatedCode').textContent = code;
-            
-            // Ajouter à l'historique
-            addToHistory(code);
-            
-            showNotification('✅ Code unique généré !');
         }
         
         // Générer plusieurs codes
@@ -557,36 +722,116 @@
             const length = parseInt(document.getElementById('codeLength').value);
             const count = parseInt(document.getElementById('codeCount').value);
             const type = document.getElementById('codeType').value;
-            const chars = CHAR_SETS[type];
             
-            let codes = [];
-            let generated = 0;
-            
-            while (generated < count) {
-                let code = '';
-                for (let i = 0; i < length; i++) {
-                    code += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
-                
-                // Vérifier les doublons dans les nouveaux codes ET l'historique
-                if (!codes.includes(code) && !codeHistory.some(item => item.code === code)) {
-                    codes.push(code);
-                    generated++;
-                }
+            if (count > 1000) {
+                showNotification('⚠️ Maximum 1000 codes autorisés');
+                return;
             }
+            
+            // Afficher le chargement pour les gros volumes
+            if (count > 100) {
+                document.getElementById('loading').style.display = 'block';
+                setTimeout(() => {
+                    processGeneration(count, length, type);
+                }, 10);
+            } else {
+                processGeneration(count, length, type);
+            }
+        }
+        
+        // Traiter la génération
+        function processGeneration(count, length, type) {
+            const codes = generateUniqueCodes(count, length, type);
             
             // Ajouter chaque code à l'historique
             codes.forEach(code => addToHistory(code));
             
-            // Afficher tous les codes
-            if (count === 1) {
-                document.getElementById('generatedCode').textContent = codes[0];
+            // Afficher les codes
+            displayGeneratedCodes(codes);
+            
+            // Masquer le chargement
+            document.getElementById('loading').style.display = 'none';
+            
+            if (codes.length === count) {
+                showNotification(`✅ ${count} code${count > 1 ? 's' : ''} unique${count > 1 ? 's' : ''} généré${count > 1 ? 's' : ''} !`);
             } else {
-                document.getElementById('generatedCode').innerHTML = 
-                    codes.map(code => `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">${code}</div>`).join('');
+                showNotification(`⚠️ Seulement ${codes.length} codes uniques générés sur ${count} demandés`);
+            }
+        }
+        
+        // Afficher les codes générés
+        function displayGeneratedCodes(codes) {
+            const codeContainer = document.getElementById('generatedCode');
+            
+            if (codes.length === 1) {
+                codeContainer.innerHTML = `<div class="code-item">${codes[0]}</div>`;
+            } else if (codes.length <= 20) {
+                codeContainer.innerHTML = codes.map(code => 
+                    `<div class="code-item">${code}</div>`
+                ).join('');
+            } else {
+                // Pour les grandes quantités, afficher seulement les premiers et derniers
+                const firstCodes = codes.slice(0, 10);
+                const lastCodes = codes.slice(-10);
+                
+                codeContainer.innerHTML = 
+                    firstCodes.map(code => `<div class="code-item">${code}</div>`).join('') +
+                    `<div style="text-align: center; padding: 10px; opacity: 0.7;">
+                        ... et ${codes.length - 20} autres codes ...
+                    </div>` +
+                    lastCodes.map(code => `<div class="code-item">${code}</div>`).join('');
+            }
+        }
+        
+        // Générer 1000 codes directement
+        function generateBulk() {
+            const length = parseInt(document.getElementById('codeLength').value);
+            const type = document.getElementById('codeType').value;
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            // Utiliser setTimeout pour éviter de bloquer l'interface
+            setTimeout(() => {
+                const codes = generateUniqueCodes(1000, length, type);
+                
+                // Ajouter à l'historique (limitons à 2000 pour la mémoire)
+                codes.forEach(code => addToHistory(code));
+                
+                // Afficher un résumé
+                displayGeneratedCodes(codes);
+                
+                document.getElementById('loading').style.display = 'none';
+                
+                showNotification(`✅ ${codes.length} codes uniques générés instantanément !`);
+            }, 10);
+        }
+        
+        // Générer une quantité personnalisée
+        function generateCustomBulk() {
+            const length = parseInt(document.getElementById('codeLength').value);
+            const type = document.getElementById('codeType').value;
+            const bulkCount = parseInt(document.getElementById('bulkCount').value);
+            
+            if (bulkCount > 1000) {
+                showNotification('⚠️ Maximum 1000 codes autorisés');
+                return;
             }
             
-            showNotification(`✅ ${count} code${count > 1 ? 's' : ''} unique${count > 1 ? 's' : ''} généré${count > 1 ? 's' : ''} !`);
+            document.getElementById('loading').style.display = 'block';
+            
+            setTimeout(() => {
+                const codes = generateUniqueCodes(bulkCount, length, type);
+                
+                // Ajouter à l'historique
+                codes.forEach(code => addToHistory(code));
+                
+                // Afficher un résumé
+                displayGeneratedCodes(codes);
+                
+                document.getElementById('loading').style.display = 'none';
+                
+                showNotification(`✅ ${codes.length} codes uniques générés !`);
+            }, 10);
         }
         
         // Ajouter un code à l'historique
@@ -598,9 +843,9 @@
                     timestamp: new Date().toISOString()
                 });
                 
-                // Limiter l'historique à 500 entrées
-                if (codeHistory.length > 500) {
-                    codeHistory = codeHistory.slice(-500);
+                // Limiter l'historique à 2000 entrées pour la performance
+                if (codeHistory.length > 2000) {
+                    codeHistory = codeHistory.slice(-2000);
                 }
                 
                 // Sauvegarder dans le localStorage
@@ -614,11 +859,19 @@
         // Copier dans le presse-papier
         async function copyToClipboard() {
             const codeElement = document.getElementById('generatedCode');
-            const code = codeElement.textContent;
+            let codeText = '';
             
-            if (code && code !== 'Cliquez sur "Générer un code"') {
+            // Extraire tout le texte des codes
+            const codeItems = codeElement.querySelectorAll('.code-item');
+            if (codeItems.length > 0) {
+                codeText = Array.from(codeItems).map(item => item.textContent).join('\n');
+            } else {
+                codeText = codeElement.textContent;
+            }
+            
+            if (codeText && codeText !== 'Cliquez sur "Générer un code"') {
                 try {
-                    await navigator.clipboard.writeText(code);
+                    await navigator.clipboard.writeText(codeText);
                     showNotification('✅ Code(s) copié(s) dans le presse-papier !');
                     
                     // Animation du bouton
@@ -647,7 +900,7 @@
                 codeHistory = [];
                 localStorage.removeItem('codeHistory');
                 updateHistoryDisplay();
-                document.getElementById('generatedCode').textContent = 'Cliquez sur "Générer un code"';
+                document.getElementById('generatedCode').innerHTML = 'Cliquez sur "Générer un code"';
                 showNotification('🗑️ Historique effacé avec succès');
             }
         }
