@@ -1465,63 +1465,72 @@
                 <i class="fas fa-user-graduate"></i> Inscription à la Formation
             </h2>
             
-            <!-- Le formulaire d'inscription -->
-            <form id="inscriptionForm">
-                <div class="form-group">
-                    <label class="form-label">Nom complet *</label>
-                    <input type="text" class="form-input" name="nom" required placeholder="Nom, Postnom, Prénom">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Email *</label>
-                    <input type="email" class="form-input" name="email" required placeholder="exemple@email.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Téléphone *</label>
-                    <input type="tel" class="form-input" name="telephone" required placeholder="+243 970 501 523">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Avez-vous WhatsApp ? *</label>
-                    <select class="form-select" name="whatsapp" required>
-                        <option value="">Sélectionnez</option>
-                        <option value="oui">Oui</option>
-                        <option value="non">Non</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Profession / Études *</label>
-                    <input type="text" class="form-input" name="profession" required placeholder="Votre profession ou domaine d'études">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Niveau d'expérience en prise de parole *</label>
-                    <select class="form-select" name="experience" required>
-                        <option value="">Sélectionnez votre niveau</option>
-                        <option value="debutant">Débutant (Première formation)</option>
-                        <option value="intermediaire">Intermédiaire (Quelques expériences)</option>
-                        <option value="avance">Avancé (Expérience significative)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Votre motivation *</label>
-                    <textarea class="form-textarea" name="motivation" required placeholder="Pourquoi souhaitez-vous suivre cette formation ? Quelles sont vos attentes ?"></textarea>
-                </div>
-                
-                <div style="margin: 30px 0;">
-                    <label style="display: flex; align-items: flex-start; gap: 15px; color: #BDC3C7; font-size: 1rem;">
-                        <input type="checkbox" required style="margin-top: 3px; transform: scale(1.3);">
-                        <span>J'accepte que mes données soient utilisées pour l'organisation de la formation *</span>
-                    </label>
-                </div>
-                
-                <button type="submit" class="submit-button">
-                    <i class="fas fa-paper-plane"></i> VALIDER MON INSCRIPTION
-                </button>
-            </form>
+           <!-- Le formulaire d'inscription -->
+<form id="inscriptionForm">
+    <div class="form-group">
+        <label class="form-label">Nom complet *</label>
+        <input type="text" class="form-input" name="nom" required placeholder="Nom, Postnom, Prénom">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Email *</label>
+        <input type="email" class="form-input" name="email" required placeholder="exemple@email.com">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Téléphone *</label>
+        <input type="tel" class="form-input" name="telephone" required placeholder="+243 970 501 523">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Avez-vous WhatsApp ? *</label>
+        <select class="form-select" name="whatsapp" required>
+            <option value="">Sélectionnez</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Profession / Études *</label>
+        <input type="text" class="form-input" name="profession" required placeholder="Votre profession ou domaine d'études">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Souhaitez-vous participer au concours d'éloquence ? *</label>
+        <select class="form-select" name="concours_eloquence" required>
+            <option value="">Sélectionnez</option>
+            <option value="oui">Oui, je vais participer</option>
+            <option value="non">Non, je vais participer à la formation uniquement</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Niveau d'expérience en prise de parole *</label>
+        <select class="form-select" name="experience" required>
+            <option value="">Sélectionnez votre niveau</option>
+            <option value="debutant">Débutant (Première formation)</option>
+            <option value="intermediaire">Intermédiaire (Quelques expériences)</option>
+            <option value="avance">Avancé (Expérience significative)</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Votre motivation *</label>
+        <textarea class="form-textarea" name="motivation" required placeholder="Pourquoi souhaitez-vous suivre cette formation ? Quelles sont vos attentes ?"></textarea>
+    </div>
+    
+    <div style="margin: 30px 0;">
+        <label style="display: flex; align-items: flex-start; gap: 15px; color: #BDC3C7; font-size: 1rem;">
+            <input type="checkbox" required style="margin-top: 3px; transform: scale(1.3);">
+            <span>J'accepte que mes données soient utilisées pour l'organisation de la formation *</span>
+        </label>
+    </div>
+    
+    <button type="submit" class="submit-button">
+        <i class="fas fa-paper-plane"></i> VALIDER MON INSCRIPTION
+    </button>
+</form>
             
             <!-- Message de confirmation -->
             <div id="confirmationMessage" class="hidden" style="text-align: center; padding: 40px;">
