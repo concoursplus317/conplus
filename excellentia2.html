@@ -1465,7 +1465,7 @@
                 <i class="fas fa-user-graduate"></i> Inscription à la Formation
             </h2>
             
-           <!-- Le formulaire d'inscription -->
+<!-- Le formulaire d'inscription -->
 <form id="inscriptionForm">
     <div class="form-group">
         <label class="form-label">Nom complet *</label>
@@ -1494,6 +1494,26 @@
     <div class="form-group">
         <label class="form-label">Profession / Études *</label>
         <input type="text" class="form-input" name="profession" required placeholder="Votre profession ou domaine d'études">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Faculté *</label>
+        <select class="form-select" name="faculte" required>
+            <option value="">Sélectionnez votre faculté</option>
+            <option value="sciences_technologies">Faculté de sciences et technologies</option>
+            <option value="lettres_sciences_humaines">Faculté de Lettres et sciences humaines</option>
+            <option value="sciences_economiques_gestion">Faculté de Sciences économiques et de gestion</option>
+            <option value="sciences_sociales_administratives_politiques">Faculté de Sciences sociales, administratives et politiques</option>
+            <option value="droit">Faculté de Droit</option>
+            <option value="polytechnique">Faculté de Polytechnique</option>
+            <option value="sciences_pharmaceutiques">Faculté de sciences pharmaceutiques</option>
+            <option value="medecine_dentaire">Faculté de médecine dentaire</option>
+            <option value="medecine_veterinaire">Faculté de médecine vétérinaire</option>
+            <option value="petrole_gaz_energies_renouvelables">Faculté de Pétrole, gaz et énergies renouvelables</option>
+            <option value="sciences_agronomiques">Faculté sciences agronomiques</option>
+            <option value="medecine">Faculté de Médecine</option>
+            <option value="psychologie_sciences_education">Faculté de psychologie et sciences de l'éducation</option>
+        </select>
     </div>
     
     <div class="form-group">
@@ -1537,11 +1557,25 @@
                 <div style="font-size: 5rem; color: #2ECC71; margin-bottom: 30px; animation: pulse 2s infinite;">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h3 style="color: #FFFFFF; margin-bottom: 25px; font-size: 1.8rem; font-weight: 800;">Inscription confirmée !</h3>
-                <p style="color: #BDC3C7; margin-bottom: 40px; font-size: 1.2rem; line-height: 1.7;">
-                    Félicitations ! Vous êtes inscrit(e) à la formation en Art Oratoire.<br>
-                    Vous recevrez les détails pratiques par email et WhatsApp dans les 48h.
-                </p>
+            <h3 style="color: #FFFFFF; margin-bottom: 25px; font-size: 1.8rem; font-weight: 800;">Inscription confirmée !</h3>
+<p style="color: #BDC3C7; margin-bottom: 25px; font-size: 1.2rem; line-height: 1.7;">
+    Félicitations ! Vous êtes inscrit(e) à la formation d'Eloquence.
+</p>
+
+<div style="background-color: rgba(37, 211, 102, 0.1); border-left: 4px solid #25D366; padding: 20px; margin-bottom: 40px; border-radius: 4px;">
+    <p style="color: #FFFFFF; margin-bottom: 15px; font-size: 1.2rem; font-weight: 600;">
+        ⚠️ IMPORTANT : Rejoignez le groupe WhatsApp
+    </p>
+    <p style="color: #BDC3C7; margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6;">
+        <strong>Aucune information ne sera envoyée par email ou WhatsApp.</strong><br>
+        Vous devez intégrer le groupe WhatsApp pour recevoir tous les détails pratiques de la formation.
+    </p>
+    <p style="color: #BDC3C7; font-size: 1.1rem; line-height: 1.6;">
+        <strong>Comment faire :</strong><br>
+        1. Cliquez sur "Retour à l'accueil"<br>
+        2. En bas de page, cliquez sur "Rejoindre le groupe WhatsApp"
+    </p>
+</div>
                 <button class="submit-button" id="closeAfterSubmit" style="background: linear-gradient(135deg, #D4AF37, #B8941F);">
                     <i class="fas fa-home"></i> RETOUR À L'ACCUEIL
                 </button>
