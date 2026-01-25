@@ -5,23 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excellentia Academia - Élever l'intelligence, inspirer l'excellence</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #1a237e;
             --primary-light: #534bae;
+            --primary-lighter: #e8eaf6;
             --primary-dark: #000051;
             --secondary: #d32f2f;
             --secondary-light: #ff6659;
+            --secondary-lighter: #ffebee;
             --secondary-dark: #9a0007;
             --accent: #ffab00;
-            --accent-dark: #e69a00;
+            --accent-light: #ffdd4b;
+            --accent-dark: #c67c00;
             --success: #4caf50;
             --warning: #ff9800;
-            --light: #f5f5f7;
+            --info: #2196f3;
+            --light: #f8f9fa;
+            --light-gray: #f5f5f7;
             --dark: #121212;
             --gray: #5f6368;
+            --gray-light: #dadce0;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --radius-lg: 20px;
         }
         
         * {
@@ -30,15 +41,19 @@
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'Source Sans Pro', sans-serif;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--dark);
             background-color: var(--light);
             overflow-x: hidden;
         }
         
-        h1, h2, h3, h4, h5 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             line-height: 1.2;
@@ -52,9 +67,51 @@
             padding: 0 20px;
         }
         
-        .btn {
+        .section-padding {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .title-decoration {
+            position: relative;
             display: inline-block;
-            padding: 12px 30px;
+        }
+        
+        .title-decoration:after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: -10px;
+            left: 15%;
+            border-radius: 2px;
+        }
+        
+        /* Boutons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
             background-color: var(--secondary);
             color: white;
             border: none;
@@ -65,13 +122,32 @@
             transition: var(--transition);
             text-decoration: none;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
         }
         
         .btn:hover {
-            background-color: var(--secondary-dark);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
         
         .btn-primary {
@@ -80,6 +156,16 @@
         
         .btn-primary:hover {
             background-color: var(--primary-dark);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            color: white;
         }
         
         .btn-outline {
@@ -93,36 +179,28 @@
             color: white;
         }
         
-        section {
-            padding: 80px 0;
+        .btn-success {
+            background-color: var(--success);
         }
         
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
+        .btn-success:hover {
+            background-color: #388e3c;
         }
         
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background-color: var(--secondary);
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        /* Header & Navigation */
+        /* Header */
         header {
             background-color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             position: fixed;
             width: 100%;
             z-index: 1000;
-            padding: 15px 0;
+            padding: 18px 0;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
         }
         
         .nav-container {
@@ -135,35 +213,55 @@
             display: flex;
             align-items: center;
             text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.02);
         }
         
         .logo-icon {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: var(--primary);
-            margin-right: 10px;
+            margin-right: 12px;
             animation: pulse 2s infinite;
         }
         
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
         .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.8rem;
             color: var(--primary);
+            line-height: 1;
         }
         
-        .logo-text span {
+        .logo-sub {
+            font-size: 0.9rem;
             color: var(--secondary);
+            font-weight: 600;
+            letter-spacing: 1px;
         }
         
-        /* Boutons d'action en haut à droite - 4 BOUTONS */
+        /* Boutons d'action header */
         .action-buttons {
             display: flex;
-            gap: 10px;
-            margin-right: 20px;
+            gap: 12px;
+            margin-right: 30px;
         }
         
         .action-btn {
-            padding: 8px 15px;
+            padding: 10px 20px;
             background-color: var(--primary);
             color: white;
             border: none;
@@ -176,17 +274,16 @@
             text-align: center;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             white-space: nowrap;
+            box-shadow: var(--shadow-sm);
         }
         
         .action-btn:hover {
-            background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
         
-        /* Style spécifique pour chaque bouton */
         .action-btn.formation {
             background-color: var(--secondary);
         }
@@ -202,6 +299,7 @@
         
         .action-btn.concours:hover {
             background-color: var(--accent-dark);
+            color: white;
         }
         
         .action-btn.ateliers {
@@ -213,12 +311,11 @@
         }
         
         .action-btn.conferences {
-            background-color: var(--warning);
-            color: var(--dark);
+            background-color: var(--info);
         }
         
         .action-btn.conferences:hover {
-            background-color: #e68900;
+            background-color: #0b7dda;
         }
         
         .nav-wrapper {
@@ -232,7 +329,7 @@
         }
         
         .nav-links li {
-            margin-left: 30px;
+            margin-left: 35px;
         }
         
         .nav-links a {
@@ -242,21 +339,23 @@
             font-size: 1rem;
             transition: var(--transition);
             position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
+            padding: 5px 0;
         }
         
         .nav-links a:after {
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            bottom: -5px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: 0;
             left: 0;
             transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
         }
         
         .nav-links a:hover:after {
@@ -265,593 +364,65 @@
         
         .mobile-menu-btn {
             display: none;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             background: none;
             border: none;
             color: var(--primary);
             cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-btn:hover {
+            background-color: var(--primary-lighter);
         }
         
         /* Hero Section */
         .hero {
-            padding-top: 150px;
-            background: linear-gradient(135deg, rgba(26, 35, 126, 0.05) 0%, rgba(255, 171, 0, 0.05) 100%);
+            padding-top: 180px;
+            padding-bottom: 120px;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.03) 0%, rgba(255, 171, 0, 0.03) 100%);
             position: relative;
             overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26, 35, 126, 0.05) 0%, rgba(26, 35, 126, 0) 70%);
+            top: -200px;
+            right: -100px;
+            z-index: 0;
+        }
+        
+        .hero:after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(211, 47, 47, 0.05) 0%, rgba(211, 47, 47, 0) 70%);
+            bottom: -150px;
+            left: -100px;
+            z-index: 0;
         }
         
         .hero-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+            z-index: 1;
         }
         
         .hero-text {
             flex: 1;
-            padding-right: 40px;
+            padding-right: 60px;
             animation: slideInLeft 1s ease-out;
-        }
-        
-        .hero-text h1 {
-            font-size: 3.2rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-        
-        .hero-text h1 span {
-            color: var(--secondary);
-        }
-        
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .coordinateur-info {
-            background-color: rgba(26, 35, 126, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 4px solid var(--secondary);
-        }
-        
-        .coordinateur-info h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        
-        .coordinateur-info p {
-            margin-bottom: 0;
-            font-size: 1rem;
-        }
-        
-        .hero-btns {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .hero-visual {
-            flex: 1;
-            position: relative;
-            animation: slideInRight 1s ease-out;
-        }
-        
-        .floating-elements {
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-        
-        .floating-element {
-            position: absolute;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            transition: var(--transition);
-        }
-        
-        .floating-element:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .element-1 {
-            top: 0;
-            left: 0;
-            width: 180px;
-            height: 180px;
-            animation: float 6s ease-in-out infinite;
-            border-top: 5px solid var(--primary);
-        }
-        
-        .element-2 {
-            top: 50px;
-            right: 0;
-            width: 220px;
-            height: 150px;
-            animation: float 7s ease-in-out infinite 0.5s;
-            border-top: 5px solid var(--secondary);
-        }
-        
-        .element-3 {
-            bottom: 0;
-            left: 50px;
-            width: 160px;
-            height: 160px;
-            animation: float 8s ease-in-out infinite 1s;
-            border-top: 5px solid var(--accent);
-        }
-        
-        .floating-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .floating-text {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        /* Facultés Section */
-        .faculties {
-            background-color: white;
-        }
-        
-        .faculties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .faculty-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .faculty-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .faculty-icon {
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-        
-        .faculty-content {
-            padding: 25px;
-        }
-        
-        .faculty-content h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        
-        /* Style pour les ambassadeurs */
-        .ambassador-info {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .ambassador-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(26, 35, 126, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            color: var(--primary);
-        }
-        
-        .ambassador-details h5 {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-bottom: 3px;
-        }
-        
-        .ambassador-details p {
-            font-size: 0.85rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        /* Pages supplémentaires */
-        .page-section {
-            display: none;
-            min-height: 100vh;
-        }
-        
-        .page-section.active {
-            display: block;
-        }
-        
-        .page-header {
-            padding: 140px 0 60px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .page-header h1 {
-            color: white;
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        
-        .page-header p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-        
-        .page-content {
-            padding: 80px 0;
-        }
-        
-        /* Page des formations */
-        .formation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .formation-card {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-        }
-        
-        .formation-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .formation-header {
-            background-color: var(--secondary);
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .formation-header h3 {
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .formation-body {
-            padding: 30px;
-        }
-        
-        .formation-features {
-            list-style: none;
-            margin-top: 20px;
-        }
-        
-        .formation-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-        }
-        
-        .formation-features li i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-        
-        .formation-price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .formation-price span {
-            font-size: 1rem;
-            color: var(--gray);
-            font-weight: 400;
-        }
-        
-        /* Page du concours */
-        .contest-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .contest-prize, .contest-conditions {
-            flex: 1;
-            min-width: 300px;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .contest-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .contest-table th {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-        }
-        
-        .contest-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .contest-table tr:hover {
-            background-color: rgba(26, 35, 126, 0.03);
-        }
-        
-        .phase-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .phase-badge.inscription {
-            background-color: rgba(76, 175, 80, 0.1);
-            color: var(--success);
-        }
-        
-        .phase-badge.qualification {
-            background-color: rgba(255, 171, 0, 0.1);
-            color: var(--accent);
-        }
-        
-        .phase-badge.finale {
-            background-color: rgba(211, 47, 47, 0.1);
-            color: var(--secondary);
-        }
-        
-        /* Page des ateliers */
-        .atelier-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .atelier-card {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-        }
-        
-        .atelier-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .atelier-header {
-            background-color: var(--success);
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .atelier-header h3 {
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .atelier-body {
-            padding: 30px;
-        }
-        
-        /* Page des conférences */
-        .conference-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .conference-card {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-        }
-        
-        .conference-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .conference-date {
-            background-color: var(--warning);
-            color: var(--dark);
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .conference-date .day {
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-        
-        .conference-date .month {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-        }
-        
-        .conference-body {
-            padding: 30px;
-        }
-        
-        .conference-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 70px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-logo {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-about p {
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-        
-        .coordinateur-footer {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        
-        .coordinateur-footer h4 {
-            color: var(--accent);
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .coordinateur-footer p {
-            margin-bottom: 5px;
-            font-size: 0.95rem;
-        }
-        
-        .footer-links h3, .footer-contact h3 {
-            color: white;
-            margin-bottom: 25px;
-            font-size: 1.3rem;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-        
-        .footer-contact p {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            opacity: 0.8;
-        }
-        
-        .footer-contact i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .social-icons a:hover {
-            background-color: var(--secondary);
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-        
-        /* Animations */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
         }
         
         @keyframes slideInLeft {
@@ -865,6 +436,103 @@
             }
         }
         
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+        
+        .hero-text h1 span {
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-text h1 span:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 171, 0, 0.3);
+            bottom: 5px;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 35px;
+            max-width: 600px;
+        }
+        
+        .comite-directeur {
+            background: linear-gradient(135deg, white, var(--light-gray));
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .comite-directeur h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comite-directeur h4 i {
+            color: var(--secondary);
+        }
+        
+        .comite-membres {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .membre {
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .membre:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .membre h5 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        
+        .membre p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+        
         @keyframes slideInRight {
             from {
                 opacity: 0;
@@ -876,25 +544,673 @@
             }
         }
         
+        .floating-elements {
+            position: relative;
+            height: 450px;
+            width: 100%;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition);
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .floating-element:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .floating-element:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .element-1 {
+            top: 20px;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .element-2 {
+            top: 80px;
+            right: 0;
+            width: 240px;
+            height: 170px;
+            animation: float 7s ease-in-out infinite 0.5s;
+        }
+        
+        .element-3 {
+            bottom: 20px;
+            left: 60px;
+            width: 180px;
+            height: 180px;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+        
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .floating-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
         }
         
-        /* Responsive Styles */
+        .floating-text {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Facultés Section */
+        .faculties {
+            background-color: white;
+        }
+        
+        .faculties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        
+        .faculty-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .faculty-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .faculty-icon:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+        }
+        
+        .faculty-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .faculty-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .faculty-content p {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .ambassador-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .ambassador-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .ambassador-details h5 {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .ambassador-details p {
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+        
+        /* Formations Section */
+        .formations {
+            background-color: var(--light-gray);
+        }
+        
+        .formations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+        }
+        
+        .formation-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .formation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .formation-header {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .formation-header:before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -75px;
+            right: -75px;
+        }
+        
+        .formation-header:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .formation-header h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .formation-header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .formation-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .formation-features {
+            list-style: none;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .formation-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .formation-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .formation-features li i {
+            color: var(--success);
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .formation-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .formation-price span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        /* Concours Section */
+        .concours {
+            background-color: white;
+        }
+        
+        .concours-highlight {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: var(--radius-lg);
+            color: var(--dark);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .concours-highlight h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .concours-highlight p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+        
+        .concours-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .info-card {
+            background-color: white;
+            padding: 35px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .info-card h4 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h4 i {
+            color: var(--secondary);
+        }
+        
+        .info-card ul {
+            list-style: none;
+        }
+        
+        .info-card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-card ul li i {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Formulaire d'inscription */
+        .inscription {
+            background-color: var(--light-gray);
+        }
+        
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-header:before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .form-header:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -75px;
+            left: -75px;
+        }
+        
+        .form-header h2 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-body {
+            padding: 50px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .form-group {
+            flex: 1 0 300px;
+            padding: 0 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Source Sans Pro', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a237e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px;
+            padding-right: 50px;
+        }
+        
+        .checkbox-group {
+            margin-top: 20px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logo-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: white;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo-sub {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        .comite-footer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .comite-footer h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .comite-footer p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-links h3:after, .footer-contact h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: -8px;
+            left: 0;
+            border-radius: 3px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            opacity: 0.9;
+        }
+        
+        .footer-contact i {
+            margin-right: 15px;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive */
         @media (max-width: 1200px) {
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+            
             .action-buttons {
-                margin-right: 10px;
+                margin-right: 20px;
             }
             
             .action-btn {
-                padding: 8px 12px;
+                padding: 9px 18px;
                 font-size: 0.8rem;
             }
         }
@@ -915,64 +1231,78 @@
             }
             
             .floating-elements {
-                height: 300px;
+                height: 350px;
             }
             
             .action-buttons {
                 display: none;
             }
             
-            .page-header h1 {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .section-padding {
+                padding: 80px 0;
+            }
+            
+            .section-title h2 {
                 font-size: 2.2rem;
             }
         }
         
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 999;
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
+            .hero {
+                padding-top: 150px;
+                padding-bottom: 80px;
             }
             
             .hero-text h1 {
                 font-size: 2.5rem;
             }
             
-            section {
-                padding: 60px 0;
+            .floating-elements {
+                height: 300px;
             }
             
-            .faculties-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            .element-1, .element-2, .element-3 {
+                width: 150px;
+                height: 150px;
+                padding: 15px;
+            }
+            
+            .floating-icon {
+                font-size: 2rem;
+            }
+            
+            .form-body {
+                padding: 30px 20px;
+            }
+            
+            .faculties-grid, .formations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .concours-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .comite-membres {
+                grid-template-columns: 1fr;
             }
         }
         
         @media (max-width: 576px) {
             .hero-text h1 {
                 font-size: 2rem;
+            }
+            
+            .hero-text p {
+                font-size: 1.1rem;
             }
             
             .hero-btns {
@@ -985,37 +1315,36 @@
                 max-width: 300px;
             }
             
-            .faculties-grid {
-                grid-template-columns: 1fr;
+            .comite-directeur {
+                padding: 20px;
             }
             
-            .page-header h1 {
+            .section-title h2 {
                 font-size: 1.8rem;
             }
             
-            .page-header p {
+            .section-title p {
                 font-size: 1rem;
-            }
-            
-            .formation-grid, .atelier-grid, .conference-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
+    <!-- Header -->
     <header>
         <div class="container nav-container">
-            <a href="#" class="logo" id="homeLink">
+            <a href="#" class="logo">
                 <i class="fas fa-graduation-cap logo-icon"></i>
-                <div class="logo-text">Excel<span>lentia</span> Academia</div>
+                <div class="logo-text">
+                    <div class="logo-main">Excellentia</div>
+                    <div class="logo-sub">ACADEMIA</div>
+                </div>
             </a>
             
             <div class="nav-wrapper">
-                <!-- 4 BOUTONS D'ACTION EN HAUT À DROITE -->
+                <!-- Boutons d'action -->
                 <div class="action-buttons">
-                    <a href="#formation" class="action-btn formation">
+                    <a href="#formations" class="action-btn formation">
                         <i class="fas fa-chalkboard-teacher"></i>
                         Formation
                     </a>
@@ -1023,11 +1352,11 @@
                         <i class="fas fa-trophy"></i>
                         Concours
                     </a>
-                    <a href="#ateliers" class="action-btn ateliers">
+                    <a href="#formations" class="action-btn ateliers">
                         <i class="fas fa-pen-fancy"></i>
                         Ateliers
                     </a>
-                    <a href="#conferences" class="action-btn conferences">
+                    <a href="#concours" class="action-btn conferences">
                         <i class="fas fa-microphone"></i>
                         Conférences
                     </a>
@@ -1039,615 +1368,327 @@
                 
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#facultes">13 Facultés</a></li>
-                    <li><a href="#activites">Activités</a></li>
-                    <li><a href="#evenements">Événements</a></li>
+                    <li><a href="#facultes">Facultés</a></li>
+                    <li><a href="#formations">Formations</a></li>
+                    <li><a href="#concours">Concours</a></li>
                     <li><a href="#inscription">Inscription</a></li>
                 </ul>
             </div>
         </div>
     </header>
 
-    <!-- Page d'accueil -->
-    <div id="accueil" class="page-section active">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
-                        <p>Excellentia Academia est la structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée.</p>
-                        
-                        <div class="coordinateur-info">
-                            <h4>Coordonnateur Général</h4>
-                            <p><strong>MALALE MUSAO Credo</strong> - Étudiant en M1 Droit, Département de Droit International Public et Relations Internationales</p>
-                            <p>Fondateur et Coordonnateur de la structure Excellentia Academia</p>
-                        </div>
-                        
-                        <div class="hero-btns">
-                            <a href="#inscription" class="btn">Devenir Membre</a>
-                            <a href="#facultes" class="btn btn-outline">Voir les Facultés</a>
-                        </div>
-                    </div>
-                    <div class="hero-visual">
-                        <div class="floating-elements">
-                            <div class="floating-element element-1">
-                                <i class="fas fa-brain floating-icon"></i>
-                                <div class="floating-text">13 Facultés</div>
-                                <small>Université de Kinshasa</small>
-                            </div>
-                            <div class="floating-element element-2">
-                                <i class="fas fa-trophy floating-icon"></i>
-                                <div class="floating-text">Concours d'éloquence</div>
-                                <small>Inter-facultés</small>
-                            </div>
-                            <div class="floating-element element-3">
-                                <i class="fas fa-users floating-icon"></i>
-                                <div class="floating-text">Ambassadeurs</div>
-                                <small>Par faculté</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Facultés Section -->
-        <section class="faculties" id="facultes">
-            <div class="container">
-                <h2 class="section-title">13 Facultés de l'Université de Kinshasa</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Excellentia Academia existe dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés dans chaque faculté.</p>
-                
-                <div class="faculties-grid" id="facultiesContainer">
-                    <!-- Les facultés seront générées par JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Inscription Section -->
-        <section class="registration" id="inscription">
-            <div class="container">
-                <h2 class="section-title">Devenir Membre d'Excellentia Academia</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Rejoignez notre communauté d'excellence et bénéficiez de tous nos programmes, événements et accompagnements personnalisés dans votre faculté.</p>
-                
-                <div class="form-container">
-                    <div class="form-header">
-                        <h2>Formulaire d'Adhésion</h2>
-                        <p>Remplissez ce formulaire pour devenir membre d'Excellentia Academia</p>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
+                    <p>Excellentia Academia est la structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée.</p>
                     
-                    <form class="form-body" id="registrationForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="firstName">Prénom *</label>
-                                <input type="text" id="firstName" class="form-control" required>
+                    <div class="comite-directeur">
+                        <h4><i class="fas fa-users"></i> Comité Directeur</h4>
+                        <div class="comite-membres">
+                            <div class="membre">
+                                <h5>Credo MALALE MUSAO</h5>
+                                <p>Coordonnateur Général</p>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="lastName">Nom *</label>
-                                <input type="text" id="lastName" class="form-control" required>
+                            <div class="membre">
+                                <h5>Arnid DJONGA</h5>
+                                <p>Secrétaire Général</p>
                             </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Adresse Email *</label>
-                                <input type="email" id="email" class="form-control" required>
+                            <div class="membre">
+                                <h5>Paul KASONGO</h5>
+                                <p>Secrétaire Général Adjoint</p>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="phone">Téléphone</label>
-                                <input type="tel" id="phone" class="form-control">
+                            <div class="membre">
+                                <h5>Chris</h5>
+                                <p>Chargé des Projets</p>
                             </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="faculty">Faculté *</label>
-                                <select id="faculty" class="form-control" required>
-                                    <option value="">Sélectionnez votre faculté</option>
-                                    <!-- Options seront générées par JavaScript -->
-                                </select>
+                            <div class="membre">
+                                <h5>Gemima BEMBIDE</h5>
+                                <p>Directrice Financière</p>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="niveau">Niveau d'études *</label>
-                                <select id="niveau" class="form-control" required>
-                                    <option value="">Sélectionnez votre niveau</option>
-                                    <option value="licence1">Licence 1</option>
-                                    <option value="licence2">Licence 2</option>
-                                    <option value="licence3">Licence 3</option>
-                                    <option value="master1">Master 1</option>
-                                    <option value="master2">Master 2</option>
-                                    <option value="doctorat">Doctorat</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="interests">Activités d'intérêt *</label>
-                                <select id="interests" class="form-control" multiple required>
-                                    <option value="concours">Concours d'éloquence</option>
-                                    <option value="formation">Formation à l'éloquence</option>
-                                    <option value="conferences">Conférences</option>
-                                    <option value="ateliers">Ateliers d'écriture</option>
-                                    <option value="ambassadeur">Devenir ambassadeur</option>
-                                    <option value="softskills">Formations soft skills</option>
-                                    <option value="mentorat">Programme de mentorat</option>
-                                    <option value="recherche">Recherche académique</option>
-                                </select>
-                                <small style="color: var(--gray);">Maintenez Ctrl (ou Cmd) pour sélectionner plusieurs options</small>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="message">Pourquoi voulez-vous rejoindre Excellentia Academia ? *</label>
-                                <textarea id="message" class="form-control" rows="4" required></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" required>
-                                <span>J'accepte de recevoir les communications d'Excellentia Academia concernant les événements et activités. Je comprends que je peux me désabonner à tout moment.</span>
-                            </label>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 30px;">
-                            <button type="submit" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Soumettre ma candidature</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Page des Formations -->
-    <div id="formation" class="page-section">
-        <div class="page-header">
-            <div class="container">
-                <h1>Formations Excellentia Academia</h1>
-                <p>Développez vos compétences avec nos programmes de formation certifiants, conçus pour les étudiants de toutes les facultés de l'UNIKIN.</p>
-            </div>
-        </div>
-        
-        <div class="page-content">
-            <div class="container">
-                <h2 class="section-title">Nos Programmes de Formation</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Choisissez la formation qui correspond à vos besoins et objectifs académiques et professionnels.</p>
-                
-                <div class="formation-grid">
-                    <div class="formation-card">
-                        <div class="formation-header">
-                            <h3>Formation à l'Éloquence</h3>
-                            <p>Programme complet - 4 semaines</p>
-                        </div>
-                        <div class="formation-body">
-                            <p>Maîtrisez l'art oratoire et devenez un communicateur efficace. Ce programme intensif couvre toutes les techniques de prise de parole en public.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li>
-                                <li><i class="fas fa-check"></i> Construction du discours et argumentation</li>
-                                <li><i class="fas fa-check"></i> Gestion du stress et du trac</li>
-                                <li><i class="fas fa-check"></i> Art de l'improvisation</li>
-                                <li><i class="fas fa-check"></i> Séances de coaching individuel</li>
-                                <li><i class="fas fa-check"></i> Certificat de participation</li>
-                            </ul>
-                            <div class="formation-price">25.000 FC<span> / mois</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%;">S'inscrire maintenant</a>
                         </div>
                     </div>
                     
-                    <div class="formation-card">
-                        <div class="formation-header" style="background-color: var(--primary);">
-                            <h3>Ateliers d'Écriture Académique</h3>
-                            <p>Pour TFC, mémoires et thèses</p>
-                        </div>
-                        <div class="formation-body">
-                            <p>Apprenez à rédiger des travaux académiques de qualité avec notre programme spécialisé en méthodologie de recherche et rédaction scientifique.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Structure et planification du travail</li>
-                                <li><i class="fas fa-check"></i> Recherche documentaire et bibliographie</li>
-                                <li><i class="fas fa-check"></i> Rédaction scientifique et normes APA</li>
-                                <li><i class="fas fa-check"></i> Méthodologie de recherche</li>
-                                <li><i class="fas fa-check"></i> Présentation et soutenance</li>
-                                <li><i class="fas fa-check"></i> Accompagnement individuel</li>
-                            </ul>
-                            <div class="formation-price">30.000 FC<span> / session complète</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%;">S'inscrire maintenant</a>
-                        </div>
-                    </div>
-                    
-                    <div class="formation-card">
-                        <div class="formation-header" style="background-color: var(--accent); color: var(--dark);">
-                            <h3>Formation Soft Skills</h3>
-                            <p>Compétences transversales - 3 semaines</p>
-                        </div>
-                        <div class="formation-body">
-                            <p>Développez les compétences essentielles pour réussir dans vos études et votre future carrière professionnelle.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Leadership et travail d'équipe</li>
-                                <li><i class="fas fa-check"></i> Gestion du temps et productivité</li>
-                                <li><i class="fas fa-check"></i> Intelligence émotionnelle</li>
-                                <li><i class="fas fa-check"></i> Rédaction de CV et entretiens</li>
-                                <li><i class="fas fa-check"></i> Communication interpersonnelle</li>
-                                <li><i class="fas fa-check"></i> Pensée critique et résolution de problèmes</li>
-                            </ul>
-                            <div class="formation-price">20.000 FC<span> / module</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%;">S'inscrire maintenant</a>
-                        </div>
+                    <div class="hero-btns">
+                        <a href="#inscription" class="btn btn-primary">Devenir Membre</a>
+                        <a href="#concours" class="btn btn-accent">Concours d'Éloquence</a>
+                        <a href="#formations" class="btn btn-outline">Nos Formations</a>
                     </div>
                 </div>
-                
-                <div style="text-align: center; margin-top: 60px;">
-                    <a href="#accueil" class="btn btn-outline">Retour à l'accueil</a>
+                <div class="hero-visual">
+                    <div class="floating-elements">
+                        <div class="floating-element element-1">
+                            <i class="fas fa-brain floating-icon"></i>
+                            <div class="floating-text">13 Facultés</div>
+                            <small>Université de Kinshasa</small>
+                        </div>
+                        <div class="floating-element element-2">
+                            <i class="fas fa-trophy floating-icon"></i>
+                            <div class="floating-text">Concours d'éloquence</div>
+                            <small>Inter-facultés</small>
+                        </div>
+                        <div class="floating-element element-3">
+                            <i class="fas fa-users floating-icon"></i>
+                            <div class="floating-text">Ambassadeurs</div>
+                            <small>Par faculté</small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Page du Concours -->
-    <div id="concours" class="page-section">
-        <div class="page-header">
-            <div class="container">
-                <h1>Concours d'Éloquence Inter-facultés</h1>
-                <p>La grande compétition d'art oratoire qui rassemble les meilleurs orateurs des 13 facultés de l'Université de Kinshasa.</p>
+    <!-- Facultés Section -->
+    <section class="faculties section-padding" id="facultes">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">13 Facultés de l'Université de Kinshasa</span></h2>
+                <p>Excellentia Academia existe dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés dans chaque faculté.</p>
+            </div>
+            
+            <div class="faculties-grid" id="facultiesContainer">
+                <!-- Les facultés seront générées par JavaScript -->
             </div>
         </div>
-        
-        <div class="page-content">
-            <div class="container">
-                <h2 class="section-title">Édition 2023-2024</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Participez à cette compétition prestigieuse et représentez votre faculté. Des prix attractifs et une reconnaissance académique attendent les meilleurs orateurs.</p>
-                
-                <div class="contest-info">
-                    <div class="contest-prize">
-                        <h3 style="color: var(--primary); margin-bottom: 20px;"><i class="fas fa-trophy" style="margin-right: 10px;"></i>Prix à Gagner</h3>
-                        <ul style="list-style: none;">
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><strong>1er Prix:</strong> 500.000 FC + Bourse d'études + Trophée</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><strong>2ème Prix:</strong> 300.000 FC + Formation certifiante</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><strong>3ème Prix:</strong> 200.000 FC + Matériel académique</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><strong>Meilleur par faculté:</strong> Certificat d'excellence</li>
-                            <li style="padding: 10px 0;"><strong>Faculté gagnante:</strong> Trophée + Reconnaissance institutionnelle</li>
+    </section>
+
+    <!-- Formations Section -->
+    <section class="formations section-padding" id="formations">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Nos Formations & Ateliers</span></h2>
+                <p>Développez vos compétences avec nos programmes de formation certifiants et nos ateliers spécialisés.</p>
+            </div>
+            
+            <div class="formations-grid">
+                <div class="formation-card">
+                    <div class="formation-header">
+                        <h3>Formation à l'Éloquence</h3>
+                        <p>Maîtrisez l'art oratoire - 4 semaines</p>
+                    </div>
+                    <div class="formation-body">
+                        <p>Devenez un communicateur efficace avec notre programme complet d'art oratoire.</p>
+                        <ul class="formation-features">
+                            <li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li>
+                            <li><i class="fas fa-check"></i> Construction du discours et argumentation</li>
+                            <li><i class="fas fa-check"></i> Gestion du stress et du trac</li>
+                            <li><i class="fas fa-check"></i> Art de l'improvisation</li>
+                            <li><i class="fas fa-check"></i> Séances de coaching individuel</li>
                         </ul>
+                        <div class="formation-price">25.000 FC<span> / mois</span></div>
+                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
                     </div>
-                    
-                    <div class="contest-conditions">
-                        <h3 style="color: var(--primary); margin-bottom: 20px;"><i class="fas fa-users" style="margin-right: 10px;"></i>Conditions de Participation</h3>
-                        <ul style="list-style: none;">
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Être étudiant régulièrement inscrit à l'UNIKIN</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">S'inscrire avant la date limite</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Présenter une pièce d'identité valide</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Participer aux séances de préparation</li>
-                            <li style="padding: 10px 0;">Respecter le thème et les règles du concours</li>
+                </div>
+                
+                <div class="formation-card">
+                    <div class="formation-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                        <h3>Ateliers d'Écriture Académique</h3>
+                        <p>TFC, mémoires et thèses - 6 semaines</p>
+                    </div>
+                    <div class="formation-body">
+                        <p>Rédigez des travaux académiques de qualité avec notre programme spécialisé.</p>
+                        <ul class="formation-features">
+                            <li><i class="fas fa-check"></i> Structure et planification du travail</li>
+                            <li><i class="fas fa-check"></i> Recherche documentaire et bibliographie</li>
+                            <li><i class="fas fa-check"></i> Rédaction scientifique et normes APA</li>
+                            <li><i class="fas fa-check"></i> Méthodologie de recherche</li>
+                            <li><i class="fas fa-check"></i> Préparation à la soutenance</li>
                         </ul>
+                        <div class="formation-price">30.000 FC<span> / session</span></div>
+                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
                     </div>
                 </div>
                 
-                <h3 style="text-align: center; margin-bottom: 30px;">Calendrier du Concours</h3>
-                <table class="contest-table">
-                    <thead>
-                        <tr>
-                            <th>Phase</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Statut</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Inscriptions</td>
-                            <td>1er - 31 octobre 2023</td>
-                            <td>Inscriptions auprès des ambassadeurs de chaque faculté</td>
-                            <td><span class="phase-badge inscription">En cours</span></td>
-                            <td><a href="#inscription" class="btn" style="padding: 5px 15px; font-size: 0.8rem;">S'inscrire</a></td>
-                        </tr>
-                        <tr>
-                            <td>Préparation</td>
-                            <td>1er - 20 novembre 2023</td>
-                            <td>Séances de formation et coaching par les ambassadeurs</td>
-                            <td><span class="phase-badge qualification">À venir</span></td>
-                            <td><a href="#formation" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Se préparer</a></td>
-                        </tr>
-                        <tr>
-                            <td>Sélections facultaires</td>
-                            <td>21 - 25 novembre 2023</td>
-                            <td>Compétition intra-faculté pour sélectionner les représentants</td>
-                            <td><span class="phase-badge qualification">À venir</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Finale inter-facultés</td>
-                            <td>5 décembre 2023</td>
-                            <td>Grande finale avec les représentants des 13 facultés</td>
-                            <td><span class="phase-badge finale">À venir</span></td>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div style="text-align: center; margin-top: 50px;">
-                    <h3>Thème du Concours 2023-2024</h3>
-                    <div style="max-width: 800px; margin: 20px auto; padding: 30px; background-color: rgba(26, 35, 126, 0.05); border-radius: 10px; border-left: 5px solid var(--secondary);">
-                        <p style="font-size: 1.3rem; font-weight: 600; color: var(--primary);">"L'excellence académique au service du développement de la République Démocratique du Congo"</p>
-                        <p style="margin-top: 15px; color: var(--gray);">Les participants sont invités à développer une réflexion argumentée sur le rôle de l'élite universitaire dans le développement national.</p>
+                <div class="formation-card">
+                    <div class="formation-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                        <h3>Formation Soft Skills</h3>
+                        <p>Compétences transversales - 3 semaines</p>
                     </div>
-                    <div style="margin-top: 40px;">
-                        <a href="#inscription" class="btn btn-primary" style="margin-right: 15px;">Inscription au Concours</a>
-                        <a href="#formation" class="btn">Préparation à l'Éloquence</a>
-                    </div>
-                    <div style="margin-top: 30px;">
-                        <a href="#accueil" class="btn btn-outline">Retour à l'accueil</a>
+                    <div class="formation-body">
+                        <p>Développez les compétences essentielles pour réussir vos études et votre carrière.</p>
+                        <ul class="formation-features">
+                            <li><i class="fas fa-check"></i> Leadership et travail d'équipe</li>
+                            <li><i class="fas fa-check"></i> Gestion du temps et productivité</li>
+                            <li><i class="fas fa-check"></i> Intelligence émotionnelle</li>
+                            <li><i class="fas fa-check"></i> Rédaction de CV et entretiens</li>
+                            <li><i class="fas fa-check"></i> Pensée critique et résolution de problèmes</li>
+                        </ul>
+                        <div class="formation-price">20.000 FC<span> / module</span></div>
+                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Page des Ateliers -->
-    <div id="ateliers" class="page-section">
-        <div class="page-header">
-            <div class="container">
-                <h1>Ateliers d'Écriture et Méthodologie</h1>
-                <p>Perfectionnez vos compétences en rédaction académique et méthodologie de recherche avec nos ateliers spécialisés.</p>
+    <!-- Concours Section -->
+    <section class="concours section-padding" id="concours">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Concours d'Éloquence Inter-facultés</span></h2>
+                <p>La grande compétition d'art oratoire qui rassemble les meilleurs orateurs des 13 facultés.</p>
             </div>
-        </div>
-        
-        <div class="page-content">
-            <div class="container">
-                <h2 class="section-title">Nos Ateliers Spécialisés</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Des ateliers pratiques pour vous accompagner dans la rédaction de vos travaux académiques, du TFC au mémoire de master.</p>
-                
-                <div class="atelier-grid">
-                    <div class="atelier-card">
-                        <div class="atelier-header">
-                            <h3>Atelier TFC (Travail de Fin de Cycle)</h3>
-                            <p>Licence - 6 semaines</p>
-                        </div>
-                        <div class="atelier-body">
-                            <p>Accompagnement complet pour la rédaction de votre Travail de Fin de Cycle, de la problématique à la soutenance.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Choix du sujet et formulation de la problématique</li>
-                                <li><i class="fas fa-check"></i> Élaboration du plan de recherche</li>
-                                <li><i class="fas fa-check"></i> Méthodologie de collecte des données</li>
-                                <li><i class="fas fa-check"></i> Rédaction des chapitres</li>
-                                <li><i class="fas fa-check"></i> Préparation à la soutenance</li>
-                                <li><i class="fas fa-check"></i> Suivi individuel hebdomadaire</li>
-                            </ul>
-                            <div class="formation-price">35.000 FC<span> / session complète</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%; margin-top: 20px;">S'inscrire à l'atelier</a>
-                        </div>
-                    </div>
-                    
-                    <div class="atelier-card">
-                        <div class="atelier-header" style="background-color: var(--primary);">
-                            <h3>Atelier Mémoire de Master</h3>
-                            <p>Master 1 & 2 - 8 semaines</p>
-                        </div>
-                        <div class="atelier-body">
-                            <p>Programme intensif pour la rédaction de mémoires de recherche de niveau master avec exigences académiques élevées.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Définition d'un cadre théorique solide</li>
-                                <li><i class="fas fa-check"></i> Méthodologie de recherche avancée</li>
-                                <li><i class="fas fa-check"></i> Analyse quantitative et qualitative</li>
-                                <li><i class="fas fa-check"></i> Rédaction scientifique approfondie</li>
-                                <li><i class="fas fa-check"></i> Révision et correction par des experts</li>
-                                <li><i class="fas fa-check"></i> Préparation à la soutenance devant jury</li>
-                            </ul>
-                            <div class="formation-price">50.000 FC<span> / session complète</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%; margin-top: 20px;">S'inscrire à l'atelier</a>
-                        </div>
-                    </div>
-                    
-                    <div class="atelier-card">
-                        <div class="atelier-header" style="background-color: var(--accent); color: var(--dark);">
-                            <h3>Atelier Article Scientifique</h3>
-                            <p>Publication académique - 4 semaines</p>
-                        </div>
-                        <div class="atelier-body">
-                            <p>Formation à la rédaction d'articles scientifiques pour publication dans des revues académiques.</p>
-                            <ul class="formation-features">
-                                <li><i class="fas fa-check"></i> Structure d'un article scientifique</li>
-                                <li><i class="fas fa-check"></i> Normes de publication internationales</li>
-                                <li><i class="fas fa-check"></i> Rédaction du résumé (abstract)</li>
-                                <li><i class="fas fa-check"></i> Référencement bibliographique</li>
-                                <li><i class="fas fa-check"></i> Soumission à des revues académiques</li>
-                                <li><i class="fas fa-check"></i> Réponse aux évaluateurs</li>
-                            </ul>
-                            <div class="formation-price">40.000 FC<span> / session complète</span></div>
-                            <a href="#inscription" class="btn" style="width: 100%; margin-top: 20px;">S'inscrire à l'atelier</a>
-                        </div>
-                    </div>
+            
+            <div class="concours-highlight">
+                <h3>Édition 2023-2024</h3>
+                <p>Représentez votre faculté et gagnez des prix attractifs !</p>
+                <a href="concours.html" class="btn btn-accent" style="font-size: 1.1rem; padding: 16px 40px;">
+                    <i class="fas fa-external-link-alt"></i> Page Officielle du Concours
+                </a>
+            </div>
+            
+            <div class="concours-info">
+                <div class="info-card">
+                    <h4><i class="fas fa-trophy"></i> Prix à Gagner</h4>
+                    <ul>
+                        <li><i class="fas fa-medal"></i> <strong>1er Prix:</strong> 500.000 FC + Bourse d'études</li>
+                        <li><i class="fas fa-medal"></i> <strong>2ème Prix:</strong> 300.000 FC + Formation</li>
+                        <li><i class="fas fa-medal"></i> <strong>3ème Prix:</strong> 200.000 FC + Matériel</li>
+                        <li><i class="fas fa-award"></i> <strong>Meilleur par faculté:</strong> Certificat</li>
+                        <li><i class="fas fa-trophy"></i> <strong>Faculté gagnante:</strong> Trophée</li>
+                    </ul>
                 </div>
                 
-                <div style="text-align: center; margin-top: 60px;">
-                    <h3>Calendrier des Ateliers 2023-2024</h3>
-                    <div style="max-width: 800px; margin: 30px auto; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
-                            <div>
-                                <h4 style="color: var(--primary);">Atelier TFC - Session 1</h4>
-                                <p style="color: var(--gray);">15 octobre - 26 novembre 2023</p>
-                            </div>
-                            <a href="#inscription" class="btn" style="padding: 8px 20px;">S'inscrire</a>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
-                            <div>
-                                <h4 style="color: var(--primary);">Atelier Mémoire - Session 1</h4>
-                                <p style="color: var(--gray);">5 novembre - 31 décembre 2023</p>
-                            </div>
-                            <a href="#inscription" class="btn" style="padding: 8px 20px;">S'inscrire</a>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
-                            <div>
-                                <h4 style="color: var(--primary);">Atelier Article Scientifique</h4>
-                                <p style="color: var(--gray);">20 novembre - 18 décembre 2023</p>
-                            </div>
-                            <a href="#inscription" class="btn" style="padding: 8px 20px;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 40px;">
-                        <a href="#accueil" class="btn btn-outline">Retour à l'accueil</a>
-                    </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-calendar-alt"></i> Calendrier</h4>
+                    <ul>
+                        <li><i class="fas fa-user-plus"></i> <strong>Inscriptions:</strong> 1-31 Octobre</li>
+                        <li><i class="fas fa-chalkboard-teacher"></i> <strong>Préparation:</strong> 1-20 Novembre</li>
+                        <li><i class="fas fa-users"></i> <strong>Sélections facultaires:</strong> 21-25 Novembre</li>
+                        <li><i class="fas fa-microphone"></i> <strong>Finale inter-facultés:</strong> 5 Décembre</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4><i class="fas fa-check-circle"></i> Conditions</h4>
+                    <ul>
+                        <li><i class="fas fa-user-graduate"></i> Être étudiant à l'UNIKIN</li>
+                        <li><i class="fas fa-file-signature"></i> S'inscrire avant la date limite</li>
+                        <li><i class="fas fa-id-card"></i> Présenter une pièce d'identité</li>
+                        <li><i class="fas fa-book"></i> Participer aux séances de préparation</li>
+                        <li><i class="fas fa-balance-scale"></i> Respecter le thème et les règles</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">Thème du Concours 2023-2024</h3>
+                <div style="max-width: 800px; margin: 0 auto; padding: 25px; background: linear-gradient(135deg, var(--primary-lighter), white); border-radius: var(--radius); border-left: 5px solid var(--accent);">
+                    <p style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 10px;">
+                        "L'excellence académique au service du développement de la République Démocratique du Congo"
+                    </p>
+                    <p style="color: var(--gray);">
+                        Les participants sont invités à développer une réflexion argumentée sur le rôle de l'élite universitaire dans le développement national.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Page des Conférences -->
-    <div id="conferences" class="page-section">
-        <div class="page-header">
-            <div class="container">
-                <h1>Conférences et Événements</h1>
-                <p>Découvrez notre programme de conférences mensuelles organisées dans les 13 facultés de l'UNIKIN avec des intervenants experts.</p>
+    <!-- Inscription Section -->
+    <section class="inscription section-padding" id="inscription">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Devenir Membre d'Excellentia Academia</span></h2>
+                <p>Rejoignez notre communauté d'excellence et bénéficiez de tous nos programmes et événements.</p>
             </div>
-        </div>
-        
-        <div class="page-content">
-            <div class="container">
-                <h2 class="section-title">Calendrier des Conférences 2023-2024</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray);">Participez à nos conférences mensuelles gratuites organisées par les ambassadeurs Excellentia Academia dans chaque faculté.</p>
-                
-                <div class="conference-grid">
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">15</div>
-                            <div class="month">OCT</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>L'excellence académique : mythe ou réalité ?</h3>
-                            <p>Conférence inaugurale organisée par la Faculté de Droit avec le Coordonnateur Général d'Excellentia Academia.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 14h-16h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté de Droit</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">22</div>
-                            <div class="month">OCT</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>Innovation et recherche scientifique</h3>
-                            <p>Conférence organisée par la Faculté de Sciences et Technologies avec des chercheurs renommés.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 15h-17h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté Sciences & Tech</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">28</div>
-                            <div class="month">OCT</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>L'économie congolaise : défis et perspectives</h3>
-                            <p>Conférence organisée par la Faculté de Sciences Économiques avec des économistes experts.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 14h-17h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté Sciences Éco</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">05</div>
-                            <div class="month">NOV</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>Santé publique et développement</h3>
-                            <p>Conférence organisée par la Faculté de Médecine avec des professionnels de santé.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 10h-12h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté de Médecine</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">12</div>
-                            <div class="month">NOV</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>Droit international et relations africaines</h3>
-                            <p>Conférence organisée par la Faculté de Droit avec des spécialistes en droit international.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 14h-16h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté de Droit</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
-                    
-                    <div class="conference-card">
-                        <div class="conference-date">
-                            <div class="day">19</div>
-                            <div class="month">NOV</div>
-                        </div>
-                        <div class="conference-body">
-                            <h3>Technologies éducatives et avenir de l'enseignement</h3>
-                            <p>Conférence organisée par la Faculté de Psychologie et Sciences de l'Éducation.</p>
-                            <div class="conference-meta">
-                                <span><i class="fas fa-clock"></i> 15h-17h</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Faculté Psychologie</span>
-                            </div>
-                            <a href="#inscription" class="btn" style="margin-top: 15px; width: 100%;">S'inscrire</a>
-                        </div>
-                    </div>
+            
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Formulaire d'Adhésion</h2>
+                    <p>Remplissez ce formulaire pour devenir membre d'Excellentia Academia</p>
                 </div>
                 
-                <div style="text-align: center; margin-top: 60px;">
-                    <h3>Intervenants Privilégiés</h3>
-                    <p style="max-width: 800px; margin: 20px auto; color: var(--gray);">Nos conférences bénéficient de la participation d'experts, professeurs d'université, professionnels et anciens étudiants ayant réussi dans leurs domaines respectifs.</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 40px;">
-                        <div style="background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 200px; text-align: center;">
-                            <div style="width: 80px; height: 80px; background-color: var(--primary-light); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <h4 style="color: var(--primary);">Pr. KABEYA</h4>
-                            <p style="font-size: 0.9rem; color: var(--gray);">Doyen Faculté de Droit</p>
+                <form class="form-body" id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName"><i class="fas fa-user"></i> Prénom *</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="Votre prénom" required>
                         </div>
                         
-                        <div style="background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 200px; text-align: center;">
-                            <div style="width: 80px; height: 80px; background-color: var(--secondary); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <h4 style="color: var(--primary);">Dr. MUKENDI</h4>
-                            <p style="font-size: 0.9rem; color: var(--gray);">Chercheur en Biologie</p>
-                        </div>
-                        
-                        <div style="background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 200px; text-align: center;">
-                            <div style="width: 80px; height: 80px; background-color: var(--accent); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: var(--dark); font-size: 2rem;">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h4 style="color: var(--primary);">M. KALALA</h4>
-                            <p style="font-size: 0.9rem; color: var(--gray);">Économiste, Banque Centrale</p>
+                        <div class="form-group">
+                            <label for="lastName"><i class="fas fa-user"></i> Nom *</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Votre nom" required>
                         </div>
                     </div>
                     
-                    <div style="margin-top: 50px;">
-                        <a href="#inscription" class="btn btn-primary">S'inscrire aux Conférences</a>
-                        <div style="margin-top: 30px;">
-                            <a href="#accueil" class="btn btn-outline">Retour à l'accueil</a>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Adresse Email *</label>
+                            <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+243 XX XXX XXXX">
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faculty"><i class="fas fa-university"></i> Faculté *</label>
+                            <select id="faculty" class="form-control" required>
+                                <option value="">Sélectionnez votre faculté</option>
+                                <!-- Options générées par JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="niveau"><i class="fas fa-graduation-cap"></i> Niveau d'études *</label>
+                            <select id="niveau" class="form-control" required>
+                                <option value="">Sélectionnez votre niveau</option>
+                                <option value="licence1">Licence 1</option>
+                                <option value="licence2">Licence 2</option>
+                                <option value="licence3">Licence 3</option>
+                                <option value="master1">Master 1</option>
+                                <option value="master2">Master 2</option>
+                                <option value="doctorat">Doctorat</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="interests"><i class="fas fa-star"></i> Activités d'intérêt *</label>
+                            <select id="interests" class="form-control" multiple required style="height: 150px;">
+                                <option value="concours">Concours d'éloquence</option>
+                                <option value="formation">Formation à l'éloquence</option>
+                                <option value="ateliers">Ateliers d'écriture académique</option>
+                                <option value="conferences">Conférences</option>
+                                <option value="softskills">Formations soft skills</option>
+                                <option value="ambassadeur">Devenir ambassadeur de faculté</option>
+                                <option value="mentorat">Programme de mentorat</option>
+                                <option value="recherche">Recherche académique</option>
+                            </select>
+                            <small style="color: var(--gray); display: block; margin-top: 5px;">Maintenez Ctrl (ou Cmd) pour sélectionner plusieurs options</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-edit"></i> Pourquoi voulez-vous rejoindre Excellentia Academia ? *</label>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Expliquez vos motivations..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>J'accepte de recevoir les communications d'Excellentia Academia concernant les événements et activités. Je comprends que je peux me désabonner à tout moment.</span>
+                        </label>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 16px 50px; font-size: 1.1rem;">
+                            <i class="fas fa-paper-plane"></i> Soumettre ma candidature
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -1655,15 +1696,19 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-graduation-cap"></i> Excellentia Academia
+                        <i class="fas fa-graduation-cap footer-logo-icon"></i>
+                        <div class="footer-logo-text">Excellentia</div>
+                        <div class="footer-logo-sub">ACADEMIA</div>
                     </div>
                     <p>Structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée dans les 13 facultés.</p>
                     
-                    <div class="coordinateur-footer">
-                        <h4>Coordonnateur Général</h4>
-                        <p><strong>MALALE MUSAO Credo</strong></p>
-                        <p>Étudiant en M1 Droit - Droit International Public et Relations Internationales</p>
-                        <p>Fondateur et Coordonnateur d'Excellentia Academia</p>
+                    <div class="comite-footer">
+                        <h4>Comité Directeur</h4>
+                        <p><strong>Credo MALALE MUSAO</strong> - Coordonnateur Général</p>
+                        <p><strong>Arnid DJONGA</strong> - Secrétaire Général</p>
+                        <p><strong>Paul KASONGO</strong> - Secrétaire Général Adjoint</p>
+                        <p><strong>Chris</strong> - Chargé des Projets</p>
+                        <p><strong>Gemima BEMBIDE</strong> - Directrice Financière</p>
                     </div>
                     
                     <div class="social-icons">
@@ -1678,19 +1723,20 @@
                 <div class="footer-links">
                     <h3>Liens Rapides</h3>
                     <ul>
-                        <li><a href="#accueil" class="nav-link">Accueil</a></li>
-                        <li><a href="#formation" class="nav-link">Formations</a></li>
-                        <li><a href="#concours" class="nav-link">Concours d'éloquence</a></li>
-                        <li><a href="#ateliers" class="nav-link">Ateliers</a></li>
-                        <li><a href="#conferences" class="nav-link">Conférences</a></li>
+                        <li><a href="#accueil"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="#facultes"><i class="fas fa-chevron-right"></i> 13 Facultés</a></li>
+                        <li><a href="#formations"><i class="fas fa-chevron-right"></i> Formations & Ateliers</a></li>
+                        <li><a href="#concours"><i class="fas fa-chevron-right"></i> Concours d'Éloquence</a></li>
+                        <li><a href="#inscription"><i class="fas fa-chevron-right"></i> Devenir Membre</a></li>
+                        <li><a href="concours.html"><i class="fas fa-external-link-alt"></i> Page du Concours</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-contact">
                     <h3>Contactez-nous</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Université de Kinshasa, Campus Principal</p>
-                    <p><i class="fas fa-phone"></i> +243 XX XXX XXXX</p>
-                    <p><i class="fas fa-envelope"></i> contact@excellentia-academia.edu</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Université de Kinshasa, Campus Principal, République Démocratique du Congo</p>
+                    <p><i class="fas fa-phone"></i> +243 81 234 5678</p>
+                    <p><i class="fas fa-envelope"></i> contact@excellentia-academia.cd</p>
                     <p><i class="far fa-clock"></i> Lundi - Vendredi: 8h00 - 18h00</p>
                     <p><i class="fas fa-university"></i> Présent dans les 13 facultés de l'UNIKIN</p>
                 </div>
@@ -1804,7 +1850,7 @@
             // Générer les facultés
             generateFaculties();
             
-            // Remplir le select des facultés dans le formulaire
+            // Remplir le select des facultés
             populateFacultySelect();
             
             // Initialiser les événements
@@ -1812,6 +1858,9 @@
             
             // Initialiser la navigation
             initNavigation();
+            
+            // Observer pour animations
+            initAnimations();
         });
 
         // Générer les cartes des facultés
@@ -1825,7 +1874,7 @@
                 const card = document.createElement('div');
                 card.className = 'faculty-card';
                 card.innerHTML = `
-                    <div class="faculty-icon" style="background-color: ${faculty.color};">
+                    <div class="faculty-icon" style="background: linear-gradient(135deg, ${faculty.color}, ${adjustColor(faculty.color, 30)})">
                         <i class="fas ${faculty.icon}"></i>
                     </div>
                     <div class="faculty-content">
@@ -1846,7 +1895,12 @@
             });
         }
 
-        // Remplir le select des facultés dans le formulaire
+        // Ajuster la couleur
+        function adjustColor(color, amount) {
+            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+        }
+
+        // Remplir le select des facultés
         function populateFacultySelect() {
             const select = document.getElementById('faculty');
             if (!select) return;
@@ -1874,39 +1928,113 @@
                 });
             }
             
+            // Fermer le menu mobile en cliquant sur un lien
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+            
             // Formulaire d'inscription
             const registrationForm = document.getElementById('registrationForm');
             if (registrationForm) {
                 registrationForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
-                    // Récupérer les données du formulaire
+                    // Collecter les données du formulaire
                     const formData = {
-                        firstName: document.getElementById('firstName').value,
-                        lastName: document.getElementById('lastName').value,
-                        email: document.getElementById('email').value,
-                        phone: document.getElementById('phone').value,
+                        firstName: document.getElementById('firstName').value.trim(),
+                        lastName: document.getElementById('lastName').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
                         faculty: document.getElementById('faculty').value,
                         niveau: document.getElementById('niveau').value,
                         interests: Array.from(document.getElementById('interests').selectedOptions).map(option => option.value),
-                        message: document.getElementById('message').value
+                        message: document.getElementById('message').value.trim()
                     };
                     
-                    // Simuler l'envoi
+                    // Validation
+                    if (!formData.firstName || !formData.lastName || !formData.email || !formData.faculty || !formData.niveau || formData.interests.length === 0 || !formData.message) {
+                        alert('Veuillez remplir tous les champs obligatoires (*)');
+                        return;
+                    }
+                    
+                    // Simulation d'envoi
                     console.log('Formulaire soumis:', formData);
                     
-                    // Afficher un message de confirmation
-                    alert('Merci pour votre inscription à Excellentia Academia ! Votre candidature a été soumise avec succès. L\'ambassadeur de votre faculté vous contactera bientôt.');
+                    // Message de succès
+                    alert('🎉 Félicitations ! Votre inscription à Excellentia Academia a été soumise avec succès.\n\nL\'ambassadeur de votre faculté vous contactera dans les plus brefs délais pour la suite du processus.');
                     
                     // Réinitialiser le formulaire
                     registrationForm.reset();
                     
-                    // Revenir à la page d'accueil
-                    navigateToPage('accueil');
+                    // Rediriger vers la page du concours si l'utilisateur a sélectionné cette option
+                    if (formData.interests.includes('concours')) {
+                        setTimeout(() => {
+                            window.location.href = 'concours.html';
+                        }, 1000);
+                    }
                 });
             }
             
-            // Animation au scroll
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Animation des éléments flottants
+            document.querySelectorAll('.floating-element').forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    element.style.animationPlayState = 'paused';
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    element.style.animationPlayState = 'running';
+                });
+            });
+        }
+
+        // Initialiser la navigation
+        function initNavigation() {
+            // Smooth scroll pour les liens d'ancrage
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Fermer le menu mobile si ouvert
+                        const navLinks = document.getElementById('navLinks');
+                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                        
+                        // Scroll vers l'élément
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialiser les animations
+        function initAnimations() {
+            // Animation au défilement
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -100px 0px'
@@ -1922,83 +2050,26 @@
             }, observerOptions);
             
             // Observer les cartes
-            document.querySelectorAll('.faculty-card, .formation-card, .atelier-card, .conference-card').forEach(card => {
+            document.querySelectorAll('.faculty-card, .formation-card, .info-card').forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
                 card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 observer.observe(card);
             });
-        }
-
-        // Initialiser la navigation
-        function initNavigation() {
-            // Navigation entre les pages
-            document.querySelectorAll('.action-btn, .nav-link, .logo').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = this.getAttribute('href');
-                    if (target.startsWith('#')) {
-                        navigateToPage(target.substring(1));
+            
+            // Animation pour les sections
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
                     }
                 });
-            });
+            }, { threshold: 0.2 });
             
-            // Navigation dans le menu principal
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = this.getAttribute('href');
-                    if (target.startsWith('#')) {
-                        navigateToPage(target.substring(1));
-                        
-                        // Fermer le menu mobile si ouvert
-                        const navLinks = document.getElementById('navLinks');
-                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-                        if (navLinks.classList.contains('active')) {
-                            navLinks.classList.remove('active');
-                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                        }
-                    }
-                });
+            document.querySelectorAll('section').forEach(section => {
+                sectionObserver.observe(section);
             });
         }
-
-        // Naviguer vers une page
-        function navigateToPage(pageId) {
-            // Cacher toutes les pages
-            document.querySelectorAll('.page-section').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Afficher la page cible
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                
-                // Scroll vers le haut
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
-            
-            // Mettre à jour l'URL
-            history.pushState(null, null, `#${pageId}`);
-        }
-
-        // Gérer le bouton retour
-        window.addEventListener('popstate', function() {
-            const hash = window.location.hash.substring(1) || 'accueil';
-            navigateToPage(hash);
-        });
-
-        // Au chargement de la page, vérifier l'URL
-        window.addEventListener('load', function() {
-            const hash = window.location.hash.substring(1);
-            if (hash) {
-                navigateToPage(hash);
-            }
-        });
     </script>
 </body>
 </html>
