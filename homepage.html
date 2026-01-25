@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excellentia Academia - Élever l'intelligence, inspirer l'excellence</title>
+    <title>Excellentia Academia - Au-delà de l'excellence académique</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -187,6 +187,14 @@
             background-color: #388e3c;
         }
         
+        .btn-info {
+            background-color: var(--info);
+        }
+        
+        .btn-info:hover {
+            background-color: #0b7dda;
+        }
+        
         /* Header */
         header {
             background-color: white;
@@ -214,16 +222,25 @@
             align-items: center;
             text-decoration: none;
             transition: var(--transition);
+            gap: 12px;
         }
         
         .logo:hover {
             transform: scale(1.02);
         }
         
+        .logo-image {
+            height: 50px;
+            width: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
         .logo-icon {
             font-size: 2.5rem;
             color: var(--primary);
-            margin-right: 12px;
             animation: pulse 2s infinite;
         }
         
@@ -251,6 +268,14 @@
             color: var(--secondary);
             font-weight: 600;
             letter-spacing: 1px;
+        }
+        
+        .logo-slogan {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 2px;
         }
         
         /* Boutons d'action header */
@@ -316,6 +341,14 @@
         
         .action-btn.conferences:hover {
             background-color: #0b7dda;
+        }
+        
+        .action-btn.photos {
+            background-color: #9c27b0;
+        }
+        
+        .action-btn.photos:hover {
+            background-color: #7b1fa2;
         }
         
         .nav-wrapper {
@@ -461,6 +494,19 @@
             z-index: -1;
         }
         
+        .hero-intro {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            padding: 20px;
+            border-radius: var(--radius);
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+        
         .hero-text p {
             font-size: 1.25rem;
             color: var(--gray);
@@ -468,13 +514,67 @@
             max-width: 600px;
         }
         
-        .comite-directeur {
+        /* Détails du fondateur */
+        .fondateur-details {
             background: linear-gradient(135deg, white, var(--light-gray));
             padding: 25px;
             border-radius: var(--radius);
             margin-top: 30px;
             box-shadow: var(--shadow-sm);
             border-left: 5px solid var(--secondary);
+        }
+        
+        .fondateur-details h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fondateur-details h4 i {
+            color: var(--secondary);
+        }
+        
+        .fondateur-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .info-item h5 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        
+        .info-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        /* Comité directeur */
+        .comite-directeur {
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--accent);
         }
         
         .comite-directeur h4 {
@@ -486,7 +586,7 @@
         }
         
         .comite-directeur h4 i {
-            color: var(--secondary);
+            color: var(--accent);
         }
         
         .comite-membres {
@@ -624,6 +724,78 @@
             margin-bottom: 5px;
         }
         
+        /* Avantages Section */
+        .avantages {
+            background-color: var(--light-gray);
+        }
+        
+        .avantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+        
+        .avantage-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .avantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .avantage-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .avantage-header h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .avantage-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .avantage-features {
+            list-style: none;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .avantage-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .avantage-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .avantage-features li i {
+            color: var(--success);
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+        
         /* Facultés Section */
         .faculties {
             background-color: white;
@@ -726,18 +898,66 @@
             margin-bottom: 0;
         }
         
-        /* Formations Section */
-        .formations {
+        /* Activités Section */
+        .activites {
             background-color: var(--light-gray);
         }
         
-        .formations-grid {
+        .activites-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .activite-tab {
+            padding: 15px 30px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .activite-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .activite-tab:hover:not(.active) {
+            background-color: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+        }
+        
+        .activite-content {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .activite-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .activite-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 35px;
         }
         
-        .formation-card {
+        .activite-card {
             background-color: white;
             border-radius: var(--radius);
             overflow: hidden;
@@ -748,12 +968,12 @@
             flex-direction: column;
         }
         
-        .formation-card:hover {
+        .activite-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-lg);
         }
         
-        .formation-header {
+        .activite-header {
             background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
             color: white;
             padding: 30px;
@@ -762,165 +982,88 @@
             overflow: hidden;
         }
         
-        .formation-header:before {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            top: -75px;
-            right: -75px;
-        }
-        
-        .formation-header:after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            bottom: -50px;
-            left: -50px;
-        }
-        
-        .formation-header h3 {
+        .activite-header h3 {
             color: white;
             font-size: 1.5rem;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
         }
         
-        .formation-header p {
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .formation-body {
+        .activite-body {
             padding: 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
-        .formation-features {
+        .activite-features {
             list-style: none;
             margin: 20px 0;
             flex-grow: 1;
         }
         
-        .formation-features li {
+        .activite-features li {
             padding: 10px 0;
             border-bottom: 1px solid var(--gray-light);
             display: flex;
             align-items: flex-start;
         }
         
-        .formation-features li:last-child {
+        .activite-features li:last-child {
             border-bottom: none;
         }
         
-        .formation-features li i {
+        .activite-features li i {
             color: var(--success);
             margin-right: 10px;
             margin-top: 3px;
             font-size: 0.9rem;
         }
         
-        .formation-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-align: center;
-            margin: 25px 0;
-        }
-        
-        .formation-price span {
-            font-size: 1rem;
-            color: var(--gray);
-            font-weight: 400;
-        }
-        
-        /* Concours Section */
-        .concours {
+        /* Ateliers Section */
+        .ateliers {
             background-color: white;
         }
         
-        .concours-highlight {
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto 60px;
-            padding: 40px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: var(--radius-lg);
-            color: var(--dark);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .concours-highlight h3 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .concours-highlight p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-        }
-        
-        .concours-info {
+        .ateliers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
         }
         
-        .info-card {
+        .atelier-card {
             background-color: white;
-            padding: 35px;
             border-radius: var(--radius);
+            overflow: hidden;
             box-shadow: var(--shadow-md);
             transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
-        .info-card:hover {
-            transform: translateY(-5px);
+        .atelier-card:hover {
+            transform: translateY(-10px);
             box-shadow: var(--shadow-lg);
         }
         
-        .info-card h4 {
-            color: var(--primary);
-            margin-bottom: 20px;
+        .atelier-header {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--dark);
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .atelier-header h3 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .atelier-body {
+            padding: 30px;
+            flex-grow: 1;
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-card h4 i {
-            color: var(--secondary);
-        }
-        
-        .info-card ul {
-            list-style: none;
-        }
-        
-        .info-card ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-light);
-            display: flex;
-            align-items: center;
-        }
-        
-        .info-card ul li:last-child {
-            border-bottom: none;
-        }
-        
-        .info-card ul li i {
-            color: var(--success);
-            margin-right: 10px;
-            font-size: 0.9rem;
+            flex-direction: column;
         }
         
         /* Formulaire d'inscription */
@@ -1064,10 +1207,14 @@
             flex-direction: column;
         }
         
-        .footer-logo-icon {
-            font-size: 2.5rem;
+        .footer-logo-image {
+            height: 60px;
+            width: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid white;
             margin-bottom: 20px;
-            color: white;
+            box-shadow: var(--shadow-sm);
         }
         
         .footer-logo-text {
@@ -1086,10 +1233,37 @@
             letter-spacing: 1px;
         }
         
+        .footer-logo-slogan {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
         .footer-about p {
             margin-bottom: 25px;
             opacity: 0.9;
             line-height: 1.8;
+        }
+        
+        .fondateur-footer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .fondateur-footer h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .fondateur-footer p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            opacity: 0.9;
         }
         
         .comite-footer {
@@ -1253,6 +1427,10 @@
             .section-title h2 {
                 font-size: 2.2rem;
             }
+            
+            .hero-intro {
+                font-size: 1.2rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1283,15 +1461,22 @@
                 padding: 30px 20px;
             }
             
-            .faculties-grid, .formations-grid {
+            .faculties-grid, .avantages-grid, .activite-grid, .ateliers-grid {
                 grid-template-columns: 1fr;
             }
             
-            .concours-info {
-                grid-template-columns: 1fr;
+            .activites-tabs {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .comite-membres {
+            .activite-tab {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .fondateur-info, .comite-membres {
                 grid-template-columns: 1fr;
             }
         }
@@ -1315,7 +1500,7 @@
                 max-width: 300px;
             }
             
-            .comite-directeur {
+            .fondateur-details, .comite-directeur {
                 padding: 20px;
             }
             
@@ -1326,6 +1511,11 @@
             .section-title p {
                 font-size: 1rem;
             }
+            
+            .hero-intro {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -1334,15 +1524,19 @@
     <header>
         <div class="container nav-container">
             <a href="#" class="logo">
-                <i class="fas fa-graduation-cap logo-icon"></i>
+                <!-- Logo de la structure -->
+                <div class="logo-image-container">
+                    <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="logo-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/50/1a237e/ffffff?text=EA'; this.alt='Logo Excellentia Academia'">
+                </div>
                 <div class="logo-text">
                     <div class="logo-main">Excellentia</div>
                     <div class="logo-sub">ACADEMIA</div>
+                    <div class="logo-slogan">Au-delà de l'excellence académique</div>
                 </div>
             </a>
             
             <div class="nav-wrapper">
-                <!-- Boutons d'action -->
+                <!-- Boutons d'action - CORRIGÉS POUR FONCTIONNER -->
                 <div class="action-buttons">
                     <a href="#formations" class="action-btn formation">
                         <i class="fas fa-chalkboard-teacher"></i>
@@ -1352,13 +1546,17 @@
                         <i class="fas fa-trophy"></i>
                         Concours
                     </a>
-                    <a href="#formations" class="action-btn ateliers">
+                    <a href="#ateliers" class="action-btn ateliers">
                         <i class="fas fa-pen-fancy"></i>
                         Ateliers
                     </a>
-                    <a href="#concours" class="action-btn conferences">
+                    <a href="#activites" class="action-btn conferences">
                         <i class="fas fa-microphone"></i>
                         Conférences
+                    </a>
+                    <a href="#photos" class="action-btn photos">
+                        <i class="fas fa-images"></i>
+                        Photos
                     </a>
                 </div>
                 
@@ -1368,9 +1566,10 @@
                 
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#avantages">Avantages</a></li>
                     <li><a href="#facultes">Facultés</a></li>
-                    <li><a href="#formations">Formations</a></li>
-                    <li><a href="#concours">Concours</a></li>
+                    <li><a href="#activites">Activités</a></li>
+                    <li><a href="#ateliers">Ateliers</a></li>
                     <li><a href="#inscription">Inscription</a></li>
                 </ul>
             </div>
@@ -1383,15 +1582,44 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
-                    <p>Excellentia Academia est la structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée.</p>
                     
+                    <div class="hero-intro">
+                        Excellentia Academia transcende l'excellence académique pour former des leaders complets, engagés et visionnaires, prêts à contribuer au développement de la République Démocratique du Congo et de l'Afrique.
+                    </div>
+                    
+                    <p>Notre structure accompagne et développe les compétences des étudiants de l'Université de Kinshasa à travers 13 facultés, avec une mission claire : former une élite académique polyvalente et engagée.</p>
+                    
+                    <!-- Détails du fondateur -->
+                    <div class="fondateur-details">
+                        <h4><i class="fas fa-user-tie"></i> Fondateur & Coordonnateur Général</h4>
+                        <div class="fondateur-info">
+                            <div class="info-item">
+                                <h5>Nom Complet</h5>
+                                <p>Credo MALALE MUSAO</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Niveau d'études</h5>
+                                <p>Master 1 (M1) en Droit</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Département</h5>
+                                <p>Droit International Public et Africain</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Université</h5>
+                                <p>Université de Kinshasa (UNIKIN)</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Fonction</h5>
+                                <p>Fondateur et Coordonnateur Général</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comité directeur -->
                     <div class="comite-directeur">
                         <h4><i class="fas fa-users"></i> Comité Directeur</h4>
                         <div class="comite-membres">
-                            <div class="membre">
-                                <h5>Credo MALALE MUSAO</h5>
-                                <p>Coordonnateur Général</p>
-                            </div>
                             <div class="membre">
                                 <h5>Arnid DJONGA</h5>
                                 <p>Secrétaire Général</p>
@@ -1413,8 +1641,8 @@
                     
                     <div class="hero-btns">
                         <a href="#inscription" class="btn btn-primary">Devenir Membre</a>
-                        <a href="#concours" class="btn btn-accent">Concours d'Éloquence</a>
-                        <a href="#formations" class="btn btn-outline">Nos Formations</a>
+                        <a href="#ambassadeur" class="btn btn-accent">Postuler Ambassadeur</a>
+                        <a href="#activites" class="btn btn-outline">Nos Activités</a>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -1440,165 +1668,380 @@
         </div>
     </section>
 
+    <!-- Avantages Section -->
+    <section class="avantages section-padding" id="avantages">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Avantages d'être Membre</span></h2>
+                <p>Rejoignez Excellentia Academia et bénéficiez de privilèges exclusifs pour votre développement académique et professionnel.</p>
+            </div>
+            
+            <div class="avantages-grid">
+                <div class="avantage-card">
+                    <div class="avantage-header">
+                        <h3>Formations Exclusives</h3>
+                        <p>Accès prioritaire</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Développez vos compétences avec nos programmes de formation certifiants.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Formation à l'éloquence et art oratoire</li>
+                            <li><i class="fas fa-check"></i> Ateliers d'écriture académique (TFC, mémoires)</li>
+                            <li><i class="fas fa-check"></i> Développement des soft skills</li>
+                            <li><i class="fas fa-check"></i> Coaching individuel et mentorat</li>
+                            <li><i class="fas fa-check"></i> Certificats de participation reconnus</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="avantage-card">
+                    <div class="avantage-header" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));">
+                        <h3>Activités Privilégiées</h3>
+                        <p>Participation prioritaire</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Participez à nos événements phares et développez votre réseau.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Concours d'éloquence inter-facultés</li>
+                            <li><i class="fas fa-check"></i> Conférences avec experts internationaux</li>
+                            <li><i class="fas fa-check"></i> Cafés scientifiques et débats</li>
+                            <li><i class="fas fa-check"></i> Rencontres avec professionnels</li>
+                            <li><i class="fas fa-check"></i> Événements de networking</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="avantage-card">
+                    <div class="avantage-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                        <h3>Opportunités Uniques</h3>
+                        <p>Développement de carrière</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Bénéficiez d'opportunités exclusives pour votre avenir professionnel.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Postuler comme ambassadeur de faculté</li>
+                            <li><i class="fas fa-check"></i> Intégrer la coordination de la structure</li>
+                            <li><i class="fas fa-check"></i> Accès aux stages et opportunités</li>
+                            <li><i class="fas fa-check"></i> Mentorat par des professionnels</li>
+                            <li><i class="fas fa-check"></i> Reconnaissance académique officielle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Facultés Section -->
     <section class="faculties section-padding" id="facultes">
         <div class="container">
             <div class="section-title">
-                <h2><span class="title-decoration">13 Facultés de l'Université de Kinshasa</span></h2>
-                <p>Excellentia Academia existe dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés dans chaque faculté.</p>
+                <h2><span class="title-decoration">13 Facultés - Nos Ambassadeurs</span></h2>
+                <p>Excellentia Academia est présent dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés.</p>
             </div>
             
             <div class="faculties-grid" id="facultiesContainer">
-                <!-- Les facultés seront générées par JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Formations Section -->
-    <section class="formations section-padding" id="formations">
-        <div class="container">
-            <div class="section-title">
-                <h2><span class="title-decoration">Nos Formations & Ateliers</span></h2>
-                <p>Développez vos compétences avec nos programmes de formation certifiants et nos ateliers spécialisés.</p>
+                <!-- Les facultés seront générées par JavaScript avec les ambassadeurs spécifiés -->
             </div>
             
-            <div class="formations-grid">
-                <div class="formation-card">
-                    <div class="formation-header">
-                        <h3>Formation à l'Éloquence</h3>
-                        <p>Maîtrisez l'art oratoire - 4 semaines</p>
-                    </div>
-                    <div class="formation-body">
-                        <p>Devenez un communicateur efficace avec notre programme complet d'art oratoire.</p>
-                        <ul class="formation-features">
-                            <li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li>
-                            <li><i class="fas fa-check"></i> Construction du discours et argumentation</li>
-                            <li><i class="fas fa-check"></i> Gestion du stress et du trac</li>
-                            <li><i class="fas fa-check"></i> Art de l'improvisation</li>
-                            <li><i class="fas fa-check"></i> Séances de coaching individuel</li>
-                        </ul>
-                        <div class="formation-price">25.000 FC<span> / mois</span></div>
-                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
-                    </div>
-                </div>
-                
-                <div class="formation-card">
-                    <div class="formation-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
-                        <h3>Ateliers d'Écriture Académique</h3>
-                        <p>TFC, mémoires et thèses - 6 semaines</p>
-                    </div>
-                    <div class="formation-body">
-                        <p>Rédigez des travaux académiques de qualité avec notre programme spécialisé.</p>
-                        <ul class="formation-features">
-                            <li><i class="fas fa-check"></i> Structure et planification du travail</li>
-                            <li><i class="fas fa-check"></i> Recherche documentaire et bibliographie</li>
-                            <li><i class="fas fa-check"></i> Rédaction scientifique et normes APA</li>
-                            <li><i class="fas fa-check"></i> Méthodologie de recherche</li>
-                            <li><i class="fas fa-check"></i> Préparation à la soutenance</li>
-                        </ul>
-                        <div class="formation-price">30.000 FC<span> / session</span></div>
-                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
-                    </div>
-                </div>
-                
-                <div class="formation-card">
-                    <div class="formation-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
-                        <h3>Formation Soft Skills</h3>
-                        <p>Compétences transversales - 3 semaines</p>
-                    </div>
-                    <div class="formation-body">
-                        <p>Développez les compétences essentielles pour réussir vos études et votre carrière.</p>
-                        <ul class="formation-features">
-                            <li><i class="fas fa-check"></i> Leadership et travail d'équipe</li>
-                            <li><i class="fas fa-check"></i> Gestion du temps et productivité</li>
-                            <li><i class="fas fa-check"></i> Intelligence émotionnelle</li>
-                            <li><i class="fas fa-check"></i> Rédaction de CV et entretiens</li>
-                            <li><i class="fas fa-check"></i> Pensée critique et résolution de problèmes</li>
-                        </ul>
-                        <div class="formation-price">20.000 FC<span> / module</span></div>
-                        <a href="#inscription" class="btn btn-primary">S'inscrire</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Concours Section -->
-    <section class="concours section-padding" id="concours">
-        <div class="container">
-            <div class="section-title">
-                <h2><span class="title-decoration">Concours d'Éloquence Inter-facultés</span></h2>
-                <p>La grande compétition d'art oratoire qui rassemble les meilleurs orateurs des 13 facultés.</p>
-            </div>
-            
-            <div class="concours-highlight">
-                <h3>Édition 2023-2024</h3>
-                <p>Représentez votre faculté et gagnez des prix attractifs !</p>
-                <a href="concours.html" class="btn btn-accent" style="font-size: 1.1rem; padding: 16px 40px;">
-                    <i class="fas fa-external-link-alt"></i> Page Officielle du Concours
+            <div style="text-align: center; margin-top: 50px;" id="ambassadeur">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">Devenir Ambassadeur de votre Faculté</h3>
+                <p style="max-width: 800px; margin: 0 auto 30px; color: var(--gray);">
+                    Postulez pour représenter Excellentia Academia dans votre faculté et intégrez notre coordination. 
+                    Les ambassadeurs bénéficient d'une formation spéciale, d'opportunités de leadership et jouent un rôle clé dans l'organisation des activités.
+                </p>
+                <a href="#inscription" class="btn btn-success" style="font-size: 1.1rem; padding: 15px 40px;">
+                    <i class="fas fa-user-plus"></i> Postuler comme Ambassadeur
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Activités Section -->
+    <section class="activites section-padding" id="activites">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Nos Activités Principales</span></h2>
+                <p>Découvrez nos programmes récurrents et événements phares organisés dans les 13 facultés.</p>
+            </div>
             
-            <div class="concours-info">
-                <div class="info-card">
-                    <h4><i class="fas fa-trophy"></i> Prix à Gagner</h4>
-                    <ul>
-                        <li><i class="fas fa-medal"></i> <strong>1er Prix:</strong> 500.000 FC + Bourse d'études</li>
-                        <li><i class="fas fa-medal"></i> <strong>2ème Prix:</strong> 300.000 FC + Formation</li>
-                        <li><i class="fas fa-medal"></i> <strong>3ème Prix:</strong> 200.000 FC + Matériel</li>
-                        <li><i class="fas fa-award"></i> <strong>Meilleur par faculté:</strong> Certificat</li>
-                        <li><i class="fas fa-trophy"></i> <strong>Faculté gagnante:</strong> Trophée</li>
-                    </ul>
-                </div>
-                
-                <div class="info-card">
-                    <h4><i class="fas fa-calendar-alt"></i> Calendrier</h4>
-                    <ul>
-                        <li><i class="fas fa-user-plus"></i> <strong>Inscriptions:</strong> 1-31 Octobre</li>
-                        <li><i class="fas fa-chalkboard-teacher"></i> <strong>Préparation:</strong> 1-20 Novembre</li>
-                        <li><i class="fas fa-users"></i> <strong>Sélections facultaires:</strong> 21-25 Novembre</li>
-                        <li><i class="fas fa-microphone"></i> <strong>Finale inter-facultés:</strong> 5 Décembre</li>
-                    </ul>
-                </div>
-                
-                <div class="info-card">
-                    <h4><i class="fas fa-check-circle"></i> Conditions</h4>
-                    <ul>
-                        <li><i class="fas fa-user-graduate"></i> Être étudiant à l'UNIKIN</li>
-                        <li><i class="fas fa-file-signature"></i> S'inscrire avant la date limite</li>
-                        <li><i class="fas fa-id-card"></i> Présenter une pièce d'identité</li>
-                        <li><i class="fas fa-book"></i> Participer aux séances de préparation</li>
-                        <li><i class="fas fa-balance-scale"></i> Respecter le thème et les règles</li>
-                    </ul>
+            <div class="activites-tabs">
+                <button class="activite-tab active" data-tab="concours">
+                    <i class="fas fa-trophy"></i> Concours d'Éloquence
+                </button>
+                <button class="activite-tab" data-tab="ateliers">
+                    <i class="fas fa-chalkboard-teacher"></i> Ateliers de Formation
+                </button>
+                <button class="activite-tab" data-tab="conferences">
+                    <i class="fas fa-microphone"></i> Conférences
+                </button>
+            </div>
+            
+            <div class="activite-content active" id="concours">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header">
+                            <h3>Concours d'Éloquence Inter-facultés</h3>
+                            <p>La compétition phare de l'année</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Représentez votre faculté dans cette compétition d'art oratoire prestigieuse.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Participation des 13 facultés de l'UNIKIN</li>
+                                <li><i class="fas fa-check"></i> Thème annuel sur le développement national</li>
+                                <li><i class="fas fa-check"></i> Prix attractifs et reconnaissance académique</li>
+                                <li><i class="fas fa-check"></i> Jury composé d'experts et personnalités</li>
+                                <li><i class="fas fa-check"></i> Préparation intensive par les ambassadeurs</li>
+                            </ul>
+                            <a href="concours.html" class="btn btn-accent" style="margin-top: 20px; width: 100%;">
+                                <i class="fas fa-external-link-alt"></i> Page Officielle du Concours
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                            <h3>Formation à l'Éloquence</h3>
+                            <p>Préparation au concours</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Programme complet de formation à l'art oratoire pour exceller au concours.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li>
+                                <li><i class="fas fa-check"></i> Construction du discours et argumentation</li>
+                                <li><i class="fas fa-check"></i> Gestion du stress et du trac</li>
+                                <li><i class="fas fa-check"></i> Art de l'improvisation et répartie</li>
+                                <li><i class="fas fa-check"></i> Coaching individuel personnalisé</li>
+                            </ul>
+                            <a href="#inscription" class="btn btn-primary" style="margin-top: 20px; width: 100%;">
+                                <i class="fas fa-user-plus"></i> S'inscrire à la Formation
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div style="text-align: center;">
-                <h3 style="color: var(--primary); margin-bottom: 20px;">Thème du Concours 2023-2024</h3>
-                <div style="max-width: 800px; margin: 0 auto; padding: 25px; background: linear-gradient(135deg, var(--primary-lighter), white); border-radius: var(--radius); border-left: 5px solid var(--accent);">
-                    <p style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 10px;">
-                        "L'excellence académique au service du développement de la République Démocratique du Congo"
-                    </p>
-                    <p style="color: var(--gray);">
-                        Les participants sont invités à développer une réflexion argumentée sur le rôle de l'élite universitaire dans le développement national.
-                    </p>
+            <div class="activite-content" id="ateliers">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                            <h3>Ateliers d'Écriture Académique</h3>
+                            <p>TFC, mémoires et thèses</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Maîtrisez la rédaction scientifique avec nos ateliers spécialisés.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Structure et planification du travail</li>
+                                <li><i class="fas fa-check"></i> Recherche documentaire efficace</li>
+                                <li><i class="fas fa-check"></i> Rédaction scientifique et normes APA</li>
+                                <li><i class="fas fa-check"></i> Méthodologie de recherche adaptée</li>
+                                <li><i class="fas fa-check"></i> Préparation à la soutenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--dark);">
+                            <h3>Ateliers Soft Skills</h3>
+                            <p>Compétences transversales</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Développez les compétences essentielles pour réussir vos études et votre carrière.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Leadership et gestion d'équipe</li>
+                                <li><i class="fas fa-check"></i> Gestion du temps et productivité</li>
+                                <li><i class="fas fa-check"></i> Intelligence émotionnelle</li>
+                                <li><i class="fas fa-check"></i> Communication efficace</li>
+                                <li><i class="fas fa-check"></i> Pensée critique et résolution de problèmes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activite-content" id="conferences">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--info), #0b7dda);">
+                            <h3>Conférences Mensuelles</h3>
+                            <p>Experts et professionnels</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Assistez à nos conférences mensuelles avec des intervenants de renom.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Thèmes variés et interdisciplinaires</li>
+                                <li><i class="fas fa-check"></i> Experts nationaux et internationaux</li>
+                                <li><i class="fas fa-check"></i> Échanges et questions-réponses</li>
+                                <li><i class="fas fa-check"></i> Certificats de participation</li>
+                                <li><i class="fas fa-check"></i> Networking avec les intervenants</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2);">
+                            <h3>Cafés Scientifiques</h3>
+                            <p>Débats dans une ambiance détendue</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Participez à nos cafés scientifiques pour échanger sur des sujets d'actualité.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Ambiance conviviale et détendue</li>
+                                <li><i class="fas fa-check"></i> Discussions animées par des modérateurs</li>
+                                <li><i class="fas fa-check"></i> Sujets d'actualité scientifique et sociale</li>
+                                <li><i class="fas fa-check"></i> Participation active des étudiants</li>
+                                <li><i class="fas fa-check"></i> Développement de l'esprit critique</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Inscription Section -->
+    <!-- Ateliers Section -->
+    <section class="ateliers section-padding" id="ateliers-section">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Nos Ateliers Spécialisés</span></h2>
+                <p>Des ateliers pratiques pour développer vos compétences académiques et professionnelles.</p>
+            </div>
+            
+            <div class="ateliers-grid">
+                <div class="atelier-card">
+                    <div class="atelier-header">
+                        <h3>Cafés Scientifiques</h3>
+                        <p>Débats et échanges intellectuels</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Dans une ambiance conviviale, venez échanger sur des sujets scientifiques et sociaux avec des experts et vos pairs.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Discussions animées sur l'actualité scientifique</li>
+                            <li><i class="fas fa-check"></i> Intervention d'experts dans divers domaines</li>
+                            <li><i class="fas fa-check"></i> Développement de l'esprit critique</li>
+                            <li><i class="fas fa-check"></i> Amélioration des compétences argumentatives</li>
+                            <li><i class="fas fa-check"></i> Networking académique et professionnel</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                        <h3>Workshops Pratiques</h3>
+                        <p>Apprentissage par la pratique</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Des ateliers pratiques pour maîtriser des compétences spécifiques nécessaires à votre réussite académique.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Techniques de présentation PowerPoint avancées</li>
+                            <li><i class="fas fa-check"></i> Méthodologie de recherche documentaire</li>
+                            <li><i class="fas fa-check"></i> Analyse statistique des données</li>
+                            <li><i class="fas fa-check"></i> Rédaction d'articles scientifiques</li>
+                            <li><i class="fas fa-check"></i> Préparation aux examens oraux</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));">
+                        <h3>Activités Diversifiées</h3>
+                        <p>Programme complet de développement</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Un programme varié d'activités pour couvrir tous les aspects du développement étudiant.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Simulations d'entretiens d'embauche</li>
+                            <li><i class="fas fa-check"></i> Ateliers de team building</li>
+                            <li><i class="fas fa-check"></i> Sessions de coaching individuel</li>
+                            <li><i class="fas fa-check"></i> Forums de carrière</li>
+                            <li><i class="fas fa-check"></i> Visites d'entreprises et institutions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Photos -->
+    <section class="ateliers section-padding" id="photos" style="background-color: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Galerie Photos</span></h2>
+                <p>Découvrez les moments forts de nos activités et événements à travers notre galerie photos.</p>
+            </div>
+            
+            <div class="ateliers-grid">
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2);">
+                        <h3><i class="fas fa-images"></i> Nos Événements</h3>
+                        <p>Moments mémorables</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Revivez les moments forts de nos conférences, formations et activités.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-camera" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Les photos de nos activités sont disponibles sur nos réseaux sociaux.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--dark);">
+                        <h3><i class="fas fa-trophy"></i> Concours d'Éloquence</h3>
+                        <p>Édition 2023-2024</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Photos exclusives de la grande finale du concours d'éloquence inter-facultés.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-video" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Retrouvez toutes les photos sur notre page Facebook.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                        <h3><i class="fas fa-users"></i> Vie de la Structure</h3>
+                        <p>Notre communauté</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Découvrez la vie au sein d'Excellentia Academia à travers nos albums photos.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-photo-video" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Suivez-nous sur Instagram pour plus de contenu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="https://facebook.com/excellentiaacademia" target="_blank" class="btn btn-info" style="font-size: 1.1rem; padding: 15px 40px; margin: 0 10px;">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="https://instagram.com/excellentiaacademia" target="_blank" class="btn" style="background: linear-gradient(135deg, #E1306C, #C13584); color: white; font-size: 1.1rem; padding: 15px 40px; margin: 0 10px;">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulaire d'inscription -->
     <section class="inscription section-padding" id="inscription">
         <div class="container">
             <div class="section-title">
-                <h2><span class="title-decoration">Devenir Membre d'Excellentia Academia</span></h2>
-                <p>Rejoignez notre communauté d'excellence et bénéficiez de tous nos programmes et événements.</p>
+                <h2><span class="title-decoration">Formulaire d'Adhésion</span></h2>
+                <p>Devenez membre d'Excellentia Academia et bénéficiez de tous nos programmes, activités et avantages.</p>
             </div>
             
             <div class="form-container">
                 <div class="form-header">
-                    <h2>Formulaire d'Adhésion</h2>
-                    <p>Remplissez ce formulaire pour devenir membre d'Excellentia Academia</p>
+                    <h2>Devenir Membre de la Structure</h2>
+                    <p>Privilège : participer à nos formations, activités, ateliers, concours, etc.</p>
                 </div>
                 
                 <form class="form-body" id="registrationForm">
@@ -1651,16 +2094,28 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="interests"><i class="fas fa-star"></i> Activités d'intérêt *</label>
+                            <label for="typeAdhesion"><i class="fas fa-star"></i> Type d'Adhésion *</label>
+                            <select id="typeAdhesion" class="form-control" required>
+                                <option value="">Choisissez votre type d'adhésion</option>
+                                <option value="membre">Membre régulier</option>
+                                <option value="ambassadeur">Postuler comme Ambassadeur</option>
+                                <option value="coordination">Intégrer la Coordination</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="interests"><i class="fas fa-heart"></i> Activités d'intérêt *</label>
                             <select id="interests" class="form-control" multiple required style="height: 150px;">
                                 <option value="concours">Concours d'éloquence</option>
                                 <option value="formation">Formation à l'éloquence</option>
                                 <option value="ateliers">Ateliers d'écriture académique</option>
-                                <option value="conferences">Conférences</option>
+                                <option value="conferences">Conférences et cafés scientifiques</option>
                                 <option value="softskills">Formations soft skills</option>
-                                <option value="ambassadeur">Devenir ambassadeur de faculté</option>
-                                <option value="mentorat">Programme de mentorat</option>
+                                <option value="photos">Activités photos et médias</option>
                                 <option value="recherche">Recherche académique</option>
+                                <option value="volontariat">Activités de volontariat</option>
                             </select>
                             <small style="color: var(--gray); display: block; margin-top: 5px;">Maintenez Ctrl (ou Cmd) pour sélectionner plusieurs options</small>
                         </div>
@@ -1669,7 +2124,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="message"><i class="fas fa-edit"></i> Pourquoi voulez-vous rejoindre Excellentia Academia ? *</label>
-                            <textarea id="message" class="form-control" rows="5" placeholder="Expliquez vos motivations..." required></textarea>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Expliquez vos motivations, vos attentes et comment vous comptez contribuer à la structure..." required></textarea>
                         </div>
                     </div>
                     
@@ -1696,15 +2151,22 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-graduation-cap footer-logo-icon"></i>
+                        <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="footer-logo-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/60/1a237e/ffffff?text=EA'; this.alt='Logo Excellentia Academia'">
                         <div class="footer-logo-text">Excellentia</div>
                         <div class="footer-logo-sub">ACADEMIA</div>
+                        <div class="footer-logo-slogan">Au-delà de l'excellence académique</div>
                     </div>
                     <p>Structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée dans les 13 facultés.</p>
                     
+                    <div class="fondateur-footer">
+                        <h4>Fondateur & Coordonnateur</h4>
+                        <p><strong>Credo MALALE MUSAO</strong></p>
+                        <p>Étudiant en M1 Droit - Droit International Public et Africain</p>
+                        <p>Fondateur et Coordonnateur Général d'Excellentia Academia</p>
+                    </div>
+                    
                     <div class="comite-footer">
                         <h4>Comité Directeur</h4>
-                        <p><strong>Credo MALALE MUSAO</strong> - Coordonnateur Général</p>
                         <p><strong>Arnid DJONGA</strong> - Secrétaire Général</p>
                         <p><strong>Paul KASONGO</strong> - Secrétaire Général Adjoint</p>
                         <p><strong>Chris</strong> - Chargé des Projets</p>
@@ -1712,11 +2174,11 @@
                     </div>
                     
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://facebook.com/excellentiaacademia" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/excellentiaacademia" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/excellentiaacademia" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/excellentiaacademia" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://youtube.com/excellentiaacademia" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 
@@ -1724,9 +2186,11 @@
                     <h3>Liens Rapides</h3>
                     <ul>
                         <li><a href="#accueil"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="#facultes"><i class="fas fa-chevron-right"></i> 13 Facultés</a></li>
-                        <li><a href="#formations"><i class="fas fa-chevron-right"></i> Formations & Ateliers</a></li>
-                        <li><a href="#concours"><i class="fas fa-chevron-right"></i> Concours d'Éloquence</a></li>
+                        <li><a href="#avantages"><i class="fas fa-chevron-right"></i> Avantages</a></li>
+                        <li><a href="#facultes"><i class="fas fa-chevron-right"></i> 13 Facultés & Ambassadeurs</a></li>
+                        <li><a href="#activites"><i class="fas fa-chevron-right"></i> Activités</a></li>
+                        <li><a href="#ateliers-section"><i class="fas fa-chevron-right"></i> Ateliers</a></li>
+                        <li><a href="#photos"><i class="fas fa-chevron-right"></i> Galerie Photos</a></li>
                         <li><a href="#inscription"><i class="fas fa-chevron-right"></i> Devenir Membre</a></li>
                         <li><a href="concours.html"><i class="fas fa-external-link-alt"></i> Page du Concours</a></li>
                     </ul>
@@ -1739,6 +2203,7 @@
                     <p><i class="fas fa-envelope"></i> contact@excellentia-academia.cd</p>
                     <p><i class="far fa-clock"></i> Lundi - Vendredi: 8h00 - 18h00</p>
                     <p><i class="fas fa-university"></i> Présent dans les 13 facultés de l'UNIKIN</p>
+                    <p><i class="fas fa-hashtag"></i> #ExcellentiaAcademia #AuDelàDeLExcellence</p>
                 </div>
             </div>
             
@@ -1750,55 +2215,62 @@
 
     <!-- JavaScript -->
     <script>
-        // Données des facultés
+        // Données des facultés avec ambassadeurs spécifiés
         const facultiesData = [
             {
-                name: "Faculté de Sciences et Technologies",
-                icon: "fa-flask",
-                color: "#1a237e",
-                description: "Laboratoires de recherche, olympiades scientifiques, hackathons et développement de projets innovants en sciences fondamentales et appliquées.",
-                ambassador: "À désigner"
+                name: "Faculté de Droit",
+                icon: "fa-balance-scale",
+                color: "#f57c00",
+                description: "Clubs de plaidoirie, concours de procès simulés, ateliers de rédaction juridique, moots courts et préparation aux examens du barreau.",
+                ambassador: "Aristote MBO"
             },
             {
                 name: "Faculté de Lettres et Sciences Humaines",
                 icon: "fa-book-open",
                 color: "#d32f2f",
                 description: "Ateliers d'écriture créative, clubs de philosophie et de littérature, conférences interdisciplinaires et projets culturels.",
-                ambassador: "À désigner"
+                ambassador: "Adoption MWAMUKASA"
             },
             {
                 name: "Faculté de Sciences Économiques et de Gestion",
                 icon: "fa-chart-line",
                 color: "#388e3c",
                 description: "Clubs d'analyse économique, compétitions de trading, ateliers d'économétrie, simulations boursières et projets de recherche économique.",
-                ambassador: "À désigner"
+                ambassador: "Grâce Eloko"
             },
             {
                 name: "Faculté de Sciences Sociales, Administratives et Politiques",
                 icon: "fa-users",
                 color: "#7b1fa2",
                 description: "Débats politiques, analyses sociologiques, simulations administratives et recherches sur les politiques publiques.",
-                ambassador: "À désigner"
+                ambassador: "Keren TUAVUKIDI"
             },
             {
-                name: "Faculté de Droit",
-                icon: "fa-balance-scale",
-                color: "#f57c00",
-                description: "Clubs de plaidoirie, concours de procès simulés, ateliers de rédaction juridique, moots courts et préparation aux examens du barreau.",
-                ambassador: "À désigner"
-            },
-            {
-                name: "Faculté de Polytechnique",
-                icon: "fa-cogs",
-                color: "#00796b",
-                description: "Projets d'ingénierie, compétitions de robotique, ateliers de conception assistée par ordinateur et innovations technologiques.",
-                ambassador: "À désigner"
+                name: "Faculté de Sciences et Technologies",
+                icon: "fa-flask",
+                color: "#1a237e",
+                description: "Laboratoires de recherche, olympiades scientifiques, hackathons et développement de projets innovants en sciences fondamentales et appliquées.",
+                ambassador: "Jonathan MATONDON"
             },
             {
                 name: "Faculté de Sciences Pharmaceutiques",
                 icon: "fa-pills",
                 color: "#5d4037",
                 description: "Ateliers de pharmacologie, recherche pharmaceutique, préparation aux concours, stages pratiques et développement de médicaments.",
+                ambassador: "Précieux KUZAMBA"
+            },
+            {
+                name: "Faculté de Psychologie et Sciences de l'Éducation",
+                icon: "fa-brain",
+                color: "#5d4037",
+                description: "Ateliers de psychologie appliquée, recherche en sciences éducatives, interventions psychosociales et innovations pédagogiques.",
+                ambassador: "Jeff NGANDU"
+            },
+            {
+                name: "Faculté de Polytechnique",
+                icon: "fa-cogs",
+                color: "#00796b",
+                description: "Projets d'ingénierie, compétitions de robotique, ateliers de conception assistée par ordinateur et innovations technologiques.",
                 ambassador: "À désigner"
             },
             {
@@ -1835,13 +2307,6 @@
                 color: "#e64a19",
                 description: "Groupes d'étude avancée, simulations médicales, recherche clinique, préparation aux résidanats et innovations médicales.",
                 ambassador: "À désigner"
-            },
-            {
-                name: "Faculté de Psychologie et Sciences de l'Éducation",
-                icon: "fa-brain",
-                color: "#5d4037",
-                description: "Ateliers de psychologie appliquée, recherche en sciences éducatives, interventions psychosociales et innovations pédagogiques.",
-                ambassador: "À désigner"
             }
         ];
 
@@ -1861,6 +2326,9 @@
             
             // Observer pour animations
             initAnimations();
+            
+            // Initialiser les onglets d'activités
+            initActivityTabs();
         });
 
         // Générer les cartes des facultés
@@ -1913,6 +2381,27 @@
             });
         }
 
+        // Initialiser les onglets d'activités
+        function initActivityTabs() {
+            const tabBtns = document.querySelectorAll('.activite-tab');
+            const tabContents = document.querySelectorAll('.activite-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Retirer la classe active de tous les boutons et contenus
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Ajouter la classe active au bouton cliqué
+                    btn.classList.add('active');
+                    
+                    // Afficher le contenu correspondant
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
         // Initialiser les événements
         function initEvents() {
             // Menu mobile
@@ -1929,9 +2418,9 @@
             }
             
             // Fermer le menu mobile en cliquant sur un lien
-            document.querySelectorAll('.nav-links a').forEach(link => {
+            document.querySelectorAll('.nav-links a, .action-btn').forEach(link => {
                 link.addEventListener('click', () => {
-                    if (navLinks.classList.contains('active')) {
+                    if (navLinks && navLinks.classList.contains('active')) {
                         navLinks.classList.remove('active');
                         mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                     }
@@ -1952,12 +2441,13 @@
                         phone: document.getElementById('phone').value.trim(),
                         faculty: document.getElementById('faculty').value,
                         niveau: document.getElementById('niveau').value,
+                        typeAdhesion: document.getElementById('typeAdhesion').value,
                         interests: Array.from(document.getElementById('interests').selectedOptions).map(option => option.value),
                         message: document.getElementById('message').value.trim()
                     };
                     
                     // Validation
-                    if (!formData.firstName || !formData.lastName || !formData.email || !formData.faculty || !formData.niveau || formData.interests.length === 0 || !formData.message) {
+                    if (!formData.firstName || !formData.lastName || !formData.email || !formData.faculty || !formData.niveau || !formData.typeAdhesion || formData.interests.length === 0 || !formData.message) {
                         alert('Veuillez remplir tous les champs obligatoires (*)');
                         return;
                     }
@@ -1965,8 +2455,20 @@
                     // Simulation d'envoi
                     console.log('Formulaire soumis:', formData);
                     
-                    // Message de succès
-                    alert('🎉 Félicitations ! Votre inscription à Excellentia Academia a été soumise avec succès.\n\nL\'ambassadeur de votre faculté vous contactera dans les plus brefs délais pour la suite du processus.');
+                    // Message de succès personnalisé
+                    let message = '🎉 Félicitations ! Votre candidature a été soumise avec succès.\n\n';
+                    
+                    if (formData.typeAdhesion === 'ambassadeur') {
+                        message += 'Vous avez postulé pour devenir Ambassadeur. Le Coordonnateur Général vous contactera pour un entretien.\n\n';
+                    } else if (formData.typeAdhesion === 'coordination') {
+                        message += 'Vous avez postulé pour intégrer la Coordination. L\'équipe de direction vous contactera prochainement.\n\n';
+                    } else {
+                        message += 'Vous êtes maintenant membre d\'Excellentia Academia ! L\'ambassadeur de votre faculté vous contactera.\n\n';
+                    }
+                    
+                    message += 'Privilèges : participer à nos formations, activités, ateliers, concours, etc.';
+                    
+                    alert(message);
                     
                     // Réinitialiser le formulaire
                     registrationForm.reset();
@@ -1974,7 +2476,7 @@
                     // Rediriger vers la page du concours si l'utilisateur a sélectionné cette option
                     if (formData.interests.includes('concours')) {
                         setTimeout(() => {
-                            window.location.href = 'concours.html';
+                            window.open('concours.html', '_blank');
                         }, 1000);
                     }
                 });
@@ -2000,6 +2502,23 @@
                     element.style.animationPlayState = 'running';
                 });
             });
+            
+            // Correction des liens des boutons d'action
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
         }
 
         // Initialiser la navigation
@@ -2007,17 +2526,17 @@
             // Smooth scroll pour les liens d'ancrage
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
+                        e.preventDefault();
+                        
                         // Fermer le menu mobile si ouvert
                         const navLinks = document.getElementById('navLinks');
                         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-                        if (navLinks.classList.contains('active')) {
+                        if (navLinks && navLinks.classList.contains('active')) {
                             navLinks.classList.remove('active');
                             mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                         }
@@ -2050,7 +2569,7 @@
             }, observerOptions);
             
             // Observer les cartes
-            document.querySelectorAll('.faculty-card, .formation-card, .info-card').forEach(card => {
+            document.querySelectorAll('.faculty-card, .avantage-card, .activite-card, .atelier-card').forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
                 card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
