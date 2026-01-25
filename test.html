@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excellentia Academia - Au-delà de l'excellence académique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-lighter: #e8eaf6;
+            --primary-dark: #000051;
+            --secondary: #d32f2f;
+            --secondary-light: #ff6659;
+            --secondary-lighter: #ffebee;
+            --secondary-dark: #9a0007;
+            --accent: #ffab00;
+            --accent-light: #ffdd4b;
+            --accent-dark: #c67c00;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --light: #f8f9fa;
+            --light-gray: #f5f5f7;
+            --dark: #121212;
+            --gray: #5f6368;
+            --gray-light: #dadce0;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-padding {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .title-decoration {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title-decoration:after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: -10px;
+            left: 15%;
+            border-radius: 2px;
+        }
+        
+        /* Boutons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #388e3c;
+        }
+        
+        .btn-info {
+            background-color: var(--info);
+        }
+        
+        .btn-info:hover {
+            background-color: #0b7dda;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 0;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: var(--transition);
+            gap: 12px;
+        }
+        
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        
+        .logo-image {
+            height: 50px;
+            width: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .logo-slogan {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 2px;
+        }
+        
+        /* Boutons d'action header */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-right: 30px;
+        }
+        
+        .action-btn {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .action-btn.formation {
+            background-color: var(--secondary);
+        }
+        
+        .action-btn.formation:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        .action-btn.concours {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .action-btn.concours:hover {
+            background-color: var(--accent-dark);
+            color: white;
+        }
+        
+        .action-btn.ateliers {
+            background-color: var(--success);
+        }
+        
+        .action-btn.ateliers:hover {
+            background-color: #388e3c;
+        }
+        
+        .action-btn.conferences {
+            background-color: var(--info);
+        }
+        
+        .action-btn.conferences:hover {
+            background-color: #0b7dda;
+        }
+        
+        .action-btn.photos {
+            background-color: #9c27b0;
+        }
+        
+        .action-btn.photos:hover {
+            background-color: #7b1fa2;
+        }
+        
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 35px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-btn:hover {
+            background-color: var(--primary-lighter);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.03) 0%, rgba(255, 171, 0, 0.03) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26, 35, 126, 0.05) 0%, rgba(26, 35, 126, 0) 70%);
+            top: -200px;
+            right: -100px;
+            z-index: 0;
+        }
+        
+        .hero:after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(211, 47, 47, 0.05) 0%, rgba(211, 47, 47, 0) 70%);
+            bottom: -150px;
+            left: -100px;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 60px;
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+        
+        .hero-text h1 span {
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-text h1 span:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 171, 0, 0.3);
+            bottom: 5px;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-intro {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            padding: 20px;
+            border-radius: var(--radius);
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 35px;
+            max-width: 600px;
+        }
+        
+        /* Détails du fondateur */
+        .fondateur-details {
+            background: linear-gradient(135deg, white, var(--light-gray));
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .fondateur-details h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fondateur-details h4 i {
+            color: var(--secondary);
+        }
+        
+        .fondateur-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .info-item h5 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        
+        .info-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        /* Comité directeur */
+        .comite-directeur {
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--accent);
+        }
+        
+        .comite-directeur h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comite-directeur h4 i {
+            color: var(--accent);
+        }
+        
+        .comite-membres {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .membre {
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .membre:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .membre h5 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        
+        .membre p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .floating-elements {
+            position: relative;
+            height: 450px;
+            width: 100%;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition);
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .floating-element:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .floating-element:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .element-1 {
+            top: 20px;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .element-2 {
+            top: 80px;
+            right: 0;
+            width: 240px;
+            height: 170px;
+            animation: float 7s ease-in-out infinite 0.5s;
+        }
+        
+        .element-3 {
+            bottom: 20px;
+            left: 60px;
+            width: 180px;
+            height: 180px;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .floating-text {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Avantages Section */
+        .avantages {
+            background-color: var(--light-gray);
+        }
+        
+        .avantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+        
+        .avantage-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .avantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .avantage-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .avantage-header h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .avantage-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .avantage-features {
+            list-style: none;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .avantage-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .avantage-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .avantage-features li i {
+            color: var(--success);
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+        
+        /* Facultés Section */
+        .faculties {
+            background-color: white;
+        }
+        
+        .faculties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        
+        .faculty-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .faculty-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .faculty-icon:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+        }
+        
+        .faculty-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .faculty-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .faculty-content p {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .ambassador-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .ambassador-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-lighter), white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .ambassador-details h5 {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .ambassador-details p {
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+        
+        /* Activités Section */
+        .activites {
+            background-color: var(--light-gray);
+        }
+        
+        .activites-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .activite-tab {
+            padding: 15px 30px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .activite-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .activite-tab:hover:not(.active) {
+            background-color: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+        }
+        
+        .activite-content {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .activite-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .activite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+        }
+        
+        .activite-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activite-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .activite-header {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activite-header h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .activite-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activite-features {
+            list-style: none;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .activite-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .activite-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .activite-features li i {
+            color: var(--success);
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+        
+        /* Ateliers Section */
+        .ateliers {
+            background-color: white;
+        }
+        
+        .ateliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+        }
+        
+        .atelier-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .atelier-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .atelier-header {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--dark);
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .atelier-header h3 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .atelier-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Formulaire d'inscription */
+        .inscription {
+            background-color: var(--light-gray);
+        }
+        
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-header:before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .form-header:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -75px;
+            left: -75px;
+        }
+        
+        .form-header h2 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-body {
+            padding: 50px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .form-group {
+            flex: 1 0 300px;
+            padding: 0 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Source Sans Pro', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a237e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px;
+            padding-right: 50px;
+        }
+        
+        .checkbox-group {
+            margin-top: 20px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logo-image {
+            height: 60px;
+            width: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .footer-logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: white;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo-sub {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .footer-logo-slogan {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        .fondateur-footer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .fondateur-footer h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .fondateur-footer p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .comite-footer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .comite-footer h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .comite-footer p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-links h3:after, .footer-contact h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: -8px;
+            left: 0;
+            border-radius: 3px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            opacity: 0.9;
+        }
+        
+        .footer-contact i {
+            margin-right: 15px;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+            
+            .action-buttons {
+                margin-right: 20px;
+            }
+            
+            .action-btn {
+                padding: 9px 18px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 60px;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .floating-elements {
+                height: 350px;
+            }
+            
+            .action-buttons {
+                display: none;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .section-padding {
+                padding: 80px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-intro {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 150px;
+                padding-bottom: 80px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .floating-elements {
+                height: 300px;
+            }
+            
+            .element-1, .element-2, .element-3 {
+                width: 150px;
+                height: 150px;
+                padding: 15px;
+            }
+            
+            .floating-icon {
+                font-size: 2rem;
+            }
+            
+            .form-body {
+                padding: 30px 20px;
+            }
+            
+            .faculties-grid, .avantages-grid, .activite-grid, .ateliers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .activites-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .activite-tab {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .fondateur-info, .comite-membres {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .fondateur-details, .comite-directeur {
+                padding: 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+            }
+            
+            .hero-intro {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <!-- Logo de la structure -->
+                <div class="logo-image-container">
+                    <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="logo-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/50/1a237e/ffffff?text=EA'; this.alt='Logo Excellentia Academia'">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">Excellentia</div>
+                    <div class="logo-sub">ACADEMIA</div>
+                    <div class="logo-slogan">Au-delà de l'excellence académique</div>
+                </div>
+            </a>
+            
+            <div class="nav-wrapper">
+                <!-- Boutons d'action - CORRIGÉS POUR FONCTIONNER -->
+                <div class="action-buttons">
+                    <a href="#formations" class="action-btn formation">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Formation
+                    </a>
+                    <a href="#concours" class="action-btn concours">
+                        <i class="fas fa-trophy"></i>
+                        Concours
+                    </a>
+                    <a href="#ateliers" class="action-btn ateliers">
+                        <i class="fas fa-pen-fancy"></i>
+                        Ateliers
+                    </a>
+                    <a href="#activites" class="action-btn conferences">
+                        <i class="fas fa-microphone"></i>
+                        Conférences
+                    </a>
+                    <a href="#photos" class="action-btn photos">
+                        <i class="fas fa-images"></i>
+                        Photos
+                    </a>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#avantages">Avantages</a></li>
+                    <li><a href="#facultes">Facultés</a></li>
+                    <li><a href="#activites">Activités</a></li>
+                    <li><a href="#ateliers">Ateliers</a></li>
+                    <li><a href="#inscription">Inscription</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
+                    
+                    <div class="hero-intro">
+                        Excellentia Academia transcende l'excellence académique pour former des leaders complets, engagés et visionnaires, prêts à contribuer au développement de la République Démocratique du Congo et de l'Afrique.
+                    </div>
+                    
+                    <p>Notre structure accompagne et développe les compétences des étudiants de l'Université de Kinshasa à travers 13 facultés, avec une mission claire : former une élite académique polyvalente et engagée.</p>
+                    
+                    <!-- Détails du fondateur -->
+                    <div class="fondateur-details">
+                        <h4><i class="fas fa-user-tie"></i> Fondateur & Coordonnateur Général</h4>
+                        <div class="fondateur-info">
+                            <div class="info-item">
+                                <h5>Nom Complet</h5>
+                                <p>Credo MALALE MUSAO</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Niveau d'études</h5>
+                                <p>Master 1 (M1) en Droit</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Département</h5>
+                                <p>Droit International Public et Africain</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Université</h5>
+                                <p>Université de Kinshasa (UNIKIN)</p>
+                            </div>
+                            <div class="info-item">
+                                <h5>Fonction</h5>
+                                <p>Fondateur et Coordonnateur Général</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comité directeur -->
+                    <div class="comite-directeur">
+                        <h4><i class="fas fa-users"></i> Comité Directeur</h4>
+                        <div class="comite-membres">
+                            <div class="membre">
+                                <h5>Arnid DJONGA</h5>
+                                <p>Secrétaire Général</p>
+                            </div>
+                            <div class="membre">
+                                <h5>Paul KASONGO</h5>
+                                <p>Secrétaire Général Adjoint</p>
+                            </div>
+                            <div class="membre">
+                                <h5>Chris</h5>
+                                <p>Chargé des Projets</p>
+                            </div>
+                            <div class="membre">
+                                <h5>Gemima BEMBIDE</h5>
+                                <p>Directrice Financière</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-btns">
+                        <a href="#inscription" class="btn btn-primary">Devenir Membre</a>
+                        <a href="#ambassadeur" class="btn btn-accent">Postuler Ambassadeur</a>
+                        <a href="#activites" class="btn btn-outline">Nos Activités</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-elements">
+                        <div class="floating-element element-1">
+                            <i class="fas fa-brain floating-icon"></i>
+                            <div class="floating-text">13 Facultés</div>
+                            <small>Université de Kinshasa</small>
+                        </div>
+                        <div class="floating-element element-2">
+                            <i class="fas fa-trophy floating-icon"></i>
+                            <div class="floating-text">Concours d'éloquence</div>
+                            <small>Inter-facultés</small>
+                        </div>
+                        <div class="floating-element element-3">
+                            <i class="fas fa-users floating-icon"></i>
+                            <div class="floating-text">Ambassadeurs</div>
+                            <small>Par faculté</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avantages Section -->
+    <section class="avantages section-padding" id="avantages">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Avantages d'être Membre</span></h2>
+                <p>Rejoignez Excellentia Academia et bénéficiez de privilèges exclusifs pour votre développement académique et professionnel.</p>
+            </div>
+            
+            <div class="avantages-grid">
+                <div class="avantage-card">
+                    <div class="avantage-header">
+                        <h3>Formations Exclusives</h3>
+                        <p>Accès prioritaire</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Développez vos compétences avec nos programmes de formation certifiants.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Formation à l'éloquence et art oratoire</li>
+                                                        <li><i class="fas fa-check"></i> Formation en Plaidoirie  </li>
+                            <li><i class="fas fa-check"></i> Ateliers d'écriture académique (TFC, mémoires)</li>
+                            <li><i class="fas fa-check"></i> Développement des soft skills</li>
+                            <li><i class="fas fa-check"></i> Coaching individuel et mentorat</li>
+                            <li><i class="fas fa-check"></i> Certificats de participation reconnus</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="avantage-card">
+                    <div class="avantage-header" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));">
+                        <h3>Activités Privilégiées</h3>
+                        <p>Participation prioritaire</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Participez à nos événements phares et développez votre réseau.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Concours d'éloquence inter-facultés</li>
+                            <li><i class="fas fa-check"></i> Conférences avec experts </li>
+                            <li><i class="fas fa-check"></i> Cafés scientifiques et débats</li>
+                            <li><i class="fas fa-check"></i> Rencontres avec professionnels</li>
+                            <li><i class="fas fa-check"></i> Événements de networking</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="avantage-card">
+                    <div class="avantage-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                        <h3>Opportunités Uniques</h3>
+                        <p>Développement de carrière</p>
+                    </div>
+                    <div class="avantage-body">
+                        <p>Bénéficiez d'opportunités exclusives pour votre avenir professionnel.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Postuler comme ambassadeur de faculté</li>
+                            <li><i class="fas fa-check"></i> Intégrer la coordination de la structure</li>
+                            <li><i class="fas fa-check"></i> Accès aux stages et opportunités</li>
+                            <li><i class="fas fa-check"></i> Mentorat par des professionnels</li>
+                            <li><i class="fas fa-check"></i> Reconnaissance académique officielle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facultés Section -->
+    <section class="faculties section-padding" id="facultes">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">13 Facultés - Nos Ambassadeurs</span></h2>
+                <p>Excellentia Academia est présent dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés.</p>
+            </div>
+            
+            <div class="faculties-grid" id="facultiesContainer">
+                <!-- Les facultés seront générées par JavaScript avec les ambassadeurs spécifiés -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;" id="ambassadeur">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">Devenir Ambassadeur de votre Faculté</h3>
+                <p style="max-width: 800px; margin: 0 auto 30px; color: var(--gray);">
+                    Postulez pour représenter Excellentia Academia dans votre faculté et intégrez notre coordination. 
+                    Les ambassadeurs bénéficient d'une formation spéciale, d'opportunités de leadership et jouent un rôle clé dans l'organisation des activités.
+                </p>
+                <a href="#inscription" class="btn btn-success" style="font-size: 1.1rem; padding: 15px 40px;">
+                    <i class="fas fa-user-plus"></i> Postuler comme Ambassadeur
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activités Section -->
+    <section class="activites section-padding" id="activites">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Nos Activités Principales</span></h2>
+                <p>Découvrez nos programmes récurrents et événements phares organisés dans les 13 facultés.</p>
+            </div>
+            
+            <div class="activites-tabs">
+                <button class="activite-tab active" data-tab="concours">
+                    <i class="fas fa-trophy"></i> Concours d'Éloquence
+                </button>
+                <button class="activite-tab" data-tab="ateliers">
+                    <i class="fas fa-chalkboard-teacher"></i> Ateliers de Formation
+                </button>
+                <button class="activite-tab" data-tab="conferences">
+                    <i class="fas fa-microphone"></i> Conférences
+                </button>
+            </div>
+            
+            <div class="activite-content active" id="concours">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header">
+                            <h3>Concours d'Éloquence Inter-facultés</h3>
+                            <p>La compétition phare de l'année</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Représentez votre faculté dans cette compétition d'art oratoire prestigieuse.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Participation des 13 facultés de l'UNIKIN</li>
+                                <li><i class="fas fa-check"></i> Thème annuel sur le développement national</li>
+                                <li><i class="fas fa-check"></i> Prix attractifs et reconnaissance académique</li>
+                                <li><i class="fas fa-check"></i> Jury composé d'experts et personnalités</li>
+                                <li><i class="fas fa-check"></i> Préparation intensive par les ambassadeurs</li>
+                            </ul>
+                            <a href="concours.html" class="btn btn-accent" style="margin-top: 20px; width: 100%;">
+                                <i class="fas fa-external-link-alt"></i> Page Officielle du Concours
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                            <h3>Formation à l'Éloquence</h3>
+                            <p>Préparation au concours</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Programme complet de formation à l'art oratoire pour exceller au concours.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li>
+                                <li><i class="fas fa-check"></i> Construction du discours et argumentation</li>
+                                <li><i class="fas fa-check"></i> Gestion du stress et du trac</li>
+                                <li><i class="fas fa-check"></i> Art de l'improvisation et répartie</li>
+                                <li><i class="fas fa-check"></i> Coaching individuel personnalisé</li>
+                            </ul>
+                            <a href="#inscription" class="btn btn-primary" style="margin-top: 20px; width: 100%;">
+                                <i class="fas fa-user-plus"></i> S'inscrire à la Formation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activite-content" id="ateliers">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                            <h3>Ateliers d'Écriture Académique</h3>
+                            <p>TFC, mémoires et thèses</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Maîtrisez la rédaction scientifique avec nos ateliers spécialisés.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Structure et planification du travail</li>
+                                <li><i class="fas fa-check"></i> Recherche documentaire efficace</li>
+                                <li><i class="fas fa-check"></i> Rédaction scientifique et normes APA</li>
+                                <li><i class="fas fa-check"></i> Méthodologie de recherche adaptée</li>
+                                <li><i class="fas fa-check"></i> Préparation à la soutenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--dark);">
+                            <h3>Ateliers Soft Skills</h3>
+                            <p>Compétences transversales</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Développez les compétences essentielles pour réussir vos études et votre carrière.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Leadership et gestion d'équipe</li>
+                                <li><i class="fas fa-check"></i> Gestion du temps et productivité</li>
+                                <li><i class="fas fa-check"></i> Intelligence émotionnelle</li>
+                                <li><i class="fas fa-check"></i> Communication efficace</li>
+                                <li><i class="fas fa-check"></i> Pensée critique et résolution de problèmes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activite-content" id="conferences">
+                <div class="activite-grid">
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, var(--info), #0b7dda);">
+                            <h3>Conférences Mensuelles</h3>
+                            <p>Experts et professionnels</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Assistez à nos conférences mensuelles avec des intervenants de renom.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Thèmes variés et interdisciplinaires</li>
+                                <li><i class="fas fa-check"></i> Experts nationaux et internationaux</li>
+                                <li><i class="fas fa-check"></i> Échanges et questions-réponses</li>
+                                <li><i class="fas fa-check"></i> Certificats de participation</li>
+                                <li><i class="fas fa-check"></i> Networking avec les intervenants</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="activite-card">
+                        <div class="activite-header" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2);">
+                            <h3>Cafés Scientifiques</h3>
+                            <p>Débats dans une ambiance détendue</p>
+                        </div>
+                        <div class="activite-body">
+                            <p>Participez à nos cafés scientifiques pour échanger sur des sujets d'actualité.</p>
+                            <ul class="activite-features">
+                                <li><i class="fas fa-check"></i> Ambiance conviviale et détendue</li>
+                                <li><i class="fas fa-check"></i> Discussions animées par des modérateurs</li>
+                                <li><i class="fas fa-check"></i> Sujets d'actualité scientifique et sociale</li>
+                                <li><i class="fas fa-check"></i> Participation active des étudiants</li>
+                                <li><i class="fas fa-check"></i> Développement de l'esprit critique</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ateliers Section -->
+    <section class="ateliers section-padding" id="ateliers-section">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Nos Ateliers Spécialisés</span></h2>
+                <p>Des ateliers pratiques pour développer vos compétences académiques et professionnelles.</p>
+            </div>
+            
+            <div class="ateliers-grid">
+                <div class="atelier-card">
+                    <div class="atelier-header">
+                        <h3>Cafés Scientifiques</h3>
+                        <p>Débats et échanges intellectuels</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Dans une ambiance conviviale, venez échanger sur des sujets scientifiques et sociaux avec des experts et vos pairs.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Discussions animées sur l'actualité scientifique</li>
+                            <li><i class="fas fa-check"></i> Intervention d'experts dans divers domaines</li>
+                            <li><i class="fas fa-check"></i> Développement de l'esprit critique</li>
+                            <li><i class="fas fa-check"></i> Amélioration des compétences argumentatives</li>
+                            <li><i class="fas fa-check"></i> Networking académique et professionnel</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                        <h3>Workshops Pratiques</h3>
+                        <p>Apprentissage par la pratique</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Des ateliers pratiques pour maîtriser des compétences spécifiques nécessaires à votre réussite académique.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Techniques de présentation PowerPoint avancées</li>
+                            <li><i class="fas fa-check"></i> Méthodologie de recherche documentaire</li>
+                            <li><i class="fas fa-check"></i> Analyse statistique des données</li>
+                            <li><i class="fas fa-check"></i> Rédaction d'articles scientifiques</li>
+                            <li><i class="fas fa-check"></i> Préparation aux examens oraux</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));">
+                        <h3>Activités Diversifiées</h3>
+                        <p>Programme complet de développement</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Un programme varié d'activités pour couvrir tous les aspects du développement étudiant.</p>
+                        <ul class="avantage-features">
+                            <li><i class="fas fa-check"></i> Simulations d'entretiens d'embauche</li>
+                            <li><i class="fas fa-check"></i> Ateliers de team building</li>
+                            <li><i class="fas fa-check"></i> Sessions de coaching individuel</li>
+                            <li><i class="fas fa-check"></i> Forums de carrière</li>
+                            <li><i class="fas fa-check"></i> Visites d'entreprises et institutions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Photos -->
+    <section class="ateliers section-padding" id="photos" style="background-color: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Galerie Photos</span></h2>
+                <p>Découvrez les moments forts de nos activités et événements à travers notre galerie photos.</p>
+            </div>
+            
+            <div class="ateliers-grid">
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2);">
+                        <h3><i class="fas fa-images"></i> Nos Événements</h3>
+                        <p>Moments mémorables</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Revivez les moments forts de nos conférences, formations et activités.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-camera" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Les photos de nos activités sont disponibles sur nos réseaux sociaux.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--dark);">
+                        <h3><i class="fas fa-trophy"></i> Concours d'Éloquence</h3>
+                        <p>Édition 2023-2024</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Photos exclusives de la grande finale du concours d'éloquence inter-facultés.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-video" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Retrouvez toutes les photos sur notre page Facebook.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="atelier-card">
+                    <div class="atelier-header" style="background: linear-gradient(135deg, var(--success), #388e3c);">
+                        <h3><i class="fas fa-users"></i> Vie de la Structure</h3>
+                        <p>Notre communauté</p>
+                    </div>
+                    <div class="atelier-body">
+                        <p>Découvrez la vie au sein d'Excellentia Academia à travers nos albums photos.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <i class="fas fa-photo-video" style="font-size: 3rem; color: var(--gray-light);"></i>
+                        </div>
+                        <p style="text-align: center; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Suivez-nous sur Instagram pour plus de contenu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="https://facebook.com/excellentiaacademia" target="_blank" class="btn btn-info" style="font-size: 1.1rem; padding: 15px 40px; margin: 0 10px;">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="https://instagram.com/excellentiaacademia" target="_blank" class="btn" style="background: linear-gradient(135deg, #E1306C, #C13584); color: white; font-size: 1.1rem; padding: 15px 40px; margin: 0 10px;">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulaire d'inscription -->
+    <section class="inscription section-padding" id="inscription">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="title-decoration">Formulaire d'Adhésion</span></h2>
+                <p>Devenez membre d'Excellentia Academia et bénéficiez de tous nos programmes, activités et avantages.</p>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Devenir Membre de la Structure</h2>
+                    <p>Privilège : participer à nos formations, activités, ateliers, concours, etc.</p>
+                </div>
+                
+                <form class="form-body" id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName"><i class="fas fa-user"></i> Prénom *</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="Votre prénom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName"><i class="fas fa-user"></i> Nom *</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Votre nom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Adresse Email *</label>
+                            <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+243 XX XXX XXXX">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faculty"><i class="fas fa-university"></i> Faculté *</label>
+                            <select id="faculty" class="form-control" required>
+                                <option value="">Sélectionnez votre faculté</option>
+                                <!-- Options générées par JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="niveau"><i class="fas fa-graduation-cap"></i> Niveau d'études *</label>
+                            <select id="niveau" class="form-control" required>
+                                <option value="">Sélectionnez votre niveau</option>
+                                <option value="licence1">Licence 1</option>
+                                <option value="licence2">Licence 2</option>
+                                <option value="licence3">Licence 3</option>
+                                <option value="master1">Master 1</option>
+                                <option value="master2">Master 2</option>
+                                <option value="doctorat">Doctorat</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="typeAdhesion"><i class="fas fa-star"></i> Type d'Adhésion *</label>
+                            <select id="typeAdhesion" class="form-control" required>
+                                <option value="">Choisissez votre type d'adhésion</option>
+                                <option value="membre">Membre régulier</option>
+                                <option value="ambassadeur">Postuler comme Ambassadeur</option>
+                                <option value="coordination">Intégrer la Coordination</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="interests"><i class="fas fa-heart"></i> Activités d'intérêt *</label>
+                            <select id="interests" class="form-control" multiple required style="height: 150px;">
+                                <option value="concours">Concours d'éloquence</option>
+                                <option value="formation">Formation à l'éloquence</option>
+                                <option value="ateliers">Ateliers d'écriture académique</option>
+                                <option value="conferences">Conférences et cafés scientifiques</option>
+                                <option value="softskills">Formations soft skills</option>
+                                <option value="photos">Activités photos et médias</option>
+                                <option value="recherche">Recherche académique</option>
+                                <option value="volontariat">Activités de volontariat</option>
+                            </select>
+                            <small style="color: var(--gray); display: block; margin-top: 5px;">Maintenez Ctrl (ou Cmd) pour sélectionner plusieurs options</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-edit"></i> Pourquoi voulez-vous rejoindre Excellentia Academia ? *</label>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Expliquez vos motivations, vos attentes et comment vous comptez contribuer à la structure..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>J'accepte de recevoir les communications d'Excellentia Academia concernant les événements et activités. Je comprends que je peux me désabonner à tout moment.</span>
+                        </label>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 16px 50px; font-size: 1.1rem;">
+                            <i class="fas fa-paper-plane"></i> Soumettre ma candidature
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="footer-logo-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/60/1a237e/ffffff?text=EA'; this.alt='Logo Excellentia Academia'">
+                        <div class="footer-logo-text">Excellentia</div>
+                        <div class="footer-logo-sub">ACADEMIA</div>
+                        <div class="footer-logo-slogan">Au-delà de l'excellence académique</div>
+                    </div>
+                    <p>Structure académique d'accompagnement et de développement des compétences des étudiants de l'Université de Kinshasa. Notre mission est de former une élite académique polyvalente et engagée dans les 13 facultés.</p>
+                    
+                    <div class="fondateur-footer">
+                        <h4>Fondateur & Coordonnateur</h4>
+                        <p><strong>Credo MALALE MUSAO</strong></p>
+                        <p>Étudiant en M1 Droit - Droit International Public et Africain</p>
+                        <p>Fondateur et Coordonnateur Général d'Excellentia Academia</p>
+                    </div>
+                    
+                    <div class="comite-footer">
+                        <h4>Comité Directeur</h4>
+                        <p><strong>Arnid DJONGA</strong> - Secrétaire Général</p>
+                        <p><strong>Paul KASONGO</strong> - Secrétaire Général Adjoint</p>
+                        <p><strong>Chris</strong> - Chargé des Projets</p>
+                        <p><strong>Gemima BEMBIDE</strong> - Directrice Financière</p>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="https://facebook.com/excellentiaacademia" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/excellentiaacademia" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/excellentiaacademia" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/excellentiaacademia" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://youtube.com/excellentiaacademia" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="#accueil"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="#avantages"><i class="fas fa-chevron-right"></i> Avantages</a></li>
+                        <li><a href="#facultes"><i class="fas fa-chevron-right"></i> 13 Facultés & Ambassadeurs</a></li>
+                        <li><a href="#activites"><i class="fas fa-chevron-right"></i> Activités</a></li>
+                        <li><a href="#ateliers-section"><i class="fas fa-chevron-right"></i> Ateliers</a></li>
+                        <li><a href="#photos"><i class="fas fa-chevron-right"></i> Galerie Photos</a></li>
+                        <li><a href="#inscription"><i class="fas fa-chevron-right"></i> Devenir Membre</a></li>
+                        <li><a href="concours.html"><i class="fas fa-external-link-alt"></i> Page du Concours</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contactez-nous</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Université de Kinshasa, Campus Principal, République Démocratique du Congo</p>
+                    <p><i class="fas fa-phone"></i> +243 81 234 5678</p>
+                    <p><i class="fas fa-envelope"></i> contact@excellentia-academia.cd</p>
+                    <p><i class="far fa-clock"></i> Lundi - Vendredi: 8h00 - 18h00</p>
+                    <p><i class="fas fa-university"></i> Présent dans les 13 facultés de l'UNIKIN</p>
+                    <p><i class="fas fa-hashtag"></i> #ExcellentiaAcademia #AuDelàDeLExcellence</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Excellentia Academia - Université de Kinshasa. Tous droits réservés. | Conçu avec <i class="fas fa-heart" style="color: var(--secondary);"></i> pour l'excellence académique</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Données des facultés avec ambassadeurs spécifiés
+        const facultiesData = [
+            {
+                name: "Faculté de Droit",
+                icon: "fa-balance-scale",
+                color: "#f57c00",
+                description: "Clubs de plaidoirie, concours de procès simulés, ateliers de rédaction juridique, moots courts et préparation aux examens du barreau.",
+                ambassador: "Aristote MBO"
+            },
+            {
+                name: "Faculté de Lettres et Sciences Humaines",
+                icon: "fa-book-open",
+                color: "#d32f2f",
+                description: "Ateliers d'écriture créative, clubs de philosophie et de littérature, conférences interdisciplinaires et projets culturels.",
+                ambassador: "Adoption MWAMUKASA"
+            },
+            {
+                name: "Faculté de Sciences Économiques et de Gestion",
+                icon: "fa-chart-line",
+                color: "#388e3c",
+                description: "Clubs d'analyse économique, compétitions de trading, ateliers d'économétrie, simulations boursières et projets de recherche économique.",
+                ambassador: "Grâce Eloko"
+            },
+            {
+                name: "Faculté de Sciences Sociales, Administratives et Politiques",
+                icon: "fa-users",
+                color: "#7b1fa2",
+                description: "Débats politiques, analyses sociologiques, simulations administratives et recherches sur les politiques publiques.",
+                ambassador: "Keren TUAVUKIDI"
+            },
+            {
+                name: "Faculté de Sciences et Technologies",
+                icon: "fa-flask",
+                color: "#1a237e",
+                description: "Laboratoires de recherche, olympiades scientifiques, hackathons et développement de projets innovants en sciences fondamentales et appliquées.",
+                ambassador: "Jonathan MATONDON"
+            },
+            {
+                name: "Faculté de Sciences Pharmaceutiques",
+                icon: "fa-pills",
+                color: "#5d4037",
+                description: "Ateliers de pharmacologie, recherche pharmaceutique, préparation aux concours, stages pratiques et développement de médicaments.",
+                ambassador: "Précieux KUZAMBA"
+            },
+            {
+                name: "Faculté de Psychologie et Sciences de l'Éducation",
+                icon: "fa-brain",
+                color: "#5d4037",
+                description: "Ateliers de psychologie appliquée, recherche en sciences éducatives, interventions psychosociales et innovations pédagogiques.",
+                ambassador: "Jeff NGANDU"
+            },
+            {
+                name: "Faculté de Polytechnique",
+                icon: "fa-cogs",
+                color: "#00796b",
+                description: "Projets d'ingénierie, compétitions de robotique, ateliers de conception assistée par ordinateur et innovations technologiques.",
+                ambassador: "À désigner"
+            },
+            {
+                name: "Faculté de Médecine Dentaire",
+                icon: "fa-tooth",
+                color: "#0288d1",
+                description: "Ateliers de techniques dentaires, recherches en odontologie, simulations cliniques et innovations en santé bucco-dentaire.",
+                ambassador: "À désigner"
+            },
+            {
+                name: "Faculté de Médecine Vétérinaire",
+                icon: "fa-paw",
+                color: "#c2185b",
+                description: "Cliniques vétérinaires étudiantes, recherche en santé animale, ateliers de chirurgie et prévention des zoonoses.",
+                ambassador: "À désigner"
+            },
+            {
+                name: "Faculté de Pétrole, Gaz et Énergies Renouvelables",
+                icon: "fa-gas-pump",
+                color: "#303f9f",
+                description: "Projets énergétiques, recherche sur les énergies alternatives, simulations d'exploitation et gestion des ressources énergétiques.",
+                ambassador: "À désigner"
+            },
+            {
+                name: "Faculté de Sciences Agronomiques",
+                icon: "fa-seedling",
+                color: "#689f38",
+                description: "Projets agricoles innovants, recherche agronomique, ateliers de transformation des produits et gestion des exploitations.",
+                ambassador: "À désigner"
+            },
+            {
+                name: "Faculté de Médecine",
+                icon: "fa-stethoscope",
+                color: "#e64a19",
+                description: "Groupes d'étude avancée, simulations médicales, recherche clinique, préparation aux résidanats et innovations médicales.",
+                ambassador: "À désigner"
+            }
+        ];
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Générer les facultés
+            generateFaculties();
+            
+            // Remplir le select des facultés
+            populateFacultySelect();
+            
+            // Initialiser les événements
+            initEvents();
+            
+            // Initialiser la navigation
+            initNavigation();
+            
+            // Observer pour animations
+            initAnimations();
+            
+            // Initialiser les onglets d'activités
+            initActivityTabs();
+        });
+
+        // Générer les cartes des facultés
+        function generateFaculties() {
+            const container = document.getElementById('facultiesContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            facultiesData.forEach(faculty => {
+                const card = document.createElement('div');
+                card.className = 'faculty-card';
+                card.innerHTML = `
+                    <div class="faculty-icon" style="background: linear-gradient(135deg, ${faculty.color}, ${adjustColor(faculty.color, 30)})">
+                        <i class="fas ${faculty.icon}"></i>
+                    </div>
+                    <div class="faculty-content">
+                        <h3>${faculty.name}</h3>
+                        <p>${faculty.description}</p>
+                        <div class="ambassador-info">
+                            <div class="ambassador-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="ambassador-details">
+                                <h5>Ambassadeur Excellentia Academia</h5>
+                                <p>${faculty.ambassador}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Ajuster la couleur
+        function adjustColor(color, amount) {
+            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+        }
+
+        // Remplir le select des facultés
+        function populateFacultySelect() {
+            const select = document.getElementById('faculty');
+            if (!select) return;
+            
+            facultiesData.forEach(faculty => {
+                const option = document.createElement('option');
+                option.value = faculty.name;
+                option.textContent = faculty.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Initialiser les onglets d'activités
+        function initActivityTabs() {
+            const tabBtns = document.querySelectorAll('.activite-tab');
+            const tabContents = document.querySelectorAll('.activite-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Retirer la classe active de tous les boutons et contenus
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Ajouter la classe active au bouton cliqué
+                    btn.classList.add('active');
+                    
+                    // Afficher le contenu correspondant
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Initialiser les événements
+        function initEvents() {
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+            }
+            
+            // Fermer le menu mobile en cliquant sur un lien
+            document.querySelectorAll('.nav-links a, .action-btn').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+            
+            // Formulaire d'inscription
+            const registrationForm = document.getElementById('registrationForm');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Collecter les données du formulaire
+                    const formData = {
+                        firstName: document.getElementById('firstName').value.trim(),
+                        lastName: document.getElementById('lastName').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        faculty: document.getElementById('faculty').value,
+                        niveau: document.getElementById('niveau').value,
+                        typeAdhesion: document.getElementById('typeAdhesion').value,
+                        interests: Array.from(document.getElementById('interests').selectedOptions).map(option => option.value),
+                        message: document.getElementById('message').value.trim()
+                    };
+                    
+                    // Validation
+                    if (!formData.firstName || !formData.lastName || !formData.email || !formData.faculty || !formData.niveau || !formData.typeAdhesion || formData.interests.length === 0 || !formData.message) {
+                        alert('Veuillez remplir tous les champs obligatoires (*)');
+                        return;
+                    }
+                    
+                    // Simulation d'envoi
+                    console.log('Formulaire soumis:', formData);
+                    
+                    // Message de succès personnalisé
+                    let message = '🎉 Félicitations ! Votre candidature a été soumise avec succès.\n\n';
+                    
+                    if (formData.typeAdhesion === 'ambassadeur') {
+                        message += 'Vous avez postulé pour devenir Ambassadeur. Le Coordonnateur Général vous contactera pour un entretien.\n\n';
+                    } else if (formData.typeAdhesion === 'coordination') {
+                        message += 'Vous avez postulé pour intégrer la Coordination. L\'équipe de direction vous contactera prochainement.\n\n';
+                    } else {
+                        message += 'Vous êtes maintenant membre d\'Excellentia Academia ! L\'ambassadeur de votre faculté vous contactera.\n\n';
+                    }
+                    
+                    message += 'Privilèges : participer à nos formations, activités, ateliers, concours, etc.';
+                    
+                    alert(message);
+                    
+                    // Réinitialiser le formulaire
+                    registrationForm.reset();
+                    
+                    // Rediriger vers la page du concours si l'utilisateur a sélectionné cette option
+                    if (formData.interests.includes('concours')) {
+                        setTimeout(() => {
+                            window.open('concours.html', '_blank');
+                        }, 1000);
+                    }
+                });
+            }
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Animation des éléments flottants
+            document.querySelectorAll('.floating-element').forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    element.style.animationPlayState = 'paused';
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    element.style.animationPlayState = 'running';
+                });
+            });
+            
+            // Correction des liens des boutons d'action
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialiser la navigation
+        function initNavigation() {
+            // Smooth scroll pour les liens d'ancrage
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        
+                        // Fermer le menu mobile si ouvert
+                        const navLinks = document.getElementById('navLinks');
+                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                        
+                        // Scroll vers l'élément
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialiser les animations
+        function initAnimations() {
+            // Animation au défilement
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observer les cartes
+            document.querySelectorAll('.faculty-card, .avantage-card, .activite-card, .atelier-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Animation pour les sections
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('section').forEach(section => {
+                sectionObserver.observe(section);
+            });
+        }
+    </script>
+</body>
+</html>
