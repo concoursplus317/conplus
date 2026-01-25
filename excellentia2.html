@@ -1262,11 +1262,11 @@
             <p class="event-subtitle">Maîtrisez l'art de la prise de parole en public et préparez-vous pour les concours d'éloquence</p>
             
             <div class="date-box">
-                <div class="date-title">FORMATION GRATUITE</div>
+                <div class="date-title">FORMATION INTENSIVE</div>
                 <div class="date-range">18 - 19 FÉVRIER 2026</div>
                 <div class="date-duration">
                     <i class="far fa-calendar-alt"></i>
-                    <span>2 jours • Formation complète • Brevet pour participants assidus</span>
+                    <span>2 jours • Formation complète</span>
                 </div>
             </div>
             
@@ -1295,7 +1295,7 @@
             </button>
             
             <p style="color: #BDC3C7; font-size: 1rem; margin-top: 30px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
-                <i class="fas fa-info-circle"></i> Places limitées • Formation 100% gratuite • Brevet pour les participants assidus
+                <i class="fas fa-info-circle"></i> Places limitées • Inscription obligatoire
             </p>
         </section>
 
@@ -1424,7 +1424,7 @@
         <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="footer-logo">
         <p style="font-size: 1.1rem; font-weight: 600; color: #D4AF37; margin-bottom: 10px;">Excellentia Academia © 2025-2026</p>
         <p style="margin-top: 10px; color: #BDC3C7; font-size: 0.95rem;">
-            Formation en Art Oratoire • Programme sur 2 jours • Formation 100% gratuite
+            Formation en Art Oratoire • Programme sur 2 jours
         </p>
         
         <p style="margin-top: 30px; font-size: 0.9rem; color: #BDC3C7;">
@@ -1468,31 +1468,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Statut *</label>
-                    <select class="form-select" name="statut" id="statutSelect" required onchange="togglePromotionField()">
-                        <option value="">Sélectionnez votre statut</option>
-                        <option value="etudiant">Étudiant</option>
-                        <option value="professionnel">Professionnel</option>
-                        <option value="autre">Autre</option>
-                    </select>
-                </div>
-                
-                <div class="form-group" id="promotionField" style="display: none;">
-                    <label class="form-label">Promotion *</label>
-                    <select class="form-select" name="promotion" id="promotionSelect">
-                        <option value="">Sélectionnez votre promotion</option>
-                        <option value="L1">Licence 1 (L1)</option>
-                        <option value="L2">Licence 2 (L2)</option>
-                        <option value="L3">Licence 3 (L3)</option>
-                        <option value="M1">Master 1 (M1)</option>
-                        <option value="M2">Master 2 (M2)</option>
-                        <option value="Doctorat">Doctorat</option>
-                    </select>
-                </div>
-                
-                <div class="form-group" id="professionField" style="display: none;">
-                    <label class="form-label">Profession *</label>
-                    <input type="text" class="form-input" name="profession" id="professionInput" placeholder="Votre profession">
+                    <label class="form-label">Profession / Études *</label>
+                    <input type="text" class="form-input" name="profession" required placeholder="Votre profession ou domaine d'études">
                 </div>
                 
                 <div class="form-group">
@@ -1506,28 +1483,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Participation à la formation *</label>
-                    <select class="form-select" name="participation" required>
-                        <option value="">Sélectionnez votre choix</option>
-                        <option value="oui_2jours">Oui, je participerai aux 2 jours de formation (éligible au brevet)</option>
-                        <option value="non_formation">Non, je participe uniquement à la formation</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
                     <label class="form-label">Votre motivation *</label>
                     <textarea class="form-textarea" name="motivation" required placeholder="Pourquoi souhaitez-vous suivre cette formation ? Quelles sont vos attentes ?"></textarea>
-                </div>
-                
-                <div style="margin: 30px 0; padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 15px; border-left: 4px solid #D4AF37;">
-                    <p style="color: #D4AF37; font-weight: 600; margin-bottom: 10px;">
-                        <i class="fas fa-info-circle"></i> IMPORTANT :
-                    </p>
-                    <p style="color: #BDC3C7; font-size: 0.95rem; line-height: 1.6;">
-                        • La formation est <strong>100% gratuite</strong><br>
-                        • Un <strong>brevet de participation</strong> sera remis uniquement aux participants qui auront suivi les 2 jours de formation<br>
-                        • L'assiduité aux deux jours est obligatoire pour obtenir le brevet
-                    </p>
                 </div>
                 
                 <div style="margin: 30px 0;">
@@ -1597,8 +1554,8 @@
                         <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Aujourd'hui</div>
                     </div>
                     <div style="background: linear-gradient(135deg, #3498DB, #2980B9); color: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);">
-                        <div style="font-size: 3rem; font-weight: 900;" id="brevetParticipants">0</div>
-                        <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Éligibles brevet</div>
+                        <div style="font-size: 3rem; font-weight: 900;" id="experienceCount">0</div>
+                        <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Niveaux</div>
                     </div>
                 </div>
                 
@@ -1657,36 +1614,6 @@
         const loginButton = document.getElementById('loginButton');
         const exportButton = document.getElementById('exportButton');
 
-        // Fonction pour afficher/masquer les champs selon le statut
-        function togglePromotionField() {
-            const statut = document.getElementById('statutSelect').value;
-            const promotionField = document.getElementById('promotionField');
-            const professionField = document.getElementById('professionField');
-            const promotionSelect = document.getElementById('promotionSelect');
-            const professionInput = document.getElementById('professionInput');
-            
-            if (statut === 'etudiant') {
-                promotionField.style.display = 'block';
-                professionField.style.display = 'none';
-                promotionSelect.required = true;
-                professionInput.required = false;
-                professionInput.value = '';
-            } else if (statut === 'professionnel' || statut === 'autre') {
-                promotionField.style.display = 'none';
-                professionField.style.display = 'block';
-                promotionSelect.required = false;
-                professionInput.required = true;
-                promotionSelect.value = '';
-            } else {
-                promotionField.style.display = 'none';
-                professionField.style.display = 'none';
-                promotionSelect.required = false;
-                professionInput.required = false;
-                promotionSelect.value = '';
-                professionInput.value = '';
-            }
-        }
-
         // Fonction WhatsApp
         function joinWhatsAppGroup() {
             window.open("https://chat.whatsapp.com/EEbdxGaG6PO755NL41CCTQ", "_blank");
@@ -1718,5 +1645,256 @@
             inscriptionForm.reset();
             inscriptionForm.classList.remove('hidden');
             confirmationMessage.classList.add('hidden');
-            document.getElementById('promotionField').style.display = 'none';
-            document.getElementById
+        });
+
+        // Fermer modal en cliquant à l'extérieur
+        [formModal, adminModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModalFunc(modal);
+            });
+        });
+
+        // Login admin
+        loginButton.addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadParticipantsData();
+            } else {
+                alert("Mot de passe incorrect");
+            }
+        });
+
+        // Gestion du formulaire d'inscription
+        inscriptionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nom: inscriptionForm.nom.value,
+                email: inscriptionForm.email.value,
+                telephone: inscriptionForm.telephone.value,
+                whatsapp: inscriptionForm.whatsapp.value,
+                profession: inscriptionForm.profession.value,
+                experience: inscriptionForm.experience.value,
+                motivation: inscriptionForm.motivation.value,
+                formation: "Art Oratoire - 18-19 Février 2026",
+                date_inscription: new Date().toISOString(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                // Envoyer à Firebase
+                await db.collection('formation_participants').add(formData);
+                
+                // Envoyer également à Formspree
+                const formspreeForm = new FormData();
+                for (const key in formData) {
+                    formspreeForm.append(key, formData[key]);
+                }
+                
+                fetch('https://formspree.io/f/mldqkngp', {
+                    method: 'POST',
+                    body: formspreeForm,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                // Afficher confirmation
+                inscriptionForm.classList.add('hidden');
+                confirmationMessage.classList.remove('hidden');
+                
+                // Mettre à jour les données
+                loadParticipantsData();
+
+            } catch (error) {
+                console.error("Erreur:", error);
+                alert("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
+            }
+        });
+
+        // Charger les participants
+        async function loadParticipantsData() {
+            try {
+                const snapshot = await db.collection('formation_participants').get();
+                participantsData = [];
+                snapshot.forEach(doc => {
+                    participantsData.push({ id: doc.id, ...doc.data() });
+                });
+                updateAdminStats();
+            } catch (error) {
+                console.error("Erreur de chargement:", error);
+            }
+        }
+
+        function updateAdminStats() {
+            // Total inscriptions
+            document.getElementById('totalParticipants').textContent = participantsData.length;
+            
+            // Inscriptions aujourd'hui
+            const today = new Date().toDateString();
+            const todayCount = participantsData.filter(p => {
+                return new Date(p.date_inscription).toDateString() === today;
+            }).length;
+            document.getElementById('todayParticipants').textContent = todayCount;
+            
+            // Niveaux d'expérience
+            const experienceSet = new Set();
+            participantsData.forEach(p => {
+                if (p.experience) {
+                    experienceSet.add(p.experience);
+                }
+            });
+            const experienceCount = experienceSet.size;
+            document.getElementById('experienceCount').textContent = experienceCount;
+            
+            // Liste des participants
+            updateParticipantsList();
+        }
+
+        function updateParticipantsList() {
+            const listElement = document.getElementById('participantsList');
+            listElement.innerHTML = '';
+            
+            participantsData.slice(0, 10).forEach(p => {
+                const div = document.createElement('div');
+                div.style.padding = '18px';
+                div.style.marginBottom = '12px';
+                div.style.background = 'rgba(255, 255, 255, 0.1)';
+                div.style.borderRadius = '12px';
+                div.style.borderLeft = '4px solid #D4AF37';
+                div.style.backdropFilter = 'blur(5px)';
+                
+                const date = new Date(p.date_inscription).toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                div.innerHTML = `
+                    <div style="font-weight: 800; color: #FFFFFF; margin-bottom: 8px; font-size: 1.1rem;">${p.nom}</div>
+                    <div style="font-size: 0.9rem; color: #BDC3C7;">
+                        ${p.profession} • ${p.experience} • ${p.telephone} • ${date}
+                    </div>
+                `;
+                
+                listElement.appendChild(div);
+            });
+        }
+
+        // Export des données
+        exportButton.addEventListener('click', () => {
+            if (participantsData.length === 0) {
+                alert("Aucune donnée à exporter");
+                return;
+            }
+            
+            let csv = "Nom,Email,Téléphone,WhatsApp,Profession,Expérience,Motivation,Date\n";
+            
+            participantsData.forEach(p => {
+                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.profession}","${p.experience}","${p.motivation.replace(/"/g, '""')}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `inscriptions_formation_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Compte à rebours intelligent vers le 18 février 2026
+        function updateCountdown() {
+            const now = new Date().getTime();
+            
+            // Si nous sommes avant la formation
+            if (now < formationStart) {
+                const distance = formationStart - now;
+                updateCountdownDisplay(distance);
+            } 
+            // Si nous sommes pendant la formation
+            else if (now >= formationStart && now <= formationEnd) {
+                const distance = formationEnd - now;
+                updateCountdownDisplay(distance);
+            } 
+            // Si la formation est terminée
+            else {
+                document.getElementById('jours').textContent = '00';
+                document.getElementById('heures').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('secondes').textContent = '00';
+            }
+        }
+
+        function updateCountdownDisplay(distance) {
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('jours').textContent = jours.toString().padStart(2, '0');
+            document.getElementById('heures').textContent = heures.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('secondes').textContent = secondes.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Charger les données au démarrage
+        loadParticipantsData();
+
+        // Écouter les nouvelles inscriptions
+        db.collection('formation_participants').onSnapshot(() => {
+            loadParticipantsData();
+        });
+
+        // Animation d'entrée
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.hero-section, .program-section, .trainer-section, .whatsapp-section');
+            elements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                }, i * 200);
+            });
+            
+            // Créer des particules dorées
+            createParticles();
+        });
+
+        // Créer des particules dorées
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Tailles aléatoires
+                const size = Math.random() * 100 + 50;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Positions aléatoires
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Opacité aléatoire
+                particle.style.opacity = Math.random() * 0.1 + 0.05;
+                
+                // Animation delay aléatoire
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                
+                // Animation duration aléatoire
+                particle.style.animationDuration = `${Math.random() * 30 + 20}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+    </script>
+</body>
+</html>
