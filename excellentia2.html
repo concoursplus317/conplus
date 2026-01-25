@@ -4,56 +4,783 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formation Art Oratoire - Excellentia Academia</title>
+    <meta name="description" content="Formation intensive en art oratoire les 18-19 février 2026. Maîtrisez la prise de parole en public et préparez-vous aux concours d'éloquence.">
+    
     <style>
-        /* Votre CSS reste inchangé - il est déjà excellent */
-        /* Aucune modification nécessaire dans la partie CSS */
+        /* Styles CSS inchangés - ils sont déjà excellents */
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-blue: #0A0A2A;
+            --light-gold: #F4E4A6;
+            --accent-blue: #1E3A8A;
+            --success-green: #2ECC71;
+            --error-red: #E74C3C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0A0A2A 0%, #1A1A3A 50%, #2A2A4A 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(10, 10, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-gold), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            color: #BDC3C7;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .admin-header-button {
+            background: linear-gradient(135deg, var(--accent-blue), #3B82F6);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .admin-header-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 30px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .event-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .highlight-text {
+            background: linear-gradient(135deg, var(--primary-gold), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+
+        .event-subtitle {
+            font-size: 1.5rem;
+            color: #BDC3C7;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .date-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(244, 228, 166, 0.05));
+            border: 2px solid var(--primary-gold);
+            border-radius: 20px;
+            padding: 30px;
+            display: inline-block;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .date-title {
+            font-size: 1.1rem;
+            color: var(--primary-gold);
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .date-range {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .date-duration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #BDC3C7;
+            font-size: 1.1rem;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px auto;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .time-value {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-gold), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 1.1rem;
+            color: #BDC3C7;
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .main-cta {
+            background: linear-gradient(135deg, var(--primary-gold), #B8941F);
+            color: var(--dark-blue);
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            margin-top: 30px;
+        }
+
+        .main-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .program-card {
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 25px;
+            padding: 40px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-gold);
+        }
+
+        .program-day {
+            color: var(--primary-gold);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .program-topic {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .program-list {
+            list-style: none;
+        }
+
+        .program-list li {
+            color: #BDC3C7;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .program-list li i {
+            color: var(--primary-gold);
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .trainer-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 50px;
+            align-items: center;
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 30px;
+            padding: 50px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            margin-bottom: 60px;
+        }
+
+        .trainer-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary-gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .trainer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .trainer-img:hover {
+            transform: scale(1.1);
+        }
+
+        .trainer-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .trainer-title {
+            color: #BDC3C7;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .trainer-bio {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-style: italic;
+            padding: 25px;
+            background: rgba(10, 10, 42, 0.5);
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-gold);
+        }
+
+        .trainer-badges {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .trainer-badge {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(33, 150, 243, 0.05));
+            border-radius: 30px;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+        }
+
+        .whatsapp-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .whatsapp-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 800;
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(10, 10, 42, 0.95);
+            border-top: 2px solid var(--primary-gold);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-gold);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1A1A3A, #2A2A4A);
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 50px;
+            border-radius: 30px;
+            border: 3px solid var(--primary-gold);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            color: #D4AF37;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background: rgba(40, 40, 60, 0.9);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--primary-gold), #B8941F);
+            color: var(--dark-blue);
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.8) 0%, rgba(212, 175, 55, 0) 70%);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .program-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trainer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .trainer-photo {
+                margin: 0 auto;
+            }
+            
+            .event-title {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .countdown {
+                gap: 15px;
+            }
+            
+            .time-unit {
+                min-width: 80px;
+            }
+            
+            .time-value {
+                font-size: 3rem;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px auto;
+            }
+            
+            .event-title {
+                font-size: 2.2rem;
+            }
+            
+            .event-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-cta, .whatsapp-button, .submit-button {
+                padding: 15px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .date-range {
+                font-size: 1.8rem;
+            }
+            
+            .time-value {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        button:focus, input:focus, select:focus, textarea:focus {
+            outline: 3px solid var(--primary-gold);
+            outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+            .modal-overlay, .admin-header-button, .whatsapp-button, .main-cta {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-gold: #FFD700;
+                --dark-blue: #000000;
+                --light-gold: #FFFF00;
+                --accent-blue: #0000FF;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Effet de particules dorées -->
-    <div class="particles" id="particles"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
     
     <!-- Header luxueux -->
-    <header class="header">
+    <header class="header" role="banner">
         <div class="logo-wrapper">
             <div class="logo-container">
-                <!-- CORRECTION : Ajout d'un alt descriptif -->
-                <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia - Excellence, Éloquence, Leadership" class="logo-img">
+                <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia - Excellence, Éloquence, Leadership" class="logo-img" width="60" height="60">
             </div>
             <div class="logo-text">
-                <div class="logo-title">Excellentia Academia</div>
-                <div class="logo-subtitle">Excellence • Éloquence • Leadership</div>
+                <h1 class="logo-title">Excellentia Academia</h1>
+                <p class="logo-subtitle">Excellence • Éloquence • Leadership</p>
             </div>
         </div>
         
         <!-- Bouton Admin Luxueux -->
-        <!-- CORRECTION : Ajout d'un titre pour l'icône -->
         <button class="admin-header-button" id="adminButton" aria-label="Accéder au panneau d'administration">
-            <i class="fas fa-chart-line" title="Statistiques"></i> Panneau Admin
+            <i class="fas fa-chart-line" aria-hidden="true"></i> Panneau Admin
         </button>
     </header>
 
     <!-- Contenu principal -->
-    <main class="main-container">
+    <main class="main-container" id="main-content">
         <!-- Hero Section Luxueuse -->
-        <section class="hero-section">
-            <h1 class="event-title">Formation en <span class="highlight-text">Art Oratoire</span></h1>
+        <section class="hero-section" aria-labelledby="event-title">
+            <h1 id="event-title" class="event-title">Formation en <span class="highlight-text">Art Oratoire</span></h1>
             <p class="event-subtitle">Maîtrisez l'art de la prise de parole en public et préparez-vous pour les concours d'éloquence</p>
             
             <div class="date-box">
                 <div class="date-title">FORMATION INTENSIVE</div>
                 <div class="date-range">18 - 19 FÉVRIER 2026</div>
                 <div class="date-duration">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="far fa-calendar-alt" title="Calendrier"></i>
+                    <i class="far fa-calendar-alt" aria-hidden="true"></i>
                     <span>2 jours • Formation complète</span>
                 </div>
             </div>
             
             <!-- Countdown Luxueux -->
-            <div class="countdown">
+            <div class="countdown" aria-label="Compte à rebours avant la formation">
                 <div class="time-unit">
                     <div class="time-value" id="jours">00</div>
                     <div class="time-label">Jours</div>
@@ -72,124 +799,87 @@
                 </div>
             </div>
             
-            <!-- CORRECTION : Bouton avec aria-label -->
             <button class="main-cta" id="openFormButton" aria-label="S'inscrire gratuitement à la formation">
-                <i class="fas fa-user-plus" title="Inscription"></i> S'INSCRIRE GRATUITEMENT
+                <i class="fas fa-user-plus" aria-hidden="true"></i> S'INSCRIRE GRATUITEMENT
             </button>
             
-            <p style="color: #BDC3C7; font-size: 1rem; margin-top: 30px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fas fa-info-circle" title="Information"></i> Places limitées • Inscription obligatoire
+            <p class="places-info">
+                <i class="fas fa-info-circle" aria-hidden="true"></i> Places limitées • Inscription obligatoire
             </p>
         </section>
 
         <!-- Programme de Formation Luxueux -->
-        <section class="program-section">
-            <h2 class="section-title">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fas fa-calendar-alt" title="Programme"></i> Programme de la Formation
+        <section class="program-section" aria-labelledby="program-title">
+            <h2 id="program-title" class="section-title">
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i> Programme de la Formation
             </h2>
             
             <div class="program-grid">
                 <!-- Jour 1 -->
-                <div class="program-card">
+                <article class="program-card">
                     <div class="program-day">
-                        <!-- CORRECTION : Icône avec titre -->
-                        <i class="fas fa-calendar-day" title="Jour 1"></i> JOUR 1 : BASES ET TECHNIQUES
+                        <i class="fas fa-calendar-day" aria-hidden="true"></i> JOUR 1 : BASES ET TECHNIQUES
                     </div>
                     <h3 class="program-topic">Les fondamentaux de la prise de parole</h3>
                     <ul class="program-list">
-                        <!-- CORRECTION : Icônes avec titre -->
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Accueil des participants et présentation de la formation</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Introduction à la prise de parole en public</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Définition et importance</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Qualités d'un bon orateur</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Erreurs courantes à éviter</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Structuration d'un discours</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Analyse du sujet</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Introduction, développement et conclusion</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Techniques d'argumentation</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Voix, diction et langage corporel</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Maîtrise de la voix</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Articulation et intonation</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Gestuelle, posture et regard</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Gestion du trac et confiance en soi</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Techniques de respiration</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Prise de confiance devant le public</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Exercices pratiques et échanges</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Accueil des participants et présentation de la formation</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Introduction à la prise de parole en public</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Définition et importance</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Qualités d'un bon orateur</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Erreurs courantes à éviter</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Structuration d'un discours</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Analyse du sujet</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Introduction, développement et conclusion</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Techniques d'argumentation</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Voix, diction et langage corporel</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Maîtrise de la voix</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Articulation et intonation</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Gestuelle, posture et regard</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Gestion du trac et confiance en soi</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Techniques de respiration</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Prise de confiance devant le public</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Exercices pratiques et échanges</li>
                     </ul>
-                </div>
+                </article>
                 
                 <!-- Jour 2 -->
-                <div class="program-card">
+                <article class="program-card">
                     <div class="program-day">
-                        <!-- CORRECTION : Icône avec titre -->
-                        <i class="fas fa-calendar-day" title="Jour 2"></i> JOUR 2 : PERFECTIONNEMENT
+                        <i class="fas fa-calendar-day" aria-hidden="true"></i> JOUR 2 : PERFECTIONNEMENT
                     </div>
                     <h3 class="program-topic">Mise en situation et éloquence avancée</h3>
                     <ul class="program-list">
-                        <!-- CORRECTION : Icônes avec titre -->
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Récapitulatif et retour sur les acquis du premier jour</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Techniques d'éloquence et de persuasion</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Convaincre et émouvoir</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Figures de style</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Discours impactant</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Improvisation orale</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Réagir face à un sujet inconnu</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Gestion du temps et des idées</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Mise en situation réelle / simulation</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Passage individuel des participants</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Évaluation et feedback</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Conseils pratiques pour les concours d'éloquence</li>
-                        <li><i class="fas fa-check-circle" title="Point inclus"></i> Clôture de la formation et recommandations finales</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Récapitulatif et retour sur les acquis du premier jour</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Techniques d'éloquence et de persuasion</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Convaincre et émouvoir</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Figures de style</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Discours impactant</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Improvisation orale</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Réagir face à un sujet inconnu</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Gestion du temps et des idées</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Mise en situation réelle / simulation</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Passage individuel des participants</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Évaluation et feedback</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Conseils pratiques pour les concours d'éloquence</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Clôture de la formation et recommandations finales</li>
                     </ul>
-                </div>
+                </article>
                 
                 <!-- Section d'information importante -->
-                <div style="
-                    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-                    border: 2px solid #2196f3;
-                    border-radius: 12px;
-                    padding: 25px;
-                    margin: 25px 0;
-                    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.15);
-                    position: relative;
-                    grid-column: 1 / -1;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: -15px;
-                        left: 20px;
-                        background: #2196f3;
-                        color: white;
-                        padding: 8px 15px;
-                        border-radius: 20px;
-                        font-weight: bold;
-                        font-size: 14px;
-                    ">
-                        📢 INFORMATION
-                    </div>
+                <div class="important-info" role="note" aria-label="Note importante sur la formation">
+                    <div class="info-badge">📢 INFORMATION</div>
                     
-                    <h3 style="
-                        margin-top: 10px;
-                        margin-bottom: 20px;
-                        color: #0d47a1;
-                        font-size: 22px;
-                        border-bottom: 2px solid #90caf9;
-                        padding-bottom: 10px;
-                    ">
-                        ⚠️ NOTE IMPORTANTE
-                    </h3>
+                    <h3>⚠️ NOTE IMPORTANTE</h3>
                     
-                    <div style="color: #000000; line-height: 1.8; font-size: 16px;">
-                        <p style="margin: 15px 0; padding-left: 10px; border-left: 3px solid #42a5f5;">
-                            <strong style="color: #1565c0;">✅ Formation gratuite</strong><br>
+                    <div class="info-content">
+                        <p>
+                            <strong>✅ Formation gratuite</strong><br>
                             Participation ouverte à tous sans frais d'inscription.
                         </p>
                         
-                        <p style="margin: 15px 0; padding-left: 10px; border-left: 3px solid #42a5f5;">
-                            <strong style="color: #1565c0;">🎓 Remise des brevets</strong><br>
-                            <span style="background: #ffebee; padding: 2px 6px; border-radius: 3px;">
+                        <p>
+                            <strong>🎓 Remise des brevets</strong><br>
+                            <span class="highlight-warning">
                                 UNIQUEMENT pour les participants présents aux deux jours complets de formation
                             </span>
                         </p>
@@ -199,16 +889,14 @@
         </section>
 
         <!-- Formateur Ultra Luxueux -->
-        <section class="trainer-section">
-            <h2 class="section-title">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fas fa-chalkboard-teacher" title="Formateur"></i> Notre Formateur Expert
+        <section class="trainer-section" aria-labelledby="trainer-title">
+            <h2 id="trainer-title" class="section-title">
+                <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Notre Formateur Expert
             </h2>
             
             <div class="trainer-grid">
                 <div class="trainer-photo">
-                    <!-- CORRECTION : Ajout d'un alt descriptif -->
-                    <img src="IMG_2216.jpeg" alt="Photo de CLOTAIRE-BERGER ELONGAMA - Formateur en Art Oratoire" class="trainer-img">
+                    <img src="IMG_2216.jpeg" alt="Photo de CLOTAIRE-BERGER ELONGAMA - Formateur en Art Oratoire" class="trainer-img" width="300" height="300">
                 </div>
                 <div class="trainer-info">
                     <h2>CLOTAIRE-BERGER ELONGAMA</h2>
@@ -216,25 +904,23 @@
                         Juriste Pénaliste • Slameur • Poète • Écrivain • Coach en Art Oratoire • PDG d'Orator's Academy
                     </p>
                     
-                    <!-- CORRECTION : Icônes avec titre -->
-                    <p class="trainer-bio">
-                        <i class="fas fa-quote-left" title="Citation"></i> 
+                    <blockquote class="trainer-bio">
+                        <i class="fas fa-quote-left" aria-hidden="true"></i> 
                         Formateur expert avec plus de 5 ans d'expérience dans le coaching en éloquence. 
                         Ancien participant et lauréat de plusieurs concours d'éloquence, il a accompagné 
                         plus de 500 étudiants dans leur préparation aux concours nationaux et internationaux.
-                        <i class="fas fa-quote-right" title="Fin de citation"></i>
-                    </p>
+                        <i class="fas fa-quote-right" aria-hidden="true"></i>
+                    </blockquote>
                     
                     <div class="trainer-badges">
-                        <!-- CORRECTION : Icônes avec titre -->
                         <div class="trainer-badge">
-                            <i class="fas fa-award" title="Certifications"></i> Expert certifié en éloquence
+                            <i class="fas fa-award" aria-hidden="true"></i> Expert certifié en éloquence
                         </div>
                         <div class="trainer-badge">
-                            <i class="fas fa-microphone-alt" title="Expérience"></i> 5+ ans d'expérience
+                            <i class="fas fa-microphone-alt" aria-hidden="true"></i> 5+ ans d'expérience
                         </div>
                         <div class="trainer-badge">
-                            <i class="fas fa-users" title="Participants"></i> 500+ étudiants formés
+                            <i class="fas fa-users" aria-hidden="true"></i> 500+ étudiants formés
                         </div>
                     </div>
                 </div>
@@ -242,85 +928,83 @@
         </section>
 
         <!-- Section WhatsApp Luxueuse -->
-        <section class="whatsapp-section">
+        <section class="whatsapp-section" aria-labelledby="whatsapp-title">
             <div class="whatsapp-header">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fab fa-whatsapp" style="font-size: 3rem; color: #25D366;" title="WhatsApp"></i>
-                <h2 class="whatsapp-title">Rejoignez notre communauté WhatsApp</h2>
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                <h2 id="whatsapp-title" class="whatsapp-title">Rejoignez notre communauté WhatsApp</h2>
             </div>
             
-            <p style="color: #BDC3C7; text-align: center; margin-bottom: 40px; font-size: 1.2rem; max-width: 900px; margin-left: auto; margin-right: auto; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
+            <p class="whatsapp-description">
                 Restez informé en temps réel des actualités, recevez des conseils exclusifs et échangez avec les autres participants.
             </p>
             
-            <!-- CORRECTION : Bouton avec aria-label -->
             <button class="whatsapp-button" onclick="joinWhatsAppGroup()" aria-label="Rejoindre le groupe WhatsApp de la formation">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fab fa-whatsapp" title="WhatsApp"></i> REJOINDRE LE GROUPE WHATSAPP
+                <i class="fab fa-whatsapp" aria-hidden="true"></i> REJOINDRE LE GROUPE WHATSAPP
             </button>
         </section>
     </main>
 
     <!-- Footer Luxueux -->
-    <footer class="footer">
-        <!-- CORRECTION : Ajout d'un alt descriptif -->
-        <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia - Excellence, Éloquence, Leadership" class="footer-logo">
-        <p style="font-size: 1.1rem; font-weight: 600; color: #D4AF37; margin-bottom: 10px;">Excellentia Academia © 2025-2026</p>
-        <p style="margin-top: 10px; color: #BDC3C7; font-size: 0.95rem;">
+    <footer class="footer" role="contentinfo">
+        <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia - Excellence, Éloquence, Leadership" class="footer-logo" width="80" height="80">
+        <p class="footer-title">Excellentia Academia © 2025-2026</p>
+        <p class="footer-subtitle">
             Formation en Art Oratoire • Programme sur 2 jours
         </p>
         
-        <p style="margin-top: 30px; font-size: 0.9rem; color: #BDC3C7;">
-            <!-- CORRECTION : Icône avec titre -->
-            <i class="fas fa-map-marker-alt" title="Localisation"></i> Kinshasa, République Démocratique du Congo
+        <p class="footer-location">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kinshasa, République Démocratique du Congo
         </p>
     </footer>
 
     <!-- Modal Formulaire d'Inscription -->
-    <div class="modal-overlay" id="formModal">
+    <div class="modal-overlay" id="formModal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-content">
-            <!-- CORRECTION : Bouton avec aria-label -->
             <button class="close-modal" id="closeModal" aria-label="Fermer la fenêtre d'inscription">&times;</button>
             
-            <h2 style="color: #FFFFFF; text-align: center; margin-bottom: 40px; font-size: 2rem; font-weight: 800;">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fas fa-user-graduate" title="Inscription"></i> Inscription à la Formation
+            <h2 id="modal-title" class="modal-title">
+                <i class="fas fa-user-graduate" aria-hidden="true"></i> Inscription à la Formation
             </h2>
             
             <!-- Le formulaire d'inscription -->
-            <form id="inscriptionForm">
+            <form id="inscriptionForm" novalidate>
                 <div class="form-group">
                     <label class="form-label" for="nom">Nom complet *</label>
-                    <input type="text" class="form-input" name="nom" id="nom" required placeholder="Nom, Postnom, Prénom">
+                    <input type="text" class="form-input" name="nom" id="nom" required placeholder="Nom, Postnom, Prénom" aria-required="true">
+                    <div class="error-message" id="nom-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="email">Email *</label>
-                    <input type="email" class="form-input" name="email" id="email" required placeholder="exemple@email.com">
+                    <input type="email" class="form-input" name="email" id="email" required placeholder="exemple@email.com" aria-required="true">
+                    <div class="error-message" id="email-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="telephone">Téléphone *</label>
-                    <input type="tel" class="form-input" name="telephone" id="telephone" required placeholder="+243 970 501 523">
+                    <input type="tel" class="form-input" name="telephone" id="telephone" required placeholder="+243 970 501 523" aria-required="true">
+                    <div class="error-message" id="telephone-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="whatsapp">Avez-vous WhatsApp ? *</label>
-                    <select class="form-select" name="whatsapp" id="whatsapp" required>
+                    <select class="form-select" name="whatsapp" id="whatsapp" required aria-required="true">
                         <option value="">Sélectionnez</option>
                         <option value="oui">Oui</option>
                         <option value="non">Non</option>
                     </select>
+                    <div class="error-message" id="whatsapp-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="profession">Profession / Études *</label>
-                    <input type="text" class="form-input" name="profession" id="profession" required placeholder="Votre profession ou domaine d'études">
+                    <input type="text" class="form-input" name="profession" id="profession" required placeholder="Votre profession ou domaine d'études" aria-required="true">
+                    <div class="error-message" id="profession-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="faculte">Faculté *</label>
-                    <select class="form-select" name="faculte" id="faculte" required>
+                    <select class="form-select" name="faculte" id="faculte" required aria-required="true">
                         <option value="">Sélectionnez votre faculté</option>
                         <option value="sciences_technologies">Faculté de sciences et technologies</option>
                         <option value="lettres_sciences_humaines">Faculté de Lettres et sciences humaines</option>
@@ -336,155 +1020,148 @@
                         <option value="medecine">Faculté de Médecine</option>
                         <option value="psychologie_sciences_education">Faculté de psychologie et sciences de l'éducation</option>
                     </select>
+                    <div class="error-message" id="faculte-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="concours_eloquence">Souhaitez-vous participer au concours d'éloquence ? *</label>
-                    <select class="form-select" name="concours_eloquence" id="concours_eloquence" required>
+                    <select class="form-select" name="concours_eloquence" id="concours_eloquence" required aria-required="true">
                         <option value="">Sélectionnez</option>
                         <option value="oui">Oui, je vais participer</option>
                         <option value="non">Non, je vais participer à la formation uniquement</option>
                     </select>
+                    <div class="error-message" id="concours-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="experience">Niveau d'expérience en prise de parole *</label>
-                    <select class="form-select" name="experience" id="experience" required>
+                    <select class="form-select" name="experience" id="experience" required aria-required="true">
                         <option value="">Sélectionnez votre niveau</option>
                         <option value="debutant">Débutant (Première formation)</option>
                         <option value="intermediaire">Intermédiaire (Quelques expériences)</option>
                         <option value="avance">Avancé (Expérience significative)</option>
                     </select>
+                    <div class="error-message" id="experience-error" hidden></div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="motivation">Votre motivation *</label>
-                    <textarea class="form-textarea" name="motivation" id="motivation" required placeholder="Pourquoi souhaitez-vous suivre cette formation ? Quelles sont vos attentes ?"></textarea>
+                    <textarea class="form-textarea" name="motivation" id="motivation" required placeholder="Pourquoi souhaitez-vous suivre cette formation ? Quelles sont vos attentes ?" aria-required="true"></textarea>
+                    <div class="error-message" id="motivation-error" hidden></div>
                 </div>
                 
-                <div style="margin: 30px 0;">
-                    <label style="display: flex; align-items: flex-start; gap: 15px; color: #BDC3C7; font-size: 1rem;">
-                        <input type="checkbox" required style="margin-top: 3px; transform: scale(1.3);" id="acceptation">
+                <div class="form-group checkbox-group">
+                    <label for="acceptation" class="checkbox-label">
+                        <input type="checkbox" required id="acceptation" aria-required="true">
                         <span>J'accepte que mes données soient utilisées pour l'organisation de la formation *</span>
                     </label>
+                    <div class="error-message" id="acceptation-error" hidden></div>
                 </div>
                 
-                <!-- CORRECTION : Bouton avec aria-label -->
                 <button type="submit" class="submit-button" aria-label="Valider mon inscription">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-paper-plane" title="Envoyer"></i> VALIDER MON INSCRIPTION
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i> VALIDER MON INSCRIPTION
                 </button>
             </form>
             
             <!-- Message de confirmation -->
-            <div id="confirmationMessage" class="hidden" style="text-align: center; padding: 40px;">
-                <div style="font-size: 5rem; color: #2ECC71; margin-bottom: 30px; animation: pulse 2s infinite;">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-check-circle" title="Confirmation"></i>
+            <div id="confirmationMessage" class="hidden" role="alert" aria-live="polite">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
                 </div>
-                <h3 style="color: #FFFFFF; margin-bottom: 25px; font-size: 1.8rem; font-weight: 800;">Inscription confirmée !</h3>
-                <p style="color: #BDC3C7; margin-bottom: 25px; font-size: 1.2rem; line-height: 1.7;">
+                <h3 class="success-title">Inscription confirmée !</h3>
+                <p class="success-message">
                     Félicitations ! Vous êtes inscrit(e) à la formation d'Eloquence.
                 </p>
                 
-                <div style="background-color: rgba(37, 211, 102, 0.1); border-left: 4px solid #25D366; padding: 20px; margin-bottom: 40px; border-radius: 4px;">
-                    <p style="color: #FFFFFF; margin-bottom: 15px; font-size: 1.2rem; font-weight: 600;">
+                <div class="important-notice" role="note">
+                    <p class="notice-title">
                         ⚠️ IMPORTANT : Rejoignez le groupe WhatsApp
                     </p>
-                    <p style="color: #BDC3C7; margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6;">
+                    <p class="notice-message">
                         <strong>Aucune information ne sera envoyée par email ou WhatsApp.</strong><br>
                         Vous devez intégrer le groupe WhatsApp pour recevoir tous les détails pratiques de la formation.
                     </p>
-                    <p style="color: #BDC3C7; font-size: 1.1rem; line-height: 1.6;">
+                    <p class="notice-instructions">
                         <strong>Comment faire :</strong><br>
                         1. Cliquez sur "Retour à l'accueil"<br>
                         2. En bas de page, cliquez sur "Rejoindre le groupe WhatsApp"
                     </p>
                 </div>
                 
-                <!-- CORRECTION : Bouton avec aria-label -->
-                <button class="submit-button" id="closeAfterSubmit" style="background: linear-gradient(135deg, #D4AF37, #B8941F);" aria-label="Retourner à la page d'accueil">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-home" title="Accueil"></i> RETOUR À L'ACCUEIL
+                <button class="submit-button" id="closeAfterSubmit" aria-label="Retourner à la page d'accueil">
+                    <i class="fas fa-home" aria-hidden="true"></i> RETOUR À L'ACCUEIL
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Modal Admin Luxueux -->
-    <div class="modal-overlay" id="adminModal">
+    <div class="modal-overlay" id="adminModal" role="dialog" aria-labelledby="admin-title" aria-hidden="true">
         <div class="modal-content">
-            <!-- CORRECTION : Bouton avec aria-label -->
             <button class="close-modal" id="closeAdminModal" aria-label="Fermer le panneau d'administration">&times;</button>
             
-            <h2 style="color: #FFFFFF; text-align: center; margin-bottom: 40px; font-size: 2rem; font-weight: 800;">
-                <!-- CORRECTION : Icône avec titre -->
-                <i class="fas fa-chart-line" title="Statistiques"></i> PANEL ADMINISTRATEUR
+            <h2 id="admin-title" class="modal-title">
+                <i class="fas fa-chart-line" aria-hidden="true"></i> PANEL ADMINISTRATEUR
             </h2>
             
             <!-- Section de mot de passe -->
             <div id="passwordSection">
-                <p style="color: #BDC3C7; text-align: center; margin-bottom: 30px; font-size: 1.2rem;">
+                <p class="admin-description">
                     Accès réservé à la coordination Excellentia Academia
                 </p>
                 
-                <!-- CORRECTION : Ajout d'un label pour l'accessibilité -->
-                <label for="adminPassword" style="display: block; margin-bottom: 10px; color: #D4AF37; font-weight: 600;">
+                <label for="adminPassword" class="form-label">
                     Mot de passe :
                 </label>
                 
                 <input type="password" id="adminPassword" 
                        placeholder="Entrez le mot de passe"
-                       style="width: 100%; padding: 20px; border-radius: 15px; border: 2px solid #D4AF37; background: rgba(40, 40, 60, 0.9); color: #FFFFFF; text-align: center; margin-bottom: 30px; font-size: 1.1rem; backdrop-filter: blur(5px);">
+                       aria-describedby="password-hint">
+                <p id="password-hint" class="visually-hidden">Le mot de passe est requis pour accéder au panneau d'administration</p>
                 
-                <!-- CORRECTION : Bouton avec aria-label -->
                 <button id="loginButton" class="submit-button" aria-label="Accéder au panneau d'administration">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-sign-in-alt" title="Connexion"></i> ACCÉDER AU PANEL
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i> ACCÉDER AU PANEL
                 </button>
             </div>
             
             <!-- Panneau d'administration -->
-            <div id="adminPanel" class="hidden">
-                <h3 style="color: #FFFFFF; text-align: center; margin-bottom: 40px; font-size: 1.6rem; font-weight: 800;">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-users" title="Participants"></i> Statistiques des Inscriptions
+            <div id="adminPanel" class="hidden" aria-live="polite">
+                <h3 class="stats-title">
+                    <i class="fas fa-users" aria-hidden="true"></i> Statistiques des Inscriptions
                 </h3>
                 
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px;">
-                    <div style="background: linear-gradient(135deg, #D4AF37, #B8941F); color: #0A0A2A; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);">
-                        <div style="font-size: 3rem; font-weight: 900;" id="totalParticipants">0</div>
-                        <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Total Inscriptions</div>
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-value" id="totalParticipants">0</div>
+                        <div class="stat-label">Total Inscriptions</div>
                     </div>
-                    <div style="background: linear-gradient(135deg, #2ECC71, #27AE60); color: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);">
-                        <div style="font-size: 3rem; font-weight: 900;" id="todayParticipants">0</div>
-                        <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Aujourd'hui</div>
+                    <div class="stat-card today">
+                        <div class="stat-value" id="todayParticipants">0</div>
+                        <div class="stat-label">Aujourd'hui</div>
                     </div>
-                    <div style="background: linear-gradient(135deg, #3498DB, #2980B9); color: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);">
-                        <div style="font-size: 3rem; font-weight: 900;" id="experienceCount">0</div>
-                        <div style="font-size: 1rem; opacity: 0.9; font-weight: 600;">Niveaux</div>
+                    <div class="stat-card levels">
+                        <div class="stat-value" id="experienceCount">0</div>
+                        <div class="stat-label">Niveaux</div>
                     </div>
                 </div>
                 
-                <h4 style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem; font-weight: 700;">Dernières inscriptions :</h4>
-                <div style="max-height: 350px; overflow-y: auto; margin-bottom: 30px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; background: rgba(40, 40, 60, 0.6); backdrop-filter: blur(10px);">
-                    <div id="participantsList">
+                <h4 class="participants-title">Dernières inscriptions :</h4>
+                <div class="participants-list-container">
+                    <div id="participantsList" role="list">
                         <!-- Liste des participants -->
                     </div>
                 </div>
                 
-                <!-- CORRECTION : Bouton avec aria-label -->
-                <button id="exportButton" class="submit-button" style="background: linear-gradient(135deg, #E74C3C, #C0392B);" aria-label="Exporter les données des inscriptions">
-                    <!-- CORRECTION : Icône avec titre -->
-                    <i class="fas fa-file-export" title="Export"></i> EXPORTER LES DONNÉES (CSV)
+                <button id="exportButton" class="submit-button export-btn" aria-label="Exporter les données des inscriptions">
+                    <i class="fas fa-file-export" aria-hidden="true"></i> EXPORTER LES DONNÉES (CSV)
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Scripts JavaScript -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" defer></script>
     
     <script>
         // Configuration Firebase
@@ -499,14 +1176,19 @@
         };
 
         // Initialiser Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } catch (error) {
+            console.error("Erreur d'initialisation Firebase:", error);
+        }
 
         // Variables
         let participantsData = [];
         const ADMIN_PASSWORD = "eloquenceenscene2k26@";
         
-        // Dates de la formation (18-19 février 2026)
+        // Dates de la formation
         const formationStart = new Date('2026-02-18T08:00:00').getTime();
         const formationEnd = new Date('2026-02-19T18:00:00').getTime();
         
@@ -523,32 +1205,137 @@
         const loginButton = document.getElementById('loginButton');
         const exportButton = document.getElementById('exportButton');
 
+        // Validation du formulaire
+        function validateForm() {
+            let isValid = true;
+            const fields = ['nom', 'email', 'telephone', 'whatsapp', 'profession', 'faculte', 'concours_eloquence', 'experience', 'motivation'];
+            
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                const errorElement = document.getElementById(`${field}-error`);
+                
+                if (!element.value.trim()) {
+                    isValid = false;
+                    element.setAttribute('aria-invalid', 'true');
+                    if (errorElement) {
+                        errorElement.textContent = 'Ce champ est obligatoire';
+                        errorElement.hidden = false;
+                    }
+                } else {
+                    element.setAttribute('aria-invalid', 'false');
+                    if (errorElement) errorElement.hidden = true;
+                    
+                    // Validation spécifique pour l'email
+                    if (field === 'email' && !isValidEmail(element.value)) {
+                        isValid = false;
+                        element.setAttribute('aria-invalid', 'true');
+                        if (errorElement) {
+                            errorElement.textContent = 'Veuillez entrer un email valide';
+                            errorElement.hidden = false;
+                        }
+                    }
+                    
+                    // Validation spécifique pour le téléphone
+                    if (field === 'telephone' && !isValidPhone(element.value)) {
+                        isValid = false;
+                        element.setAttribute('aria-invalid', 'true');
+                        if (errorElement) {
+                            errorElement.textContent = 'Veuillez entrer un numéro de téléphone valide';
+                            errorElement.hidden = false;
+                        }
+                    }
+                }
+            });
+            
+            // Validation de la checkbox
+            const acceptation = document.getElementById('acceptation');
+            const acceptationError = document.getElementById('acceptation-error');
+            if (!acceptation.checked) {
+                isValid = false;
+                acceptation.setAttribute('aria-invalid', 'true');
+                if (acceptationError) {
+                    acceptationError.textContent = 'Vous devez accepter les conditions';
+                    acceptationError.hidden = false;
+                }
+            } else {
+                acceptation.setAttribute('aria-invalid', 'false');
+                if (acceptationError) acceptationError.hidden = true;
+            }
+            
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function isValidPhone(phone) {
+            const re = /^[\d\s+()-]+$/;
+            return re.test(phone) && phone.length >= 8;
+        }
+
         // Fonction WhatsApp
         function joinWhatsAppGroup() {
             window.open("https://chat.whatsapp.com/EEbdxGaG6PO755NL41CCTQ", "_blank");
         }
 
-        // Gestion des modals - UNIFICATION DES FERMETURES
-        openFormButton.addEventListener('click', () => {
-            formModal.style.display = 'block';
+        // Gestion des modals
+        function openModal(modal) {
+            modal.style.display = 'block';
+            modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-        });
+            
+            // Focus management
+            const closeButton = modal.querySelector('.close-modal');
+            if (closeButton) closeButton.focus();
+            
+            // Empêcher le focus de sortir de la modal
+            modal.addEventListener('keydown', trapFocus);
+        }
 
-        adminButton.addEventListener('click', () => {
-            adminModal.style.display = 'block';
-            document.getElementById('passwordSection').classList.remove('hidden');
-            document.getElementById('adminPanel').classList.add('hidden');
-            document.getElementById('adminPassword').value = '';
-            document.body.style.overflow = 'hidden';
-        });
-
-        // FONCTION UNIFIÉE DE FERMETURE DE MODAL
-        const closeModalFunc = (modal) => {
+        function closeModalFunc(modal) {
             modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = 'auto';
-        };
+            
+            // Restaurer le focus
+            if (modal.id === 'formModal') {
+                openFormButton.focus();
+            } else if (modal.id === 'adminModal') {
+                adminButton.focus();
+            }
+            
+            // Retirer l'event listener
+            modal.removeEventListener('keydown', trapFocus);
+        }
 
-        // Gestionnaires d'événements unifiés
+        function trapFocus(e) {
+            if (e.key === 'Tab') {
+                const focusableElements = this.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        }
+
+        // Event Listeners
+        openFormButton.addEventListener('click', () => openModal(formModal));
+        adminButton.addEventListener('click', () => openModal(adminModal));
+
         closeModal.addEventListener('click', () => closeModalFunc(formModal));
         closeAdminModal.addEventListener('click', () => closeModalFunc(adminModal));
 
@@ -558,6 +1345,14 @@
                 inscriptionForm.reset();
                 inscriptionForm.classList.remove('hidden');
                 confirmationMessage.classList.add('hidden');
+                
+                // Réinitialiser les messages d'erreur
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.hidden = true;
+                });
+                document.querySelectorAll('[aria-invalid="true"]').forEach(el => {
+                    el.setAttribute('aria-invalid', 'false');
+                });
             });
         }
 
@@ -568,6 +1363,19 @@
             });
         });
 
+        // Gestion du focus pour les erreurs
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+            input.addEventListener('blur', () => {
+                if (input.hasAttribute('aria-invalid') && input.getAttribute('aria-invalid') === 'true') {
+                    const errorId = input.id + '-error';
+                    const errorElement = document.getElementById(errorId);
+                    if (errorElement) {
+                        errorElement.focus();
+                    }
+                }
+            });
+        });
+
         // Login admin
         loginButton.addEventListener('click', () => {
             const password = document.getElementById('adminPassword').value;
@@ -575,6 +1383,10 @@
                 document.getElementById('passwordSection').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
                 loadParticipantsData();
+                
+                // Focus sur le premier élément du panel
+                const firstStat = document.querySelector('.stat-card');
+                if (firstStat) firstStat.focus();
             } else {
                 alert("Mot de passe incorrect");
                 document.getElementById('adminPassword').value = '';
@@ -582,10 +1394,19 @@
             }
         });
 
-        // Gestion du formulaire d'inscription
+        // Gestion du formulaire d'inscription avec debouncing
+        let isSubmitting = false;
         inscriptionForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            if (isSubmitting) return;
+            isSubmitting = true;
+            
+            if (!validateForm()) {
+                isSubmitting = false;
+                return;
+            }
+
             const formData = {
                 nom: inscriptionForm.nom.value.trim(),
                 email: inscriptionForm.email.value.trim(),
@@ -605,7 +1426,7 @@
                 // Envoyer à Firebase
                 await db.collection('formation_participants').add(formData);
                 
-                // Envoyer également à Formspree
+                // Envoyer à Formspree
                 const formspreeForm = new FormData();
                 for (const key in formData) {
                     if (formData[key] !== undefined && formData[key] !== null) {
@@ -613,7 +1434,7 @@
                     }
                 }
                 
-                fetch('https://formspree.io/f/mldqkngp', {
+                await fetch('https://formspree.io/f/mldqkngp', {
                     method: 'POST',
                     body: formspreeForm,
                     headers: { 'Accept': 'application/json' }
@@ -622,6 +1443,7 @@
                 // Afficher confirmation
                 inscriptionForm.classList.add('hidden');
                 confirmationMessage.classList.remove('hidden');
+                confirmationMessage.focus();
                 
                 // Mettre à jour les données
                 loadParticipantsData();
@@ -629,32 +1451,47 @@
             } catch (error) {
                 console.error("Erreur:", error);
                 alert("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
+            } finally {
+                isSubmitting = false;
             }
         });
 
-        // Charger les participants
+        // Charger les participants avec gestion d'erreurs
         async function loadParticipantsData() {
+            if (!db) {
+                console.error("Firebase non initialisé");
+                return;
+            }
+
             try {
-                const snapshot = await db.collection('formation_participants').orderBy('timestamp', 'desc').get();
+                const snapshot = await db.collection('formation_participants')
+                    .orderBy('timestamp', 'desc')
+                    .limit(100)
+                    .get();
+                
                 participantsData = [];
                 snapshot.forEach(doc => {
-                    const data = doc.data();
-                    participantsData.push({ 
-                        id: doc.id, 
-                        ...data,
-                        // Assurer que toutes les propriétés existent
-                        nom: data.nom || '',
-                        email: data.email || '',
-                        telephone: data.telephone || '',
-                        profession: data.profession || '',
-                        experience: data.experience || 'Non spécifié',
-                        motivation: data.motivation || '',
-                        date_inscription: data.date_inscription || new Date().toISOString()
-                    });
+                    if (doc.exists) {
+                        const data = doc.data();
+                        participantsData.push({ 
+                            id: doc.id, 
+                            nom: data.nom || '',
+                            email: data.email || '',
+                            telephone: data.telephone || '',
+                            whatsapp: data.whatsapp || '',
+                            profession: data.profession || '',
+                            faculte: data.faculte || '',
+                            concours_eloquence: data.concours_eloquence || '',
+                            experience: data.experience || 'Non spécifié',
+                            motivation: data.motivation || '',
+                            date_inscription: data.date_inscription || new Date().toISOString()
+                        });
+                    }
                 });
                 updateAdminStats();
             } catch (error) {
                 console.error("Erreur de chargement:", error);
+                showError("Impossible de charger les données. Veuillez réessayer.");
             }
         }
 
@@ -665,22 +1502,23 @@
             // Inscriptions aujourd'hui
             const today = new Date().toDateString();
             const todayCount = participantsData.filter(p => {
-                if (!p.date_inscription) return false;
-                const inscDate = new Date(p.date_inscription);
-                if (isNaN(inscDate.getTime())) return false;
-                return inscDate.toDateString() === today;
+                try {
+                    if (!p.date_inscription) return false;
+                    const inscDate = new Date(p.date_inscription);
+                    return !isNaN(inscDate.getTime()) && inscDate.toDateString() === today;
+                } catch (e) {
+                    return false;
+                }
             }).length;
             document.getElementById('todayParticipants').textContent = todayCount;
             
-            // Niveaux d'expérience
-            const experienceSet = new Set();
-            participantsData.forEach(p => {
-                if (p.experience && p.experience.trim() !== '') {
-                    experienceSet.add(p.experience);
-                }
-            });
-            const experienceCount = experienceSet.size;
-            document.getElementById('experienceCount').textContent = experienceCount;
+            // Niveaux d'expérience uniques
+            const experienceSet = new Set(
+                participantsData
+                    .filter(p => p.experience && p.experience.trim() !== '')
+                    .map(p => p.experience)
+            );
+            document.getElementById('experienceCount').textContent = experienceSet.size;
             
             // Liste des participants
             updateParticipantsList();
@@ -689,24 +1527,21 @@
         function updateParticipantsList() {
             const listElement = document.getElementById('participantsList');
             listElement.innerHTML = '';
+            listElement.setAttribute('role', 'list');
             
             if (participantsData.length === 0) {
-                listElement.innerHTML = '<div style="text-align: center; color: #BDC3C7; padding: 20px;">Aucune inscription pour le moment</div>';
+                listElement.innerHTML = '<div class="empty-list">Aucune inscription pour le moment</div>';
                 return;
             }
             
-            participantsData.slice(0, 10).forEach(p => {
+            participantsData.slice(0, 10).forEach((p, index) => {
                 const div = document.createElement('div');
-                div.style.padding = '18px';
-                div.style.marginBottom = '12px';
-                div.style.background = 'rgba(255, 255, 255, 0.1)';
-                div.style.borderRadius = '12px';
-                div.style.borderLeft = '4px solid #D4AF37';
-                div.style.backdropFilter = 'blur(5px)';
+                div.setAttribute('role', 'listitem');
+                div.className = 'participant-item';
                 
                 let dateStr = 'Date inconnue';
-                if (p.date_inscription) {
-                    try {
+                try {
+                    if (p.date_inscription) {
                         const date = new Date(p.date_inscription);
                         if (!isNaN(date.getTime())) {
                             dateStr = date.toLocaleDateString('fr-FR', {
@@ -716,15 +1551,17 @@
                                 minute: '2-digit'
                             });
                         }
-                    } catch (e) {
-                        console.log("Erreur de format de date:", e);
                     }
+                } catch (e) {
+                    console.log("Erreur de format de date:", e);
                 }
                 
                 div.innerHTML = `
-                    <div style="font-weight: 800; color: #FFFFFF; margin-bottom: 8px; font-size: 1.1rem;">${p.nom || 'Non renseigné'}</div>
-                    <div style="font-size: 0.9rem; color: #BDC3C7;">
-                        ${p.profession || 'Non renseigné'} • ${p.experience || 'Non renseigné'} • ${p.telephone || 'Non renseigné'} • ${dateStr}
+                    <div class="participant-name">${escapeHtml(p.nom) || 'Non renseigné'}</div>
+                    <div class="participant-details">
+                        ${escapeHtml(p.profession) || 'Non renseigné'} • 
+                        ${escapeHtml(p.experience) || 'Non renseigné'} • 
+                        ${escapeHtml(p.telephone) || 'Non renseigné'} • ${dateStr}
                     </div>
                 `;
                 
@@ -733,17 +1570,32 @@
             
             if (participantsData.length > 10) {
                 const moreDiv = document.createElement('div');
-                moreDiv.style.textAlign = 'center';
-                moreDiv.style.color = '#D4AF37';
-                moreDiv.style.fontWeight = '600';
-                moreDiv.style.padding = '10px';
-                moreDiv.style.marginTop = '10px';
+                moreDiv.className = 'more-participants';
                 moreDiv.innerHTML = `... et ${participantsData.length - 10} inscription(s) supplémentaires`;
                 listElement.appendChild(moreDiv);
             }
         }
 
-        // Export des données - AMÉLIORÉ POUR GÉRER LES VALEURS NULLES
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.setAttribute('role', 'alert');
+            
+            const adminPanel = document.getElementById('adminPanel');
+            if (adminPanel) {
+                adminPanel.insertBefore(errorDiv, adminPanel.firstChild);
+                setTimeout(() => errorDiv.remove(), 5000);
+            }
+        }
+
+        // Export des données
         exportButton.addEventListener('click', () => {
             if (participantsData.length === 0) {
                 alert("Aucune donnée à exporter");
@@ -751,27 +1603,28 @@
             }
             
             // En-têtes CSV
-            let csv = "Nom,Email,Téléphone,WhatsApp,Profession,Faculté,Concours,Expérience,Motivation,Date\n";
+            const headers = ['Nom', 'Email', 'Téléphone', 'WhatsApp', 'Profession', 'Faculté', 'Concours', 'Expérience', 'Motivation', 'Date'];
+            let csv = headers.join(',') + '\n';
             
             // Données
             participantsData.forEach(p => {
-                const safeValue = (value) => {
-                    if (value === undefined || value === null) return '';
-                    const strValue = String(value);
-                    // Échapper les guillemets et entourer de guillemets si nécessaire
-                    const escaped = strValue.replace(/"/g, '""');
-                    return `"${escaped}"`;
-                };
-                
-                const dateStr = p.date_inscription ? 
-                    new Date(p.date_inscription).toLocaleDateString('fr-FR') : 
-                    'Date inconnue';
-                
-                csv += `${safeValue(p.nom)},${safeValue(p.email)},${safeValue(p.telephone)},${safeValue(p.whatsapp)},${safeValue(p.profession)},${safeValue(p.faculte)},${safeValue(p.concours_eloquence)},${safeValue(p.experience)},${safeValue(p.motivation)},"${dateStr}"\n`;
+                const row = [
+                    p.nom || '',
+                    p.email || '',
+                    p.telephone || '',
+                    p.whatsapp || '',
+                    p.profession || '',
+                    p.faculte || '',
+                    p.concours_eloquence || '',
+                    p.experience || '',
+                    `"${(p.motivation || '').replace(/"/g, '""')}"`,
+                    p.date_inscription ? new Date(p.date_inscription).toLocaleDateString('fr-FR') : 'Date inconnue'
+                ];
+                csv += row.join(',') + '\n';
             });
             
             // Créer et télécharger le fichier
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -782,26 +1635,18 @@
             URL.revokeObjectURL(url);
         });
 
-        // Compte à rebours intelligent vers le 18 février 2026
+        // Compte à rebours
         function updateCountdown() {
             const now = new Date().getTime();
             
-            // Si nous sommes avant la formation
             if (now < formationStart) {
                 const distance = formationStart - now;
                 updateCountdownDisplay(distance);
-            } 
-            // Si nous sommes pendant la formation
-            else if (now >= formationStart && now <= formationEnd) {
+            } else if (now >= formationStart && now <= formationEnd) {
                 const distance = formationEnd - now;
                 updateCountdownDisplay(distance);
-            } 
-            // Si la formation est terminée
-            else {
-                document.getElementById('jours').textContent = '00';
-                document.getElementById('heures').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('secondes').textContent = '00';
+            } else {
+                resetCountdown();
             }
         }
 
@@ -811,45 +1656,104 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const secondes = Math.floor((distance % (1000 * 60)) / 1000);
             
-            document.getElementById('jours').textContent = jours.toString().padStart(2, '0');
-            document.getElementById('heures').textContent = heures.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('secondes').textContent = secondes.toString().padStart(2, '0');
+            updateElement('jours', jours);
+            updateElement('heures', heures);
+            updateElement('minutes', minutes);
+            updateElement('secondes', secondes);
+        }
+
+        function updateElement(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value.toString().padStart(2, '0');
+                element.setAttribute('aria-label', `${value} ${id}`);
+            }
+        }
+
+        function resetCountdown() {
+            ['jours', 'heures', 'minutes', 'secondes'].forEach(id => {
+                updateElement(id, 0);
+            });
         }
         
-        setInterval(updateCountdown, 1000);
+        // Démarrer le compte à rebours
+        const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Charger les données au démarrage
+        // Initialisation
         document.addEventListener('DOMContentLoaded', () => {
-            loadParticipantsData();
-            
             // Animation d'entrée
-            const elements = document.querySelectorAll('.hero-section, .program-section, .trainer-section, .whatsapp-section');
-            elements.forEach((el, i) => {
-                setTimeout(() => {
-                    el.style.opacity = 1;
-                    el.style.transform = 'translateY(0)';
-                }, i * 200);
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '50px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.hero-section, .program-section, .trainer-section, .whatsapp-section').forEach(el => {
+                observer.observe(el);
             });
-            
-            // Créer des particules dorées
+
+            // Créer des particules
             createParticles();
             
-            // Écouter les nouvelles inscriptions
-            db.collection('formation_participants').onSnapshot(() => {
+            // Charger les données initiales
+            if (db) {
                 loadParticipantsData();
+                
+                // Écouter les nouvelles inscriptions
+                db.collection('formation_participants').onSnapshot(() => {
+                    loadParticipantsData();
+                }, error => {
+                    console.error("Erreur d'écoute:", error);
+                });
+            }
+
+            // Gestion de la touche Échap
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (formModal.style.display === 'block') {
+                        closeModalFunc(formModal);
+                    }
+                    if (adminModal.style.display === 'block') {
+                        closeModalFunc(adminModal);
+                    }
+                }
+            });
+
+            // Validation en temps réel
+            document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+                input.addEventListener('input', () => {
+                    if (input.hasAttribute('aria-invalid') && input.getAttribute('aria-invalid') === 'true') {
+                        const errorId = input.id + '-error';
+                        const errorElement = document.getElementById(errorId);
+                        if (errorElement) {
+                            errorElement.hidden = true;
+                        }
+                        input.setAttribute('aria-invalid', 'false');
+                    }
+                });
             });
         });
 
-        // Créer des particules dorées
+        // Créer des particules avec optimisation
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+            if (!particlesContainer) return;
+
+            const particleCount = Math.min(30, Math.floor(window.innerWidth / 50));
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
+                particle.setAttribute('aria-hidden', 'true');
                 
                 // Tailles aléatoires
                 const size = Math.random() * 100 + 50;
@@ -872,16 +1776,23 @@
                 particlesContainer.appendChild(particle);
             }
         }
-        
-        // Gestion de la touche Échap pour fermer les modals
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (formModal.style.display === 'block') {
-                    closeModalFunc(formModal);
-                }
-                if (adminModal.style.display === 'block') {
-                    closeModalFunc(adminModal);
-                }
+
+        // Gestion du redimensionnement
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                document.getElementById('particles').innerHTML = '';
+                createParticles();
+            }, 250);
+        });
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            clearInterval(countdownInterval);
+            if (db) {
+                // Désabonner les listeners Firebase
+                // (À implémenter si des listeners permanents sont ajoutés)
             }
         });
     </script>
