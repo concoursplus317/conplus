@@ -458,62 +458,63 @@
             box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.15);
         }
 
-        /* Boutons d'action */
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
+        /* Bouton Sauvegarde Unique */
+        .save-section {
             margin-top: 40px;
             padding-top: 30px;
             border-top: 2px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: 15px;
+            text-align: center;
         }
 
-        .btn {
-            padding: 16px 35px;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            min-width: 200px;
-        }
-
-        .btn-primary {
+        .save-btn {
+            padding: 20px 60px;
             background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
             color: white;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(26, 35, 126, 0.3);
+            min-width: 350px;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(26, 35, 126, 0.3);
+        .save-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
-        .btn-secondary {
+        .save-btn:hover::before {
+            left: 100%;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(26, 35, 126, 0.4);
+        }
+
+        .save-btn.saving {
             background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold));
-            color: white;
+            cursor: not-allowed;
         }
 
-        .btn-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 179, 0, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-blue);
-            color: white;
+        .save-btn.saved {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            cursor: default;
         }
 
         /* Pied de page */
@@ -615,7 +616,6 @@
             border-radius: 10px;
             margin: 20px 0;
             text-align: center;
-            display: none;
             font-weight: 600;
             font-size: 1.1rem;
         }
@@ -845,12 +845,10 @@
                 font-size: 2rem;
             }
             
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
+            .save-btn {
                 width: 100%;
+                min-width: auto;
+                padding: 20px 30px;
             }
             
             .footer {
@@ -908,14 +906,14 @@
                 
                 <div style="margin-top: 30px; padding: 20px; background: rgba(26, 35, 126, 0.05); border-radius: 12px;">
                     <h3 style="color: var(--primary-blue); margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-lightbulb"></i> Comment remplir
+                        <i class="fas fa-lightbulb"></i> Instructions
                     </h3>
-                    <ul style="font-size: 0.95rem; color: var(--text-light); padding-left: 20px;">
-                        <li>Sélectionnez un clan à gauche</li>
-                        <li>Remplissez les informations des joueurs</li>
-                        <li>Les champs remplis deviennent verts</li>
-                        <li>Enregistrez les données quand vous avez terminé</li>
-                    </ul>
+                    <ol style="font-size: 0.95rem; color: var(--text-light); padding-left: 20px;">
+                        <li>Sélectionnez un clan</li>
+                        <li>Remplissez les informations</li>
+                        <li>Cliquez sur "Sauvegarder l'enregistrement"</li>
+                        <li>Les données seront envoyées directement à Firebase</li>
+                    </ol>
                 </div>
             </div>
 
@@ -961,7 +959,7 @@
                 
                 <div class="coaches-section">
                     <h3 class="section-title">
-                        <i class="fas fa-person-chalkboard"></i> Coachs
+                        <i class="fas fa-person-chalkboard"></i> ENCADREMENT TECHNIQUE
                     </h3>
                     <table class="coaches-table">
                         <thead>
@@ -977,19 +975,17 @@
                     </table>
                 </div>
                 
-                <div id="formMessage" class="message"></div>
+                <!-- Message de statut -->
+                <div id="statusMessage" class="message" style="display: none;"></div>
                 
-                <div class="action-buttons">
-                    <button class="btn btn-outline" id="clearBtn">
-                        <i class="fas fa-eraser"></i> 
-                        
+                <!-- Bouton de Sauvegarde Unique -->
+                <div class="save-section">
+                    <button class="save-btn" id="saveBtn">
+                        <i class="fas fa-database"></i> SAUVEGARDER L'ENREGISTREMENT
                     </button>
-                    <button class="btn btn-secondary" id="saveLocalBtn">
-                        <i class="fas fa-save"></i> Sauvegarder localement
-                    </button>
-                    <button class="btn btn-primary" id="submitBtn">
-                        <i class="fas fa-cloud-upload-alt"></i> Merci de vous être inscrit 
-                    </button>
+                    <p style="color: var(--text-light); margin-top: 15px; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> Les données seront envoyées directement à la base Firebase
+                    </p>
                 </div>
             </div>
         </div>
@@ -1112,6 +1108,7 @@
         let currentClanIndex = 0;
         let playersData = {};
         let coachesData = {};
+        let isSaving = false;
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
@@ -1126,9 +1123,7 @@
             generateCoachesTable();
             
             // Événements
-            document.getElementById('clearBtn').addEventListener('click', clearCurrentClan);
-            document.getElementById('saveLocalBtn').addEventListener('click', saveLocalData);
-            document.getElementById('submitBtn').addEventListener('click', submitToFirebase);
+            document.getElementById('saveBtn').addEventListener('click', saveToFirebase);
             
             // Événements admin
             document.getElementById('adminButton').addEventListener('click', openAdminModal);
@@ -1223,6 +1218,9 @@
                     generatePlayersTable();
                     generateCoachesTable();
                     updateFilledPlayersCount();
+                    
+                    // Réinitialiser le message de statut
+                    hideStatusMessage();
                     
                     // Animation
                     this.style.transform = 'scale(0.98)';
@@ -1385,66 +1383,149 @@
 
         // Sauvegarder les données d'année
         function saveYearData() {
-            // Les années sont sauvegardées automatiquement dans loadLocalData et saveLocalData
+            // Les années sont sauvegardées automatiquement
         }
 
-        // Effacer le clan courant
-        function clearCurrentClan() {
-            if (confirm(`Voulez-vous vraiment effacer toutes les données du clan ${clans[currentClanIndex]} ?`)) {
-                // Réinitialiser les données du clan courant
-                for (let i = 0; i < 15; i++) {
-                    playersData[currentClanIndex][i] = {
-                        nom: '',
-                        prenom: '',
-                        voyage: '',
-                        age: ''
-                    };
+        // Sauvegarder dans Firebase
+        async function saveToFirebase() {
+            // Empêcher les sauvegardes multiples
+            if (isSaving) return;
+            
+            // Validation de base
+            let hasPlayers = false;
+            const currentPlayers = playersData[currentClanIndex];
+            
+            for (let i = 0; i < currentPlayers.length; i++) {
+                const player = currentPlayers[i];
+                if (player.nom.trim() !== '' || player.prenom.trim() !== '') {
+                    hasPlayers = true;
+                    break;
+                }
+            }
+            
+            if (!hasPlayers) {
+                showStatusMessage('Veuillez remplir au moins un joueur avant de sauvegarder.', 'error');
+                return;
+            }
+            
+            // Validation des coaches
+            const currentCoaches = coachesData[currentClanIndex];
+            let hasCoaches = false;
+            for (let i = 1; i <= 3; i++) {
+                if (currentCoaches[i].nom.trim() !== '') {
+                    hasCoaches = true;
+                    break;
+                }
+            }
+            
+            if (!hasCoaches) {
+                showStatusMessage('Veuillez remplir au moins un coach avant de sauvegarder.', 'error');
+                return;
+            }
+            
+            // Début de la sauvegarde
+            isSaving = true;
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.classList.add('saving');
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SAUVEGARDE EN COURS...';
+            saveBtn.disabled = true;
+            
+            // Préparer les données pour Firebase
+            const clanData = {
+                clanName: clans[currentClanIndex],
+                clanNumber: currentClanIndex + 1,
+                players: currentPlayers,
+                coaches: currentCoaches,
+                year: {
+                    start: document.getElementById('yearStart').value,
+                    end: document.getElementById('yearEnd').value
+                },
+                timestamp: new Date().toISOString(),
+                lastUpdate: firebase.database.ServerValue.TIMESTAMP,
+                filledPlayers: document.getElementById('filledPlayersCount').textContent,
+                status: 'completed'
+            };
+            
+            try {
+                // Envoyer à Firebase - Structure organisée par clan
+                const clanRef = database.ref('clans/' + clans[currentClanIndex].replace(/\s+/g, '_').toUpperCase());
+                
+                // Sauvegarder les données principales
+                await clanRef.set(clanData);
+                
+                // Créer également un enregistrement dans l'historique
+                const historyRef = database.ref('registrations').push();
+                await historyRef.set({
+                    ...clanData,
+                    registrationId: historyRef.key,
+                    registrationDate: new Date().toLocaleDateString('fr-FR'),
+                    registrationTime: new Date().toLocaleTimeString('fr-FR')
+                });
+                
+                // Succès
+                showStatusMessage(`Clan ${clans[currentClanIndex]} sauvegardé avec succès dans Firebase!`, 'success');
+                
+                // Animation de confirmation
+                saveBtn.classList.remove('saving');
+                saveBtn.classList.add('saved');
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> ENREGISTRÉ AVEC SUCCÈS';
+                
+                // Sauvegarder aussi localement pour éviter les pertes
+                saveLocalBackup();
+                
+                // Mettre à jour les statistiques admin
+                updateAdminStatistics();
+                
+                // Réinitialiser après 3 secondes
+                setTimeout(() => {
+                    saveBtn.classList.remove('saved');
+                    saveBtn.innerHTML = '<i class="fas fa-database"></i> SAUVEGARDER L\'ENREGISTREMENT';
+                    saveBtn.disabled = false;
+                    isSaving = false;
+                }, 3000);
+                
+                // Afficher un résumé
+                showSummary(clanData);
+                
+            } catch (error) {
+                console.error('Erreur Firebase:', error);
+                showStatusMessage('Erreur lors de la sauvegarde. Tentative de sauvegarde locale...', 'error');
+                
+                // Essayer de sauvegarder localement en cas d'erreur
+                try {
+                    saveLocalBackup();
+                    showStatusMessage('Données sauvegardées localement en attendant la reconnexion Firebase.', 'info');
+                } catch (backupError) {
+                    console.error('Erreur de sauvegarde locale:', backupError);
+                    showStatusMessage('Erreur critique. Veuillez noter les données et réessayer plus tard.', 'error');
                 }
                 
-                // Réinitialiser les coaches du clan courant
-                for (let i = 1; i <= 3; i++) {
-                    coachesData[currentClanIndex][i] = { nom: '', telephone: '' };
-                }
-                
-                // Regénérer les tables
-                generatePlayersTable();
-                generateCoachesTable();
-                updateFilledPlayersCount();
-                
-                showMessage(`Données du clan ${clans[currentClanIndex]} effacées avec succès!`, 'success');
+                // Réinitialiser le bouton
+                saveBtn.classList.remove('saving');
+                saveBtn.innerHTML = '<i class="fas fa-database"></i> SAUVEGARDER L\'ENREGISTREMENT';
+                saveBtn.disabled = false;
+                isSaving = false;
             }
         }
 
-        // Sauvegarder localement
-        function saveLocalData() {
+        // Sauvegarde locale de secours
+        function saveLocalBackup() {
             const data = {
                 players: playersData,
                 coaches: coachesData,
                 yearStart: document.getElementById('yearStart').value,
                 yearEnd: document.getElementById('yearEnd').value,
                 currentClanIndex: currentClanIndex,
-                lastUpdated: new Date().toISOString()
+                lastBackup: new Date().toISOString()
             };
             
-            localStorage.setItem('lwg_khg_clans_data', JSON.stringify(data));
-            
-            // Animation de confirmation
-            const saveBtn = document.getElementById('saveLocalBtn');
-            const originalHTML = saveBtn.innerHTML;
-            saveBtn.innerHTML = '<i class="fas fa-check"></i> Sauvegardé!';
-            saveBtn.style.background = 'linear-gradient(135deg, #4caf50, #2e7d32)';
-            
-            setTimeout(() => {
-                saveBtn.innerHTML = originalHTML;
-                saveBtn.style.background = 'linear-gradient(135deg, var(--primary-gold), var(--accent-gold))';
-            }, 2000);
-            
-            showMessage(`Données des ${clans.length} clans sauvegardées localement!`, 'success');
+            localStorage.setItem('lwg_khg_backup_data', JSON.stringify(data));
+            console.log('Sauvegarde locale effectuée');
         }
 
         // Charger les données sauvegardées localement
         function loadLocalData() {
-            const savedData = localStorage.getItem('lwg_khg_clans_data');
+            const savedData = localStorage.getItem('lwg_khg_backup_data');
             if (savedData) {
                 try {
                     const data = JSON.parse(savedData);
@@ -1494,10 +1575,11 @@
                     generateCoachesTable();
                     updateFilledPlayersCount();
                     
-                    console.log('Données locales chargées avec succès');
-                    showMessage('Données locales chargées avec succès!', 'info');
+                    console.log('Données de secours chargées avec succès');
+                    showStatusMessage('Données de secours chargées depuis la sauvegarde locale.', 'info');
+                    
                 } catch (error) {
-                    console.error('Erreur lors du chargement des données locales:', error);
+                    console.error('Erreur lors du chargement des données de secours:', error);
                 }
             }
         }
@@ -1507,109 +1589,54 @@
             const testRef = database.ref('connection_test');
             testRef.set({
                 timestamp: new Date().toISOString(),
-                status: 'connected'
+                status: 'connected',
+                app: 'LWG_KHG_Clans'
             })
             .then(() => {
                 console.log('Connexion Firebase établie avec succès');
-                showMessage('Connexion à Firebase établie avec succès!', 'success');
+                showStatusMessage('Connecté à Firebase - Prêt à sauvegarder', 'success');
             })
             .catch(error => {
                 console.error('Erreur de connexion Firebase:', error);
-                showMessage('Attention: Impossible de se connecter à Firebase. Les données seront sauvegardées localement uniquement.', 'error');
+                showStatusMessage('Mode hors ligne - Les données seront sauvegardées localement', 'warning');
             });
         }
 
-        // Soumettre à Firebase
-        function submitToFirebase() {
-            // Validation de base
-            let hasPlayers = false;
-            const currentPlayers = playersData[currentClanIndex];
-            
-            for (let i = 0; i < currentPlayers.length; i++) {
-                const player = currentPlayers[i];
-                if (player.nom.trim() !== '' || player.prenom.trim() !== '') {
-                    hasPlayers = true;
-                    break;
-                }
-            }
-            
-            if (!hasPlayers) {
-                showMessage('Veuillez remplir au moins un joueur avant d\'enregistrer.', 'error');
-                return;
-            }
-            
-            // Préparer les données pour Firebase
-            const clanData = {
-                clanName: clans[currentClanIndex],
-                clanNumber: currentClanIndex + 1,
-                players: currentPlayers,
-                coaches: coachesData[currentClanIndex],
-                year: {
-                    start: document.getElementById('yearStart').value,
-                    end: document.getElementById('yearEnd').value
-                },
-                timestamp: new Date().toISOString(),
-                filledPlayers: document.getElementById('filledPlayersCount').textContent
-            };
-            
-            // Afficher l'animation de chargement
-            const submitBtn = document.getElementById('submitBtn');
-            const originalHTML = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-            submitBtn.disabled = true;
-            
-            // Envoyer à Firebase
-            const clanRef = database.ref('clans/' + clans[currentClanIndex].replace(/\s+/g, '_'));
-            clanRef.set(clanData)
-                .then(() => {
-                    // Enregistrer aussi dans la liste des enregistrements
-                    const recordRef = database.ref('registrations').push();
-                    recordRef.set(clanData)
-                        .then(() => {
-                            showMessage(`Clan ${clans[currentClanIndex]} enregistré avec succès dans Firebase!`, 'success');
-                            
-                            // Animation de confirmation
-                            submitBtn.innerHTML = '<i class="fas fa-check"></i> Enregistré!';
-                            submitBtn.style.background = 'linear-gradient(135deg, #4caf50, #2e7d32)';
-                            
-                            // Sauvegarder aussi localement
-                            saveLocalData();
-                            
-                            setTimeout(() => {
-                                submitBtn.innerHTML = originalHTML;
-                                submitBtn.style.background = 'linear-gradient(135deg, var(--primary-blue), var(--accent-blue))';
-                                submitBtn.disabled = false;
-                            }, 2000);
-                        })
-                        .catch(error => {
-                            console.error('Erreur Firebase (enregistrement):', error);
-                            showMessage('Erreur lors de l\'enregistrement. Veuillez réessayer.', 'error');
-                            submitBtn.innerHTML = originalHTML;
-                            submitBtn.disabled = false;
-                        });
-                })
-                .catch(error => {
-                    console.error('Erreur Firebase:', error);
-                    showMessage('Erreur de connexion à Firebase. Les données seront sauvegardées localement uniquement.', 'error');
-                    submitBtn.innerHTML = originalHTML;
-                    submitBtn.disabled = false;
-                    
-                    // Sauvegarder localement en cas d'erreur
-                    saveLocalData();
-                });
-        }
-
-        // Afficher un message
-        function showMessage(text, type) {
-            const messageElement = document.getElementById('formMessage');
+        // Afficher un message de statut
+        function showStatusMessage(text, type) {
+            const messageElement = document.getElementById('statusMessage');
             messageElement.textContent = text;
             messageElement.className = `message ${type}`;
             messageElement.style.display = 'block';
             
-            // Masquer le message après 5 secondes
-            setTimeout(() => {
-                messageElement.style.display = 'none';
-            }, 5000);
+            // Masquer le message après 5 secondes (sauf pour les erreurs)
+            if (type !== 'error') {
+                setTimeout(() => {
+                    hideStatusMessage();
+                }, 5000);
+            }
+        }
+
+        function hideStatusMessage() {
+            const messageElement = document.getElementById('statusMessage');
+            messageElement.style.display = 'none';
+        }
+
+        // Afficher un résumé de l'enregistrement
+        function showSummary(clanData) {
+            const playersCount = clanData.players.filter(p => p.nom && p.nom.trim() !== '').length;
+            const coachesCount = Object.values(clanData.coaches).filter(c => c.nom && c.nom.trim() !== '').length;
+            
+            const summary = `
+                Résumé de l'enregistrement:
+                - Clan: ${clanData.clanName}
+                - Joueurs enregistrés: ${playersCount}/15
+                - Coaches enregistrés: ${coachesCount}/3
+                - Année: 20${clanData.year.start}-20${clanData.year.end}
+                - Date: ${new Date(clanData.timestamp).toLocaleString('fr-FR')}
+            `;
+            
+            console.log(summary);
         }
 
         // Fonctions Admin
@@ -1804,6 +1831,14 @@
                     console.error('Erreur lors de l\'export:', error);
                     alert('Erreur lors de l\'export des données.');
                 });
+        }
+
+        // Mettre à jour les statistiques admin
+        function updateAdminStatistics() {
+            // Recharger les statistiques si le panneau admin est ouvert
+            if (document.getElementById('adminPanel').style.display === 'block') {
+                loadAdminStatistics();
+            }
         }
 
         // Animation au chargement
