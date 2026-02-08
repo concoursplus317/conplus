@@ -1365,7 +1365,7 @@
             }
         });
 
-        // Gestion du formulaire d'inscription
+        // Gestion du formulaire d'inscription - MODIFIÉ POUR LE NOM DE LA PERSONNE PAYÉE
         inscriptionForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -1392,7 +1392,8 @@
             
             // Ajouter les informations de paiement supplémentaires
             if (paymentStatus.value === 'oui') {
-                formData.person_paid_to = personPaidTo.value;
+                // CORRECTION ICI : Utiliser le bon ID
+                formData.person_paid_to = document.getElementById('personPaidTo').value;
             } else {
                 formData.planned_payment_date = plannedPaymentDate.value;
             }
@@ -1400,18 +1401,6 @@
             try {
                 await db.collection('participants').add(formData);
                 
-                // Envoyer également à Formspree
-                const formspreeForm = new FormData();
-                for (const key in formData) {
-                    formspreeForm.append(key, formData[key]);
-                }
-                
-                fetch('https://formspree.io/f/mldqkngp', {
-                    method: 'POST',
-                    body: formspreeForm,
-                    headers: { 'Accept': 'application/json' }
-                });
-
                 // Afficher confirmation
                 inscriptionForm.classList.add('hidden');
                 confirmationMessage.classList.remove('hidden');
@@ -1451,6 +1440,7 @@
             updateParticipantsList();
         }
 
+        // Fonction pour afficher la liste des participants - MODIFIÉE POUR AFFICHER LE NOM DE LA PERSONNE PAYÉE
         function updateParticipantsList() {
             const listElement = document.getElementById('participantsList');
             listElement.innerHTML = '';
@@ -1475,29 +1465,43 @@
                 }
                 
                 const date = new Date(p.date_inscription).toLocaleDateString('fr-FR');
+                
+                // Créer l'affichage avec le nom de la personne payée si disponible
+                let paymentInfo = '';
+                if (p.payment_status === 'oui' && p.person_paid_to) {
+                    paymentInfo = `<div style="color: #25d366; font-size: 0.8rem; margin-top: 5px;">
+                        <i class="fas fa-money-bill-wave"></i> Payé à: ${p.person_paid_to}
+                    </div>`;
+                } else if (p.payment_status === 'non' && p.planned_payment_date) {
+                    paymentInfo = `<div style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                        <i class="fas fa-clock"></i> Paiement prévu: ${p.planned_payment_date}
+                    </div>`;
+                }
+                
                 div.innerHTML = `
                     <div style="font-weight: bold; color: #f7ef8a;">${p.nom}</div>
                     <div style="font-size: 0.8rem; color: #a0c8ff;">
                         <span class="promotion-badge ${badgeClass}">${p.promotion}</span>
                         • ${p.faculte} • ${p.telephone} • ${date}
                     </div>
+                    ${paymentInfo}
                 `;
                 
                 listElement.appendChild(div);
             });
         }
 
-        // Export des données
+        // Export des données - MODIFIÉ POUR INCLURE LE NOM DE LA PERSONNE PAYÉE
         exportButton.addEventListener('click', () => {
             if (participantsData.length === 0) {
                 alert("Aucune donnée à exporter");
                 return;
             }
             
-            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Promotion,Catégorie,Statut Paiement,Date\n";
+            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Promotion,Catégorie,Statut Paiement,Personne Payée,Date Paiement Prévue,Date Inscription\n";
             
             participantsData.forEach(p => {
-                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.promotion}","${p.categorie}","${p.payment_status}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
+                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.promotion}","${p.categorie}","${p.payment_status}","${p.person_paid_to || ''}","${p.planned_payment_date || ''}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
             });
             
             const blob = new Blob([csv], { type: 'text/csv' });
