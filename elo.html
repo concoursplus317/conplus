@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours d'Éloquence Excellentia Academia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a2a, #1a1a3a, #2a2a4a);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        /* Header avec logo */
+        .header {
+            background: rgba(10, 10, 40, 0.95);
+            padding: 15px 20px;
+            border-bottom: 3px solid #d4af37;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #d4af37;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+        
+        .logo-text {
+            flex: 1;
+        }
+        
+        .logo-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.85rem;
+            color: #d4af37;
+            font-style: italic;
+        }
+        
+        /* Contenu principal */
+        .main-container {
+            max-width: 100%;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        
+        /* Section hero */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .event-title {
+            font-size: 1.8rem;
+            color: #f7ef8a;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .deadline-box {
+            background: rgba(255, 50, 50, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 2px solid rgba(255, 100, 100, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { border-color: rgba(255, 100, 100, 0.4); }
+            50% { border-color: rgba(255, 100, 100, 0.8); }
+            100% { border-color: rgba(255, 100, 100, 0.4); }
+        }
+        
+        .deadline-title {
+            font-size: 1.1rem;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+        
+        .deadline-date {
+            font-size: 1.6rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        /* Compte à rebours */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .time-unit {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px 5px;
+            text-align: center;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+        }
+        
+        .time-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #f7ef8a;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .time-label {
+            font-size: 0.8rem;
+            color: #a0c8ff;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        /* Bouton principal */
+        .main-cta {
+            display: block;
+            width: 100%;
+            background: linear-gradient(90deg, #d4af37, #f7ef8a);
+            color: #1a1a2e;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .main-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Section Frais */
+        .fees-section {
+            background: rgba(30, 144, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(30, 144, 255, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .fees-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .fees-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .fee-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid;
+            transition: transform 0.3s ease;
+        }
+        
+        .fee-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .fee-card.regular {
+            border-color: #1e90ff;
+        }
+        
+        .fee-card.member {
+            border-color: #d4af37;
+        }
+        
+        .fee-amount {
+            font-size: 2.2rem;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .fee-card.regular .fee-amount {
+            color: #1e90ff;
+        }
+        
+        .fee-card.member .fee-amount {
+            color: #f7ef8a;
+        }
+        
+        .fee-description {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-bottom: 15px;
+        }
+        
+        /* Section Prix */
+        .prizes-section {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .prizes-title {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .prizes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .prize-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prize-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .prize-card.first {
+            border-color: #ffd700;
+        }
+        
+        .prize-card.first::before {
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+        
+        .prize-card.second {
+            border-color: #c0c0c0;
+        }
+        
+        .prize-card.second::before {
+            background: linear-gradient(90deg, #c0c0c0, #e8e8e8);
+        }
+        
+        .prize-card.third {
+            border-color: #cd7f32;
+        }
+        
+        .prize-card.third::before {
+            background: linear-gradient(90deg, #cd7f32, #e49b5d);
+        }
+        
+        .prize-rank {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .prize-amount {
+            font-size: 1.8rem;
+            color: #f7ef8a;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .prize-details {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .prize-details li {
+            margin-bottom: 8px;
+            color: #cccccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .prize-details i {
+            color: #d4af37;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        /* Style spécial pour les badges des promotions */
+        .promotion-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+        
+        .badge-l1 {
+            background: linear-gradient(90deg, #1e90ff, #0d47a1);
+            color: white;
+        }
+        
+        .badge-l2 {
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            color: white;
+        }
+        
+        .badge-l3 {
+            background: linear-gradient(90deg, #ff6b6b, #c44569);
+            color: white;
+        }
+        
+        .badge-m1 {
+            background: linear-gradient(90deg, #d4af37, #8b7500);
+            color: white;
+        }
+        
+        .badge-m2 {
+            background: linear-gradient(90deg, #9c27b0, #6a1b9a);
+            color: white;
+        }
+        
+        /* Section WhatsApp */
+        .whatsapp-section {
+            background: rgba(37, 211, 102, 0.1);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .whatsapp-title {
+            font-size: 1.4rem;
+            color: #25d366;
+        }
+        
+        .whatsapp-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 20px 0 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #88aabb;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+        
+        /* Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 2px solid #d4af37;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0c8ff;
+            font-weight: 600;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #1e90ff, #0d47a1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        /* Bouton Admin */
+        .admin-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #d4af37, #8b7500);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Responsive optimisations */
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .logo-container {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-title {
+                font-size: 1.2rem;
+            }
+            
+            .event-title {
+                font-size: 1.5rem;
+            }
+            
+            .time-value {
+                font-size: 1.5rem;
+            }
+            
+            .countdown {
+                gap: 8px;
+            }
+            
+            .time-unit {
+                padding: 12px 5px;
+            }
+            
+            .main-cta {
+                padding: 16px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .main-container {
+                max-width: 1200px;
+                padding: 30px;
+            }
+            
+            .hero-section {
+                padding: 30px;
+            }
+            
+            .event-title {
+                font-size: 2.2rem;
+            }
+            
+            .deadline-date {
+                font-size: 2rem;
+            }
+            
+            .time-value {
+                font-size: 2.2rem;
+            }
+            
+            .time-unit {
+                padding: 20px 10px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Style amélioré pour les cartes de prix */
+        .prize-feature {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid;
+        }
+        
+        .prize-card.first .prize-feature {
+            border-left-color: #ffd700;
+        }
+        
+        .prize-card.second .prize-feature {
+            border-left-color: #c0c0c0;
+        }
+        
+        .prize-card.third .prize-feature {
+            border-left-color: #cd7f32;
+        }
+        
+        /* Styles pour les boutons de paiement */
+        .payment-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-btn.yes {
+            border-color: #25d366;
+        }
+        
+        .payment-btn.yes:hover, .payment-btn.yes.active {
+            background: rgba(37, 211, 102, 0.2);
+        }
+        
+        .payment-btn.no {
+            border-color: #ff6b6b;
+        }
+        
+        .payment-btn.no:hover, .payment-btn.no.active {
+            background: rgba(255, 107, 107, 0.2);
+        }
+        
+        /* Affiche du concours */
+        .poster-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .poster-img {
+            max-width: 100%;
+            border-radius: 15px;
+            border: 3px solid #d4af37;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Note d'urgence */
+        .urgency-note {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            color: white;
+            border: 2px solid #ff4757;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header avec logo -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="IMG_1812.jpeg" alt="Logo Excellentia Academia" class="logo-img">
+        </div>
+        <div class="logo-text">
+            <div class="logo-title">Excellentia Academia</div>
+            <div class="logo-subtitle"> • Au-delà de l'excellence académique 🧠 • </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section fade-in">
+            <h1 class="event-title">Concours d'Éloquence 2026 • 1ère Édition</h1>
+            
+            <!-- Affiche du concours -->
+            <div class="poster-container">
+                <img src="d47f1726-df4d-4da3-92d9-6116484d66be.jpeg" alt="Affiche du Concours d'Éloquence" class="poster-img">
+            </div>
+            
+            <div class="deadline-box">
+                <div class="deadline-title">DERNIER JOUR D'INSCRIPTION</div>
+                <div class="deadline-date">30 FÉVRIER 2026</div>
+                <div style="color: #ffcccb; font-size: 0.9rem; margin-top: 8px;">
+                    Formation préparatoire: 03-04 Mars 2026 (non obligatoire)
+                </div>
+            </div>
+            
+            <!-- Note d'urgence -->
+            <div class="urgency-note">
+                ⚠️ Les frais d'inscription sont à 5000fc seulement et les places sont limitées ! 
+                Inscrivez-vous rapidement ! ⚠️
+            </div>
+            
+            <div class="countdown">
+                <div class="time-unit">
+                    <div class="time-value" id="jours">00</div>
+                    <div class="time-label">Jours</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="heures">00</div>
+                    <div class="time-label">Heures</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="secondes">00</div>
+                    <div class="time-label">Secondes</div>
+                </div>
+            </div>
+            
+            <button class="main-cta" id="openFormButton">
+                <i class="fas fa-pen-fancy"></i> S'INSCRIRE MAINTENANT
+            </button>
+            
+            <div style="color: #a0c8ff; font-size: 0.9rem; text-align: center; margin-top: 15px;">
+                <i class="fas fa-clock"></i> Concours prévu pour le 10 Mars 2026
+            </div>
+        </section>
+
+        <!-- Frais de Participation -->
+        <section class="fees-section fade-in">
+            <h2 class="section-title">
+                <i class="fas fa-money-bill-wave"></i> FRAIS DE PARTICIPATION
+            </h2>
+            
+            <div class="fees-grid">
+                <div class="fee-card regular">
+                    <div class="fee-amount">5.000 Fc</div>
+                    <div class="fee-description">
+                        Frais d'inscription et de participation (places limitées)
+                    </div>
+                    <div style="color: #a0c8ff; font-size: 0.9rem;">
+                        <i class="fas fa-user-graduate"></i> Étudiant régulier 
+                    </div>
+                </div>
+                
+
+            
+            <div style="text-align: center; margin-top: 20px; color: #a0c8ff; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Prière de vous enregistrer le plutôt que possible
+            </div>
+        </section>
+
+        <!-- Prix et Récompenses -->
+        <section class="prizes-section fade-in">
+            <h2 class="prizes-title">
+                <i class="fas fa-trophy"></i> PRIX ET RÉCOMPENSES
+            </h2>
+            
+            <div class="prizes-grid">
+                <!-- 1ère Place -->
+                <div class="prize-card first">
+                    <div class="prize-rank">
+                        <i class="fas fa-crown"></i> 1ère Place
+                    </div>
+                    <div class="prize-amount">1.000.000 Fc</div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte First Bank
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-graduation-cap"></i> Bourse académique UNIKIN 2026-2027
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Couverture des frais académiques
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-award"></i> Médaille d'Or + Écharpe de Vainqueur
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Médaille d'or et écharpe Excellentia Academia
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-book"></i> Accès Bibliothèque Centrale (1 an)
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Accès prioritaire aux ressources
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #ffd700; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+              
+                <div class="prize-feature">
+    <div style="font-weight: bold; color: #e6c300; margin-bottom: 5px;">
+        <i class="fas fa-graduation-cap"></i> Toge Excellentia Academia
+    </div>
+    <div style="color: #cccccc; font-size: 0.9rem;">
+        Symbole suprême de l'excellence oratoire et académique
+    </div>
+</div>
+      </div>
+                </div>
+                
+                <!-- 2ème Place -->
+                <div class="prize-card second">
+                    <div class="prize-rank">
+                        <i class="fas fa-medal"></i> 2ème Place
+                    </div>
+                    <div class="prize-amount">500.000 Fc</div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte First Bank
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-medal"></i> Médaille d'Argent
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Médaille d'excellence en argent
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée d'Argent
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+                            <i class="fas fa-file-certificate"></i> Brevet d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Diplôme officiel de mérite
+                        </div>
+
+                
+                <div class="prize-feature">
+    <div style="font-weight: bold; color: #c0c0c0; margin-bottom: 5px;">
+        <i class="fas fa-book"></i> Accès Bibliothèque Centrale (1 an)
+    </div>
+    <div style="color: #cccccc; font-size: 0.9rem;">
+        Accès prioritaire aux ressources
+    </div>
+</div>
+                    </div>
+                </div>
+                <!-- 3ème Place -->
+                <div class="prize-card third">
+                    <div class="prize-rank">
+                        <i class="fas fa-award"></i> 3ème Place
+                    </div>
+                    <div class="prize-amount">250.000 Fc</div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-university"></i> Sur compte First Bank
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Transfert direct sur votre compte bancaire
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-medal"></i> Médaille de Bronze
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Médaille d'excellence en bronze
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-trophy"></i> Trophée de Bronze
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Trophée personnalisé
+                        </div>
+                    </div>
+                    
+                    <div class="prize-feature">
+                        <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+                            <i class="fas fa-file-certificate"></i> Brevet d'Excellence
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem;">
+                            Diplôme officiel de mérite
+                        </div>
+                    </div>
+                    <div class="prize-feature">
+    <div style="font-weight: bold; color: #cd7f32; margin-bottom: 5px;">
+        <i class="fas fa-book"></i> Accès Bibliothèque Centrale (1 an)
+    </div>
+    <div style="color: #cccccc; font-size: 0.9rem;">
+        Accès prioritaire aux ressources
+    </div>
+</div>
+                </div>
+            </div>
+            
+            <!-- Récompenses supplémentaires -->
+            <div style="margin-top: 25px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h3 style="color: #f7ef8a; margin-bottom: 15px; text-align: center;">
+                    <i class="fas fa-star"></i> RÉCOMPENSES SUPPLÉMENTAIRES
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; color: #cccccc;">
+                        <i class="fas fa-medal" style="color: #d4af37;"></i>
+                        <span>Brevet de Mérite pour tous les finalistes</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; color: #cccccc;">
+                        <i class="fas fa-certificate" style="color: #1e90ff;"></i>
+                        <span>Certificats de participation pour tous</span>
+                    </div>
+
+            </div>
+        </section>
+
+        <!-- Section WhatsApp -->
+        <section class="whatsapp-section fade-in">
+            <div class="whatsapp-header">
+                <i class="fab fa-whatsapp" style="font-size: 2rem; color: #25d366;"></i>
+                <h2 class="whatsapp-title">Rejoignez notre groupe WhatsApp</h2>
+            </div>
+            
+            <p style="color: #a0ffc0; text-align: center; margin-bottom: 20px;">
+                Ne ratez aucune information importante ! Rejoignez la communauté officielle pour :
+            </p>
+            
+            <div style="background: rgba(37, 211, 102, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: white;">
+                    <i class="fas fa-check-circle" style="color: #25d366;"></i>
+                    <span>Annonces en temps réel</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: white;">
+                    <i class="fas fa-check-circle" style="color: #25d366;"></i>
+                    <span>Conseils des organisateurs</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; color: white;">
+                    <i class="fas fa-check-circle" style="color: #25d366;"></i>
+                    <span>Échanges avec les participants</span>
+                </div>
+            </div>
+            
+            <button class="whatsapp-button" onclick="joinWhatsAppGroup()">
+                <i class="fab fa-whatsapp"></i> REJOINDRE LE GROUPE
+            </button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Excellentia Academia © 2025-2026</p>
+
+    </footer>
+
+    <!-- Bouton Admin -->
+    <button class="admin-button" id="adminButton">
+        <i class="fas fa-lock"></i> Admin
+    </button>
+
+    <!-- Modal Formulaire d'Inscription -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <h2 style="color: #f7ef8a; text-align: center; margin-bottom: 25px; font-size: 1.5rem;">
+                <i class="fas fa-user-plus"></i> Formulaire d'Inscription
+            </h2>
+            
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label class="form-label">Nom complet *</label>
+                    <input type="text" class="form-input" name="nom" required placeholder="Nom, Postnom, Prénom">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" name="email" required placeholder="exemple@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Téléphone *</label>
+                    <input type="tel" class="form-input" name="telephone" required placeholder="+243 970 501 523">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Avez-vous WhatsApp ? *</label>
+                    <select class="form-select" name="whatsapp" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Université *</label>
+                    <input type="text" class="form-input" name="universite" required placeholder="Votre université">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Faculté *</label>
+                    <select class="form-select" name="faculte" required>
+                        <option value="">Sélectionnez votre faculté</option>
+                        <option value="Faculté de sciences et technologies">Faculté de sciences et technologies</option>
+                        <option value="Faculté de Lettres et sciences humaines">Faculté de Lettres et sciences humaines</option>
+                        <option value="Faculté de Sciences économiques et de gestion">Faculté de Sciences économiques et de gestion</option>
+                        <option value="Faculté de Sciences sociales, administratives et politiques">Faculté de Sciences sociales, administratives et politiques</option>
+                        <option value="Faculté de Droit">Faculté de Droit</option>
+                        <option value="Faculté de Polytechnique">Faculté de Polytechnique</option>
+                        <option value="Faculté de sciences pharmaceutiques">Faculté de sciences pharmaceutiques</option>
+                        <option value="Faculté de médecine dentaire">Faculté de médecine dentaire</option>
+                        <option value="Faculté de médecine vétérinaire">Faculté de médecine vétérinaire</option>
+                        <option value="Faculté de Pétrole, gaz et énergies renouvelables">Faculté de Pétrole, gaz et énergies renouvelables</option>
+                        <option value="Faculté sciences agronomiques">Faculté sciences agronomiques</option>
+                        <option value="Faculté de Médecine">Faculté de Médecine</option>
+                        <option value="Faculté de psychologie et sciences de l'éducation">Faculté de psychologie et sciences de l'éducation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Promotion *</label>
+                    <select class="form-select" name="promotion" required>
+                        <option value="">Sélectionnez votre promotion</option>
+                        <option value="L1">Licence 1 (L1)</option>
+                        <option value="L2">Licence 2 (L2)</option>
+                        <option value="L3">Licence 3 (L3)</option>
+                        <option value="M1">Master 1 (M1)</option>
+                        <option value="M2">Master 2 (M2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Catégorie *</label>
+                    <select class="form-select" name="categorie" required id="categorieSelect">
+                        <option value="">Sélectionnez votre catégorie</option>
+                        <option value="etudiant_regulier">Étudiant régulier (5.000 Fc)</option>
+                        <option value="membre_excellentia">Membre Excellentia (3.000 Fc)</option>
+                    </select>
+                </div>
+                
+                <!-- Section Paiement -->
+                <div class="form-group">
+                    <label class="form-label">Avez-vous déjà payé les frais d'inscription ? *</label>
+                    <div class="payment-options">
+                        <button type="button" class="payment-btn yes" id="payYesBtn">OUI</button>
+                        <button type="button" class="payment-btn no" id="payNoBtn">NON</button>
+                    </div>
+                    <input type="hidden" name="payment_status" id="paymentStatus" required>
+                </div>
+                
+                <!-- Section si OUI -->
+                <div id="paidSection" class="form-group hidden">
+                    <label class="form-label">Nom de la personne chez qui vous avez payé *</label>
+                    <input type="text" class="form-input" name="person_paid_to" id="personPaidTo" placeholder="Nom et prénom de la personne">
+                </div>
+                
+                <!-- Section si NON -->
+                <div id="notPaidSection" class="form-group hidden">
+                    <label class="form-label">Quand comptez-vous payer ? *</label>
+                    <input type="date" class="form-input" name="planned_payment_date" id="plannedPaymentDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Votre motivation *</label>
+                    <textarea class="form-textarea" name="message" required placeholder="Pourquoi souhaitez-vous participer ?"></textarea>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; color: #cccccc;">
+                        <input type="checkbox" required style="margin-top: 3px;">
+                        <span>J'accepte les frais de participation selon ma catégorie *</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-paper-plane"></i> ENVOYER L'INSCRIPTION
+                </button>
+            </form>
+            
+            <!-- Message de confirmation avec WhatsApp -->
+            <div id="confirmationMessage" class="hidden" style="text-align: center; padding: 20px;">
+                <div style="font-size: 3rem; color: #25d366; margin-bottom: 15px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="color: #f7ef8a; margin-bottom: 15px;">Merci pour votre inscription !</h3>
+                <p style="color: #a0c8ff; margin-bottom: 20px;">
+                    Votre inscription au Concours d'Éloquence Excellentia Academia 2026 a été confirmée.
+                </p>
+                <p style="color: #f7ef8a; margin-bottom: 20px; font-weight: bold;">
+                    <i class="fab fa-whatsapp"></i> Rejoignez le groupe WhatsApp officiel pour ne rien rater :
+                </p>
+                <div style="background: rgba(37, 211, 102, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="color: white; margin-bottom: 10px;">
+                        <i class="fas fa-link"></i> Lien du groupe :
+                    </p>
+                    <p style="color: #25d366; font-weight: bold; word-break: break-all;">
+                        https://chat.whatsapp.com/IQBgEAbmDe7AQCNxTG0u04
+                    </p>
+                </div>
+                <button class="whatsapp-button" onclick="joinWhatsAppGroup()">
+                    <i class="fab fa-whatsapp"></i> REJOINDRE WHATSAPP MAINTENANT
+                </button>
+                <button class="main-cta" id="closeAfterSubmit" style="margin-top: 10px;">
+                    <i class="fas fa-home"></i> RETOUR À L'ACCUEIL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Admin -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            
+            <h2 style="color: #f7ef8a; text-align: center; margin-bottom: 25px;">
+                <i class="fas fa-lock"></i> PANEL ADMIN
+            </h2>
+            
+            <div id="passwordSection">
+                <p style="color: #a0c8ff; text-align: center; margin-bottom: 20px;">
+                    Accès réservé à la coordination Excellentia Academia
+                </p>
+                <input type="password" id="adminPassword" 
+                       placeholder="Mot de passe : Excellence@acad_2K26"
+                       style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #d4af37; background: rgba(0,0,0,0.3); color: white; text-align: center; margin-bottom: 20px;">
+                <button id="loginButton" class="submit-button">
+                    <i class="fas fa-sign-in-alt"></i> SE CONNECTER
+                </button>
+            </div>
+            
+            <div id="adminPanel" class="hidden">
+                <h3 style="color: #f7ef8a; text-align: center; margin-bottom: 20px;">
+                    Excellentia Academia - Coordination
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+                    <div style="background: rgba(212,175,55,0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2rem; color: #f7ef8a; font-weight: bold;" id="totalParticipants">0</div>
+                        <div style="color: #a0c8ff; font-size: 0.9rem;">Total Inscriptions</div>
+                    </div>
+                    <div style="background: rgba(212,175,55,0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2rem; color: #f7ef8a; font-weight: bold;" id="todayParticipants">0</div>
+                        <div style="color: #a0c8ff; font-size: 0.9rem;">Aujourd'hui</div>
+                    </div>
+                </div>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                    <div id="participantsList">
+                        <!-- Liste des participants -->
+                    </div>
+                </div>
+                
+                <button id="exportButton" class="whatsapp-button" style="background: linear-gradient(90deg, #4CAF50, #2E7D32);">
+                    <i class="fas fa-download"></i> EXPORTER LES DONNÉES
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyByypEIIWEnUdhvvGCGvSjhXImgeZTifA0",
+            authDomain: "eloquence-565d8.firebaseapp.com",
+            projectId: "eloquence-565d8",
+            storageBucket: "eloquence-565d8.firebasestorage.app",
+            messagingSenderId: "462079862368",
+            appId: "1:462079862368:web:439c967822fd8588090505",
+            measurementId: "G-HFQWHB4NBB"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Variables
+        let participantsData = [];
+        const ADMIN_PASSWORD = "eloquenceenscene2k26";
+        
+        // DOM Elements
+        const formModal = document.getElementById('formModal');
+        const adminModal = document.getElementById('adminModal');
+        const openFormButton = document.getElementById('openFormButton');
+        const adminButton = document.getElementById('adminButton');
+        const closeModal = document.getElementById('closeModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const closeAfterSubmit = document.getElementById('closeAfterSubmit');
+        const inscriptionForm = document.getElementById('inscriptionForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const loginButton = document.getElementById('loginButton');
+        const exportButton = document.getElementById('exportButton');
+        
+        // Nouveaux éléments pour paiement
+        const payYesBtn = document.getElementById('payYesBtn');
+        const payNoBtn = document.getElementById('payNoBtn');
+        const paymentStatus = document.getElementById('paymentStatus');
+        const paidSection = document.getElementById('paidSection');
+        const notPaidSection = document.getElementById('notPaidSection');
+        const personPaidTo = document.getElementById('personPaidTo');
+        const plannedPaymentDate = document.getElementById('plannedPaymentDate');
+        const categorieSelect = document.getElementById('categorieSelect');
+
+        // Fonctions WhatsApp
+        function joinWhatsAppGroup() {
+            window.open("https://chat.whatsapp.com/IQBgEAbmDe7AQCNxTG0u04", "_blank");
+        }
+
+        // Gestion des options de paiement
+        payYesBtn.addEventListener('click', () => {
+            paymentStatus.value = 'oui';
+            payYesBtn.classList.add('active');
+            payNoBtn.classList.remove('active');
+            paidSection.classList.remove('hidden');
+            notPaidSection.classList.add('hidden');
+            personPaidTo.required = true;
+            plannedPaymentDate.required = false;
+        });
+
+        payNoBtn.addEventListener('click', () => {
+            paymentStatus.value = 'non';
+            payNoBtn.classList.add('active');
+            payYesBtn.classList.remove('active');
+            paidSection.classList.add('hidden');
+            notPaidSection.classList.remove('hidden');
+            personPaidTo.required = false;
+            plannedPaymentDate.required = true;
+            // Définir une date par défaut (3 jours)
+            const defaultDate = new Date();
+            defaultDate.setDate(defaultDate.getDate() + 3);
+            plannedPaymentDate.valueAsDate = defaultDate;
+        });
+
+        // Gestion des modals
+        openFormButton.addEventListener('click', () => {
+            formModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            // Réinitialiser les boutons de paiement
+            paymentStatus.value = '';
+            payYesBtn.classList.remove('active');
+            payNoBtn.classList.remove('active');
+            paidSection.classList.add('hidden');
+            notPaidSection.classList.add('hidden');
+            personPaidTo.required = false;
+            plannedPaymentDate.required = false;
+            // Garder seulement étudiant régulier
+            categorieSelect.innerHTML = `
+                <option value="">Sélectionnez votre catégorie</option>
+                <option value="etudiant_regulier">Étudiant régulier (5.000 Fc)</option>
+            `;
+        });
+
+        adminButton.addEventListener('click', () => {
+            adminModal.style.display = 'block';
+            document.getElementById('passwordSection').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+        });
+
+        const closeModalFunc = (modal) => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModal.addEventListener('click', () => closeModalFunc(formModal));
+        closeAdminModal.addEventListener('click', () => closeModalFunc(adminModal));
+
+        closeAfterSubmit?.addEventListener('click', () => {
+            closeModalFunc(formModal);
+            inscriptionForm.reset();
+            inscriptionForm.classList.remove('hidden');
+            confirmationMessage.classList.add('hidden');
+        });
+
+        // Fermer modal en cliquant à l'extérieur
+        [formModal, adminModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModalFunc(modal);
+            });
+        });
+
+        // Login admin
+        loginButton.addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadParticipantsData();
+            } else {
+                alert("Mot de passe incorrect");
+            }
+        });
+
+        // Gestion du formulaire d'inscription
+        inscriptionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Vérifier si une option de paiement est sélectionnée
+            if (!paymentStatus.value) {
+                alert("Veuillez indiquer si vous avez déjà payé ou non");
+                return;
+            }
+            
+            const formData = {
+                nom: inscriptionForm.nom.value,
+                email: inscriptionForm.email.value,
+                telephone: inscriptionForm.telephone.value,
+                whatsapp: inscriptionForm.whatsapp.value,
+                universite: inscriptionForm.universite.value,
+                faculte: inscriptionForm.faculte.value,
+                promotion: inscriptionForm.promotion.value,
+                categorie: inscriptionForm.categorie.value,
+                message: inscriptionForm.message.value,
+                payment_status: paymentStatus.value,
+                date_inscription: new Date().toISOString(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            // Ajouter les informations de paiement supplémentaires
+            if (paymentStatus.value === 'oui') {
+                formData.person_paid_to = personPaidTo.value;
+            } else {
+                formData.planned_payment_date = plannedPaymentDate.value;
+            }
+
+            try {
+                await db.collection('participants').add(formData);
+                
+                // Envoyer également à Formspree
+                const formspreeForm = new FormData();
+                for (const key in formData) {
+                    formspreeForm.append(key, formData[key]);
+                }
+                
+                fetch('https://formspree.io/f/mldqkngp', {
+                    method: 'POST',
+                    body: formspreeForm,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                // Afficher confirmation
+                inscriptionForm.classList.add('hidden');
+                confirmationMessage.classList.remove('hidden');
+                
+                // Mettre à jour les données
+                loadParticipantsData();
+
+            } catch (error) {
+                console.error("Erreur:", error);
+                alert("Erreur lors de l'enregistrement");
+            }
+        });
+
+        // Charger les participants
+        async function loadParticipantsData() {
+            try {
+                const snapshot = await db.collection('participants').get();
+                participantsData = [];
+                snapshot.forEach(doc => {
+                    participantsData.push({ id: doc.id, ...doc.data() });
+                });
+                updateAdminStats();
+            } catch (error) {
+                console.error("Erreur de chargement:", error);
+            }
+        }
+
+        function updateAdminStats() {
+            document.getElementById('totalParticipants').textContent = participantsData.length;
+            
+            const today = new Date().toDateString();
+            const todayCount = participantsData.filter(p => {
+                return new Date(p.date_inscription).toDateString() === today;
+            }).length;
+            document.getElementById('todayParticipants').textContent = todayCount;
+            
+            updateParticipantsList();
+        }
+
+        function updateParticipantsList() {
+            const listElement = document.getElementById('participantsList');
+            listElement.innerHTML = '';
+            
+            participantsData.slice(0, 20).forEach(p => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.marginBottom = '8px';
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.borderRadius = '8px';
+                div.style.borderLeft = '3px solid #d4af37';
+                
+                // Déterminer la classe du badge promotion
+                let badgeClass = '';
+                switch(p.promotion) {
+                    case 'L1': badgeClass = 'badge-l1'; break;
+                    case 'L2': badgeClass = 'badge-l2'; break;
+                    case 'L3': badgeClass = 'badge-l3'; break;
+                    case 'M1': badgeClass = 'badge-m1'; break;
+                    case 'M2': badgeClass = 'badge-m2'; break;
+                    default: badgeClass = 'badge-l1';
+                }
+                
+                const date = new Date(p.date_inscription).toLocaleDateString('fr-FR');
+                div.innerHTML = `
+                    <div style="font-weight: bold; color: #f7ef8a;">${p.nom}</div>
+                    <div style="font-size: 0.8rem; color: #a0c8ff;">
+                        <span class="promotion-badge ${badgeClass}">${p.promotion}</span>
+                        • ${p.faculte} • ${p.telephone} • ${date}
+                    </div>
+                `;
+                
+                listElement.appendChild(div);
+            });
+        }
+
+        // Export des données
+        exportButton.addEventListener('click', () => {
+            if (participantsData.length === 0) {
+                alert("Aucune donnée à exporter");
+                return;
+            }
+            
+            let csv = "Nom,Email,Téléphone,WhatsApp,Université,Faculté,Promotion,Catégorie,Statut Paiement,Date\n";
+            
+            participantsData.forEach(p => {
+                csv += `"${p.nom}","${p.email}","${p.telephone}","${p.whatsapp}","${p.universite}","${p.faculte}","${p.promotion}","${p.categorie}","${p.payment_status}","${new Date(p.date_inscription).toLocaleDateString('fr-FR')}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `participants_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Compte à rebours pour le 02 Mars 2026
+        const targetDate = new Date('March 2, 2026 23:59:59').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('jours').textContent = '00';
+                document.getElementById('heures').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('secondes').textContent = '00';
+                return;
+            }
+            
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('jours').textContent = jours.toString().padStart(2, '0');
+            document.getElementById('heures').textContent = heures.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('secondes').textContent = secondes.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Charger les données au démarrage
+        loadParticipantsData();
+
+        // Écouter les nouvelles inscriptions
+        db.collection('participants').onSnapshot(() => {
+            loadParticipantsData();
+        });
+
+        // Animation d'entrée
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                }, i * 100);
+            });
+        });
+    </script>
+</body>
+</html>
