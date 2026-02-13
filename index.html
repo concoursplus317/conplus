@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excellentia Academia – Au-delà de l'excellence académique</title>
-    <!-- Font Awesome & Google Fonts -->
+    <title>Excellentia Academia – L'excellence académique réinventée</title>
+    <!-- Font Awesome, Google Fonts, AOS, GSAP, Three.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -33,12 +34,14 @@
             --dark: #121212;
             --gray: #5f6368;
             --gray-light: #dadce0;
-            --transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
             --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.2);
             --radius: 12px;
             --radius-lg: 20px;
+            --radius-xl: 30px;
         }
 
         html { scroll-behavior: smooth; }
@@ -51,7 +54,7 @@
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
@@ -61,24 +64,26 @@
             padding: 0 20px;
             width: 100%;
         }
-        .section-padding { padding: 100px 0; }
+        .section-padding { padding: 120px 0; }
         .section-title {
             text-align: center;
-            margin-bottom: 70px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s ease-out forwards;
-        }
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 80px;
         }
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--primary);
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title h2 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .section-title p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--gray);
             max-width: 700px;
             margin: 0 auto;
@@ -103,90 +108,128 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 32px;
+            padding: 16px 36px;
             background: var(--secondary);
             color: white;
             border: none;
             border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
-            gap: 8px;
+            gap: 12px;
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            letter-spacing: 0.5px;
         }
         .btn:before {
             content: '';
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transition: 0.6s;
             z-index: -1;
         }
         .btn:hover:before { left: 100%; }
-        .btn:hover { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-lg); }
-        .btn-primary { background: var(--primary); }
-        .btn-primary:hover { background: var(--primary-dark); }
-        .btn-accent { background: var(--accent); color: var(--dark); }
-        .btn-accent:hover { background: var(--accent-dark); color: white; }
+        .btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: var(--shadow-xl); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+        .btn-accent { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--dark); }
         .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: white; }
-        .btn-success { background: var(--success); }
-        .btn-info { background: var(--info); }
+        .btn-outline:hover { background: var(--primary); color: white; border-color: transparent; }
+        .btn-success { background: linear-gradient(135deg, var(--success), #2e7d32); }
+        .btn-info { background: linear-gradient(135deg, var(--info), #1565c0); }
 
         /* header */
         header {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             z-index: 1000;
             padding: 18px 0;
             transition: var(--transition);
         }
-        header.scrolled { padding: 12px 0; box-shadow: 0 4px 25px rgba(0,0,0,0.1); }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; text-decoration: none; gap: 12px; transition: transform 0.3s; }
-        .logo:hover { transform: scale(1.03); }
-        .logo-image { height: 50px; width: 50px; border-radius: 10px; object-fit: cover; border: 2px solid var(--primary); box-shadow: var(--shadow-sm); }
+        header.scrolled { padding: 12px 0; background: rgba(255,255,255,0.98); }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            transition: 0.4s;
+        }
+        .logo:hover { transform: scale(1.05); }
+        .logo-image {
+            height: 55px;
+            width: 55px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow-md);
+        }
         .logo-text { display: flex; flex-direction: column; }
-        .logo-main { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--primary); line-height: 1; }
-        .logo-sub { font-size: 0.9rem; color: var(--secondary); font-weight: 600; letter-spacing: 1px; }
+        .logo-main {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        .logo-sub { font-size: 0.9rem; color: var(--secondary); font-weight: 700; letter-spacing: 1px; }
         .logo-slogan { font-size: 0.8rem; color: var(--accent); font-weight: 600; font-style: italic; }
 
         .action-buttons {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             margin-right: 30px;
         }
         .action-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.85rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.4s;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             white-space: nowrap;
             box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
         }
-        .action-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: var(--shadow-md); }
-        .action-btn.formation { background: var(--secondary); }
-        .action-btn.concours { background: var(--accent); color: var(--dark); }
-        .action-btn.ateliers { background: var(--success); }
-        .action-btn.conferences { background: var(--info); }
-        .action-btn.photos { background: #9c27b0; }
+        .action-btn:after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .action-btn:hover:after { width: 300px; height: 300px; }
+        .action-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: var(--shadow-lg); }
+        .action-btn.formation { background: linear-gradient(135deg, var(--secondary), #b71c1c); }
+        .action-btn.concours { background: linear-gradient(135deg, var(--accent), #ff6f00); color: var(--dark); }
+        .action-btn.ateliers { background: linear-gradient(135deg, var(--success), #1b5e20); }
+        .action-btn.conferences { background: linear-gradient(135deg, var(--info), #0d47a1); }
+        .action-btn.photos { background: linear-gradient(135deg, #9c27b0, #4a148c); }
 
         .nav-wrapper { display: flex; align-items: center; }
         .nav-links { display: flex; list-style: none; }
@@ -194,9 +237,9 @@
         .nav-links a {
             text-decoration: none;
             color: var(--dark);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
-            transition: var(--transition);
+            transition: 0.3s;
             position: relative;
             padding: 5px 0;
         }
@@ -207,7 +250,7 @@
             height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             bottom: 0; left: 0;
-            transition: var(--transition);
+            transition: 0.4s;
             border-radius: 3px;
         }
         .nav-links a:hover { color: var(--primary); }
@@ -215,7 +258,7 @@
 
         .mobile-menu-btn {
             display: none;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             background: none;
             border: none;
             color: var(--primary);
@@ -226,403 +269,244 @@
         }
         .mobile-menu-btn:hover { background: var(--primary-lighter); }
 
-        /* Hero */
+        /* Hero avec particules */
         .hero {
             padding-top: 180px;
             padding-bottom: 120px;
-            background: linear-gradient(135deg, rgba(26,35,126,0.03), rgba(255,171,0,0.03));
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
         }
-        .hero:before {
-            content: '';
-            position: absolute; width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(26,35,126,0.08), transparent 70%);
-            top: -200px; right: -150px; animation: blobMove 18s infinite alternate;
-        }
-        .hero:after {
-            content: '';
-            position: absolute; width: 400px; height: 400px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(211,47,47,0.08), transparent 70%);
-            bottom: -150px; left: -100px; animation: blobMove 15s infinite alternate-reverse;
-        }
-        @keyframes blobMove {
-            0% { transform: translate(0,0) scale(1); }
-            100% { transform: translate(50px,30px) scale(1.1); }
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
         .hero-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
-        .hero-text { flex: 1; padding-right: 60px; opacity: 0; transform: translateX(-30px); animation: slideIn 0.9s ease-out forwards; }
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .hero-text { flex: 1; padding-right: 60px; }
         .hero-text h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: var(--primary);
             margin-bottom: 25px;
             line-height: 1.1;
-            font-weight: 800;
+            font-weight: 900;
         }
-        .hero-text h1 span { color: var(--secondary); position: relative; display: inline-block; }
-        .hero-text h1 span:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 8px;
-            background: rgba(255,171,0,0.3);
-            bottom: 5px; left: 0;
-            z-index: -1;
+        .hero-text h1 .gradient-text {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
         }
         .hero-intro {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--primary-dark);
             font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.4;
-            background: linear-gradient(135deg, var(--primary-lighter), white);
-            padding: 20px;
-            border-radius: var(--radius);
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: var(--radius-lg);
             border-left: 5px solid var(--accent);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-lg);
         }
         .hero-text p { font-size: 1.25rem; color: var(--gray); margin-bottom: 35px; max-width: 600px; }
 
-        .fondateur-details {
-            background: linear-gradient(135deg, white, var(--light-gray));
+        .fondateur-details, .comite-directeur {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
             padding: 25px;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             margin-top: 30px;
-            box-shadow: var(--shadow-sm);
-            border-left: 5px solid var(--secondary);
-            transition: 0.3s;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: 0.4s;
         }
-        .fondateur-details:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .fondateur-details h4, .comite-directeur h4 {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 15px;
-        }
+        .fondateur-details:hover, .comite-directeur:hover { transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow-xl); }
         .fondateur-info {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
         }
-        .info-item {
-            padding: 12px;
+        .info-item, .membre {
+            padding: 15px;
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: 0.3s;
+            transition: 0.4s;
+            border: 1px solid rgba(0,0,0,0.02);
         }
-        .info-item:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .info-item h5 { font-size: 0.95rem; color: var(--primary); margin-bottom: 3px; }
-        .info-item p { font-size: 0.9rem; color: var(--gray); margin-bottom: 0; }
+        .info-item:hover, .membre:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
 
-        .comite-directeur {
-            background: linear-gradient(135deg, var(--primary-lighter), white);
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-top: 30px;
-            box-shadow: var(--shadow-sm);
-            border-left: 5px solid var(--accent);
-            transition: 0.3s;
-        }
-        .comite-directeur:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .comite-membres {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .membre {
-            padding: 12px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: 0.3s;
-        }
-        .membre:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .membre h5 { font-size: 0.95rem; color: var(--primary); margin-bottom: 3px; }
-        .membre p { font-size: 0.85rem; color: var(--gray); margin-bottom: 0; }
-
-        .hero-btns { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .hero-visual { flex: 1; position: relative; opacity: 0; transform: translateX(30px); animation: slideInRight 0.9s ease-out forwards; }
-        @keyframes slideInRight {
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .hero-visual { flex: 1; position: relative; }
         .floating-elements { position: relative; height: 450px; width: 100%; }
         .floating-element {
             position: absolute;
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
             padding: 25px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center;
-            transition: 0.4s;
+            transition: 0.5s;
             z-index: 2;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-            background: rgba(255,255,255,0.9);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.5);
         }
-        .floating-element:before {
-            content: '';
-            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        .floating-element:hover { transform: translateY(-15px) scale(1.03); box-shadow: var(--shadow-lg); }
-        .element-1 { top: 20px; left: 0; width: 200px; height: 200px; animation: float 6s infinite; }
-        .element-2 { top: 80px; right: 0; width: 240px; height: 170px; animation: float 7s infinite 0.5s; }
-        .element-3 { bottom: 20px; left: 60px; width: 180px; height: 180px; animation: float 8s infinite 1s; }
+        .floating-element:hover { transform: translateY(-20px) scale(1.05); box-shadow: var(--shadow-xl); }
+        .element-1 { top: 20px; left: 0; width: 220px; height: 220px; animation: float 6s infinite; }
+        .element-2 { top: 80px; right: 0; width: 260px; height: 180px; animation: float 7s infinite 0.5s; }
+        .element-3 { bottom: 20px; left: 60px; width: 200px; height: 200px; animation: float 8s infinite 1s; }
         @keyframes float {
             0%,100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-25px); }
         }
-        .floating-icon { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
-        .floating-text { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        .floating-icon { font-size: 3.5rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
 
-        /* avantages */
-        .avantages { background: var(--light-gray); }
-        .avantages-grid {
+        /* Cartes 3D */
+        .avantages-grid, .faculties-grid, .activite-grid, .ateliers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 35px;
         }
-        .avantage-card {
-            background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md);
-            transition: 0.4s; height: 100%; display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(30px);
-            animation: cardFade 0.8s ease-out forwards;
+        .avantage-card, .faculty-card, .activite-card, .atelier-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: 0.5s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
-        .avantage-card:nth-child(1) { animation-delay: 0.1s; }
-        .avantage-card:nth-child(2) { animation-delay: 0.2s; }
-        .avantage-card:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes cardFade {
-            to { opacity: 1; transform: translateY(0); }
+        .avantage-card:hover, .faculty-card:hover, .activite-card:hover, .atelier-card:hover {
+            transform: translateY(-15px) scale(1.02) rotateX(2deg);
+            box-shadow: var(--shadow-xl);
         }
-        .avantage-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: var(--shadow-lg); }
-        .avantage-header {
+        .avantage-header, .activite-header, .atelier-header {
+            padding: 30px;
+            text-align: center;
+            color: white;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white; padding: 25px; text-align: center;
         }
-        .avantage-header h3 { color: white; margin-bottom: 10px; }
-        .avantage-body { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-        .avantage-features { list-style: none; margin: 20px 0; flex-grow: 1; }
-        .avantage-features li {
-            padding: 10px 0; border-bottom: 1px solid var(--gray-light);
-            display: flex; align-items: flex-start;
-        }
-        .avantage-features li i { color: var(--success); margin-right: 10px; }
-
-        /* facultés */
-        .faculties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 35px;
-        }
-        .faculty-card {
-            background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md);
-            transition: 0.4s; cursor: pointer; height: 100%; display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(30px);
-            animation: cardFade 0.8s ease-out forwards;
-        }
-        .faculty-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-lg); }
         .faculty-icon {
-            height: 140px; display: flex; align-items: center; justify-content: center; color: white;
-            font-size: 3.5rem; position: relative; overflow: hidden;
-            transition: 0.3s;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
-        .faculty-icon:after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
-        }
-        .faculty-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-        .faculty-content h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.4rem; }
-        .ambassador-info {
-            display: flex; align-items: center; margin-top: 20px; padding-top: 20px;
-            border-top: 1px solid var(--gray-light);
-        }
-        .ambassador-icon {
-            width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary-lighter), white);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;
-            color: var(--primary); font-size: 1.2rem; box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: 0.3s;
-        }
-        .ambassador-icon:hover { transform: rotate(10deg) scale(1.1); }
-        .ambassador-details h5 { font-size: 0.9rem; color: var(--gray); margin-bottom: 5px; font-weight: 600; }
-        .ambassador-details p { font-size: 0.9rem; color: var(--dark); font-weight: 700; margin-bottom: 0; }
 
-        /* activités */
-        .activites { background: var(--light-gray); }
+        /* timeline / tabs */
         .activites-tabs {
             display: flex; justify-content: center; margin-bottom: 50px; flex-wrap: wrap; gap: 15px;
         }
         .activite-tab {
-            padding: 15px 30px; background: white; border: none; border-radius: 50px; font-weight: 600;
-            color: var(--gray); cursor: pointer; transition: 0.3s; box-shadow: var(--shadow-sm);
-            display: flex; align-items: center; gap: 10px; font-size: 1.1rem;
+            padding: 15px 35px;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            color: var(--gray);
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: var(--shadow-md);
+            display: flex;
+ align-items: center; gap: 10px; font-size: 1.1rem;
         }
-        .activite-tab:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--primary-lighter); }
-        .activite-tab.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
-        .activite-content { display: none; animation: fadeIn 0.6s; }
+        .activite-tab:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); background: var(--primary-lighter); }
+        .activite-tab.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .activite-content { display: none; animation: fadeInUp 0.6s; }
         .activite-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .activite-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 35px;
-        }
-        .activite-card {
-            background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md);
-            transition: 0.4s; height: 100%; display: flex; flex-direction: column;
-        }
-        .activite-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-lg); }
-        .activite-header {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); color: white;
-            padding: 30px; text-align: center;
-        }
-        .activite-header h3 { color: white; margin-bottom: 10px; }
-
-        /* ateliers */
-        .ateliers-section { background: white; }
-        .ateliers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 35px;
-        }
-        .atelier-card {
-            background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md);
-            transition: 0.4s; height: 100%; display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(30px);
-            animation: cardFade 0.8s ease-out forwards;
-        }
-        .atelier-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-lg); }
-        .atelier-header {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            color: var(--dark); padding: 25px; text-align: center;
-        }
-        .atelier-body { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* formulaire */
-        .inscription { background: var(--light-gray); }
+        .inscription { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden; }
+        .inscription:before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M0 0 L100 100 M100 0 L0 100" stroke="white" stroke-width="1"/></svg>');
+            background-size: 30px 30px;
+        }
         .form-container {
-            max-width: 900px; margin: 0 auto; background: white; border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg); overflow: hidden;
-            opacity: 0; transform: scale(0.95); animation: formPop 0.6s ease-out 0.2s forwards;
+            max-width: 950px; margin: 0 auto; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); overflow: hidden;
+            transform: translateY(0); transition: 0.5s;
         }
-        @keyframes formPop {
-            to { opacity: 1; transform: scale(1); }
-        }
+        .form-container:hover { transform: translateY(-10px); box-shadow: var(--shadow-xl); }
         .form-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white; padding: 40px; text-align: center; position: relative; overflow: hidden;
+            color: white; padding: 50px; text-align: center;
         }
-        .form-header h2 { color: white; position: relative; z-index: 1; }
         .form-body { padding: 50px; }
-        .form-row { display: flex; flex-wrap: wrap; margin: 0 -15px; }
-        .form-group { flex: 1 0 300px; padding: 0 15px; margin-bottom: 30px; }
-        .form-group label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--dark); }
         .form-control {
-            width: 100%; padding: 15px 20px; border: 2px solid var(--gray-light); border-radius: 10px;
-            font-size: 1rem; font-family: 'Source Sans Pro', sans-serif; transition: 0.3s;
-            background: white;
+            width: 100%; padding: 15px 20px; border: 2px solid var(--gray-light); border-radius: 15px;
+            font-size: 1rem; transition: 0.4s;
         }
-        .form-control:focus {
-            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,35,126,0.1);
-            transform: translateY(-2px);
-        }
-        select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a237e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 20px center; background-size: 16px; padding-right: 50px; }
-        .checkbox-group { margin-top: 20px; }
-        .checkbox-label { display: flex; align-items: flex-start; cursor: pointer; transition: 0.2s; }
-        .checkbox-label:hover { transform: translateX(5px); }
-        .checkbox-label input { margin-right: 12px; margin-top: 5px; }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,35,126,0.1); transform: translateY(-2px); }
 
         /* footer */
         footer {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white; padding: 80px 0 30px;
+            background: linear-gradient(135deg, #0a0f2e, #1a237e);
+            color: white; padding: 100px 0 30px;
             position: relative;
             overflow: hidden;
         }
-        footer:before {
-            content: ''; position: absolute; width: 300px; height: 300px; background: rgba(255,255,255,0.03);
-            border-radius: 50%; top: -100px; right: -100px; animation: footerBlob 20s infinite;
+        .footer-wave {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" opacity=".25"/></svg>');
+            background-size: cover;
+            opacity: 0.2;
         }
-        @keyframes footerBlob {
-            0% { transform: translate(0,0) scale(1); }
-            50% { transform: translate(40px,40px) scale(1.2); }
-            100% { transform: translate(0,0) scale(1); }
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px; margin-bottom: 60px;
-        }
-        .footer-logo-image {
-            height: 60px; width: 60px; border-radius: 10px; object-fit: cover; border: 2px solid white;
-            margin-bottom: 20px; box-shadow: var(--shadow-sm);
-            transition: 0.3s;
-        }
-        .footer-logo-image:hover { transform: rotate(5deg) scale(1.05); }
-        .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 2rem; color: white; line-height: 1; }
-        .footer-logo-sub { font-size: 1rem; color: var(--accent); font-weight: 600; }
-        .footer-logo-slogan { font-size: 0.9rem; color: var(--accent-light); font-weight: 600; font-style: italic; margin-top: 5px; }
-        .footer-about p { margin-bottom: 25px; opacity: 0.9; line-height: 1.8; }
-        .fondateur-footer, .comite-footer {
-            background: rgba(255,255,255,0.1); padding: 20px; border-radius: var(--radius); margin-top: 20px;
-            transition: 0.3s;
-        }
-        .fondateur-footer:hover, .comite-footer:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
-        .fondateur-footer h4, .comite-footer h4 { color: var(--accent); font-size: 1.2rem; }
-        .footer-links h3, .footer-contact h3 { color: white; margin-bottom: 30px; position: relative; display: inline-block; }
-        .footer-links h3:after, .footer-contact h3:after {
-            content: ''; position: absolute; width: 40px; height: 3px; background: var(--accent);
-            bottom: -8px; left: 0; border-radius: 3px;
-            transition: 0.3s;
-        }
-        .footer-links h3:hover:after, .footer-contact h3:hover:after { width: 60px; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 15px; }
-        .footer-links a { color: rgba(255,255,255,0.85); text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
-        .footer-links a:hover { color: var(--accent); padding-left: 8px; }
-        .footer-contact p { margin-bottom: 20px; display: flex; align-items: flex-start; opacity: 0.9; }
-        .footer-contact i { margin-right: 15px; color: var(--accent); font-size: 1.1rem; transition: 0.3s; }
-        .footer-contact p:hover i { transform: scale(1.2); }
-        .social-icons { display: flex; gap: 15px; margin-top: 25px; }
-        .social-icons a {
-            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
-            background: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none;
-            transition: 0.4s; font-size: 1.2rem;
-        }
-        .social-icons a:hover { background: var(--accent); transform: translateY(-5px) scale(1.1); }
-        .copyright { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.7; }
 
-        /* responsive */
+        /* liens vers sous-pages */
+        .page-links {
+            display: flex; gap: 20px; justify-content: center; margin: 60px 0;
+        }
+        .page-card {
+            background: white; padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+            text-align: center; transition: 0.5s; cursor: pointer;
+            flex: 1; max-width: 250px;
+        }
+        .page-card:hover { transform: translateY(-15px) scale(1.05); box-shadow: var(--shadow-xl); }
+        .page-card i { font-size: 3rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+
         @media (max-width: 992px) {
             .hero-content { flex-direction: column; }
-            .hero-text { padding-right: 0; margin-bottom: 60px; text-align: center; }
-            .hero-btns { justify-content: center; }
+            .hero-text { padding-right: 0; text-align: center; }
             .action-buttons { display: none; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
-            .section-padding { padding: 80px 0; }
-        }
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2.5rem; }
-            .floating-elements { height: 300px; }
-            .element-1, .element-2, .element-3 { width: 150px; height: 150px; }
         }
     </style>
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-    <!-- header identique -->
     <header>
         <div class="container nav-container">
             <a href="#" class="logo">
-                <img src="IMG_1812.jpeg" alt="Excellentia Academia" class="logo-image" onerror="this.src='https://via.placeholder.com/50/1a237e/ffffff?text=EA'">
+                <img src="IMG_1812.jpeg" alt="Excellentia Academia" class="logo-image" onerror="this.src='https://via.placeholder.com/55/1a237e/ffffff?text=EA'">
                 <div class="logo-text">
                     <div class="logo-main">Excellentia</div>
                     <div class="logo-sub">ACADEMIA</div>
@@ -650,31 +534,30 @@
         </div>
     </header>
 
-    <!-- Hero inchangé (texte) -->
+    <!-- Hero avec particules -->
     <section class="hero" id="accueil">
+        <canvas id="particles-canvas"></canvas>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Élever l'intelligence, <span>inspirer l'excellence.</span></h1>
+                <div class="hero-text" data-aos="fade-right" data-aos-duration="1200">
+                    <h1>Élever l'intelligence, <span class="gradient-text">inspirer l'excellence.</span></h1>
                     <div class="hero-intro">
                         Excellentia Academia transcende l'excellence académique pour former des leaders complets, engagés et visionnaires, prêts à contribuer au développement de la RDC et de l'Afrique.
                     </div>
                     <p>Notre structure accompagne et développe les compétences des étudiants de l'Université de Kinshasa à travers 13 facultés, avec une mission claire : former une élite académique polyvalente et engagée.</p>
                     
-                    <!-- Fondateur details -->
-                    <div class="fondateur-details">
+                    <div class="fondateur-details" data-aos="fade-up" data-aos-delay="200">
                         <h4><i class="fas fa-user-tie"></i> Fondateur & Coordonnateur Général</h4>
                         <div class="fondateur-info">
                             <div class="info-item"><h5>Nom Complet</h5><p>Credo MALALE MUSAO</p></div>
-                            <div class="info-item"><h5>Niveau d'études</h5><p>Master 1 (M1) en Droit</p></div>
-                            <div class="info-item"><h5>Département</h5><p>Droit International Public et Africain</p></div>
-                            <div class="info-item"><h5>Université</h5><p>Université de Kinshasa (UNIKIN)</p></div>
-                            <div class="info-item"><h5>Fonction</h5><p>Fondateur et Coordonnateur Général</p></div>
+                            <div class="info-item"><h5>Niveau</h5><p>Master 1 Droit</p></div>
+                            <div class="info-item"><h5>Département</h5><p>Droit International Public</p></div>
+                            <div class="info-item"><h5>Université</h5><p>UNIKIN</p></div>
+                            <div class="info-item"><h5>Fonction</h5><p>Fondateur & Coordonnateur</p></div>
                         </div>
                     </div>
                     
-                    <!-- Comité directeur -->
-                    <div class="comite-directeur">
+                    <div class="comite-directeur" data-aos="fade-up" data-aos-delay="400">
                         <h4><i class="fas fa-users"></i> Comité Directeur</h4>
                         <div class="comite-membres">
                             <div class="membre"><h5>Arnid DJONGA</h5><p>Secrétaire Général</p></div>
@@ -690,7 +573,7 @@
                         <a href="#activites" class="btn btn-outline">Nos Activités</a>
                     </div>
                 </div>
-                <div class="hero-visual">
+                <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200">
                     <div class="floating-elements">
                         <div class="floating-element element-1"><i class="fas fa-brain floating-icon"></i><div class="floating-text">13 Facultés</div><small>UNIKIN</small></div>
                         <div class="floating-element element-2"><i class="fas fa-trophy floating-icon"></i><div class="floating-text">Concours d'éloquence</div><small>Inter-facultés</small></div>
@@ -701,47 +584,38 @@
         </div>
     </section>
 
+    <!-- Liens vers sous-pages (beauté et navigation) -->
+    <div class="container page-links">
+        <div class="page-card" onclick="window.open('concours.html', '_blank')" data-aos="zoom-in">
+            <i class="fas fa-trophy"></i>
+            <h3>Concours d'Éloquence</h3>
+            <p>Page officielle du concours</p>
+        </div>
+        <div class="page-card" onclick="window.open('formations.html', '_blank')" data-aos="zoom-in" data-aos-delay="100">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h3>Formations</h3>
+            <p>Tous nos programmes</p>
+        </div>
+        <div class="page-card" onclick="window.open('galerie.html', '_blank')" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-images"></i>
+            <h3>Galerie Photos</h3>
+            <p>Moments mémorables</p>
+        </div>
+        <div class="page-card" onclick="window.open('equipe.html', '_blank')" data-aos="zoom-in" data-aos-delay="300">
+            <i class="fas fa-users"></i>
+            <h3>Notre Équipe</h3>
+            <p>Comité et ambassadeurs</p>
+        </div>
+    </div>
+
     <!-- Avantages -->
     <section class="avantages section-padding" id="avantages">
         <div class="container">
-            <div class="section-title"><h2><span class="title-decoration">Avantages d'être Membre</span></h2><p>Rejoignez Excellentia Academia et bénéficiez de privilèges exclusifs.</p></div>
+            <div class="section-title" data-aos="fade-down"><h2><span class="title-decoration">Avantages d'être Membre</span></h2><p>Rejoignez Excellentia Academia et bénéficiez de privilèges exclusifs.</p></div>
             <div class="avantages-grid">
-                <div class="avantage-card">
-                    <div class="avantage-header"><h3>Formations Exclusives</h3><p>Accès prioritaire</p></div>
-                    <div class="avantage-body">
-                        <ul class="avantage-features">
-                            <li><i class="fas fa-check"></i> Formation à l'éloquence et art oratoire</li>
-                            <li><i class="fas fa-check"></i> Ateliers d'écriture académique (TFC, mémoires)</li>
-                            <li><i class="fas fa-check"></i> Développement des soft skills</li>
-                            <li><i class="fas fa-check"></i> Coaching individuel et mentorat</li>
-                            <li><i class="fas fa-check"></i> Certificats de participation reconnus</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="avantage-card">
-                    <div class="avantage-header" style="background:linear-gradient(135deg, var(--secondary), var(--secondary-dark))"><h3>Activités Privilégiées</h3><p>Participation prioritaire</p></div>
-                    <div class="avantage-body">
-                        <ul class="avantage-features">
-                            <li><i class="fas fa-check"></i> Concours d'éloquence inter-facultés</li>
-                            <li><i class="fas fa-check"></i> Conférences avec experts internationaux</li>
-                            <li><i class="fas fa-check"></i> Cafés scientifiques et débats</li>
-                            <li><i class="fas fa-check"></i> Rencontres avec professionnels</li>
-                            <li><i class="fas fa-check"></i> Événements de networking</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="avantage-card">
-                    <div class="avantage-header" style="background:linear-gradient(135deg, var(--success), #388e3c)"><h3>Opportunités Uniques</h3><p>Développement de carrière</p></div>
-                    <div class="avantage-body">
-                        <ul class="avantage-features">
-                            <li><i class="fas fa-check"></i> Postuler comme ambassadeur de faculté</li>
-                            <li><i class="fas fa-check"></i> Intégrer la coordination de la structure</li>
-                            <li><i class="fas fa-check"></i> Accès aux stages et opportunités</li>
-                            <li><i class="fas fa-check"></i> Mentorat par des professionnels</li>
-                            <li><i class="fas fa-check"></i> Reconnaissance académique officielle</li>
-                        </ul>
-                    </div>
-                </div>
+                <div class="avantage-card" data-aos="flip-left"><div class="avantage-header"><h3>Formations Exclusives</h3></div><div class="avantage-body"><ul><li><i class="fas fa-check"></i> Éloquence & art oratoire</li><li><i class="fas fa-check"></i> Écriture académique (TFC, mémoires)</li><li><i class="fas fa-check"></i> Soft skills</li><li><i class="fas fa-check"></i> Coaching individuel</li><li><i class="fas fa-check"></i> Certificats reconnus</li></ul></div></div>
+                <div class="avantage-card" data-aos="flip-left" data-aos-delay="100"><div class="avantage-header" style="background:linear-gradient(135deg, var(--secondary), #b71c1c)"><h3>Activités Privilégiées</h3></div><div class="avantage-body"><ul><li><i class="fas fa-check"></i> Concours d'éloquence</li><li><i class="fas fa-check"></i> Conférences experts</li><li><i class="fas fa-check"></i> Cafés scientifiques</li><li><i class="fas fa-check"></i> Rencontres pros</li><li><i class="fas fa-check"></i> Networking</li></ul></div></div>
+                <div class="avantage-card" data-aos="flip-left" data-aos-delay="200"><div class="avantage-header" style="background:linear-gradient(135deg, var(--success), #1b5e20)"><h3>Opportunités Uniques</h3></div><div class="avantage-body"><ul><li><i class="fas fa-check"></i> Ambassadeur de faculté</li><li><i class="fas fa-check"></i> Intégrer la coordination</li><li><i class="fas fa-check"></i> Stages & opportunités</li><li><i class="fas fa-check"></i> Mentorat pro</li><li><i class="fas fa-check"></i> Reconnaissance académique</li></ul></div></div>
             </div>
         </div>
     </section>
@@ -749,12 +623,12 @@
     <!-- Facultés -->
     <section class="faculties section-padding" id="facultes">
         <div class="container">
-            <div class="section-title"><h2><span class="title-decoration">13 Facultés - Nos Ambassadeurs</span></h2><p>Excellentia Academia est présent dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés.</p></div>
+            <div class="section-title" data-aos="fade-down"><h2><span class="title-decoration">13 Facultés - Nos Ambassadeurs</span></h2><p>Présence dans toutes les facultés de l'UNIKIN avec des ambassadeurs dédiés.</p></div>
             <div class="faculties-grid" id="facultiesContainer"></div>
             <div style="text-align:center; margin-top:50px;" id="ambassadeur">
                 <h3 style="color:var(--primary);">Devenir Ambassadeur de votre Faculté</h3>
-                <p style="max-width:800px; margin:0 auto 30px; color:var(--gray);">Postulez pour représenter Excellentia Academia dans votre faculté et intégrez notre coordination. Les ambassadeurs bénéficient d'une formation spéciale et jouent un rôle clé.</p>
-                <a href="#inscription" class="btn btn-success" style="font-size:1.1rem; padding:15px 40px;"><i class="fas fa-user-plus"></i> Postuler comme Ambassadeur</a>
+                <p style="max-width:800px; margin:0 auto 30px;">Postulez pour représenter Excellentia Academia dans votre faculté et intégrez notre coordination.</p>
+                <a href="#inscription" class="btn btn-success"><i class="fas fa-user-plus"></i> Postuler comme Ambassadeur</a>
             </div>
         </div>
     </section>
@@ -762,28 +636,28 @@
     <!-- Activités -->
     <section class="activites section-padding" id="activites">
         <div class="container">
-            <div class="section-title"><h2><span class="title-decoration">Nos Activités Principales</span></h2><p>Découvrez nos programmes récurrents et événements phares.</p></div>
+            <div class="section-title" data-aos="fade-down"><h2><span class="title-decoration">Nos Activités Principales</span></h2><p>Découvrez nos programmes récurrents et événements phares.</p></div>
             <div class="activites-tabs">
-                <button class="activite-tab active" data-tab="concours"><i class="fas fa-trophy"></i> Concours d'Éloquence</button>
-                <button class="activite-tab" data-tab="ateliers"><i class="fas fa-chalkboard-teacher"></i> Ateliers de Formation</button>
-                <button class="activite-tab" data-tab="conferences"><i class="fas fa-microphone"></i> Conférences</button>
+                <button class="activite-tab active" data-tab="concoursTab"><i class="fas fa-trophy"></i> Concours d'Éloquence</button>
+                <button class="activite-tab" data-tab="ateliersTab"><i class="fas fa-chalkboard-teacher"></i> Ateliers de Formation</button>
+                <button class="activite-tab" data-tab="conferencesTab"><i class="fas fa-microphone"></i> Conférences</button>
             </div>
-            <div class="activite-content active" id="concours">
+            <div class="activite-content active" id="concoursTab">
                 <div class="activite-grid">
-                    <div class="activite-card"><div class="activite-header"><h3>Concours d'Éloquence Inter-facultés</h3><p>Compétition phare</p></div><div class="activite-body"><ul class="avantage-features"><li><i class="fas fa-check"></i> Participation des 13 facultés</li><li><i class="fas fa-check"></i> Thème annuel sur le développement national</li><li><i class="fas fa-check"></i> Prix attractifs et reconnaissance académique</li><li><i class="fas fa-check"></i> Jury d'experts</li><li><i class="fas fa-check"></i> Préparation par les ambassadeurs</li></ul><a href="concours.html" class="btn btn-accent" style="width:100%;"><i class="fas fa-external-link-alt"></i> Page Officielle du Concours</a></div></div>
-                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark))"><h3>Formation à l'Éloquence</h3><p>Préparation au concours</p></div><div class="activite-body"><ul class="avantage-features"><li><i class="fas fa-check"></i> Techniques vocales et langage corporel</li><li><i class="fas fa-check"></i> Construction du discours</li><li><i class="fas fa-check"></i> Gestion du stress</li><li><i class="fas fa-check"></i> Art de l'improvisation</li><li><i class="fas fa-check"></i> Coaching individuel</li></ul><a href="#inscription" class="btn btn-primary" style="width:100%;"><i class="fas fa-user-plus"></i> S'inscrire à la Formation</a></div></div>
+                    <div class="activite-card" data-aos="fade-up"><div class="activite-header"><h3>Concours d'Éloquence Inter-facultés</h3></div><div class="activite-body"><ul><li>Participation des 13 facultés</li><li>Thème sur le développement national</li><li>Prix attractifs</li><li>Jury d'experts</li><li>Préparation par les ambassadeurs</li></ul><a href="concours.html" class="btn btn-accent" style="margin-top:20px;">Page Officielle</a></div></div>
+                    <div class="activite-card" data-aos="fade-up" data-aos-delay="100"><div class="activite-header" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark))"><h3>Formation à l'Éloquence</h3></div><div class="activite-body"><ul><li>Techniques vocales</li><li>Construction du discours</li><li>Gestion du stress</li><li>Improvisation</li><li>Coaching individuel</li></ul><a href="#inscription" class="btn btn-primary">S'inscrire</a></div></div>
                 </div>
             </div>
-            <div class="activite-content" id="ateliers">
+            <div class="activite-content" id="ateliersTab">
                 <div class="activite-grid">
-                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--success), #388e3c)"><h3>Ateliers d'Écriture Académique</h3><p>TFC, mémoires, thèses</p></div><div class="activite-body"><ul><li><i class="fas fa-check"></i> Structure et planification</li><li><i class="fas fa-check"></i> Recherche documentaire</li><li><i class="fas fa-check"></i> Rédaction et normes APA</li><li><i class="fas fa-check"></i> Méthodologie de recherche</li><li><i class="fas fa-check"></i> Préparation à la soutenance</li></ul></div></div>
-                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--accent), var(--accent-dark));color:var(--dark);"><h3>Ateliers Soft Skills</h3><p>Compétences transversales</p></div><div class="activite-body"><ul><li><i class="fas fa-check"></i> Leadership et gestion d'équipe</li><li><i class="fas fa-check"></i> Gestion du temps</li><li><i class="fas fa-check"></i> Intelligence émotionnelle</li><li><i class="fas fa-check"></i> Communication efficace</li><li><i class="fas fa-check"></i> Pensée critique</li></ul></div></div>
+                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--success), #1b5e20)"><h3>Ateliers d'Écriture Académique</h3></div><div class="activite-body"><ul><li>Structure & planification</li><li>Recherche documentaire</li><li>Normes APA</li><li>Méthodologie</li><li>Soutenance</li></ul></div></div>
+                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--accent), #ff6f00);color:var(--dark);"><h3>Ateliers Soft Skills</h3></div><div class="activite-body"><ul><li>Leadership</li><li>Gestion du temps</li><li>Intelligence émotionnelle</li><li>Communication</li><li>Pensée critique</li></ul></div></div>
                 </div>
             </div>
-            <div class="activite-content" id="conferences">
+            <div class="activite-content" id="conferencesTab">
                 <div class="activite-grid">
-                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--info), #0b7dda)"><h3>Conférences Mensuelles</h3><p>Experts et professionnels</p></div><div class="activite-body"><ul><li><i class="fas fa-check"></i> Thèmes variés</li><li><i class="fas fa-check"></i> Experts nationaux/internationaux</li><li><i class="fas fa-check"></i> Questions-réponses</li><li><i class="fas fa-check"></i> Certificats de participation</li><li><i class="fas fa-check"></i> Networking</li></ul></div></div>
-                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, #9c27b0, #7b1fa2)"><h3>Cafés Scientifiques</h3><p>Débats conviviaux</p></div><div class="activite-body"><ul><li><i class="fas fa-check"></i> Ambiance détendue</li><li><i class="fas fa-check"></i> Discussions animées</li><li><i class="fas fa-check"></i> Sujets d'actualité</li><li><i class="fas fa-check"></i> Participation active</li><li><i class="fas fa-check"></i> Esprit critique</li></ul></div></div>
+                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, var(--info), #0d47a1)"><h3>Conférences Mensuelles</h3></div><div class="activite-body"><ul><li>Thèmes variés</li><li>Experts internationaux</li><li>Échanges</li><li>Certificats</li><li>Networking</li></ul></div></div>
+                    <div class="activite-card"><div class="activite-header" style="background:linear-gradient(135deg, #9c27b0, #4a148c)"><h3>Cafés Scientifiques</h3></div><div class="activite-body"><ul><li>Ambiance conviviale</li><li>Débats animés</li><li>Actualité scientifique</li><li>Participation active</li><li>Esprit critique</li></ul></div></div>
                 </div>
             </div>
         </div>
@@ -792,23 +666,23 @@
     <!-- Ateliers Spécialisés -->
     <section class="ateliers-section section-padding" id="ateliers">
         <div class="container">
-            <div class="section-title"><h2><span class="title-decoration">Nos Ateliers Spécialisés</span></h2><p>Des ateliers pratiques pour développer vos compétences.</p></div>
+            <div class="section-title" data-aos="fade-down"><h2><span class="title-decoration">Nos Ateliers Spécialisés</span></h2><p>Des ateliers pratiques pour développer vos compétences.</p></div>
             <div class="ateliers-grid">
-                <div class="atelier-card"><div class="atelier-header"><h3>Cafés Scientifiques</h3><p>Débats intellectuels</p></div><div class="atelier-body"><ul><li><i class="fas fa-check"></i> Discussions sur l'actualité scientifique</li><li><i class="fas fa-check"></i> Intervention d'experts</li><li><i class="fas fa-check"></i> Développement de l'esprit critique</li><li><i class="fas fa-check"></i> Amélioration de l'argumentation</li><li><i class="fas fa-check"></i> Networking</li></ul></div></div>
-                <div class="atelier-card"><div class="atelier-header" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark))"><h3>Workshops Pratiques</h3><p>Apprentissage par la pratique</p></div><div class="atelier-body"><ul><li><i class="fas fa-check"></i> PowerPoint avancé</li><li><i class="fas fa-check"></i> Recherche documentaire</li><li><i class="fas fa-check"></i> Analyse statistique</li><li><i class="fas fa-check"></i> Rédaction d'articles</li><li><i class="fas fa-check"></i> Préparation aux examens oraux</li></ul></div></div>
-                <div class="atelier-card"><div class="atelier-header" style="background:linear-gradient(135deg, var(--secondary), var(--secondary-dark))"><h3>Activités Diversifiées</h3><p>Programme complet</p></div><div class="atelier-body"><ul><li><i class="fas fa-check"></i> Simulations d'entretiens</li><li><i class="fas fa-check"></i> Team building</li><li><i class="fas fa-check"></i> Coaching individuel</li><li><i class="fas fa-check"></i> Forums de carrière</li><li><i class="fas fa-check"></i> Visites d'entreprises</li></ul></div></div>
+                <div class="atelier-card" data-aos="zoom-in"><div class="atelier-header"><h3>Cafés Scientifiques</h3></div><div class="atelier-body"><ul><li>Discussions actualité</li><li>Intervention d'experts</li><li>Esprit critique</li><li>Argumentation</li><li>Networking</li></ul></div></div>
+                <div class="atelier-card" data-aos="zoom-in" data-aos-delay="100"><div class="atelier-header" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark))"><h3>Workshops Pratiques</h3></div><div class="atelier-body"><ul><li>PowerPoint avancé</li><li>Recherche documentaire</li><li>Analyse statistique</li><li>Rédaction d'articles</li><li>Préparation examens oraux</li></ul></div></div>
+                <div class="atelier-card" data-aos="zoom-in" data-aos-delay="200"><div class="atelier-header" style="background:linear-gradient(135deg, var(--secondary), #b71c1c)"><h3>Activités Diversifiées</h3></div><div class="atelier-body"><ul><li>Simulations d'entretiens</li><li>Team building</li><li>Coaching individuel</li><li>Forums de carrière</li><li>Visites d'entreprises</li></ul></div></div>
             </div>
         </div>
     </section>
 
     <!-- Galerie Photos -->
-    <section class="ateliers-section section-padding" id="photos" style="background: var(--light-gray);">
+    <section class="ateliers-section section-padding" id="photos" style="background: linear-gradient(135deg, #f5f7fa, #e8ecf5);">
         <div class="container">
             <div class="section-title"><h2><span class="title-decoration">Galerie Photos</span></h2><p>Découvrez les moments forts de nos activités.</p></div>
             <div class="ateliers-grid">
-                <div class="atelier-card"><div class="atelier-header" style="background:linear-gradient(135deg, #9c27b0, #7b1fa2)"><h3><i class="fas fa-images"></i> Nos Événements</h3></div><div class="atelier-body"><p style="text-align:center;"><i class="fas fa-camera" style="font-size:3rem; color:var(--gray-light);"></i></p><p>Les photos de nos activités sont disponibles sur nos réseaux sociaux.</p></div></div>
-                <div class="atelier-card"><div class="atelier-header" style="background:linear-gradient(135deg, var(--accent), var(--accent-dark));color:var(--dark)"><h3><i class="fas fa-trophy"></i> Concours d'Éloquence</h3></div><div class="atelier-body"><p><i class="fas fa-video" style="font-size:3rem; color:var(--gray-light); display:block; text-align:center;"></i>Retrouvez les photos sur notre page Facebook.</p></div></div>
-                <div class="atelier-card"><div class="atelier-header" style="background:linear-gradient(135deg, var(--success), #388e3c)"><h3><i class="fas fa-users"></i> Vie de la Structure</h3></div><div class="atelier-body"><p><i class="fas fa-photo-video" style="font-size:3rem; color:var(--gray-light); display:block; text-align:center;"></i>Suivez-nous sur Instagram.</p></div></div>
+                <div class="atelier-card" data-aos="flip-right"><div class="atelier-header" style="background:linear-gradient(135deg, #9c27b0, #4a148c)"><h3><i class="fas fa-images"></i> Nos Événements</h3></div><div class="atelier-body"><p><i class="fas fa-camera" style="font-size:3rem;"></i></p><p>Photos disponibles sur nos réseaux.</p></div></div>
+                <div class="atelier-card" data-aos="flip-right" data-aos-delay="100"><div class="atelier-header" style="background:linear-gradient(135deg, var(--accent), #ff6f00);color:var(--dark);"><h3><i class="fas fa-trophy"></i> Concours d'Éloquence</h3></div><div class="atelier-body"><p><i class="fas fa-video" style="font-size:3rem;"></i></p><p>Retrouvez les photos sur Facebook.</p></div></div>
+                <div class="atelier-card" data-aos="flip-right" data-aos-delay="200"><div class="atelier-header" style="background:linear-gradient(135deg, var(--success), #1b5e20)"><h3><i class="fas fa-users"></i> Vie de la Structure</h3></div><div class="atelier-body"><p><i class="fas fa-photo-video" style="font-size:3rem;"></i></p><p>Suivez-nous sur Instagram.</p></div></div>
             </div>
             <div style="text-align:center; margin-top:40px;">
                 <a href="#" class="btn btn-info"><i class="fab fa-facebook"></i> Facebook</a>
@@ -820,18 +694,17 @@
     <!-- Formulaire d'inscription -->
     <section class="inscription section-padding" id="inscription">
         <div class="container">
-            <div class="section-title"><h2><span class="title-decoration">Formulaire d'Adhésion</span></h2><p>Devenez membre et bénéficiez de tous nos programmes.</p></div>
-            <div class="form-container">
+            <div class="section-title" style="color:white;"><h2 style="color:white;"><span class="title-decoration" style="color:white;">Formulaire d'Adhésion</span></h2><p style="color:rgba(255,255,255,0.9);">Devenez membre et bénéficiez de tous nos programmes.</p></div>
+            <div class="form-container" data-aos="flip-up">
                 <div class="form-header"><h2>Devenir Membre de la Structure</h2><p>Privilège : participer à nos formations, activités, ateliers, concours, etc.</p></div>
                 <form class="form-body" id="registrationForm">
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-user"></i> Prénom *</label><input type="text" id="firstName" class="form-control" required></div><div class="form-group"><label><i class="fas fa-user"></i> Nom *</label><input type="text" id="lastName" class="form-control" required></div></div>
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-envelope"></i> Email *</label><input type="email" id="email" class="form-control" required></div><div class="form-group"><label><i class="fas fa-phone"></i> Téléphone</label><input type="tel" id="phone" class="form-control"></div></div>
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-university"></i> Faculté *</label><select id="facultySelect" class="form-control" required></select></div><div class="form-group"><label><i class="fas fa-graduation-cap"></i> Niveau *</label><select id="niveau" class="form-control" required><option value="">Sélectionnez</option><option>Licence 1</option><option>Licence 2</option><option>Licence 3</option><option>Master 1</option><option>Master 2</option><option>Doctorat</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-star"></i> Type d'Adhésion *</label><select id="typeAdhesion" class="form-control" required><option value="">Choisissez</option><option value="membre">Membre régulier</option><option value="ambassadeur">Postuler comme Ambassadeur</option><option value="coordination">Intégrer la Coordination</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-heart"></i> Activités d'intérêt *</label><select id="interests" class="form-control" multiple size="5"><option value="concours">Concours d'éloquence</option><option value="formation">Formation à l'éloquence</option><option value="ateliers">Ateliers d'écriture</option><option value="conferences">Conférences</option><option value="softskills">Soft skills</option><option value="photos">Photos/médias</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label><i class="fas fa-edit"></i> Pourquoi voulez‑vous rejoindre ? *</label><textarea id="message" class="form-control" rows="5" required></textarea></div></div>
-                    <div class="checkbox-group"><label class="checkbox-label"><input type="checkbox" required> <span>J'accepte de recevoir les communications d'Excellentia Academia.</span></label></div>
-                    <div style="text-align:center; margin-top:40px;"><button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Soumettre ma candidature</button></div>
+                    <div class="form-row"><div class="form-group"><label>Prénom *</label><input type="text" class="form-control" required></div><div class="form-group"><label>Nom *</label><input type="text" class="form-control" required></div></div>
+                    <div class="form-row"><div class="form-group"><label>Email *</label><input type="email" class="form-control" required></div><div class="form-group"><label>Téléphone</label><input type="tel" class="form-control"></div></div>
+                    <div class="form-row"><div class="form-group"><label>Faculté *</label><select class="form-control" id="facultySelect" required></select></div><div class="form-group"><label>Niveau *</label><select class="form-control"><option>Licence 1</option><option>Licence 2</option><option>Licence 3</option><option>Master 1</option><option>Master 2</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>Type d'Adhésion *</label><select class="form-control" id="typeAdhesion"><option>Membre régulier</option><option>Ambassadeur</option><option>Coordination</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>Message *</label><textarea class="form-control" rows="5" required></textarea></div></div>
+                    <div class="checkbox-group"><label class="checkbox-label"><input type="checkbox"> J'accepte de recevoir les communications.</label></div>
+                    <div style="text-align:center; margin-top:40px;"><button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Soumettre</button></div>
                 </form>
             </div>
         </div>
@@ -839,122 +712,149 @@
 
     <!-- Footer -->
     <footer>
+        <div class="footer-wave"></div>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
                     <img src="IMG_1812.jpeg" alt="Logo" class="footer-logo-image" onerror="this.src='https://via.placeholder.com/60/1a237e/ffffff?text=EA'">
                     <div class="footer-logo-text">Excellentia</div><div class="footer-logo-sub">ACADEMIA</div><div class="footer-logo-slogan">Au-delà de l'excellence académique</div>
-                    <p>Structure académique d'accompagnement des étudiants de l'Université de Kinshasa. Mission : former une élite polyvalente et engagée.</p>
-                    <div class="fondateur-footer"><h4>Fondateur & Coordonnateur</h4><p><strong>Credo MALALE MUSAO</strong> (M1 Droit, Droit International Public et Africain)</p></div>
-                    <div class="comite-footer"><h4>Comité Directeur</h4><p><strong>Arnid DJONGA</strong> - Secrétaire Général<br><strong>Paul KASONGO</strong> - Secrétaire Général Adjoint<br><strong>Chris</strong> - Chargé des Projets<br><strong>Gemima BEMBIDE</strong> - Directrice Financière</p></div>
-                    <div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div>
+                    <p>Structure académique d'accompagnement des étudiants de l'Université de Kinshasa.</p>
+                    <div class="fondateur-footer"><h4>Fondateur</h4><p><strong>Credo MALALE MUSAO</strong> (M1 Droit)</p></div>
+                    <div class="comite-footer"><h4>Comité Directeur</h4><p>Arnid DJONGA, Paul KASONGO, Chris, Gemima BEMBIDE</p></div>
+                    <div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
                 </div>
-                <div class="footer-links"><h3>Liens Rapides</h3><ul><li><a href="#accueil"><i class="fas fa-chevron-right"></i> Accueil</a></li><li><a href="#avantages">Avantages</a></li><li><a href="#facultes">13 Facultés</a></li><li><a href="#activites">Activités</a></li><li><a href="#ateliers">Ateliers</a></li><li><a href="#inscription">Devenir Membre</a></li></ul></div>
-                <div class="footer-contact"><h3>Contact</h3><p><i class="fas fa-map-marker-alt"></i> Université de Kinshasa, Campus Principal, RDC</p><p><i class="fas fa-phone"></i> +243 81 234 5678</p><p><i class="fas fa-envelope"></i> contact@excellentia-academia.cd</p><p><i class="fas fa-university"></i> Présent dans les 13 facultés</p></div>
+                <div class="footer-links"><h3>Liens Rapides</h3><ul><li><a href="#accueil">Accueil</a></li><li><a href="#avantages">Avantages</a></li><li><a href="#facultes">13 Facultés</a></li><li><a href="#activites">Activités</a></li><li><a href="#inscription">Devenir Membre</a></li></ul></div>
+                <div class="footer-contact"><h3>Contact</h3><p><i class="fas fa-map-marker-alt"></i> UNIKIN, Kinshasa, RDC</p><p><i class="fas fa-phone"></i> +243 81 234 5678</p><p><i class="fas fa-envelope"></i> contact@excellentia-academia.cd</p></div>
             </div>
-            <div class="copyright"><p>© 2023 Excellentia Academia – UNIKIN. Tous droits réservés. #ExcellentiaAcademia</p></div>
+            <div class="copyright"><p>© 2023 Excellentia Academia – UNIKIN. Tous droits réservés.</p></div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        (function() {
-            // facultés + ambassadeurs (données précises)
-            const faculties = [
-                { name: "Faculté de Droit", ambassador: "Aristote MBO", desc: "Clubs de plaidoirie, concours de procès simulés, ateliers de rédaction juridique." },
-                { name: "Faculté de Lettres et Sciences Humaines", ambassador: "Adoption MWAMUKASA", desc: "Ateliers d'écriture créative, clubs de philosophie et littérature." },
-                { name: "Faculté de Sciences Économiques et de Gestion", ambassador: "Grâce Eloko", desc: "Clubs d'analyse économique, compétitions de trading, ateliers d'économétrie." },
-                { name: "Faculté de Sciences Sociales, Administratives et Politiques", ambassador: "Keren TUAVUKIDI", desc: "Débats politiques, analyses sociologiques, simulations administratives." },
-                { name: "Faculté de Sciences et Technologies", ambassador: "Jonathan MATONDON", desc: "Laboratoires de recherche, hackathons, projets innovants." },
-                { name: "Faculté de Sciences Pharmaceutiques", ambassador: "Précieux KUZAMBA", desc: "Ateliers de pharmacologie, recherche pharmaceutique, préparation aux concours." },
-                { name: "Faculté de Psychologie et Sciences de l'Éducation", ambassador: "Jeff NGANDU", desc: "Ateliers de psychologie appliquée, recherche en sciences éducatives." },
-                { name: "Faculté de Polytechnique", ambassador: "À désigner", desc: "Projets d'ingénierie, compétitions de robotique, ateliers CAO." },
-                { name: "Faculté de Médecine Dentaire", ambassador: "À désigner", desc: "Ateliers de techniques dentaires, recherches en odontologie." },
-                { name: "Faculté de Médecine Vétérinaire", ambassador: "À désigner", desc: "Cliniques vétérinaires étudiantes, recherche en santé animale." },
-                { name: "Faculté de Pétrole, Gaz et Énergies Renouvelables", ambassador: "À désigner", desc: "Projets énergétiques, recherche sur les énergies alternatives." },
-                { name: "Faculté de Sciences Agronomiques", ambassador: "À désigner", desc: "Projets agricoles innovants, recherche agronomique." },
-                { name: "Faculté de Médecine", ambassador: "À désigner", desc: "Groupes d'étude avancée, simulations médicales, recherche clinique." }
-            ];
+        // Initialisation AOS
+        AOS.init({ duration: 1000, once: true, offset: 100 });
 
-            const container = document.getElementById('facultiesContainer');
-            if (container) {
-                faculties.forEach(f => {
-                    const card = document.createElement('div');
-                    card.className = 'faculty-card';
-                    card.innerHTML = `<div class="faculty-icon" style="background:linear-gradient(135deg, #1a237e, #3949ab)"><i class="fas fa-university"></i></div>
-                        <div class="faculty-content"><h3>${f.name}</h3><p>${f.desc}</p>
-                        <div class="ambassador-info"><div class="ambassador-icon"><i class="fas fa-user-graduate"></i></div>
-                        <div class="ambassador-details"><h5>Ambassadeur</h5><p>${f.ambassador}</p></div></div></div>`;
-                    container.appendChild(card);
-                });
+        // Particles.js manuel simple (canvas)
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = document.querySelector('.hero').offsetHeight;
+        let particles = [];
+        for(let i=0; i<100; i++) {
+            particles.push({
+                x: Math.random()*canvas.width,
+                y: Math.random()*canvas.height,
+                radius: Math.random()*3+1,
+                dx: (Math.random()-0.5)*0.5,
+                dy: (Math.random()-0.5)*0.5,
+                color: `rgba(26,35,126,${Math.random()*0.5+0.2})`
+            });
+        }
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+                if(p.x<0 || p.x>canvas.width) p.dx *= -1;
+                if(p.y<0 || p.y>canvas.height) p.dy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+        }
+        animateParticles();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = document.querySelector('.hero').offsetHeight;
+        });
+
+        // facultés data
+        const faculties = [
+            { name:"Droit", ambassador:"Aristote MBO", desc:"Clubs de plaidoirie" },
+            { name:"Lettres", ambassador:"Adoption MWAMUKASA", desc:"Ateliers d'écriture" },
+            { name:"Sciences Éco", ambassador:"Grâce Eloko", desc:"Analyse économique" },
+            { name:"Sciences Sociales", ambassador:"Keren TUAVUKIDI", desc:"Débats politiques" },
+            { name:"Sciences et Technologies", ambassador:"Jonathan MATONDON", desc:"Hackathons" },
+            { name:"Pharmaceutiques", ambassador:"Précieux KUZAMBA", desc:"Recherche" },
+            { name:"Psychologie", ambassador:"Jeff NGANDU", desc:"Psychologie appliquée" },
+            { name:"Polytechnique", ambassador:"À désigner", desc:"Ingénierie" },
+            { name:"Médecine Dentaire", ambassador:"À désigner", desc:"Odontologie" },
+            { name:"Médecine Vétérinaire", ambassador:"À désigner", desc:"Santé animale" },
+            { name:"Pétrole, Gaz", ambassador:"À désigner", desc:"Énergies" },
+            { name:"Agronomiques", ambassador:"À désigner", desc:"Agriculture" },
+            { name:"Médecine", ambassador:"À désigner", desc:"Recherche clinique" }
+        ];
+        const container = document.getElementById('facultiesContainer');
+        faculties.forEach(f => {
+            let card = document.createElement('div');
+            card.className = 'faculty-card';
+            card.setAttribute('data-aos','fade-up');
+            card.innerHTML = `<div class="faculty-icon"><i class="fas fa-university"></i></div><div class="faculty-content"><h3>${f.name}</h3><p>${f.desc}</p><div class="ambassador-info"><div class="ambassador-icon"><i class="fas fa-user-graduate"></i></div><div class="ambassador-details"><h5>Ambassadeur</h5><p>${f.ambassador}</p></div></div></div>`;
+            container.appendChild(card);
+        });
+
+        // select faculté
+        const facSelect = document.getElementById('facultySelect');
+        faculties.forEach(f => {
+            let opt = document.createElement('option');
+            opt.value = f.name;
+            opt.textContent = f.name;
+            facSelect.appendChild(opt);
+        });
+
+        // tabs
+        const tabs = document.querySelectorAll('.activite-tab');
+        const contents = document.querySelectorAll('.activite-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // mobile menu
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if(navLinks.style.display === 'flex') {
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '80px';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.boxShadow = 'var(--shadow-md)';
             }
+        });
 
-            const facSelect = document.getElementById('facultySelect');
-            if (facSelect) {
-                faculties.forEach(f => {
-                    let opt = document.createElement('option');
-                    opt.value = f.name;
-                    opt.textContent = f.name;
-                    facSelect.appendChild(opt);
-                });
-            }
+        // header scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
 
-            // tabs
-            const tabs = document.querySelectorAll('.activite-tab');
-            const contents = document.querySelectorAll('.activite-content');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    contents.forEach(c => c.classList.remove('active'));
-                    tab.classList.add('active');
-                    document.getElementById(tab.dataset.tab).classList.add('active');
-                });
+        // formulaire
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('✅ Félicitations ! Votre candidature a été soumise. Vous recevrez un email de confirmation.');
+        });
+
+        // liens vers pages externes
+        document.querySelectorAll('.page-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // ouverture simulée
+                window.open('#', '_blank');
             });
-
-            // mobile menu
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            mobileBtn.addEventListener('click', () => {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.display = 'none';
-                } else {
-                    navLinks.style.display = 'flex';
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.background = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = 'var(--shadow-md)';
-                    navLinks.style.zIndex = '999';
-                }
-            });
-
-            window.addEventListener('scroll', () => {
-                document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
-            });
-
-            const form = document.getElementById('registrationForm');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const type = document.getElementById('typeAdhesion').value;
-                let msg = '✅ Félicitations ! Votre candidature a été soumise. ';
-                if (type === 'ambassadeur') msg += 'Vous avez postulé pour devenir Ambassadeur. Le coordonnateur vous contactera.';
-                else if (type === 'coordination') msg += 'Vous avez postulé pour la Coordination. L\'équipe vous contactera.';
-                else msg += 'Vous êtes maintenant membre ! L\'ambassadeur de votre faculté vous contactera.';
-                alert(msg);
-                form.reset();
-            });
-
-            // fermer menu mobile sur clic lien
-            document.querySelectorAll('.nav-links a, .action-btn').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 992) {
-                        navLinks.style.display = 'none';
-                    }
-                });
-            });
-        })();
+        });
     </script>
 </body>
 </html>
