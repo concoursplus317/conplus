@@ -1,83 +1,800 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Excellentia Academia</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excellentia Academia · UNIKIN</title>
+    <!-- Feuilles de style modernes et épurées -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ---------- VARIABLES ÉLÉGANTES & PROFESSIONNELLES (inspiration AUF) ---------- */
+        :root {
+            --blanc-pur: #FFFFFF;
+            --gris-ciel: #F8FAFC;
+            --gris-traits: #E9EDF2;
+            --gratia: #6B7A8F;
+            --nuit-profond: #0B2D4B;
+            --bordeaux-signature: #8B1E3F;
+            --ocre-dynamique: #EAB354;
+            --ombre-douce: 0 8px 30px rgba(0,20,40,0.04);
+            --transition-douce: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #f5f5f5;
-            text-align: center;
+            background-color: var(--blanc-pur);
+            color: #1E2F3E;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 400;
+            line-height: 1.65;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            color: var(--nuit-profond);
+        }
+
+        /* ---------- HEADER RAFFINÉ : LOGO visible, héritage IMMÉDIAT ---------- */
+        header {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gris-traits);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1.5px solid var(--nuit-profond);
+            transition: var(--transition-douce);
+            box-shadow: 0 2px 0 #E9EDF2;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--nuit-profond);
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--bordeaux-signature);
+            font-weight: 600;
+        }
+
+        .logo-slogan {
+            font-size: 0.7rem;
+            color: var(--gratia);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* Navigation ligne claire */
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--nuit-profond);
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid transparent;
+            transition: var(--transition-douce);
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: var(--bordeaux-signature);
+            color: var(--bordeaux-signature);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: var(--nuit-profond);
+            cursor: pointer;
+        }
+
+        /* ---------- SECTION HÉROS : NOTRE HISTOIRE, NOTRE IDENTITÉ ---------- */
+        .hero {
+            padding: 80px 0 60px;
+            background-color: var(--gris-ciel);
+            border-bottom: 1px solid var(--gris-traits);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .hero-titre {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--nuit-profond);
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .hero-accent {
+            color: var(--bordeaux-signature);
+            border-bottom: 3px solid var(--ocre-dynamique);
+            display: inline-block;
+        }
+
+        .chapeau {
+            font-size: 1.2rem;
+            color: var(--gratia);
+            margin-bottom: 32px;
+            font-weight: 350;
+            border-left: 4px solid var(--ocre-dynamique);
+            padding-left: 24px;
+        }
+
+        /* Bloc fondateur – comme une notice biographique */
+        .notice-fondateur {
+            background: var(--blanc-pur);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--ombre-douce);
+            border: 1px solid var(--gris-traits);
+        }
+
+        .badge-fondateur {
+            display: inline-block;
+            background-color: var(--nuit-profond);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .coordonnees {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0 0;
+        }
+
+        .coordonnees-item {
+            border-bottom: 1px dashed var(--gris-traits);
+            padding-bottom: 8px;
+        }
+
+        .coordonnees-item strong {
+            font-weight: 600;
+            color: var(--nuit-profond);
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--bordeaux-signature);
+        }
+
+        .comite-liste {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .membre-tag {
+            background: var(--gris-ciel);
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--gris-traits);
+        }
+
+        /* ---------- PROGRAMMES PHARES : CARTES PRESTIGIEUSES ---------- */
+        .section-titre {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--nuit-profond);
+            margin-bottom: 16px;
+        }
+
+        .section-sous-titre {
+            color: var(--gratia);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 56px;
+            font-weight: 350;
+        }
+
+        .programmes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .carte-programme {
+            background: var(--blanc-pur);
+            border: 1px solid var(--gris-traits);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: var(--transition-douce);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.02);
+        }
+
+        .carte-programme:hover {
+            border-color: var(--nuit-profond);
+            box-shadow: var(--ombre-douce);
+            transform: translateY(-4px);
+        }
+
+        .programme-icon {
+            font-size: 2.6rem;
+            color: var(--bordeaux-signature);
+            margin-bottom: 24px;
+        }
+
+        .carte-programme h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .liste-puces {
+            list-style: none;
+        }
+
+        .liste-puces li {
+            padding: 8px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            color: #2C3E50;
+            border-bottom: 1px solid var(--gris-traits);
+            font-size: 0.95rem;
+        }
+
+        .liste-puces li i {
+            color: var(--ocre-dynamique);
+            font-size: 0.8rem;
+            width: 18px;
+        }
+
+        /* ---------- GRILLE FACULTÉS / AMBASSADEURS (données intégrées) ---------- */
+        .facultes-grille {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .carte-faculte {
             background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--gris-traits);
+            border-radius: 16px;
+            padding: 24px;
+            transition: 0.15s;
         }
-        h1 {
-            color: #2c3e50;
-            font-size: 2.5em;
-            margin-bottom: 5px;
+
+        .carte-faculte:hover {
+            background: var(--gris-ciel);
         }
-        .academia {
-            color: #e74c3c;
-            font-weight: bold;
+
+        .faculte-nom {
+            font-weight: 700;
+            color: var(--nuit-profond);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
         }
-        .slogan {
-            color: #7f8c8d;
-            font-style: italic;
+
+        .ambassadeur-badge {
+            font-size: 0.8rem;
+            background: var(--ocre-dynamique);
+            color: #1E2F3E;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* ---------- FORMULAIRE MINIMAL, TRÈS CLAIR ---------- */
+        .formulaire-card {
+            background: white;
+            border: 1px solid var(--gris-traits);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: var(--ombre-douce);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
             margin-bottom: 30px;
         }
-        .bouton {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 10px;
-            background: #e74c3c;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
         }
-        .bouton:hover {
-            background: #c0392b;
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gratia);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            padding: 14px 18px;
+            border: 1px solid var(--gris-traits);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            background: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--nuit-profond);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11,45,75,0.04);
+        }
+
+        .btn {
+            background: var(--nuit-profond);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            background: white;
+            color: var(--nuit-profond);
+            border-color: var(--nuit-profond);
+        }
+
+        /* ---------- FOOTER SOBRE, INFOS COMPLÈTES ---------- */
+        footer {
+            margin-top: 80px;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--gris-traits);
+            background: var(--gris-ciel);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 60px;
+        }
+
+        .footer-logo-image {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-small {
+            color: var(--gratia);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .social {
+            display: flex;
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .social a {
+            color: var(--nuit-profond);
+            font-size: 1.2rem;
+            transition: 0.15s;
+        }
+
+        .social a:hover { color: var(--bordeaux-signature); }
+
+        .copyright {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--gris-traits);
+            text-align: center;
+            color: var(--gratia);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .hero-grid, .form-row, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .container { padding: 0 24px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Excellentia <span class="academia">ACADEMIA</span></h1>
-        <div class="slogan">Au-delà de l'excellence académique</div>
-        
-        <h2>Élever l'intelligence, inspirer l'excellence.</h2>
-        
-        <p style="font-size: 1.2em; line-height: 1.6; margin: 30px 0;">
-            <em>Excellentia Academia transcende l'excellence académique pour former 
-            des leaders complets, engagés et visionnaires, prêts à contribuer au 
-            développement de la République Démocratique du Congo et de l'Afrique.</em>
-        </p>
-        
-        <p style="margin-bottom: 40px;">
-            Notre structure accompagne et développe les compétences des étudiants 
-            de l'Université de Kinshasa à travers 13 facultés, avec une mission 
-            claire : former une élite académique polyvalente et engagée.
-        </p>
 
-        <!-- 👇 VOICI LES BOUTONS 👇 -->
-        <a href="formation.html" class="bouton">🎤 Formation Art Oratoire</a>
-        <a href="apropos.html" class="bouton">📖 À propos</a>
-        <a href="contact.html" class="bouton">📧 Contact</a>
-        <!-- 👆 AJOUTEZ AUTANT DE BOUTONS QUE VOUS VOULEZ 👆 -->
-        
-        <p style="margin-top: 40px; color: #7f8c8d;">
-            <strong>Fondateur & Coordonnateur</strong>
-        </p>
+<!-- ===== HEADER LOGO PREMIER PLAN ===== -->
+<header>
+    <div class="container nav-container">
+        <a href="#" class="logo">
+            <img src="IMG_1812.jpeg" alt="Excellentia Academia" class="logo-image" 
+                 onerror="this.src='https://via.placeholder.com/56/0B2D4B/ffffff?text=EA'">
+            <div class="logo-text">
+                <span class="logo-main">Excellentia</span>
+                <span class="logo-sub">ACADEMIA · UNIKIN</span>
+                <span class="logo-slogan">au‑delà de l’excellence académique</span>
+            </div>
+        </a>
+
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        <ul class="nav-links">
+            <li><a href="#histoire">Notre histoire</a></li>
+            <li><a href="#programmes">Programmes</a></li>
+            <li><a href="#facultes">Facultés</a></li>
+            <li><a href="#adhesion">Adhésion</a></li>
+        </ul>
     </div>
+</header>
+
+<!-- ===== SECTION HÉROS : HISTOIRE, FONDATEUR, COMITÉ ===== -->
+<section class="hero" id="histoire">
+    <div class="container hero-grid">
+        <!-- Colonne gauche : récit d’excellence -->
+        <div>
+            <h1 class="hero-titre">
+                Élever l’intelligence,<br><span class="hero-accent">inspirer l’excellence.</span>
+            </h1>
+            <div class="chapeau">
+                Fondée en 2023 par Credo MALALE MUSAO, Excellentia Academia transcende le cadre académique pour former une élite universitaire polyvalente et engagée, ancrée dans les 13 facultés de l’Université de Kinshasa.
+            </div>
+            <!-- Notre histoire : héritage et vision -->
+            <div style="margin: 40px 0; padding: 24px; background: white; border-radius: 16px; border: 1px solid var(--gris-traits);">
+                <h3 style="font-size: 1.5rem; margin-bottom: 16px; display: flex; gap: 10px;"><i class="fas fa- scroll fa-leaf" style="color: var(--ocre-dynamique);"></i> Notre histoire</h3>
+                <p style="color: #2C3E50; margin-bottom: 16px;">Née au cœur du campus de Kinshasa, notre structure est le fruit de la conviction d’un étudiant en Master de Droit International : l’université doit offrir bien plus qu’un savoir théorique. Excellentia Academia est aujourd’hui un écosystème de talents, reconnu pour son concours d’éloquence, ses ateliers pratiques et son réseau d’ambassadeurs.</p>
+                <p><strong>Présence active</strong> — Droit, Médecine, Polytechnique, Sciences… 13 facultés, 13 ambassadeurs, une communauté.</p>
+            </div>
+        </div>
+
+        <!-- Colonne droite : Fondateur + Comité directeur (mise en avant forte) -->
+        <div class="notice-fondateur">
+            <span class="badge-fondateur"><i class="fas fa-user-tie"></i> Fondateur & Coordonnateur général</span>
+            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: var(--nuit-profond);">Credo MALALE MUSAO</h2>
+            <p style="font-size: 1rem; color: var(--bordeaux-signature); font-weight: 500; margin-bottom: 24px;">Master 1 – Droit international public et africain, UNIKIN</p>
+            
+            <div class="coordonnees">
+                <div class="coordonnees-item"><strong>Département</strong> Droit International</div>
+                <div class="coordonnees-item"><strong>Depuis</strong> 2023</div>
+            </div>
+
+            <div style="margin-top: 32px;">
+                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 16px; display: flex; gap: 8px;"><i class="fas fa-users" style="color: var(--ocre-dynamique);"></i> Comité directeur</h4>
+                <div class="comite-liste">
+                    <span class="membre-tag"><i class="fas fa-user"></i> Arnid DJONGA – Sec. général</span>
+                    <span class="membre-tag"><i class="fas fa-user"></i> Paul KASONGO – Sec. adj.</span>
+                    <span class="membre-tag"><i class="fas fa-user"></i> Chris – Chargé projets</span>
+                    <span class="membre-tag"><i class="fas fa-user"></i> Gemima BEMBIDE – Dir. financière</span>
+                </div>
+            </div>
+            <!-- Lien vers la charte -->
+            <p style="margin-top: 32px; font-size: 0.9rem;"><i class="fas fa-arrow-right" style="color: var(--ocre-dynamique);"></i> Une équipe entièrement dédiée à l’excellence étudiante.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== NOS PROGRAMMES (ÉLOQUENCE, ENTREPRENEURIAT, INFO, VISUEL) ===== -->
+<section class="container" id="programmes" style="padding: 100px 0;">
+    <h2 class="section-titre">Programmes & formations</h2>
+    <p class="section-sous-titre">Au‑delà des facultés, des compétences concrètes pour le monde de demain.</p>
+    
+    <div class="programmes-grid">
+        <!-- 1. Éloquence & art oratoire -->
+        <div class="carte-programme">
+            <div class="programme-icon"><i class="fas fa-microphone-alt"></i></div>
+            <h3>Éloquence</h3>
+            <ul class="liste-puces">
+                <li><i class="fas fa-check-circle"></i> Concours inter‑facultés</li>
+                <li><i class="fas fa-check-circle"></i> Coaching individuel</li>
+                <li><i class="fas fa-check-circle"></i> Prise de parole en public</li>
+                <li><i class="fas fa-check-circle"></i> Argumentation & rhétorique</li>
+            </ul>
+        </div>
+        <!-- 2. Entrepreneuriat & leadership -->
+        <div class="carte-programme">
+            <div class="programme-icon"><i class="fas fa-lightbulb"></i></div>
+            <h3>Entrepreneuriat</h3>
+            <ul class="liste-puces">
+                <li><i class="fas fa-check-circle"></i> Design thinking</li>
+                <li><i class="fas fa-check-circle"></i> Modèles économiques</li>
+                <li><i class="fas fa-check-circle"></i> Accompagnement de projets</li>
+                <li><i class="fas fa-check-circle"></i> Rencontres avec des entrepreneurs</li>
+            </ul>
+        </div>
+        <!-- 3. Numérique & informatique -->
+        <div class="carte-programme">
+            <div class="programme-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>Numérique</h3>
+            <ul class="liste-puces">
+                <li><i class="fas fa-check-circle"></i> Initiation au code</li>
+                <li><i class="fas fa-check-circle"></i> Culture data</li>
+                <li><i class="fas fa-check-circle"></i> Outils collaboratifs</li>
+                <li><i class="fas fa-check-circle"></i> Intelligence artificielle</li>
+            </ul>
+        </div>
+        <!-- 4. Création visuelle & médias -->
+        <div class="carte-programme">
+            <div class="programme-icon"><i class="fas fa-camera-retro"></i></div>
+            <h3>Visuel & Médias</h3>
+            <ul class="liste-puces">
+                <li><i class="fas fa-check-circle"></i> Design graphique</li>
+                <li><i class="fas fa-check-circle"></i> Montage vidéo</li>
+                <li><i class="fas fa-check-circle"></i> Community management</li>
+                <li><i class="fas fa-check-circle"></i> Photographie</li>
+            </ul>
+        </div>        
+    </div>
+    <!-- Ateliers complémentaires -->
+    <div style="margin-top: 48px; background: var(--gris-ciel); padding: 32px; border-radius: 20px;">
+        <p style="font-size: 1.2rem; font-weight: 500;"><i class="fas fa-pen-fancy" style="color: var(--bordeaux-signature); margin-right: 12px;"></i> Ateliers phares : Cafés scientifiques, méthodologie du mémoire, préparation aux concours.</p>
+    </div>
+</section>
+
+<!-- ===== 13 FACULTÉS – AMBASSADEURS (données réelles intégrées) ===== -->
+<section id="facultes" style="padding: 40px 0 100px; background: var(--gris-ciel);">
+    <div class="container">
+        <h2 class="section-titre">13 facultés · nos ambassadeurs</h2>
+        <p class="section-sous-titre">Un représentant par faculté, relais d’excellence et premier contact.</p>
+        <div class="facultes-grille" id="facultes-list"></div>
+        <!-- Postuler Ambassadeur -->
+        <div style="margin-top: 56px; text-align: center; background: white; padding: 48px; border-radius: 28px; border: 1px solid var(--gris-traits);">
+            <i class="fas fa-crown" style="font-size: 2.4rem; color: var(--ocre-dynamique); margin-bottom: 16px;"></i>
+            <h3 style="font-size: 2rem; margin-bottom: 16px;">Devenir ambassadeur</h3>
+            <p style="max-width: 600px; margin: 0 auto 24px; color: var(--gratia);">Représentez votre faculté, intégrez la coordination et bénéficiez d’une formation exclusive au leadership.</p>
+            <a href="#adhesion" class="btn">Postuler comme ambassadeur <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FORMULAIRE D’ADHÉSION – MINIMALISTE ET CLAIR ===== -->
+<section id="adhesion" style="padding: 100px 0;">
+    <div class="container">
+        <div class="formulaire-card">
+            <h2 style="font-size: 2rem; margin-bottom: 8px;">Rejoindre Excellentia</h2>
+            <p style="color: var(--gratia); margin-bottom: 48px; font-size: 1.1rem;">Adhésion simple, accès à tous les programmes et à la vie de la structure.</p>
+            <form id="formAdhesion">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" class="form-control" placeholder="Votre prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" placeholder="Votre nom" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="prenom.nom@unikin.ac.cd" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Faculté</label>
+                        <select class="form-control" id="facultySelect" required>
+                            <option value="">Sélectionnez votre faculté</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Niveau</label>
+                        <select class="form-control">
+                            <option>Licence 1</option>
+                            <option>Licence 2</option>
+                            <option>Licence 3</option>
+                            <option>Master 1</option>
+                            <option>Master 2</option>
+                            <option>Doctorat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Type d’adhésion</label>
+                        <select class="form-control" id="typeAdhesionSelect">
+                            <option value="membre">Membre régulier</option>
+                            <option value="ambassadeur">Postuler Ambassadeur</option>
+                            <option value="coordination">Intégrer la coordination</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label>Motivation (pourquoi nous rejoignez‑vous ?)</label>
+                    <textarea class="form-control" rows="4" placeholder="Votre parcours, vos attentes, votre engagement..."></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="submit" class="btn">Soumettre ma candidature <i class="fas fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER – TOUTES LES INFORMATIONS, COMME UNE NOTICE INSTITUTIONNELLE ===== -->
+<footer>
+    <div class="container footer-grid">
+        <div>
+            <img src="IMG_1812.jpeg" alt="Excellentia Academia" class="footer-logo-image" onerror="this.src='https://via.placeholder.com/64/0B2D4B/ffffff?text=EA'">
+            <div style="font-weight: 700; font-size: 1.8rem; color: var(--nuit-profond); margin-bottom: 4px;">Excellentia</div>
+            <div style="color: var(--bordeaux-signature); letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">ACADEMIA · UNIKIN</div>
+            <p class="footer-small" style="margin-top: 24px; max-width: 300px;">Campus de Kinshasa, bâtiment des amphithéâtres. Présent dans 13 facultés.</p>
+            <div class="social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 24px;">Coordination</h4>
+            <p class="footer-small">Credo MALALE MUSAO<br>Fondateur</p>
+            <p class="footer-small" style="margin-top: 20px;">Arnid DJONGA<br>Secrétaire général</p>
+            <p class="footer-small">Gemima BEMBIDE<br>Directrice financière</p>
+        </div>
+        <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 24px;">Informations</h4>
+            <p class="footer-small"><i class="fas fa-map-pin" style="margin-right: 8px;"></i> B.P. 127, Kinshasa, RDC</p>
+            <p class="footer-small"><i class="fas fa-envelope"></i> contact@excellentia-unikin.cd</p>
+            <p class="footer-small"><i class="fas fa-phone-alt"></i> +243 81 234 5678</p>
+            <p class="footer-small" style="margin-top: 20px;"><strong>Adhésion ouverte</strong> — toute l’année.</p>
+        </div>
+    </div>
+    <div class="container copyright">
+        <p>© 2025 Excellentia Academia – Université de Kinshasa. Héritage & excellence. </p>
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT : DONNÉES FACULTÉS / AMBASSADEURS / FORMULAIRE ===== -->
+<script>
+    (function(){
+        // ----- LISTE COMPLÈTE DES 13 FACULTÉS AVEC AMBASSADEURS (données officielles) -----
+        const faculties = [
+            { name: "Faculté de Droit", ambassador: "Aristote MBO", icon: "fa-gavel" },
+            { name: "Faculté de Lettres et Sciences Humaines", ambassador: "Adoption MWAMUKASA", icon: "fa-book" },
+            { name: "Faculté des Sciences Économiques et de Gestion", ambassador: "Grâce Eloko", icon: "fa-chart-line" },
+            { name: "Faculté des Sciences Sociales, Administratives et Politiques", ambassador: "Keren TUAVUKIDI", icon: "fa-building-columns" },
+            { name: "Faculté des Sciences et Technologies", ambassador: "Jonathan MATONDON", icon: "fa-flask" },
+            { name: "Faculté des Sciences Pharmaceutiques", ambassador: "Précieux KUZAMBA", icon: "fa-capsules" },
+            { name: "Faculté de Psychologie et Sciences de l'Éducation", ambassador: "Jeff NGANDU", icon: "fa-brain" },
+            { name: "Faculté de Polytechnique", ambassador: "À désigner", icon: "fa-gears" },
+            { name: "Faculté de Médecine Dentaire", ambassador: "À désigner", icon: "fa-tooth" },
+            { name: "Faculté de Médecine Vétérinaire", ambassador: "À désigner", icon: "fa-paw" },
+            { name: "Faculté de Pétrole, Gaz et Énergies Renouvelables", ambassador: "À désigner", icon: "fa-oil-well" },
+            { name: "Faculté des Sciences Agronomiques", ambassador: "À désigner", icon: "fa-leaf" },
+            { name: "Faculté de Médecine", ambassador: "À désigner", icon: "fa-stethoscope" }
+        ];
+
+        // 1. Afficher les facultés dans la grille
+        const container = document.getElementById('facultes-list');
+        if (container) {
+            container.innerHTML = faculties.map(f => `
+                <div class="carte-faculte">
+                    <div class="faculte-nom">
+                        <i class="fas ${f.icon}" style="color: var(--bordeaux-signature); width: 24px;"></i>
+                        <span style="font-weight: 600;">${f.name}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--gratia); font-size: 0.9rem;">Ambassadeur</span>
+                        <span class="ambassadeur-badge">${f.ambassador}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 2. Remplir le select du formulaire avec les facultés
+        const facultySelect = document.getElementById('facultySelect');
+        if (facultySelect) {
+            faculties.forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f.name;
+                opt.textContent = f.name;
+                facultySelect.appendChild(opt);
+            });
+        }
+
+        // 3. Gestion de la soumission du formulaire (simulation)
+        const form = document.getElementById('formAdhesion');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const type = document.getElementById('typeAdhesionSelect').value;
+                let msg = "✅ Votre demande d'adhésion a bien été reçue. ";
+                if (type === 'ambassadeur') msg += "Vous recevrez une convocation pour un entretien avec le comité.";
+                else if (type === 'coordination') msg += "Le comité directeur examinera votre candidature.";
+                else msg += "Bienvenue dans la communauté Excellentia ! L'ambassadeur de votre faculté vous contactera.";
+                alert(msg);
+                form.reset();
+            });
+        }
+
+        // 4. Mobile menu simple
+        const btn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav-links');
+        if(btn && nav) {
+            btn.addEventListener('click', ()=> {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '80px';
+                nav.style.left = '0';
+                nav.style.width = '100%';
+                nav.style.background = 'white';
+                nav.style.padding = '24px';
+                nav.style.boxShadow = '0 10px 20px rgba(0,0,0,0.05)';
+            });
+        }
+    })();
+</script>
 </body>
 </html>
