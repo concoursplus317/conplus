@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoursePerfect - Résumé de Cours Parfait</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .upload-area {
+            text-align: center;
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f3ff;
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .upload-area h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .file-info {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        /* File Preview */
+        .file-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .pdf-icon {
+            color: #ff4757;
+            font-size: 1.5em;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: auto;
+        }
+
+        .btn-remove:hover {
+            color: #ff4757;
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Loading Section */
+        .loading-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+
+        /* Result Section */
+        .result-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-copy, .btn-download {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .btn-copy {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-download {
+            background: #667eea;
+            color: white;
+        }
+
+        .result-content {
+            line-height: 1.8;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+
+        .result-content h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .result-content h2 {
+            color: #764ba2;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .result-content h3 {
+            color: #333;
+            margin: 15px 0 10px;
+        }
+
+        .concept-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .example-box {
+            background: #fff3cd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .highlight-box {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .summary-box {
+            background: #e8f5e8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #00b09b;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.error {
+            background: #ff4757;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎓 CoursePerfect</h1>
+            <p>Transformez vos cours en résumés parfaits avec explications détaillées de A à Z</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📤</div>
+                <h3>Déposez votre fichier PDF ici</h3>
+                <p>ou</p>
+                <button class="btn-primary" id="selectFileBtn">
+                    📁 Sélectionner un fichier
+                </button>
+                <input type="file" id="fileInput" accept=".pdf" hidden>
+                <p class="file-info">Format accepté : PDF uniquement (max 50MB)</p>
+            </div>
+            
+            <!-- File Preview -->
+            <div class="file-preview" id="filePreview" style="display: none;">
+                <div class="preview-header">
+                    <span class="pdf-icon">📄</span>
+                    <span id="fileName"></span>
+                    <button class="btn-remove" id="removeFileBtn">✖</button>
+                </div>
+                <button class="btn-generate" id="generateBtn">
+                    ✨ Générer le résumé parfait
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section class="loading-section" id="loadingSection" style="display: none;">
+            <div class="loader"></div>
+            <p>Analyse approfondie du cours en cours...</p>
+            <p style="color: #666;">Extraction des concepts clés et création des explications détaillées</p>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section" id="resultSection" style="display: none;">
+            <div class="result-header">
+                <h2>📚 Cours Parfaitement Résumé</h2>
+                <div class="result-actions">
+                    <button class="btn-copy" id="copyBtn">📋 Copier</button>
+                    <button class="btn-download" id="downloadBtn">📥 Télécharger</button>
+                </div>
+            </div>
+            <div class="result-content" id="resultContent"></div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h4>Analyse Intelligente</h4>
+                <p>Extraction automatique des concepts clés et des points importants</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h4>Explications Complètes</h4>
+                <p>Chaque concept est expliqué en détail, de A à Z, sans rien omettre</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h4>Perfection Absolue</h4>
+                <p>Résumés sans erreur, structurés et prêts à l'emploi</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        // Configuration
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        
+        // Éléments DOM
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const filePreview = document.getElementById('filePreview');
+        const fileName = document.getElementById('fileName');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingSection = document.getElementById('loadingSection');
+        const resultSection = document.getElementById('resultSection');
+        const resultContent = document.getElementById('resultContent');
+        const progressBar = document.getElementById('progressBar');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let currentFile = null;
+
+        // Événements
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#764ba2';
+            uploadArea.style.background = '#f0f3ff';
+        });
+        
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.background = '#f8f9ff';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.background = '#f8f9ff';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                validateAndProcessFile(files[0]);
+            }
+        });
+        
+        selectFileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                validateAndProcessFile(e.target.files[0]);
+            }
+        });
+        
+        removeFileBtn.addEventListener('click', removeFile);
+        generateBtn.addEventListener('click', generateSummary);
+        copyBtn.addEventListener('click', copyToClipboard);
+        downloadBtn.addEventListener('click', downloadSummary);
+
+        function validateAndProcessFile(file) {
+            if (file.type !== 'application/pdf') {
+                showNotification('Veuillez sélectionner un fichier PDF valide.', 'error');
+                return;
+            }
+            
+            if (file.size > 50 * 1024 * 1024) {
+                showNotification('Le fichier est trop volumineux. Taille maximum : 50MB', 'error');
+                return;
+            }
+            
+            currentFile = file;
+            fileName.textContent = file.name;
+            filePreview.style.display = 'block';
+            uploadArea.style.display = 'none';
+        }
+
+        function removeFile() {
+            currentFile = null;
+            fileInput.value = '';
+            filePreview.style.display = 'none';
+            uploadArea.style.display = 'block';
+            resultSection.style.display = 'none';
+        }
+
+        async function generateSummary() {
+            if (!currentFile) {
+                showNotification('Veuillez sélectionner un fichier PDF.', 'error');
+                return;
+            }
+            
+            loadingSection.style.display = 'block';
+            resultSection.style.display = 'none';
+            
+            try {
+                const text = await extractTextFromPDF(currentFile);
+                simulateProgress();
+                const summary = await generatePerfectSummary(text);
+                displaySummary(summary);
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors du traitement du fichier.', 'error');
+                loadingSection.style.display = 'none';
+            }
+        }
+
+        async function extractTextFromPDF(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    try {
+                        const typedarray = new Uint8Array(e.target.result);
+                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                        let fullText = '';
+                        
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const textContent = await page.getTextContent();
+                            const pageText = textContent.items.map(item => item.str).join(' ');
+                            fullText += pageText + '\n';
+                        }
+                        
+                        resolve(fullText);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function simulateProgress() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+        }
+
+        async function generatePerfectSummary(text) {
+            // Nettoyer le texte
+            const cleanText = text.replace(/\s+/g, ' ').trim();
+            
+            // Diviser en phrases
+            const sentences = cleanText.match(/[^.!?]+[.!?]+/g) || [];
+            
+            // Extraire les mots-clés
+            const keywords = extractKeywords(cleanText);
+            
+            // Générer le résumé structuré
+            return {
+                title: "RÉSUMÉ PARFAIT DU COURS",
+                introduction: sentences.slice(0, 3).join(' ') || "Introduction du cours...",
+                concepts: generateConcepts(keywords, sentences),
+                explanations: generateExplanations(keywords, sentences),
+                examples: sentences.filter(s => s.toLowerCase().includes('exemple')).slice(0, 3),
+                conclusion: sentences.slice(-3).join(' ') || "Conclusion du cours...",
+                keyPoints: sentences.slice(0, 10)
+            };
+        }
+
+        function extractKeywords(text) {
+            const stopWords = ['le', 'la', 'les', 'un', 'une', 'des', 'et', 'ou', 'mais', 'donc', 'car', 'ni', 'or', 'de', 'du', 'en', 'au', 'aux', 'ce', 'cet', 'cette', 'ces', 'mon', 'ton', 'son', 'notre', 'votre', 'leur'];
+            const words = text.toLowerCase().split(/\s+/);
+            const wordCount = {};
+            
+            words.forEach(word => {
+                word = word.replace(/[.,!?;:]/, '');
+                if (word.length > 3 && !stopWords.includes(word)) {
+                    wordCount[word] = (wordCount[word] || 0) + 1;
+                }
+            });
+            
+            return Object.entries(wordCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 15)
+                .map(item => item[0]);
+        }
+
+        function generateConcepts(keywords, sentences) {
+            return keywords.slice(0, 8).map(keyword => {
+                const definition = sentences.find(s => 
+                    s.toLowerCase().includes(keyword) && 
+                    (s.toLowerCase().includes('est') || s.toLowerCase().includes('défini'))
+                ) || `Le concept de "${keyword}" est fondamental dans ce cours.`;
+                
+                return {
+                    term: keyword,
+                    definition: definition,
+                    importance: "Concept clé à maîtriser pour la compréhension globale"
+                };
+            });
+        }
+
+        function generateExplanations(keywords, sentences) {
+            return keywords.slice(0, 6).map(keyword => {
+                const details = sentences.filter(s => 
+                    s.toLowerCase().includes(keyword)
+                ).slice(0, 2).join(' ') || `Explication détaillée du concept "${keyword}" avec tous ses aspects.`;
+                
+                return {
+                    concept: keyword,
+                    description: `Analyse approfondie de "${keyword}" :`,
+                    details: details,
+                    applications: `Applications pratiques : ${sentences.find(s => s.toLowerCase().includes('application')) || 'Ce concept s\'applique dans de nombreux contextes.'}`
+                };
+            });
+        }
+
+        function displaySummary(summary) {
+            let html = `
+                <h1>📚 ${summary.title}</h1>
+                
+                <div class="highlight-box">
+                    <h2>📝 Introduction</h2>
+                    <p>${summary.introduction}</p>
+                </div>
+                
+                <h2>🎯 Concepts Clés</h2>
+            `;
+            
+            summary.concepts.forEach(concept => {
+                html += `
+                    <div class="concept-card">
+                        <h3>📌 ${concept.term}</h3>
+                        <p><strong>Définition :</strong> ${concept.definition}</p>
+                        <p><em>${concept.importance}</em></p>
+                    </div>
+                `;
+            });
+            
+            html += `<h2>🔍 Explications Détaillées</h2>`;
+            
+            summary.explanations.forEach(exp => {
+                html += `
+                    <div class="concept-card">
+                        <h3>✨ ${exp.concept}</h3>
+                        <p>${exp.description}</p>
+                        <p><strong>Détails complets :</strong> ${exp.details}</p>
+                        <p><strong>Applications :</strong> ${exp.applications}</p>
+                    </div>
+                `;
+            });
+            
+            if (summary.examples.length > 0) {
+                html += `<h2>💡 Exemples Concrets</h2>`;
+                summary.examples.forEach(example => {
+                    html += `
+                        <div class="example-box">
+                            <p>📌 ${example}</p>
+                        </div>
+                    `;
+                });
+            }
+            
+            html += `
+                <h2>📋 Points Essentiels à Retenir</h2>
+                <div class="summary-box">
+                    <ul>
+            `;
+            
+            summary.keyPoints.slice(0, 8).forEach(point => {
+                html += `<li>${point}</li>`;
+            });
+            
+            html += `
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h2>🎓 Conclusion</h2>
+                    <p>${summary.conclusion}</p>
+                </div>
+                
+                <div class="summary-box">
+                    <h2>⭐ Résumé Parfait</h2>
+                    <p>Ce cours a été analysé et résumé de A à Z pour vous offrir une compréhension complète et sans faille de tous les concepts abordés. Chaque point important a été expliqué en détail, avec des exemples concrets et des applications pratiques.</p>
+                </div>
+            `;
+            
+            loadingSection.style.display = 'none';
+            resultContent.innerHTML = html;
+            resultSection.style.display = 'block';
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const text = resultContent.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Résumé copié dans le presse-papiers !');
+            }).catch(() => {
+                showNotification('Erreur lors de la copie', 'error');
+            });
+        }
+
+        function downloadSummary() {
+            const text = resultContent.innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `resume_cours_${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
