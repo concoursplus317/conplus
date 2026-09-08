@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Éloquence en Scène · Résultats Phase Prime</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b1f3a 0%, #1a446b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 15px;
+        }
+
+        .main-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 48px;
+            padding: 30px 30px 40px;
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.3s;
+        }
+
+        /* --- EN-TÊTE --- */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #c4e2ff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding: 0 10px;
+            text-shadow: 0 2px 20px rgba(70, 150, 255, 0.3);
+        }
+
+        .header .sous-titre {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-top: 6px;
+            letter-spacing: 3px;
+            font-weight: 300;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: inline-block;
+            padding-top: 10px;
+            color: #b8d6ff;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            margin: 18px 0 5px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.95rem;
+        }
+
+        .stats .badge {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 6px 22px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        .stats .badge strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* --- MESSAGE FÉLICITATIONS --- */
+        .felicitation {
+            background: linear-gradient(90deg, rgba(30, 120, 255, 0.15), rgba(70, 180, 255, 0.08));
+            border-left: 4px solid #4aabff;
+            padding: 14px 22px;
+            border-radius: 18px;
+            margin: 8px 0 22px;
+            color: #d6ecff;
+            font-size: 1.05rem;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 20px rgba(0, 80, 200, 0.15);
+        }
+
+        .felicitation span {
+            font-weight: 500;
+            color: white;
+        }
+
+        /* --- LISTE --- */
+        .liste-container {
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin-top: 6px;
+            scroll-behavior: smooth;
+        }
+
+        .liste-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .liste-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .liste-container::-webkit-scrollbar-thumb {
+            background: #4a9eff;
+            border-radius: 10px;
+        }
+
+        /* --- LIGNE CANDIDAT --- */
+        .candidat-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 18px 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+            animation: fadeSlide 0.6s ease forwards;
+            opacity: 0;
+            transform: translateX(-12px);
+        }
+
+        .candidat-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(70, 170, 255, 0.25);
+            transform: scale(1.01);
+        }
+
+        /* animation d'entrée */
+        @keyframes fadeSlide {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* numéro / classement */
+        .rang {
+            min-width: 38px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        .nom {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #f0f8ff;
+            letter-spacing: 0.3px;
+        }
+
+        .note {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #b8d6ff;
+            background: rgba(0, 40, 80, 0.3);
+            padding: 2px 14px;
+            border-radius: 40px;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* --- CADRE (case) transparente --- */
+        .cadre {
+            min-width: 70px;
+            height: 34px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* VERT transparent (qualifiés) */
+        .cadre.vert {
+            border-color: rgba(0, 255, 150, 0.5);
+            background: rgba(0, 255, 150, 0.08);
+            color: #7fffd4;
+            box-shadow: 0 0 16px rgba(0, 255, 170, 0.08);
+        }
+
+        /* ROUGE transparent (non qualifiés) */
+        .cadre.rouge {
+            border-color: rgba(255, 80, 80, 0.4);
+            background: rgba(255, 60, 60, 0.06);
+            color: #ff8a8a;
+            box-shadow: 0 0 16px rgba(255, 60, 60, 0.05);
+        }
+
+        /* --- MÉDAILLES --- */
+        .medaille {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .medaille.argent {
+            filter: drop-shadow(0 0 6px rgba(192, 192, 192, 0.6));
+        }
+        .medaille.bronze {
+            filter: drop-shadow(0 0 6px rgba(205, 127, 50, 0.6));
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 700px) {
+            .main-card {
+                padding: 20px 14px 30px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .candidat-row {
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                padding: 12px 14px;
+            }
+            .nom {
+                font-size: 0.9rem;
+                min-width: 130px;
+                flex-basis: 100%;
+            }
+            .cadre {
+                min-width: 60px;
+                height: 30px;
+                font-size: 0.65rem;
+            }
+            .rang {
+                min-width: 30px;
+                font-size: 0.95rem;
+            }
+            .medaille {
+                font-size: 1.3rem;
+                min-width: 30px;
+            }
+            .note {
+                font-size: 0.8rem;
+                padding: 0 10px;
+            }
+            .stats .badge {
+                padding: 4px 14px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .candidat-row {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+            .nom {
+                flex-basis: 100%;
+                order: 2;
+            }
+            .rang {
+                order: 1;
+            }
+            .note {
+                order: 3;
+            }
+            .cadre {
+                order: 4;
+                margin-left: auto;
+            }
+            .medaille {
+                order: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <!-- EN-TÊTE -->
+        <div class="header">
+            <h1>🏆 Éloquence en Scène</h1>
+            <div class="sous-titre">Phase · Prime · Résultats officiels</div>
+            <div class="stats">
+                <span class="badge">🎯 <strong>52</strong> sélectionnés</span>
+                <span class="badge">✅ <strong>40</strong> participants</span>
+                <span class="badge">🏅 <strong>24</strong> qualifiés · <span style="color:#ff8a8a;">16</span> éliminés</span>
+            </div>
+        </div>
+
+        <!-- FÉLICITATIONS -->
+        <div class="felicitation">
+            ✨ Félicitations à <span>tous les candidats</span> ! Vous nous avez <span>épatés</span> par votre talent et votre éloquence. <br style="display: none;" class="mobile-break"/> Un grand bravo à chacun d’entre vous ! 🙌
+        </div>
+
+        <!-- LISTE DES CANDIDATS (injectée par JS) -->
+        <div id="listeCandidats" class="liste-container"></div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- LISTE EXACTE (40 candidats) ----------
+            const candidats = [
+                { nom: "Joyce Eke-Shomba Kapinga", note: "17,5/20" },
+                { nom: "Exauce Mikila Waney", note: "16,7/20" },
+                { nom: "Claudel Elongama", note: "16,6/20" },
+                { nom: "Furah Kipata", note: "15,5/20" },
+                { nom: "Christiane Bongo", note: "15,3/20" },
+                { nom: "Eugenie Nabintu Basirwa", note: "15,0/20" },
+                { nom: "Amerack Mavinga Ntali", note: "14,9/20" },
+                { nom: "Henock Bolefo Wetshi", note: "14,8/20" },
+                { nom: "David Kitengie Malangu", note: "14,4/20" },
+                { nom: "Abraham Mundanda", note: "14,4/20" },
+                { nom: "Brineige Massamba", note: "14/20" },
+                { nom: "Pax Fungamali", note: "14/20" },
+                { nom: "Ruth Kalonga", note: "13,9/20" },
+                { nom: "Joyce Aziza", note: "13,8/20" },
+                { nom: "Gremis Flevia Funga Funga", note: "13,6/20" },
+                { nom: "Divine Nlandu Nsakanunu", note: "13,6/20" },
+                { nom: "Adju Abdallah", note: "13,4/20" },
+                { nom: "David Nakweti Musikwela", note: "13,3/20" },
+                { nom: "Darlène Yowa Ngandu", note: "13,0/20" },
+                { nom: "Emeraude Kanene Samba", note: "12,9/20" },
+                { nom: "Mersei Kanemeka Wa Nzambi", note: "12,9/20" },
+                { nom: "Béni Fungamali R…ani", note: "12,5/20" },
+                { nom: "Christian Mbo Ntali", note: "12,5/20" },
+                { nom: "Enoch Bilha Kalonda", note: "12,4/20" },
+                // À partir d'ici : 16 non qualifiés (rouges)
+                { nom: "Henry Lukonga Butumbi", note: "12,3/20" },
+                { nom: "Divine Mugoli", note: "12,1/20" },
+                { nom: "Jean Djemodo Toss", note: "12,1/20" },
+                { nom: "Dieudonné Mundala", note: "12,1/20" },
+                { nom: "Benjamin Kabeya", note: "12,1/20" },
+                { nom: "Arsène Sangwa", note: "12,1/20" },
+                { nom: "Gaspard Mwina", note: "11,9/20" },
+                { nom: "Winner Blessing", note: "12/20" },
+                { nom: "Rodrick Banza", note: "11,6/20" },
+                { nom: "David Mukedi", note: "11,5/20" },
+                { nom: "Remy Kingambo", note: "11,1/20" },
+                { nom: "Bijou Belanza", note: "11/20" },
+                { nom: "Glody Loleke Elembe", note: "10,9/20" },
+                { nom: "Nicky Musadi", note: "10,5/20" },
+                { nom: "Ecric Mafuku", note: "10,3/20" },
+                { nom: "Jenovic Letashi", note: "10/20" }
+            ];
+
+            // Les 24 premiers = qualifiés (verts) ; les 16 suivants = rouges
+            const QUALIFIES = 24;
+
+            // Médailles : or, argent, bronze pour les 3 premiers
+            const MEDAILLES = ['🥇', '🥈', '🥉'];
+
+            const container = document.getElementById('listeCandidats');
+            if (!container) return;
+
+            // Construction du HTML
+            let html = '';
+
+            candidats.forEach((candidat, index) => {
+                const position = index + 1; // 1-based
+                const estQualifie = position <= QUALIFIES;
+                const classeCadre = estQualifie ? 'vert' : 'rouge';
+                const texteCadre = estQualifie ? '✔ QUALIFIÉ' : '✘ ÉLIMINÉ';
+
+                // Gestion des médailles (or, argent, bronze)
+                let medailleHtml = '';
+                if (position === 1) medailleHtml = `<span class="medaille">🥇</span>`;
+                else if (position === 2) medailleHtml = `<span class="medaille argent">🥈</span>`;
+                else if (position === 3) medailleHtml = `<span class="medaille bronze">🥉</span>`;
+                else medailleHtml = `<span class="rang">${position}</span>`;
+
+                // On ajoute un délai d'animation progressif (effet cascade)
+                const delay = index * 40; // ms
+
+                html += `
+                    <div class="candidat-row" style="animation-delay: ${delay}ms;">
+                        ${medailleHtml}
+                        <span class="nom">${candidat.nom}</span>
+                        <span class="note">${candidat.note}</span>
+                        <span class="cadre ${classeCadre}">${texteCadre}</span>
+                    </div>
+                `;
+            });
+
+            // Injection
+            container.innerHTML = html;
+
+            // (Optionnel) petit effet : scroll automatique vers le bas après chargement
+            // pour montrer le déroulé complet (on le fait doucement)
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 1200);
+
+        })();
+    </script>
+
+</body>
+</html>
