@@ -34,7 +34,6 @@
             transition: 0.3s;
         }
 
-        /* --- EN-TÊTE --- */
         .header {
             text-align: center;
             margin-bottom: 25px;
@@ -52,6 +51,12 @@
             display: inline-block;
             padding: 0 10px;
             text-shadow: 0 2px 20px rgba(70, 150, 255, 0.3);
+            animation: glowTitle 2s ease-in-out infinite;
+        }
+
+        @keyframes glowTitle {
+            0%, 100% { text-shadow: 0 2px 20px rgba(70, 150, 255, 0.3); }
+            50% { text-shadow: 0 2px 40px rgba(70, 150, 255, 0.7), 0 0 60px rgba(70, 150, 255, 0.3); }
         }
 
         .header .sous-titre {
@@ -82,6 +87,12 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+
+        .stats .badge:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
         }
 
         .stats .badge strong {
@@ -89,7 +100,47 @@
             font-weight: 600;
         }
 
-        /* --- MESSAGE FÉLICITATIONS --- */
+        /* COMPTE À REBOURS */
+        .countdown-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .countdown-text {
+            color: #b8d6ff;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .countdown-number {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4aabff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            animation: pulseNumber 1s ease-in-out infinite;
+            min-width: 80px;
+        }
+
+        @keyframes pulseNumber {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .countdown-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
         .felicitation {
             background: linear-gradient(90deg, rgba(30, 120, 255, 0.15), rgba(70, 180, 255, 0.08));
             border-left: 4px solid #4aabff;
@@ -103,6 +154,14 @@
             letter-spacing: 0.5px;
             backdrop-filter: blur(4px);
             box-shadow: 0 4px 20px rgba(0, 80, 200, 0.15);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        .felicitation.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .felicitation span {
@@ -110,7 +169,6 @@
             color: white;
         }
 
-        /* --- LISTE --- */
         .liste-container {
             max-height: 520px;
             overflow-y: auto;
@@ -133,7 +191,6 @@
             border-radius: 10px;
         }
 
-        /* --- LIGNE CANDIDAT --- */
         .candidat-row {
             display: flex;
             align-items: center;
@@ -144,27 +201,80 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.25s ease;
-            animation: fadeSlide 0.6s ease forwards;
+            transition: all 0.3s ease;
             opacity: 0;
-            transform: translateX(-12px);
+            transform: translateX(-15px) scale(0.95);
+            animation: none;
+        }
+
+        .candidat-row.visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            animation: fadeSlide 0.6s ease forwards;
         }
 
         .candidat-row:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(70, 170, 255, 0.25);
-            transform: scale(1.01);
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 80, 200, 0.15);
         }
 
-        /* animation d'entrée */
         @keyframes fadeSlide {
-            to {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px) scale(0.95);
+            }
+            100% {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) scale(1);
             }
         }
 
-        /* numéro / classement */
+        /* Médailles avec animation */
+        .medaille {
+            font-size: 1.8rem;
+            min-width: 45px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .medaille.or {
+            animation: shineGold 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes shineGold {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            }
+            50% { 
+                transform: scale(1.2) rotate(10deg);
+                filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)), drop-shadow(0 0 60px rgba(255, 215, 0, 0.6));
+            }
+        }
+
+        .medaille.argent {
+            animation: shineSilver 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(192, 192, 192, 0.6));
+        }
+
+        @keyframes shineSilver {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(192, 192, 192, 0.9)); }
+        }
+
+        .medaille.bronze {
+            animation: shineBronze 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(205, 127, 50, 0.6));
+        }
+
+        @keyframes shineBronze {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(205, 127, 50, 0.9)); }
+        }
+
         .rang {
             min-width: 38px;
             font-weight: 600;
@@ -192,7 +302,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* --- CADRE (case) transparente --- */
         .cadre {
             min-width: 70px;
             height: 34px;
@@ -204,43 +313,63 @@
             font-weight: 600;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            transition: 0.3s;
+            transition: all 0.5s ease;
             border: 2px solid transparent;
             background: rgba(255, 255, 255, 0.04);
         }
 
-        /* VERT transparent (qualifiés) */
         .cadre.vert {
             border-color: rgba(0, 255, 150, 0.5);
             background: rgba(0, 255, 150, 0.08);
             color: #7fffd4;
-            box-shadow: 0 0 16px rgba(0, 255, 170, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.1);
+            animation: pulseGreen 2s ease-in-out infinite;
         }
 
-        /* ROUGE transparent (non qualifiés) */
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 170, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 170, 0.3); }
+        }
+
         .cadre.rouge {
             border-color: rgba(255, 80, 80, 0.4);
             background: rgba(255, 60, 60, 0.06);
             color: #ff8a8a;
-            box-shadow: 0 0 16px rgba(255, 60, 60, 0.05);
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.05);
         }
 
-        /* --- MÉDAILLES --- */
-        .medaille {
-            font-size: 1.6rem;
-            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
-            min-width: 40px;
-            text-align: center;
+        /* Confettis en fond (effet de célébration) */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
         }
 
-        .medaille.argent {
-            filter: drop-shadow(0 0 6px rgba(192, 192, 192, 0.6));
-        }
-        .medaille.bronze {
-            filter: drop-shadow(0 0 6px rgba(205, 127, 50, 0.6));
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #4aabff;
+            opacity: 0;
+            animation: confettiFall linear forwards;
         }
 
-        /* --- RESPONSIVE --- */
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 700px) {
             .main-card {
                 padding: 20px 14px 30px;
@@ -268,8 +397,8 @@
                 font-size: 0.95rem;
             }
             .medaille {
-                font-size: 1.3rem;
-                min-width: 30px;
+                font-size: 1.5rem;
+                min-width: 35px;
             }
             .note {
                 font-size: 0.8rem;
@@ -278,6 +407,9 @@
             .stats .badge {
                 padding: 4px 14px;
                 font-size: 0.8rem;
+            }
+            .countdown-number {
+                font-size: 3rem;
             }
         }
 
@@ -313,7 +445,6 @@
 <body>
 
     <div class="main-card">
-        <!-- EN-TÊTE -->
         <div class="header">
             <h1>🏆 Éloquence en Scène</h1>
             <div class="sous-titre">Phase · Prime · Résultats officiels</div>
@@ -324,18 +455,26 @@
             </div>
         </div>
 
-        <!-- FÉLICITATIONS -->
-        <div class="felicitation">
-            ✨ Félicitations à <span>tous les candidats</span> ! Vous nous avez <span>épatés</span> par votre talent et votre éloquence. <br style="display: none;" class="mobile-break"/> Un grand bravo à chacun d’entre vous ! 🙌
+        <!-- COMPTE À REBOURS -->
+        <div id="countdownContainer" class="countdown-container">
+            <div class="countdown-text">🎤 Les résultats arrivent dans...</div>
+            <div id="countdownNumber" class="countdown-number">5</div>
+            <div class="countdown-label">secondes</div>
         </div>
 
-        <!-- LISTE DES CANDIDATS (injectée par JS) -->
+        <!-- FÉLICITATIONS (caché au début) -->
+        <div id="felicitation" class="felicitation">
+            ✨ Félicitations à <span>tous les candidats</span> ! Vous nous avez <span>épatés</span> par votre talent et votre éloquence.<br/> 
+            Un grand bravo à chacun d'entre vous ! 🙌🎉
+        </div>
+
         <div id="listeCandidats" class="liste-container"></div>
     </div>
 
+    <div id="confettiContainer" class="confetti-container"></div>
+
     <script>
         (function() {
-            // ---------- LISTE EXACTE (40 candidats) ----------
             const candidats = [
                 { nom: "Joyce Eke-Shomba Kapinga", note: "17,5/20" },
                 { nom: "Exauce Mikila Waney", note: "16,7/20" },
@@ -361,7 +500,6 @@
                 { nom: "Béni Fungamali R…ani", note: "12,5/20" },
                 { nom: "Christian Mbo Ntali", note: "12,5/20" },
                 { nom: "Enoch Bilha Kalonda", note: "12,4/20" },
-                // À partir d'ici : 16 non qualifiés (rouges)
                 { nom: "Henry Lukonga Butumbi", note: "12,3/20" },
                 { nom: "Divine Mugoli", note: "12,1/20" },
                 { nom: "Jean Djemodo Toss", note: "12,1/20" },
@@ -380,37 +518,37 @@
                 { nom: "Jenovic Letashi", note: "10/20" }
             ];
 
-            // Les 24 premiers = qualifiés (verts) ; les 16 suivants = rouges
             const QUALIFIES = 24;
-
-            // Médailles : or, argent, bronze pour les 3 premiers
-            const MEDAILLES = ['🥇', '🥈', '🥉'];
-
             const container = document.getElementById('listeCandidats');
-            if (!container) return;
+            const countdownContainer = document.getElementById('countdownContainer');
+            const countdownNumber = document.getElementById('countdownNumber');
+            const felicitation = document.getElementById('felicitation');
+            const confettiContainer = document.getElementById('confettiContainer');
 
-            // Construction du HTML
+            // Construction HTML (tous cachés)
             let html = '';
-
             candidats.forEach((candidat, index) => {
-                const position = index + 1; // 1-based
+                const position = index + 1;
                 const estQualifie = position <= QUALIFIES;
                 const classeCadre = estQualifie ? 'vert' : 'rouge';
                 const texteCadre = estQualifie ? '✔ QUALIFIÉ' : '✘ ÉLIMINÉ';
 
-                // Gestion des médailles (or, argent, bronze)
                 let medailleHtml = '';
-                if (position === 1) medailleHtml = `<span class="medaille">🥇</span>`;
-                else if (position === 2) medailleHtml = `<span class="medaille argent">🥈</span>`;
-                else if (position === 3) medailleHtml = `<span class="medaille bronze">🥉</span>`;
-                else medailleHtml = `<span class="rang">${position}</span>`;
-
-                // On ajoute un délai d'animation progressif (effet cascade)
-                const delay = index * 40; // ms
+                let classeMedaille = '';
+                if (position === 1) {
+                    medailleHtml = '🥇';
+                    classeMedaille = 'or';
+                } else if (position === 2) {
+                    medailleHtml = '🥈';
+                    classeMedaille = 'argent';
+                } else if (position === 3) {
+                    medailleHtml = '🥉';
+                    classeMedaille = 'bronze';
+                }
 
                 html += `
-                    <div class="candidat-row" style="animation-delay: ${delay}ms;">
-                        ${medailleHtml}
+                    <div class="candidat-row" data-index="${index}">
+                        ${medailleHtml ? `<span class="medaille ${classeMedaille}">${medailleHtml}</span>` : `<span class="rang">${position}</span>`}
                         <span class="nom">${candidat.nom}</span>
                         <span class="note">${candidat.note}</span>
                         <span class="cadre ${classeCadre}">${texteCadre}</span>
@@ -418,14 +556,90 @@
                 `;
             });
 
-            // Injection
             container.innerHTML = html;
 
-            // (Optionnel) petit effet : scroll automatique vers le bas après chargement
-            // pour montrer le déroulé complet (on le fait doucement)
-            setTimeout(() => {
-                container.scrollTop = container.scrollHeight;
-            }, 1200);
+            const rows = container.querySelectorAll('.candidat-row');
+            let currentIndex = 0;
+
+            // Fonction pour afficher les confettis
+            function launchConfetti() {
+                const colors = ['#4aabff', '#ffd700', '#ff6b6b', '#7fffd4', '#ff9ff3', '#ffd93d'];
+                for (let i = 0; i < 60; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 8 + 4) + 'px';
+                    confetti.style.height = (Math.random() * 8 + 4) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    confetti.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    confettiContainer.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }
+            }
+
+            // Fonction d'affichage des candidats
+            function showNextCandidate() {
+                if (currentIndex >= rows.length) {
+                    setTimeout(() => {
+                        container.scrollTo({
+                            top: container.scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    }, 300);
+                    return;
+                }
+
+                const row = rows[currentIndex];
+                row.classList.add('visible');
+                currentIndex++;
+
+                // Confettis pour les 3 premiers (médaillés)
+                if (currentIndex <= 3) {
+                    launchConfetti();
+                }
+
+                setTimeout(() => {
+                    if (row) {
+                        row.scrollIntoView({
+                            block: 'nearest',
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100);
+
+                // Intervalle plus rapide pour les premiers (effet de suspense)
+                const delay = currentIndex <= 5 ? 300 : 350;
+                setTimeout(showNextCandidate, delay);
+            }
+
+            // COMPTE À REBOURS (5 secondes)
+            let countdown = 5;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown >= 0) {
+                    countdownNumber.textContent = countdown;
+                }
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                    countdownContainer.style.display = 'none';
+                    
+                    // Afficher les félicitations
+                    felicitation.classList.add('show');
+                    
+                    // Lancer les confettis
+                    launchConfetti();
+                    
+                    // Démarrer l'affichage des candidats
+                    setTimeout(showNextCandidate, 500);
+                }
+            }, 1000);
+
+            // Effet de brillance sur la médaille d'or (déjà en CSS)
 
         })();
     </script>
