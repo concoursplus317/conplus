@@ -100,7 +100,6 @@
             font-weight: 600;
         }
 
-        /* COMPTE À REBOURS */
         .countdown-container {
             text-align: center;
             margin: 20px 0;
@@ -231,7 +230,6 @@
             }
         }
 
-        /* Médailles avec animation */
         .medaille {
             font-size: 1.8rem;
             min-width: 45px;
@@ -283,12 +281,59 @@
             text-align: center;
         }
 
+        /* --- LE NOM EST ENCADRÉ AVEC LA COULEUR --- */
         .nom {
             flex: 1;
             font-size: 1rem;
             font-weight: 500;
-            color: #f0f8ff;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 2.5px solid transparent;
+            transition: all 0.4s ease;
             letter-spacing: 0.3px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Vert pour les 24 premiers (qualifiés) */
+        .nom.vert {
+            border-color: rgba(0, 255, 150, 0.6);
+            color: #7fffd4;
+            background: rgba(0, 255, 150, 0.06);
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.08);
+            animation: pulseGreenName 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGreenName {
+            0%, 100% { 
+                border-color: rgba(0, 255, 150, 0.6);
+                box-shadow: 0 0 20px rgba(0, 255, 170, 0.08);
+            }
+            50% { 
+                border-color: rgba(0, 255, 150, 0.9);
+                box-shadow: 0 0 40px rgba(0, 255, 170, 0.2);
+            }
+        }
+
+        /* Rouge pour les 16 suivants (éliminés) */
+        .nom.rouge {
+            border-color: rgba(255, 80, 80, 0.5);
+            color: #ff8a8a;
+            background: rgba(255, 60, 60, 0.04);
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.05);
+        }
+
+        .candidat-row:hover .nom {
+            transform: scale(1.02);
+        }
+
+        .candidat-row:hover .nom.vert {
+            border-color: rgba(0, 255, 150, 0.9);
+            box-shadow: 0 0 40px rgba(0, 255, 170, 0.3);
+        }
+
+        .candidat-row:hover .nom.rouge {
+            border-color: rgba(255, 80, 80, 0.8);
+            box-shadow: 0 0 40px rgba(255, 60, 60, 0.2);
         }
 
         .note {
@@ -302,43 +347,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .cadre {
-            min-width: 70px;
-            height: 34px;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: all 0.5s ease;
-            border: 2px solid transparent;
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .cadre.vert {
-            border-color: rgba(0, 255, 150, 0.5);
-            background: rgba(0, 255, 150, 0.08);
-            color: #7fffd4;
-            box-shadow: 0 0 20px rgba(0, 255, 170, 0.1);
-            animation: pulseGreen 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseGreen {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 170, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 170, 0.3); }
-        }
-
-        .cadre.rouge {
-            border-color: rgba(255, 80, 80, 0.4);
-            background: rgba(255, 60, 60, 0.06);
-            color: #ff8a8a;
-            box-shadow: 0 0 20px rgba(255, 60, 60, 0.05);
-        }
-
-        /* Confettis en fond (effet de célébration) */
         .confetti-container {
             position: fixed;
             top: 0;
@@ -384,13 +392,8 @@
             }
             .nom {
                 font-size: 0.9rem;
-                min-width: 130px;
+                padding: 5px 12px;
                 flex-basis: 100%;
-            }
-            .cadre {
-                min-width: 60px;
-                height: 30px;
-                font-size: 0.65rem;
             }
             .rang {
                 min-width: 30px;
@@ -432,10 +435,6 @@
             .note {
                 order: 3;
             }
-            .cadre {
-                order: 4;
-                margin-left: auto;
-            }
             .medaille {
                 order: 0;
             }
@@ -455,14 +454,12 @@
             </div>
         </div>
 
-        <!-- COMPTE À REBOURS -->
         <div id="countdownContainer" class="countdown-container">
             <div class="countdown-text">🎤 Les résultats arrivent dans...</div>
             <div id="countdownNumber" class="countdown-number">5</div>
             <div class="countdown-label">secondes</div>
         </div>
 
-        <!-- FÉLICITATIONS (caché au début) -->
         <div id="felicitation" class="felicitation">
             ✨ Félicitations à <span>tous les candidats</span> ! Vous nous avez <span>épatés</span> par votre talent et votre éloquence.<br/> 
             Un grand bravo à chacun d'entre vous ! 🙌🎉
@@ -525,13 +522,11 @@
             const felicitation = document.getElementById('felicitation');
             const confettiContainer = document.getElementById('confettiContainer');
 
-            // Construction HTML (tous cachés)
             let html = '';
             candidats.forEach((candidat, index) => {
                 const position = index + 1;
                 const estQualifie = position <= QUALIFIES;
-                const classeCadre = estQualifie ? 'vert' : 'rouge';
-                const texteCadre = estQualifie ? '✔ QUALIFIÉ' : '✘ ÉLIMINÉ';
+                const classeNom = estQualifie ? 'vert' : 'rouge';
 
                 let medailleHtml = '';
                 let classeMedaille = '';
@@ -549,9 +544,8 @@
                 html += `
                     <div class="candidat-row" data-index="${index}">
                         ${medailleHtml ? `<span class="medaille ${classeMedaille}">${medailleHtml}</span>` : `<span class="rang">${position}</span>`}
-                        <span class="nom">${candidat.nom}</span>
+                        <span class="nom ${classeNom}">${candidat.nom}</span>
                         <span class="note">${candidat.note}</span>
-                        <span class="cadre ${classeCadre}">${texteCadre}</span>
                     </div>
                 `;
             });
@@ -561,7 +555,6 @@
             const rows = container.querySelectorAll('.candidat-row');
             let currentIndex = 0;
 
-            // Fonction pour afficher les confettis
             function launchConfetti() {
                 const colors = ['#4aabff', '#ffd700', '#ff6b6b', '#7fffd4', '#ff9ff3', '#ffd93d'];
                 for (let i = 0; i < 60; i++) {
@@ -582,7 +575,6 @@
                 }
             }
 
-            // Fonction d'affichage des candidats
             function showNextCandidate() {
                 if (currentIndex >= rows.length) {
                     setTimeout(() => {
@@ -598,7 +590,6 @@
                 row.classList.add('visible');
                 currentIndex++;
 
-                // Confettis pour les 3 premiers (médaillés)
                 if (currentIndex <= 3) {
                     launchConfetti();
                 }
@@ -612,12 +603,10 @@
                     }
                 }, 100);
 
-                // Intervalle plus rapide pour les premiers (effet de suspense)
                 const delay = currentIndex <= 5 ? 300 : 350;
                 setTimeout(showNextCandidate, delay);
             }
 
-            // COMPTE À REBOURS (5 secondes)
             let countdown = 5;
             const countdownInterval = setInterval(() => {
                 countdown--;
@@ -628,18 +617,12 @@
                     clearInterval(countdownInterval);
                     countdownContainer.style.display = 'none';
                     
-                    // Afficher les félicitations
                     felicitation.classList.add('show');
-                    
-                    // Lancer les confettis
                     launchConfetti();
                     
-                    // Démarrer l'affichage des candidats
                     setTimeout(showNextCandidate, 500);
                 }
             }, 1000);
-
-            // Effet de brillance sur la médaille d'or (déjà en CSS)
 
         })();
     </script>
