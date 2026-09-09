@@ -10,1905 +10,803 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        :root {
-            --blanc: #ffffff;
-            --blanc-casse: #f8f7f4;
-            --bleu-fonce: #0a1628;
-            --bleu-marine: #1a2a4a;
-            --bleu-ciel: #4a90d9;
-            --rouge: #c0392b;
-            --rouge-dore: #a93226;
-            --or: #d4af37;
-            --gris-clair: #e8e6e1;
-            --gris-moyen: #b0aeaa;
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            --radius: 20px;
-            --transition: 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-            --green: #2ecc71;
-            --orange: #f39c12;
-            --red: #e74c3c;
-            --bleu-france: #0055a4;
-            --rouge-france: #ef4135;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--blanc-casse) 0%, #e8e4de 100%);
+            background: #0a0a1a;
             min-height: 100vh;
             padding: 20px;
-            background-image: 
-                radial-gradient(ellipse at 0% 0%, rgba(0, 85, 164, 0.03) 0%, transparent 60%),
-                radial-gradient(ellipse at 100% 100%, rgba(239, 65, 53, 0.03) 0%, transparent 60%);
+            color: #fff;
         }
-        ::-webkit-scrollbar {
-            width: 6px;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--blanc-casse);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--bleu-france);
-            border-radius: 10px;
-        }
-
-        /* === SÉLECTEUR DE JURY (MAISON) === */
-        .jury-selector-container {
-            max-width: 1400px;
-            margin: 0 auto 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            background: var(--blanc);
-            padding: 12px 24px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--bleu-france);
-            border-right: 5px solid var(--rouge-france);
-        }
-        .jury-selector-container .label {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--bleu-fonce);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .jury-selector-container .label i {
-            color: var(--or);
-        }
-        .jury-btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            flex: 1;
-        }
-        .jury-btn {
-            padding: 8px 20px;
-            border: 2px solid var(--gris-clair);
-            border-radius: 30px;
-            background: var(--blanc);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--gris-moyen);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .jury-btn:hover:not(.locked) {
-            border-color: var(--bleu-france);
-            color: var(--bleu-france);
-        }
-        .jury-btn.active {
-            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
-            color: var(--blanc);
-            border-color: var(--bleu-france);
-            box-shadow: 0 4px 20px rgba(0, 85, 164, 0.25);
-        }
-        .jury-btn.locked {
-            opacity: 0.6;
-            cursor: not-allowed;
-            border-color: var(--gris-clair) !important;
-        }
-        .jury-btn.locked.active {
-            opacity: 1;
-            cursor: default;
-        }
-        .jury-btn .badge-num {
-            background: rgba(0,0,0,0.08);
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        .jury-btn.active .badge-num {
-            background: rgba(255,255,255,0.2);
-        }
-        .jury-btn .status-dot-mini {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-dot-mini.connected {
-            background: var(--green);
-        }
-        .status-dot-mini.locked-dot {
-            background: var(--or);
-        }
-        .jury-btn .lock-icon {
-            font-size: 0.7rem;
-            color: var(--or);
-        }
-
-        /* === MODAL DE CONNEXION JURY (CODE D'ACCÈS) === */
-        .jury-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(4px);
-        }
-        .jury-modal-overlay.active {
-            display: flex;
-        }
-        .jury-modal {
-            background: var(--blanc);
-            border-radius: var(--radius);
-            padding: 40px 50px;
-            max-width: 440px;
-            width: 100%;
-            box-shadow: var(--shadow);
-            text-align: center;
-            animation: modalIn 0.3s ease;
-        }
-        @keyframes modalIn {
-            0% { transform: scale(0.9) translateY(20px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        .jury-modal .modal-icon {
-            font-size: 3.5rem;
-            color: var(--bleu-france);
-            margin-bottom: 12px;
-        }
-        .jury-modal h2 {
-            font-size: 1.4rem;
-            color: var(--bleu-fonce);
-            font-weight: 700;
-        }
-        .jury-modal .subtitle {
-            color: var(--gris-moyen);
-            font-size: 0.85rem;
-            margin: 4px 0 20px;
-        }
-        .jury-modal .jury-name-display {
-            font-weight: 700;
-            color: var(--bleu-france);
-            font-size: 1.2rem;
-            background: var(--blanc-casse);
-            padding: 6px 16px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-        .jury-modal .code-input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            margin: 16px 0;
-        }
-        .jury-modal .code-input-group input {
-            padding: 12px 18px;
-            border: 2px solid var(--gris-clair);
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: 'Poppins', monospace;
-            width: 160px;
-            text-align: center;
-            letter-spacing: 6px;
-            transition: var(--transition);
-        }
-        .jury-modal .code-input-group input:focus {
-            outline: none;
-            border-color: var(--bleu-france);
-            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
-        }
-        .jury-modal .code-input-group input.error {
-            border-color: var(--red);
-            animation: shake 0.4s ease;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-        .jury-modal .btn-confirm-code {
-            padding: 12px 40px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
-            color: var(--blanc);
-            font-weight: 700;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .jury-modal .btn-confirm-code:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 85, 164, 0.25);
-        }
-        .jury-modal .btn-confirm-code:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        .jury-modal .error-msg {
-            color: var(--red);
-            font-size: 0.8rem;
-            margin-top: 8px;
-            min-height: 24px;
-        }
-        .jury-modal .hint-text {
-            color: var(--gris-moyen);
-            font-size: 0.7rem;
-            margin-top: 12px;
-        }
-
-        .jury-header {
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 32px;
-            background: var(--blanc);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #0055a4, #ef4135);
+            border-radius: 16px;
             margin-bottom: 24px;
-            border-left: 5px solid var(--bleu-france);
-            border-right: 5px solid var(--rouge-france);
             flex-wrap: wrap;
             gap: 12px;
         }
-        .jury-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .jury-header .logo i {
-            font-size: 2rem;
-            color: var(--bleu-france);
-        }
-        .jury-header .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--bleu-france), var(--rouge-france));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .jury-header .logo span {
-            font-weight: 300;
-            font-size: 0.8rem;
-            color: var(--gris-moyen);
-            -webkit-text-fill-color: var(--gris-moyen);
-        }
-        .jury-header .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .jury-header .user-info .badge-jury {
-            background: var(--bleu-france);
-            color: var(--blanc);
+        header .logo { font-size: 1.3rem; font-weight: 700; }
+        header .logo i { margin-right: 10px; }
+        header .jury-name {
+            background: rgba(255,255,255,0.15);
             padding: 6px 18px;
             border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        .jury-header .user-info .badge-jury.rouge {
-            background: var(--rouge-france);
-        }
-        .jury-header .user-info .badge-jury.locked-badge {
-            background: var(--or);
-            color: var(--bleu-fonce);
-        }
-        .jury-header .user-info .btn-deconnexion {
-            background: transparent;
-            border: 1px solid var(--gris-clair);
-            color: var(--gris-moyen);
-            padding: 8px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.75rem;
-            transition: var(--transition);
-        }
-        .jury-header .user-info .btn-deconnexion:hover {
-            border-color: var(--rouge-france);
-            color: var(--rouge-france);
-        }
-        .status-connection {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            color: #888;
-        }
-        .status-connection .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .dot.online {
-            background: var(--green);
-        }
-        .dot.offline {
-            background: var(--red);
-        }
-        .jury-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 24px;
-        }
-        @media (max-width: 1024px) {
-            .jury-main {
-                grid-template-columns: 1fr;
-            }
-        }
-        .candidat-card {
-            background: var(--blanc);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            border: 1px solid rgba(26, 42, 74, 0.06);
-            position: sticky;
-            top: 20px;
-            height: fit-content;
-            transition: all 0.3s ease;
-        }
-        .candidat-card .card-header {
-            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .candidat-card .card-header .match-badge {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--blanc);
-            padding: 4px 16px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        .candidat-card .card-header .timer-badge {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--blanc);
-            padding: 4px 16px;
-            border-radius: 30px;
             font-size: 0.8rem;
-            font-weight: 700;
-            font-family: 'Poppins', monospace;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
-        .candidat-card .card-header .timer-badge i {
-            color: var(--or);
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
         }
-        .candidat-card .candidat-photo {
-            position: relative;
-            padding: 30px 20px 20px;
+        .card h2 {
+            color: #d4af37;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+        .card h2 i { margin-right: 10px; }
+
+        /* Candidat actuel */
+        .candidat-actuel {
             text-align: center;
-            background: linear-gradient(180deg, var(--bleu-france) 0%, var(--blanc) 60%);
+            padding: 20px;
         }
-        .candidat-card .candidat-photo .photo-frame {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto;
+        .candidat-actuel .photo {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 5px solid var(--blanc);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            background: var(--gris-clair);
+            background: #1a1a2e;
+            margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            font-size: 3rem;
+            border: 3px solid #d4af37;
+            overflow: hidden;
         }
-        .candidat-card .candidat-photo .photo-frame img {
+        .candidat-actuel .photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .candidat-card .candidat-photo .photo-frame .placeholder {
-            font-size: 4rem;
-            color: var(--gris-moyen);
-            opacity: 0.3;
-        }
-        .candidat-card .candidat-photo .role-badge {
-            display: inline-block;
-            padding: 6px 24px;
-            border-radius: 30px;
-            font-size: 0.75rem;
+        .candidat-actuel .nom {
+            font-size: 1.6rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 16px;
         }
-        .role-badge.these {
-            background: var(--bleu-france);
-            color: var(--blanc);
-        }
-        .role-badge.antithese {
-            background: var(--rouge-france);
-            color: var(--blanc);
-        }
-        .candidat-card .candidat-info {
-            padding: 20px 24px 24px;
-        }
-        .candidat-card .candidat-info .nom {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--bleu-fonce);
-            text-align: center;
-            margin-bottom: 4px;
-        }
-        .candidat-card .candidat-info .theme {
-            font-size: 0.85rem;
-            color: var(--gris-moyen);
-            text-align: center;
-            font-weight: 300;
-            line-height: 1.6;
-            padding: 8px 16px;
-            background: var(--blanc-casse);
-            border-radius: 10px;
-            margin-top: 8px;
-            border-left: 3px solid var(--or);
-        }
-        .candidat-card .candidat-info .theme i {
-            color: var(--or);
-            margin-right: 8px;
-        }
-        .candidat-card .status-cotation {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 12px 24px;
-            border-top: 1px solid var(--gris-clair);
-            font-size: 0.75rem;
-            color: var(--gris-moyen);
-            flex-wrap: wrap;
-        }
-        .candidat-card .status-cotation .statut-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .candidat-card .status-cotation .statut-item .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .candidat-actuel .role {
             display: inline-block;
-        }
-        .dot.non-cote {
-            background: var(--gris-clair);
-        }
-        .dot.brouillon {
-            background: var(--or);
-        }
-        .dot.valide {
-            background: var(--bleu-france);
-        }
-        .dot.en-attente {
-            background: var(--orange);
-            animation: pulse-dot 1.5s infinite;
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.8);
-            }
-        }
-        .cotation-card {
-            background: var(--blanc);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(26, 42, 74, 0.06);
-            overflow: hidden;
-        }
-        .cotation-card .card-header {
-            background: linear-gradient(135deg, var(--bleu-france), var(--rouge-dore));
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .cotation-card .card-header h2 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--blanc);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .cotation-card .card-header h2 i {
-            font-size: 1.2rem;
-        }
-        .cotation-card .card-header .jury-name {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 16px;
+            padding: 4px 20px;
             border-radius: 30px;
-        }
-        .cotation-card .card-body {
-            padding: 24px;
-        }
-        .candidat-actif-info {
-            background: rgba(212, 175, 55, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .candidat-actif-info .label {
             font-size: 0.7rem;
-            color: var(--gris-moyen);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .candidat-actif-info .value {
-            font-weight: 700;
-            color: var(--bleu-fonce);
-        }
-        .candidat-actif-info .badge-en-cours {
-            background: var(--or);
-            color: var(--bleu-fonce);
-            padding: 2px 14px;
-            border-radius: 30px;
-            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
+            margin-top: 8px;
         }
+        .role.these { background: #0055a4; }
+        .role.antithese { background: #ef4135; }
+        .candidat-actuel .theme {
+            margin-top: 12px;
+            color: #aaa;
+            font-style: italic;
+            font-size: 0.9rem;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid #d4af37;
+        }
+        .candidat-actuel .status {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #f59e0b;
+        }
+
+        /* Timer */
+        .timer-display {
+            text-align: center;
+            padding: 16px;
+        }
+        .timer-display .clock {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Poppins', monospace;
+            color: #d4af37;
+        }
+        .timer-display .clock.warning { color: #f59e0b; animation: pulse 0.5s infinite alternate; }
+        .timer-display .clock.danger { color: #ef4444; animation: pulse 0.3s infinite alternate; }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.5; transform: scale(1.05); }
+        }
+        .timer-display .status-text { font-size: 0.8rem; color: #888; }
+
+        /* Grille des critères */
         .criteria-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 20px;
+            gap: 12px;
         }
         @media (max-width: 600px) {
-            .criteria-grid {
-                grid-template-columns: 1fr;
-            }
+            .criteria-grid { grid-template-columns: 1fr; }
         }
         .criteria-item {
-            background: var(--blanc-casse);
+            background: rgba(255,255,255,0.03);
+            padding: 12px 16px;
             border-radius: 12px;
-            padding: 14px 18px;
-            border: 1px solid var(--gris-clair);
-            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.06);
         }
-        .criteria-item:hover {
-            border-color: var(--bleu-france);
-            box-shadow: 0 4px 20px rgba(0, 85, 164, 0.08);
+        .criteria-item label {
+            font-size: 0.75rem;
+            color: #aaa;
+            display: block;
+            margin-bottom: 4px;
         }
-        .criteria-item .criteria-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-        .criteria-item .criteria-header label {
-            font-size: 0.78rem;
+        .criteria-item label .max {
+            float: right;
+            color: #d4af37;
             font-weight: 600;
-            color: var(--bleu-fonce);
-        }
-        .criteria-item .criteria-header .max-points {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--bleu-france);
-            background: rgba(0, 85, 164, 0.08);
-            padding: 2px 10px;
-            border-radius: 20px;
         }
         .criteria-item input {
             width: 100%;
-            padding: 8px 14px;
-            background: var(--blanc);
-            border: 1px solid var(--gris-clair);
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
-            color: var(--bleu-fonce);
+            color: #fff;
             font-size: 1rem;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
+            transition: all 0.3s;
         }
         .criteria-item input:focus {
             outline: none;
-            border-color: var(--bleu-france);
-            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212,175,55,0.1);
         }
         .criteria-item input:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
         }
-        .criteria-item input::-webkit-outer-spin-button,
-        .criteria-item input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
-        .criteria-item input[type="number"] {
-            -moz-appearance: textfield;
-        }
+
+        /* Total */
         .total-section {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
-            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .total-section .total-label {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.85rem;
-            font-weight: 400;
-        }
-        .total-section .total-value {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-        .total-section .total-value #totalScore {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--or);
-            min-width: 60px;
-            text-align: right;
-        }
-        .total-section .total-value .sur {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.3);
-        }
-        .comment-area {
-            margin-bottom: 14px;
-        }
-        .comment-area label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--bleu-fonce);
-            display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #0055a4, #ef4135);
+            border-radius: 12px;
+            margin: 16px 0;
         }
-        .comment-area label i {
-            color: var(--bleu-france);
+        .total-section .label { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+        .total-section .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #d4af37;
         }
+        .total-section .value .sur { font-size: 1rem; color: rgba(255,255,255,0.3); }
+
+        /* Commentaire */
         .comment-area textarea {
             width: 100%;
-            padding: 10px 14px;
-            background: var(--blanc-casse);
-            border: 1px solid var(--gris-clair);
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 10px;
-            color: var(--bleu-fonce);
+            color: #fff;
             font-family: 'Poppins', sans-serif;
             font-size: 0.85rem;
             resize: vertical;
             min-height: 50px;
-            transition: var(--transition);
         }
         .comment-area textarea:focus {
             outline: none;
-            border-color: var(--bleu-france);
-            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.08);
+            border-color: #d4af37;
         }
         .comment-area textarea:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
         }
+
+        /* Boutons */
         .actions {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            margin-top: 16px;
         }
         .actions button {
-            padding: 12px 28px;
+            padding: 12px 24px;
             border: none;
             border-radius: 12px;
             font-family: 'Poppins', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            transition: all 0.3s ease;
             flex: 1;
-            justify-content: center;
-            min-width: 140px;
+            min-width: 120px;
         }
         .actions button:disabled {
             opacity: 0.4;
             cursor: not-allowed;
-            transform: none !important;
         }
         .btn-valider {
-            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
-            color: var(--blanc);
-            border: 2px solid transparent;
+            background: linear-gradient(135deg, #0055a4, #003d7a);
+            color: #fff;
         }
         .btn-valider:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 85, 164, 0.2);
+            box-shadow: 0 10px 30px rgba(0,85,164,0.3);
         }
-        .btn-reinitialiser {
+        .btn-brouillon {
             background: transparent;
-            color: var(--gris-moyen);
-            border: 2px solid var(--gris-clair);
+            color: #f59e0b;
+            border: 2px solid rgba(245,158,11,0.3);
         }
-        .btn-reinitialiser:hover:not(:disabled) {
-            border-color: var(--rouge-france);
-            color: var(--rouge-france);
-            transform: translateY(-2px);
-        }
-        .btn-sync {
-            background: var(--bleu-ciel);
-            color: var(--blanc);
-            border: 2px solid transparent;
-        }
-        .btn-sync:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(74, 144, 217, 0.2);
+        .btn-brouillon:hover:not(:disabled) {
+            border-color: #f59e0b;
         }
         .btn-probleme {
-            background: var(--red);
-            color: var(--blanc);
-            border: 2px solid transparent;
+            background: rgba(239,68,68,0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.2);
         }
         .btn-probleme:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+            background: rgba(239,68,68,0.25);
         }
+
+        /* Statut */
         .status-bar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid var(--gris-clair);
+            padding: 12px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 16px;
             font-size: 0.75rem;
-            color: var(--gris-moyen);
+            color: #666;
             flex-wrap: wrap;
             gap: 8px;
         }
-        .status-bar .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .status-bar .status-indicator .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-dot.non-cote {
-            background: var(--gris-clair);
-        }
-        .status-dot.brouillon {
-            background: var(--or);
-        }
-        .status-dot.valide {
-            background: var(--bleu-france);
-        }
-        .status-bar .last-save {
-            font-size: 0.65rem;
-            color: var(--gris-moyen);
-        }
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-        .loading-overlay.active {
-            display: flex;
-        }
-        .loading-spinner {
-            background: var(--blanc);
-            padding: 30px 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-        .loading-spinner i {
-            font-size: 2.5rem;
-            color: var(--bleu-france);
-            animation: spin 1s linear infinite;
-        }
-        .loading-spinner p {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--bleu-fonce);
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+
+        /* Notification */
         .toast {
             position: fixed;
             bottom: 30px;
-            right: 30px;
-            padding: 14px 24px;
-            border-radius: 12px;
-            color: var(--blanc);
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: var(--shadow);
-            z-index: 9998;
-            display: none;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(16,185,129,0.95);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.error { background: rgba(239,68,68,0.95); }
+        .toast.warning { background: rgba(245,158,11,0.95); }
+
+        .jury-selector {
+            display: flex;
             align-items: center;
             gap: 12px;
-            max-width: 400px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
-        .toast.success { background: var(--green); }
-        .toast.error { background: var(--red); }
-        .toast.info { background: var(--bleu-ciel); }
-        .toast.show { display: flex; animation: slideUp 0.3s ease; }
-        @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .jury-selector label { font-size: 0.8rem; color: #aaa; }
+        .jury-selector select {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            min-width: 120px;
         }
-        .no-candidat {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gris-moyen);
+        .jury-selector select:focus {
+            outline: none;
+            border-color: #d4af37;
         }
-        .no-candidat i {
-            font-size: 3rem;
-            opacity: 0.3;
-            margin-bottom: 12px;
-        }
-        .no-candidat p {
-            font-size: 0.9rem;
-        }
-        .verrouille-badge {
-            background: var(--or) !important;
-            color: var(--bleu-fonce) !important;
-        }
-        .verrouille-badge i {
-            margin-right: 6px;
+        .jury-selector select option { background: #0a0a1a; }
+        
+        .jury-count-info {
+            font-size: 0.7rem;
+            color: #666;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- LOADING -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner">
-            <i class="fas fa-spinner"></i>
-            <p>Chargement...</p>
+    <div class="container">
+        <header>
+            <div class="logo"><i class="fas fa-gavel"></i> Jury Éloquence</div>
+            <div class="jury-name">
+                <i class="fas fa-user-check"></i> 
+                <span id="juryNameDisplay">Jury 1</span>
+                <span class="jury-count-info" id="juryCountInfo">👥 0 jurys</span>
+            </div>
+        </header>
+
+        <!-- Candidat actuel -->
+        <div class="card" id="candidatCard">
+            <h2><i class="fas fa-user-tie"></i> Candidat actuel</h2>
+            <div class="candidat-actuel" id="candidatInfo">
+                <div class="photo" id="photoContainer">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="nom" id="candidatNom">En attente...</div>
+                <div class="role" id="candidatRole" style="display:none;">Thèse</div>
+                <div class="theme" id="candidatTheme">Aucun candidat sélectionné</div>
+                <div class="status" id="candidatStatus">⏳ En attente d'un candidat</div>
+            </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="card">
+            <h2><i class="fas fa-clock"></i> Chronomètre</h2>
+            <div class="timer-display">
+                <div class="clock" id="timerClock">05:00</div>
+                <div class="status-text" id="timerStatus">⏸️ En pause</div>
+            </div>
+        </div>
+
+        <!-- Sélecteur Jury -->
+        <div class="card">
+            <h2><i class="fas fa-users"></i> Identifiez-vous</h2>
+            <div class="jury-selector">
+                <label><i class="fas fa-id-badge"></i> Votre nom :</label>
+                <select id="jurySelect">
+                    <option value="">-- Choisissez --</option>
+                </select>
+                <span style="font-size:0.7rem;color:#555;margin-left:auto;" id="selectedJuryInfo">Sélectionnez votre nom</span>
+            </div>
+            <div style="font-size:0.7rem;color:#555;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+                <i class="fas fa-info-circle"></i> Chaque jury doit choisir son nom. Les votes sont individuels.
+            </div>
+        </div>
+
+        <!-- Grille de notation -->
+        <div class="card">
+            <h2><i class="fas fa-star"></i> Notation</h2>
+            <div class="criteria-grid">
+                <div class="criteria-item">
+                    <label>Éloquence <span class="max">/20</span></label>
+                    <input type="number" id="eloquence" min="0" max="20" step="0.5" value="0" disabled>
+                </div>
+                <div class="criteria-item">
+                    <label>Argumentation <span class="max">/20</span></label>
+                    <input type="number" id="argumentation" min="0" max="20" step="0.5" value="0" disabled>
+                </div>
+                <div class="criteria-item">
+                    <label>Structure <span class="max">/20</span></label>
+                    <input type="number" id="structure" min="0" max="20" step="0.5" value="0" disabled>
+                </div>
+                <div class="criteria-item">
+                    <label>Gestuelle <span class="max">/20</span></label>
+                    <input type="number" id="gestuelle" min="0" max="20" step="0.5" value="0" disabled>
+                </div>
+            </div>
+
+            <div class="total-section">
+                <span class="label">Total</span>
+                <span class="value"><span id="totalScore">0</span><span class="sur"> /80</span></span>
+            </div>
+
+            <div class="comment-area">
+                <textarea id="commentaire" placeholder="Commentaire (optionnel)" disabled></textarea>
+            </div>
+
+            <div class="actions">
+                <button class="btn-valider" id="validerBtn" disabled><i class="fas fa-check"></i> Valider</button>
+                <button class="btn-brouillon" id="brouillonBtn" disabled><i class="fas fa-save"></i> Brouillon</button>
+                <button class="btn-probleme" id="problemeBtn" disabled><i class="fas fa-exclamation-triangle"></i> Problème</button>
+            </div>
+
+            <div class="status-bar">
+                <span id="voteStatus"><i class="fas fa-circle" style="color:#666;"></i> Non coté</span>
+                <span id="lastUpdate">-</span>
+            </div>
         </div>
     </div>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Message</span>
-    </div>
-
-    <!-- ===== MODAL DE CONNEXION JURY (CODE D'ACCÈS) ===== -->
-    <div class="jury-modal-overlay" id="juryModal">
-        <div class="jury-modal">
-            <div class="modal-icon"><i class="fas fa-home"></i></div>
-            <h2>🏠 Entrez dans votre maison</h2>
-            <p class="subtitle">Chaque jury a sa propre maison. Entrez le code d'accès pour rejoindre votre siège.</p>
-            <div class="jury-name-display" id="modalJuryName">Jury 1</div>
-            <div class="code-input-group">
-                <input type="password" id="codeInput" maxlength="4" placeholder="● ● ● ●" inputmode="numeric" />
-                <button class="btn-confirm-code" id="btnConfirmCode">
-                    <i class="fas fa-key"></i> Entrer
-                </button>
-            </div>
-            <div class="error-msg" id="modalError"></div>
-            <p class="hint-text"><i class="fas fa-info-circle"></i> Le code vous a été communiqué par l'organisateur</p>
-        </div>
-    </div>
-
-    <!-- ===== SÉLECTEUR DE JURY (MAISON) ===== -->
-    <div class="jury-selector-container" id="jurySelector">
-        <span class="label"><i class="fas fa-flag"></i> Maisons des Jurys :</span>
-        <div class="jury-btn-group" id="juryBtnGroup">
-            <!-- Généré par JS -->
-        </div>
-        <span style="font-size:0.7rem;color:var(--gris-moyen);margin-left:auto;" id="statusMaison">
-            <i class="fas fa-lock"></i> Sélectionnez une maison
-        </span>
-    </div>
-
-    <!-- ===== HEADER ===== -->
-    <header class="jury-header">
-        <div class="logo">
-            <i class="fas fa-gavel"></i>
-            <div>
-                <h1>Éloquence en Scène</h1>
-                <span>Plateforme du Jury</span>
-            </div>
-        </div>
-        <div class="user-info">
-            <span class="badge-jury" id="juryBadge">Jury 1</span>
-            <span class="badge-jury rouge" id="roleBadge">Cotation</span>
-            <span class="badge-jury locked-badge" id="lockBadge" style="display:none;">
-                <i class="fas fa-lock"></i> Verrouillé
-            </span>
-            <div class="status-connection">
-                <span class="dot online" id="statusDot"></span>
-                <span id="statusText">Connecté</span>
-            </div>
-            <button class="btn-deconnexion" id="btnDeconnexion">
-                <i class="fas fa-sign-out-alt"></i> Quitter
-            </button>
-        </div>
-    </header>
-
-    <!-- ===== MAIN ===== -->
-    <main class="jury-main" id="juryMain">
-        <!-- Colonne Candidat -->
-        <section class="candidat-card" id="candidatCard">
-            <div class="card-header">
-                <span class="match-badge"><i class="fas fa-microphone"></i> Match #1</span>
-                <span class="timer-badge"><i class="far fa-clock"></i> <span id="timerDisplay">--:--</span></span>
-            </div>
-            <div class="candidat-photo">
-                <div class="photo-frame" id="photoFrame">
-                    <span class="placeholder"><i class="fas fa-user-circle"></i></span>
-                </div>
-                <div class="role-badge these" id="roleBadgeCandidat">Thèse</div>
-            </div>
-            <div class="candidat-info">
-                <div class="nom" id="candidatNom">Chargement...</div>
-                <div class="theme"><i class="fas fa-quote-left"></i> <span id="candidatTheme">---</span></div>
-            </div>
-            <div class="status-cotation">
-                <span class="statut-item"><span class="dot non-cote" id="statutDot"></span> <span id="statutTexte">Non coté</span></span>
-                <span class="statut-item"><i class="far fa-clock"></i> <span id="derniereModif">--</span></span>
-            </div>
-        </section>
-
-        <!-- Colonne Cotation -->
-        <section class="cotation-card" id="cotationCard">
-            <div class="card-header">
-                <h2><i class="fas fa-pen-fancy"></i> Grille de cotation</h2>
-                <span class="jury-name" id="juryNameDisplay">Jury 1</span>
-            </div>
-            <div class="card-body">
-                <div class="candidat-actif-info">
-                    <span class="label"><i class="fas fa-user"></i> Candidat</span>
-                    <span class="value" id="actifNom">---</span>
-                    <span class="badge-en-cours">EN COURS</span>
-                </div>
-
-                <div class="criteria-grid" id="criteriaGrid">
-                    <!-- Généré par JS -->
-                </div>
-
-                <div class="total-section">
-                    <span class="total-label"><i class="fas fa-calculator"></i> Total</span>
-                    <div class="total-value">
-                        <span id="totalScore">0</span>
-                        <span class="sur">/ 100</span>
-                    </div>
-                </div>
-
-                <div class="comment-area">
-                    <label><i class="fas fa-comment"></i> Commentaire / Remarque</label>
-                    <textarea id="commentaire" placeholder="Votre appréciation sur la prestation..." rows="2"></textarea>
-                </div>
-
-                <div class="actions">
-                    <button class="btn-valider" id="btnValider"><i class="fas fa-check"></i> Valider</button>
-                    <button class="btn-reinitialiser" id="btnReinitialiser"><i class="fas fa-undo"></i> Réinitialiser</button>
-                    <button class="btn-sync" id="btnSync"><i class="fas fa-sync-alt"></i> Synchroniser</button>
-                    <button class="btn-probleme" id="btnProbleme"><i class="fas fa-flag"></i> Signaler</button>
-                </div>
-
-                <div class="status-bar">
-                    <span class="status-indicator">
-                        <span class="status-dot non-cote" id="statusBarDot"></span>
-                        <span id="statusBarText">Brouillon</span>
-                    </span>
-                    <span class="last-save"><i class="far fa-save"></i> <span id="lastSaveText">Non sauvegardé</span></span>
-                </div>
-            </div>
-        </section>
-    </main>
+    <div class="toast" id="toast"></div>
 
     <script>
-        // ============================================================
-        // 1. CONFIGURATION FIREBASE (LA MÊME - NE RIEN CHANGER)
-        // ============================================================
+        // 🔥 CONFIGURATION FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyB8vK7X2vX5V5n8Z9wZq7Z9yZ8vX7K5X2vX5",
-            authDomain: "votre-projet.firebaseapp.com",
-            projectId: "votre-projet",
-            storageBucket: "votre-projet.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
+            apiKey: "AIzaSyCOSnZ0ogR05svM0SbALqSlNqmODDDlIyw",
+            authDomain: "conf-94615.firebaseapp.com",
+            projectId: "conf-94615",
+            storageBucket: "conf-94615.firebasestorage.app",
+            messagingSenderId: "312554343685",
+            appId: "1:312554343685:web:b199e33ff4ca050d533b6c"
         };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const auth = firebase.auth();
 
-        // ============================================================
-        // 2. CONFIGURATION DES JURYS (MAISONS) AVEC CODES D'ACCÈS
-        // ============================================================
-        const JURYS = [
-            { id: 'jury1', label: 'Jury 1', color: '#0055a4', short: 'J1', code: '1234' },
-            { id: 'jury2', label: 'Jury 2', color: '#2e7d32', short: 'J2', code: '5678' },
-            { id: 'jury3', label: 'Jury 3', color: '#b71c1c', short: 'J3', code: '9012' },
-            { id: 'jury4', label: 'Jury 4', color: '#e65100', short: 'J4', code: '3456' },
-            { id: 'jury5', label: 'Jury 5', color: '#4a148c', short: 'J5', code: '7890' }
-        ];
+        // Variables
+        let currentJury = '';
+        let currentCandidat = null;
+        let currentMatchId = null;
+        let hasVoted = false;
+        let isDraft = false;
+        let juryList = [];
+        let notificationTimeout = null;
 
-        // ============================================================
-        // 3. ÉTAT
-        // ============================================================
-        let currentJuryId = null; // null = pas encore connecté
-        let isLocked = false; // une fois connecté, verrouillé
-        let currentCandidatId = null;
-        let currentCotation = {
-            criteres: {},
-            total: 0,
-            commentaire: '',
-            statut: 'brouillon',
-            juryId: null,
-            candidatId: null,
-            updatedAt: null
-        };
-        let criteresConfig = [];
-        let isLoading = false;
-        let pendingJuryId = null; // jury en cours de connexion
+        // Éléments DOM
+        const jurySelect = document.getElementById('jurySelect');
+        const juryNameDisplay = document.getElementById('juryNameDisplay');
+        const juryCountInfo = document.getElementById('juryCountInfo');
+        const selectedJuryInfo = document.getElementById('selectedJuryInfo');
+        const candidatNom = document.getElementById('candidatNom');
+        const candidatRole = document.getElementById('candidatRole');
+        const candidatTheme = document.getElementById('candidatTheme');
+        const candidatStatus = document.getElementById('candidatStatus');
+        const photoContainer = document.getElementById('photoContainer');
+        const timerClock = document.getElementById('timerClock');
+        const timerStatus = document.getElementById('timerStatus');
+        const eloquence = document.getElementById('eloquence');
+        const argumentation = document.getElementById('argumentation');
+        const structure = document.getElementById('structure');
+        const gestuelle = document.getElementById('gestuelle');
+        const totalScore = document.getElementById('totalScore');
+        const commentaire = document.getElementById('commentaire');
+        const validerBtn = document.getElementById('validerBtn');
+        const brouillonBtn = document.getElementById('brouillonBtn');
+        const problemeBtn = document.getElementById('problemeBtn');
+        const voteStatus = document.getElementById('voteStatus');
+        const lastUpdate = document.getElementById('lastUpdate');
+        const toast = document.getElementById('toast');
 
-        // ============================================================
-        // 4. RÉFÉRENCES DOM
-        // ============================================================
-        const $ = (id) => document.getElementById(id);
-        const juryBtnGroup = $('juryBtnGroup');
-        const juryBadge = $('juryBadge');
-        const juryNameDisplay = $('juryNameDisplay');
-        const candidatNom = $('candidatNom');
-        const candidatTheme = $('candidatTheme');
-        const actifNom = $('actifNom');
-        const photoFrame = $('photoFrame');
-        const roleBadgeCandidat = $('roleBadgeCandidat');
-        const statutDot = $('statutDot');
-        const statutTexte = $('statutTexte');
-        const statusBarDot = $('statusBarDot');
-        const statusBarText = $('statusBarText');
-        const totalScore = $('totalScore');
-        const commentaire = $('commentaire');
-        const lastSaveText = $('lastSaveText');
-        const timerDisplay = $('timerDisplay');
-        const statusDot = $('statusDot');
-        const statusText = $('statusText');
-        const loadingOverlay = $('loadingOverlay');
-        const toast = $('toast');
-        const toastMessage = $('toastMessage');
-        const btnValider = $('btnValider');
-        const btnReinitialiser = $('btnReinitialiser');
-        const btnSync = $('btnSync');
-        const btnProbleme = $('btnProbleme');
-        const btnDeconnexion = $('btnDeconnexion');
-        const lockBadge = $('lockBadge');
-        const statusMaison = $('statusMaison');
-        const modalOverlay = $('juryModal');
-        const modalJuryName = $('modalJuryName');
-        const codeInput = $('codeInput');
-        const btnConfirmCode = $('btnConfirmCode');
-        const modalError = $('modalError');
-
-        // ============================================================
-        // 5. TOAST & LOADING
-        // ============================================================
-        function showToast(message, type = 'success') {
-            toast.className = 'toast ' + type + ' show';
-            toastMessage.textContent = message;
-            clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
-        }
-
-        function setLoading(active) {
-            isLoading = active;
-            loadingOverlay.classList.toggle('active', active);
-        }
-
-        // ============================================================
-        // 6. GESTION DU MODAL DE CONNEXION
-        // ============================================================
-        function openJuryModal(juryId) {
-            const jury = JURYS.find(j => j.id === juryId);
-            if (!jury) return;
-            pendingJuryId = juryId;
-            modalJuryName.textContent = jury.label;
-            modalJuryName.style.color = jury.color;
-            codeInput.value = '';
-            modalError.textContent = '';
-            codeInput.className = '';
-            modalOverlay.classList.add('active');
-            setTimeout(() => codeInput.focus(), 100);
-        }
-
-        function closeJuryModal() {
-            modalOverlay.classList.remove('active');
-            pendingJuryId = null;
-            codeInput.value = '';
-            modalError.textContent = '';
-            codeInput.className = '';
-        }
-
-        function confirmJuryCode() {
-            const code = codeInput.value.trim();
-            if (!pendingJuryId) return;
-            const jury = JURYS.find(j => j.id === pendingJuryId);
-            if (!jury) return;
-
-            if (code === jury.code) {
-                // Code correct ! Verrouiller le jury
-                currentJuryId = pendingJuryId;
-                isLocked = true;
-                closeJuryModal();
-                applyJuryLock();
-                showToast(`✅ Bienvenue dans la maison du ${jury.label} !`, 'success');
-                chargerCandidatActuel();
-            } else {
-                codeInput.className = 'error';
-                modalError.textContent = '❌ Code incorrect. Réessayez.';
-                codeInput.value = '';
-                setTimeout(() => codeInput.focus(), 300);
-                setTimeout(() => codeInput.className = '', 500);
-            }
-        }
-
-        // ============================================================
-        // 7. VERROUILLAGE DU JURY
-        // ============================================================
-        function applyJuryLock() {
-            const jury = JURYS.find(j => j.id === currentJuryId);
-            if (!jury) return;
-
-            // Mettre à jour l'UI
-            updateJuryUI();
-            lockBadge.style.display = 'inline-block';
-
-            // Désactiver tous les boutons jury sauf celui actif
-            document.querySelectorAll('.jury-btn').forEach(btn => {
-                const id = btn.dataset.juryId;
-                if (id === currentJuryId) {
-                    btn.classList.add('active');
-                    btn.classList.remove('locked');
-                } else {
-                    btn.classList.add('locked');
-                    btn.classList.remove('active');
-                    // Ajouter un cadenas
-                    if (!btn.querySelector('.lock-icon')) {
-                        const lock = document.createElement('span');
-                        lock.className = 'lock-icon';
-                        lock.innerHTML = '<i class="fas fa-lock"></i>';
-                        btn.appendChild(lock);
-                    }
-                }
-            });
-
-            statusMaison.innerHTML = `<i class="fas fa-home"></i> ${jury.label} <i class="fas fa-lock" style="color:var(--or);margin-left:6px;"></i>`;
-            statusMaison.style.color = jury.color;
-
-            // Mettre à jour le header
-            juryBadge.textContent = jury.label + ' 🔒';
-            juryBadge.className = 'badge-jury verrouille-badge';
-            juryNameDisplay.textContent = jury.label;
-
-            // Changer la couleur des bordures
-            document.querySelector('.jury-header').style.borderLeftColor = jury.color;
-            document.querySelector('.jury-selector-container').style.borderLeftColor = jury.color;
-
-            // Activer les champs de cotation
-            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
-            commentaire.disabled = false;
-            btnValider.disabled = false;
-            btnReinitialiser.disabled = false;
-        }
-
-        // ============================================================
-        // 8. GÉNÉRATION DES BOUTONS JURY
-        // ============================================================
-        function renderJuryButtons() {
-            juryBtnGroup.innerHTML = '';
-            JURYS.forEach(jury => {
-                const btn = document.createElement('button');
-                btn.className = 'jury-btn';
-                if (isLocked) {
-                    if (jury.id === currentJuryId) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.add('locked');
-                        btn.innerHTML = `
-                            <span class="badge-num">${jury.short}</span>
-                            ${jury.label}
-                            <span class="lock-icon"><i class="fas fa-lock"></i></span>
-                        `;
-                        juryBtnGroup.appendChild(btn);
-                        return;
-                    }
-                }
-                btn.dataset.juryId = jury.id;
-                btn.innerHTML = `
-                    <span class="badge-num">${jury.short}</span>
-                    ${jury.label}
-                    <span class="status-dot-mini connected"></span>
-                `;
-                if (!isLocked) {
-                    btn.addEventListener('click', () => {
-                        if (!isLocked) {
-                            openJuryModal(jury.id);
-                        }
-                    });
-                }
-                juryBtnGroup.appendChild(btn);
-            });
-        }
-
-        // ============================================================
-        // 9. MISE À JOUR UI JURY
-        // ============================================================
-        function updateJuryUI() {
-            if (!currentJuryId) return;
-            const jury = JURYS.find(j => j.id === currentJuryId);
-            if (jury) {
-                juryBadge.textContent = isLocked ? jury.label + ' 🔒' : jury.label;
-                if (isLocked) {
-                    juryBadge.className = 'badge-jury verrouille-badge';
-                } else {
-                    juryBadge.className = 'badge-jury';
-                }
-                juryNameDisplay.textContent = jury.label;
-            }
-        }
-
-        // ============================================================
-        // 10. CHARGEMENT DES CRITÈRES
-        // ============================================================
-        async function chargerCriteres() {
-            try {
-                const doc = await db.collection('config').doc('criteres').get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    if (data.criteres && Array.isArray(data.criteres)) {
-                        criteresConfig = data.criteres;
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.warn('Impossible de charger les critères, utilisation des defaults');
-            }
-            criteresConfig = [
-                { id: 'fond', label: 'Fond du discours', max: 20 },
-                { id: 'forme', label: 'Forme / Élocution', max: 20 },
-                { id: 'argumentation', label: 'Argumentation', max: 20 },
-                { id: 'conviction', label: 'Capacité de conviction', max: 15 },
-                { id: 'originalite', label: 'Originalité', max: 15 },
-                { id: 'interaction', label: 'Interaction avec le public', max: 10 }
-            ];
-        }
-
-        function renderCriteres() {
-            const grid = $('criteriaGrid');
-            grid.innerHTML = '';
-            criteresConfig.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'criteria-item';
-                div.innerHTML = `
-                    <div class="criteria-header">
-                        <label for="crit_${c.id}">${c.label}</label>
-                        <span class="max-points">/${c.max}</span>
-                    </div>
-                    <input type="number" id="crit_${c.id}" data-crit-id="${c.id}" data-max="${c.max}" 
-                           min="0" max="${c.max}" step="0.5" value="0" disabled />
-                `;
-                grid.appendChild(div);
-            });
-            grid.querySelectorAll('input[type="number"]').forEach(input => {
-                input.addEventListener('input', onCriteresChange);
-            });
-            // Désactiver tant que le jury n'est pas connecté
-            if (!isLocked) {
-                document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = true);
-                commentaire.disabled = true;
-                btnValider.disabled = true;
-                btnReinitialiser.disabled = true;
-            }
-        }
-
-        // ============================================================
-        // 11. CHARGEMENT DU CANDIDAT ACTUEL
-        // ============================================================
-        async function chargerCandidatActuel() {
-            if (!isLocked || !currentJuryId) {
-                afficherAucunCandidat();
-                return;
-            }
-            setLoading(true);
-            try {
-                const matchSnapshot = await db.collection('matches')
-                    .where('statut', '==', 'en_cours')
-                    .limit(1)
-                    .get();
-
-                if (matchSnapshot.empty) {
-                    afficherAucunCandidat();
-                    setLoading(false);
-                    return;
-                }
-
-                const matchDoc = matchSnapshot.docs[0];
-                const matchData = matchDoc.data();
-                const candidatId = matchData.candidatId;
-
-                if (!candidatId) {
-                    afficherAucunCandidat();
-                    setLoading(false);
-                    return;
-                }
-
-                currentCandidatId = candidatId;
-
-                const candidatDoc = await db.collection('candidats').doc(candidatId).get();
-                if (!candidatDoc.exists) {
-                    afficherAucunCandidat();
-                    setLoading(false);
-                    return;
-                }
-
-                const candidatData = candidatDoc.data();
-                afficherCandidat(candidatData);
-                await chargerCotation(candidatId);
-
-                if (matchData.tempsDebat) {
-                    const debut = matchData.tempsDebat.toDate ? matchData.tempsDebat.toDate() : new Date(matchData.tempsDebat);
-                    demarrerTimer(debut, 7 * 60);
-                }
-
-            } catch (e) {
-                console.error('Erreur chargement candidat:', e);
-                showToast('Erreur de chargement', 'error');
-            }
-            setLoading(false);
-        }
-
-        function afficherAucunCandidat() {
-            currentCandidatId = null;
-            candidatNom.textContent = 'Aucun candidat';
-            candidatTheme.textContent = '---';
-            actifNom.textContent = '---';
-            photoFrame.innerHTML = '<span class="placeholder"><i class="fas fa-user-circle"></i></span>';
-            roleBadgeCandidat.textContent = '--';
-            roleBadgeCandidat.className = 'role-badge';
-            reinitialiserFormulaire();
-            statutDot.className = 'dot non-cote';
-            statutTexte.textContent = 'Aucun candidat';
-            statusBarDot.className = 'status-dot non-cote';
-            statusBarText.textContent = 'En attente';
-            btnValider.disabled = true;
-            btnReinitialiser.disabled = true;
-            commentaire.disabled = true;
-            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = true);
-        }
-
-        function afficherCandidat(data) {
-            candidatNom.textContent = data.nom || 'Candidat';
-            candidatTheme.textContent = data.theme || '---';
-            actifNom.textContent = data.nom || '---';
-            if (data.photoUrl) {
-                photoFrame.innerHTML = `<img src="${data.photoUrl}" alt="${data.nom}" />`;
-            } else {
-                photoFrame.innerHTML = `<span class="placeholder"><i class="fas fa-user-circle"></i></span>`;
-            }
-            const role = data.role || 'these';
-            roleBadgeCandidat.textContent = role === 'these' ? 'Thèse' : 'Antithèse';
-            roleBadgeCandidat.className = 'role-badge ' + (role === 'these' ? 'these' : 'antithese');
-            if (isLocked) {
-                btnValider.disabled = false;
-                btnReinitialiser.disabled = false;
-                commentaire.disabled = false;
-                document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
-            }
-        }
-
-        // ============================================================
-        // 12. CHARGEMENT DE LA COTATION
-        // ============================================================
-        async function chargerCotation(candidatId) {
-            try {
-                const docRef = db.collection('cotations')
-                    .where('candidatId', '==', candidatId)
-                    .where('juryId', '==', currentJuryId)
-                    .limit(1);
-                const snapshot = await docRef.get();
-
-                if (snapshot.empty) {
-                    initialiserCotation(candidatId);
-                    return;
-                }
-
-                const doc = snapshot.docs[0];
-                const data = doc.data();
-                currentCotation = { ...data, id: doc.id };
-
-                criteresConfig.forEach(c => {
-                    const input = document.getElementById(`crit_${c.id}`);
-                    if (input && data.criteres && data.criteres[c.id] !== undefined) {
-                        input.value = data.criteres[c.id];
-                    }
-                });
-                commentaire.value = data.commentaire || '';
-                currentCotation.total = data.total || 0;
-                currentCotation.statut = data.statut || 'brouillon';
-
-                mettreAJourAffichage();
-
-                if (data.updatedAt) {
-                    const date = data.updatedAt.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt);
-                    lastSaveText.textContent = 'Dernière modification: ' + date.toLocaleTimeString();
-                }
-
-                if (data.statut === 'valide') {
-                    desactiverChamps(true);
-                } else if (isLocked) {
-                    desactiverChamps(false);
-                }
-
-            } catch (e) {
-                console.error('Erreur chargement cotation:', e);
-                initialiserCotation(candidatId);
-            }
-        }
-
-        function initialiserCotation(candidatId) {
-            currentCotation = {
-                candidatId: candidatId,
-                juryId: currentJuryId,
-                criteres: {},
-                total: 0,
-                commentaire: '',
-                statut: 'brouillon',
-                updatedAt: new Date()
-            };
-            criteresConfig.forEach(c => {
-                const input = document.getElementById(`crit_${c.id}`);
-                if (input) input.value = 0;
-                currentCotation.criteres[c.id] = 0;
-            });
-            commentaire.value = '';
-            currentCotation.total = 0;
-            currentCotation.statut = 'brouillon';
-            if (isLocked) desactiverChamps(false);
-            mettreAJourAffichage();
-            lastSaveText.textContent = 'Non sauvegardé';
-        }
-
-        function reinitialiserFormulaire() {
-            criteresConfig.forEach(c => {
-                const input = document.getElementById(`crit_${c.id}`);
-                if (input) input.value = 0;
-            });
-            commentaire.value = '';
-            totalScore.textContent = '0';
-            currentCotation.total = 0;
-            currentCotation.criteres = {};
-            criteresConfig.forEach(c => currentCotation.criteres[c.id] = 0);
-            currentCotation.commentaire = '';
-            currentCotation.statut = 'brouillon';
-            statutDot.className = 'dot non-cote';
-            statutTexte.textContent = 'Non coté';
-            statusBarDot.className = 'status-dot non-cote';
-            statusBarText.textContent = 'Brouillon';
-            lastSaveText.textContent = 'Non sauvegardé';
-        }
-
-        // ============================================================
-        // 13. GESTION DES CHAMPS
-        // ============================================================
-        function desactiverChamps(desactiver) {
-            document.querySelectorAll('.criteria-item input').forEach(i => {
-                i.disabled = desactiver || !isLocked;
-            });
-            commentaire.disabled = desactiver || !isLocked;
-            btnValider.disabled = desactiver || !isLocked;
-            btnReinitialiser.disabled = desactiver || !isLocked;
-            if (desactiver) {
-                btnValider.textContent = '✅ Validé';
-                btnValider.style.background = 'var(--green)';
-            } else if (isLocked) {
-                btnValider.innerHTML = '<i class="fas fa-check"></i> Valider';
-                btnValider.style.background = '';
-            }
-        }
-
-        // ============================================================
-        // 14. ÉVÉNEMENT CHANGEMENT CRITÈRES
-        // ============================================================
-        function onCriteresChange(e) {
-            if (!isLocked) return;
-            const input = e.target;
-            const critId = input.dataset.critId;
-            const max = parseFloat(input.dataset.max);
-            let val = parseFloat(input.value) || 0;
-            if (val < 0) val = 0;
-            if (val > max) val = max;
-            input.value = val;
-            currentCotation.criteres[critId] = val;
-            calculerTotal();
-            currentCotation.statut = 'brouillon';
-            mettreAJourAffichage();
-            clearTimeout(window._autoSaveTimeout);
-            window._autoSaveTimeout = setTimeout(() => {
-                sauvegarderCotation(false);
-            }, 2000);
+        // Fonctions
+        function showToast(message, type = 'info') {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            clearTimeout(notificationTimeout);
+            notificationTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         function calculerTotal() {
-            let total = 0;
-            criteresConfig.forEach(c => {
-                total += (currentCotation.criteres[c.id] || 0);
-            });
-            currentCotation.total = Math.round(total * 100) / 100;
-            totalScore.textContent = currentCotation.total;
-            return currentCotation.total;
+            const e = parseFloat(eloquence.value) || 0;
+            const a = parseFloat(argumentation.value) || 0;
+            const s = parseFloat(structure.value) || 0;
+            const g = parseFloat(gestuelle.value) || 0;
+            const total = e + a + s + g;
+            totalScore.textContent = total.toFixed(1);
+            return total;
         }
 
-        // ============================================================
-        // 15. MISE À JOUR AFFICHAGE
-        // ============================================================
-        function mettreAJourAffichage() {
-            totalScore.textContent = currentCotation.total || 0;
-            if (currentCotation.statut === 'valide') {
-                statutDot.className = 'dot valide';
-                statutTexte.textContent = 'Validé ✓';
-                statusBarDot.className = 'status-dot valide';
-                statusBarText.textContent = 'Validé';
-            } else if (currentCotation.statut === 'brouillon') {
-                const aDesNotes = Object.values(currentCotation.criteres).some(v => v > 0);
-                if (aDesNotes) {
-                    statutDot.className = 'dot brouillon';
-                    statutTexte.textContent = 'Brouillon';
-                    statusBarDot.className = 'status-dot brouillon';
-                    statusBarText.textContent = 'Brouillon';
+        // Écouter les changements des champs
+        [eloquence, argumentation, structure, gestuelle].forEach(input => {
+            input.addEventListener('input', () => {
+                const val = parseFloat(input.value);
+                if (val < 0) input.value = 0;
+                if (val > 20) input.value = 20;
+                calculerTotal();
+            });
+        });
+
+        // Écouter la liste des jurys (définie par le centre de contrôle)
+        function ecouterJurys() {
+            db.collection('jurys').doc('liste').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data && data.jurys && Array.isArray(data.jurys)) {
+                        juryList = data.jurys;
+                    } else {
+                        juryList = ['Jury 1'];
+                    }
                 } else {
-                    statutDot.className = 'dot non-cote';
-                    statutTexte.textContent = 'Non coté';
-                    statusBarDot.className = 'status-dot non-cote';
-                    statusBarText.textContent = 'Brouillon';
+                    juryList = ['Jury 1'];
                 }
+                mettreAJourListeJurys();
+            }, (error) => {
+                console.error('❌ Erreur écoute jurys:', error);
+                juryList = ['Jury 1'];
+                mettreAJourListeJurys();
+            });
+        }
+
+        function mettreAJourListeJurys() {
+            // Mettre à jour le select
+            const currentValue = jurySelect.value;
+            jurySelect.innerHTML = '<option value="">-- Choisissez --</option>';
+            juryList.forEach(j => {
+                const opt = document.createElement('option');
+                opt.value = j;
+                opt.textContent = j;
+                jurySelect.appendChild(opt);
+            });
+            // Restaurer la sélection si possible
+            if (juryList.includes(currentValue)) {
+                jurySelect.value = currentValue;
+            } else {
+                jurySelect.value = '';
+            }
+            
+            // Mettre à jour l'affichage
+            juryCountInfo.textContent = `👥 ${juryList.length} jurys`;
+            
+            // Si un jury est sélectionné, mettre à jour l'affichage
+            if (currentJury) {
+                juryNameDisplay.textContent = currentJury;
+                selectedJuryInfo.textContent = `✅ ${currentJury}`;
+            } else {
+                juryNameDisplay.textContent = 'Non sélectionné';
+                selectedJuryInfo.textContent = '⚠️ Sélectionnez votre nom';
             }
         }
 
-        // ============================================================
-        // 16. SAUVEGARDE
-        // ============================================================
-        async function sauvegarderCotation(afficherToast = true) {
-            if (!isLocked || !currentCandidatId) return;
-
-            criteresConfig.forEach(c => {
-                const input = document.getElementById(`crit_${c.id}`);
-                if (input) {
-                    currentCotation.criteres[c.id] = parseFloat(input.value) || 0;
+        // Sélection du jury
+        jurySelect.addEventListener('change', function() {
+            currentJury = this.value;
+            if (currentJury) {
+                juryNameDisplay.textContent = currentJury;
+                selectedJuryInfo.textContent = `✅ ${currentJury}`;
+                showToast(`👤 Bienvenue ${currentJury}`, 'success');
+                // Recharger la cotation si un candidat est en cours
+                if (currentCandidat) {
+                    chargerCotation(currentCandidat);
                 }
+            } else {
+                juryNameDisplay.textContent = 'Non sélectionné';
+                selectedJuryInfo.textContent = '⚠️ Sélectionnez votre nom';
+                desactiverChamps();
+            }
+        });
+
+        // Écouter l'état (candidat actuel)
+        function ecouterEtat() {
+            db.collection('etat').doc('current').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    currentCandidat = data.candidatNom || null;
+                    currentMatchId = data.matchId || null;
+                    const nbJurys = data.nombreJurys || 0;
+
+                    if (currentCandidat) {
+                        candidatNom.textContent = currentCandidat;
+                        candidatTheme.textContent = `"${data.candidatTheme || 'Thème'}"`;
+                        candidatRole.textContent = data.candidatRole || 'Thèse';
+                        candidatRole.style.display = 'inline-block';
+                        candidatRole.className = `role ${(data.candidatRole || 'thèse').toLowerCase()}`;
+                        candidatStatus.textContent = '🎯 En cours d\'évaluation';
+                        candidatStatus.style.color = '#10b981';
+
+                        // Photo
+                        if (data.candidatPhoto) {
+                            photoContainer.innerHTML = `<img src="${data.candidatPhoto}" alt="Photo">`;
+                        } else {
+                            photoContainer.innerHTML = `<i class="fas fa-user"></i>`;
+                        }
+
+                        // Activer les champs si un jury est sélectionné
+                        if (currentJury) {
+                            eloquence.disabled = false;
+                            argumentation.disabled = false;
+                            structure.disabled = false;
+                            gestuelle.disabled = false;
+                            commentaire.disabled = false;
+                            validerBtn.disabled = false;
+                            brouillonBtn.disabled = false;
+                            problemeBtn.disabled = false;
+                            // Charger la cotation existante
+                            chargerCotation(currentCandidat);
+                        } else {
+                            desactiverChamps();
+                            candidatStatus.textContent = '⚠️ Sélectionnez votre nom pour voter';
+                            candidatStatus.style.color = '#f59e0b';
+                        }
+
+                    } else {
+                        candidatNom.textContent = 'En attente...';
+                        candidatTheme.textContent = 'Aucun candidat sélectionné';
+                        candidatRole.style.display = 'none';
+                        candidatStatus.textContent = '⏳ En attente d\'un candidat';
+                        candidatStatus.style.color = '#f59e0b';
+                        photoContainer.innerHTML = `<i class="fas fa-user"></i>`;
+                        desactiverChamps();
+                    }
+                }
+            }, (error) => {
+                console.error('❌ Erreur écoute état:', error);
             });
-            currentCotation.commentaire = commentaire.value;
-            currentCotation.total = calculerTotal();
-            currentCotation.updatedAt = new Date();
-            currentCotation.juryId = currentJuryId;
-            currentCotation.candidatId = currentCandidatId;
+        }
+
+        function chargerCotation(candidat) {
+            if (!currentJury) return;
+            db.collection('cotations').doc(candidat).get().then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const juryData = data[currentJury];
+                    if (juryData) {
+                        eloquence.value = juryData.eloquence || 0;
+                        argumentation.value = juryData.argumentation || 0;
+                        structure.value = juryData.structure || 0;
+                        gestuelle.value = juryData.gestuelle || 0;
+                        commentaire.value = juryData.commentaire || '';
+                        calculerTotal();
+                        hasVoted = juryData.valide || false;
+                        isDraft = !hasVoted && (juryData.eloquence !== undefined);
+                        mettreAJourStatut();
+                    } else {
+                        reinitialiserChamps();
+                    }
+                } else {
+                    reinitialiserChamps();
+                }
+            }).catch((error) => {
+                console.error('❌ Erreur chargement cotation:', error);
+            });
+        }
+
+        function reinitialiserChamps() {
+            eloquence.value = 0;
+            argumentation.value = 0;
+            structure.value = 0;
+            gestuelle.value = 0;
+            commentaire.value = '';
+            calculerTotal();
+            hasVoted = false;
+            isDraft = false;
+            mettreAJourStatut();
+        }
+
+        function desactiverChamps() {
+            eloquence.disabled = true;
+            argumentation.disabled = true;
+            structure.disabled = true;
+            gestuelle.disabled = true;
+            commentaire.disabled = true;
+            validerBtn.disabled = true;
+            brouillonBtn.disabled = true;
+            problemeBtn.disabled = true;
+            reinitialiserChamps();
+        }
+
+        function mettreAJourStatut() {
+            if (hasVoted) {
+                voteStatus.innerHTML = `<i class="fas fa-check-circle" style="color:#10b981;"></i> ✅ Validé`;
+                voteStatus.style.color = '#10b981';
+            } else if (isDraft) {
+                voteStatus.innerHTML = `<i class="fas fa-pencil-alt" style="color:#f59e0b;"></i> 📝 Brouillon`;
+                voteStatus.style.color = '#f59e0b';
+            } else {
+                voteStatus.innerHTML = `<i class="fas fa-circle" style="color:#666;"></i> Non coté`;
+                voteStatus.style.color = '#666';
+            }
+        }
+
+        // Sauvegarder la cotation (brouillon ou validation)
+        async function sauvegarderCotation(valide) {
+            if (!currentCandidat) {
+                showToast('⚠️ Aucun candidat en cours', 'error');
+                return;
+            }
+            if (!currentJury) {
+                showToast('⚠️ Sélectionnez votre nom de jury', 'error');
+                return;
+            }
+
+            const total = calculerTotal();
+            const data = {
+                [currentJury]: {
+                    eloquence: parseFloat(eloquence.value) || 0,
+                    argumentation: parseFloat(argumentation.value) || 0,
+                    structure: parseFloat(structure.value) || 0,
+                    gestuelle: parseFloat(gestuelle.value) || 0,
+                    total: total,
+                    valide: valide,
+                    commentaire: commentaire.value || '',
+                    timestamp: new Date().toISOString()
+                }
+            };
 
             try {
-                const query = await db.collection('cotations')
-                    .where('candidatId', '==', currentCandidatId)
-                    .where('juryId', '==', currentJuryId)
-                    .get();
-
-                if (query.empty) {
-                    const docRef = await db.collection('cotations').add({
-                        ...currentCotation,
-                        createdAt: new Date()
-                    });
-                    currentCotation.id = docRef.id;
-                } else {
-                    const doc = query.docs[0];
-                    await doc.ref.update({
-                        criteres: currentCotation.criteres,
-                        total: currentCotation.total,
-                        commentaire: currentCotation.commentaire,
-                        statut: currentCotation.statut,
-                        updatedAt: currentCotation.updatedAt,
-                        juryId: currentCotation.juryId,
-                        candidatId: currentCotation.candidatId
-                    });
-                    currentCotation.id = doc.id;
-                }
-
-                lastSaveText.textContent = 'Sauvegardé à ' + new Date().toLocaleTimeString();
-                if (afficherToast) showToast('Cotation sauvegardée ✅', 'success');
-                return true;
-            } catch (e) {
-                console.error('Erreur sauvegarde:', e);
-                if (afficherToast) showToast('Erreur de sauvegarde ❌', 'error');
-                return false;
+                await db.collection('cotations').doc(currentCandidat).set(data, { merge: true });
+                hasVoted = valide;
+                isDraft = !valide;
+                mettreAJourStatut();
+                lastUpdate.textContent = `🕐 ${new Date().toLocaleTimeString()}`;
+                showToast(valide ? '✅ Cotation validée !' : '📝 Brouillon sauvegardé', valide ? 'success' : 'warning');
+            } catch (error) {
+                console.error('❌ Erreur sauvegarde:', error);
+                showToast('❌ Erreur: ' + error.message, 'error');
             }
         }
 
-        // ============================================================
-        // 17. VALIDATION
-        // ============================================================
-        async function validerCotation() {
-            if (!isLocked || !currentCandidatId) {
-                showToast('Aucun candidat sélectionné', 'error');
-                return;
-            }
-
-            const tousNotes = criteresConfig.every(c => {
-                const val = currentCotation.criteres[c.id] || 0;
-                return val > 0;
+        // Écouter le timer
+        function ecouterTimer() {
+            db.collection('etat').doc('current').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.timer !== undefined) {
+                        const minutes = Math.floor(data.timer / 60);
+                        const seconds = data.timer % 60;
+                        timerClock.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                        
+                        timerClock.classList.remove('warning', 'danger');
+                        if (data.timer <= 30 && data.timerRunning) timerClock.classList.add('danger');
+                        else if (data.timer <= 60 && data.timerRunning) timerClock.classList.add('warning');
+                    }
+                    if (data.timerRunning && !data.timerPaused) {
+                        timerStatus.textContent = '▶️ En cours';
+                        timerStatus.style.color = '#10b981';
+                    } else if (data.timerPaused) {
+                        timerStatus.textContent = '⏸️ En pause';
+                        timerStatus.style.color = '#f59e0b';
+                    } else {
+                        timerStatus.textContent = '⏸️ Arrêté';
+                        timerStatus.style.color = '#666';
+                    }
+                }
             });
-
-            if (!tousNotes) {
-                showToast('Veuillez noter tous les critères avant de valider', 'error');
-                return;
-            }
-
-            if (currentCotation.total < 10) {
-                showToast('Le total semble très bas, vérifiez vos notes', 'error');
-                return;
-            }
-
-            const confirmVal = confirm('Confirmez-vous la validation de cette cotation ? (Action définitive)');
-            if (!confirmVal) return;
-
-            currentCotation.statut = 'valide';
-            const ok = await sauvegarderCotation(true);
-            if (ok) {
-                desactiverChamps(true);
-                mettreAJourAffichage();
-                showToast('Cotation validée avec succès ✅', 'success');
-            }
         }
 
-        // ============================================================
-        // 18. RÉINITIALISATION
-        // ============================================================
-        function reinitialiserCotation() {
-            if (!isLocked || !currentCandidatId) return;
-            if (currentCotation.statut === 'valide') {
-                showToast('Cette cotation est déjà validée', 'error');
-                return;
-            }
-            const confirmReset = confirm('Voulez-vous vraiment réinitialiser toutes les notes ?');
-            if (!confirmReset) return;
-            initialiserCotation(currentCandidatId);
-            showToast('Formulaire réinitialisé', 'info');
-        }
-
-        // ============================================================
-        // 19. TIMER
-        // ============================================================
-        let timerInterval = null;
-
-        function demarrerTimer(debut, dureeSeconds) {
-            clearInterval(timerInterval);
-            const fin = new Date(debut.getTime() + dureeSeconds * 1000);
-
-            function update() {
-                const now = new Date();
-                const diff = fin - now;
-                if (diff <= 0) {
-                    timerDisplay.textContent = '00:00';
-                    clearInterval(timerInterval);
-                    return;
-                }
-                const minutes = Math.floor(diff / 60000);
-                const seconds = Math.floor((diff % 60000) / 1000);
-                timerDisplay.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-            }
-            update();
-            timerInterval = setInterval(update, 1000);
-        }
-
-        // ============================================================
-        // 20. SIGNALER UN PROBLÈME
-        // ============================================================
+        // Signaler un problème
         async function signalerProbleme() {
-            if (!isLocked || !currentCandidatId) {
-                showToast('Aucun candidat actif', 'error');
+            if (!currentCandidat) {
+                showToast('⚠️ Aucun candidat en cours', 'error');
                 return;
             }
-            const msg = prompt('Décrivez le problème rencontré :');
-            if (!msg) return;
+            if (!currentJury) {
+                showToast('⚠️ Sélectionnez votre nom de jury', 'error');
+                return;
+            }
+
+            if (!confirm(`Signaler un problème pour "${currentCandidat}" ?`)) return;
+
             try {
-                await db.collection('rapports').add({
-                    juryId: currentJuryId,
-                    candidatId: currentCandidatId,
-                    message: msg,
-                    date: new Date(),
-                    statut: 'ouvert'
+                await db.collection('problemes').add({
+                    jury: currentJury,
+                    candidat: currentCandidat,
+                    message: 'Problème signalé par le jury',
+                    timestamp: new Date().toISOString(),
+                    lu: false
                 });
-                showToast('Problème signalé au centre de contrôle 🚨', 'info');
-            } catch (e) {
-                showToast('Erreur lors du signalement', 'error');
+                showToast('📢 Problème signalé au centre de contrôle', 'warning');
+            } catch (error) {
+                console.error('❌ Erreur signalement:', error);
+                showToast('❌ Erreur: ' + error.message, 'error');
             }
         }
 
-        // ============================================================
-        // 21. SYNC MANUELLE
-        // ============================================================
-        async function syncManuelle() {
-            setLoading(true);
-            await chargerCandidatActuel();
-            setLoading(false);
-            showToast('Synchronisation effectuée', 'info');
-        }
+        // Événements
+        validerBtn.addEventListener('click', () => sauvegarderCotation(true));
+        brouillonBtn.addEventListener('click', () => sauvegarderCotation(false));
+        problemeBtn.addEventListener('click', signalerProbleme);
 
-        // ============================================================
-        // 22. DÉCONNEXION (REVIENT À L'ÉCRAN DE SÉLECTION)
-        // ============================================================
-        function deconnexion() {
-            if (confirm('Voulez-vous vraiment quitter votre maison ?')) {
-                sauvegarderCotation(false).then(() => {
-                    // Réinitialiser l'état
-                    isLocked = false;
-                    currentJuryId = null;
-                    currentCandidatId = null;
-                    lockBadge.style.display = 'none';
-                    statusMaison.innerHTML = '<i class="fas fa-lock"></i> Sélectionnez une maison';
-                    statusMaison.style.color = '';
-                    juryBadge.className = 'badge-jury';
-                    juryBadge.textContent = 'Jury';
-                    // Réactiver les boutons
-                    renderJuryButtons();
-                    afficherAucunCandidat();
-                    showToast('Vous avez quitté votre maison', 'info');
-                });
-            }
-        }
-
-        // ============================================================
-        // 23. AUTHENTIFICATION
-        // ============================================================
-        async function initAuth() {
-            try {
-                const user = auth.currentUser;
-                if (!user) {
-                    await auth.signInAnonymously();
-                }
-                statusDot.className = 'dot online';
-                statusText.textContent = 'Connecté';
-            } catch (e) {
-                console.warn('Auth anonyme:', e);
-                statusDot.className = 'dot offline';
-                statusText.textContent = 'Hors ligne';
-            }
-        }
-
-        // ============================================================
-        // 24. INITIALISATION
-        // ============================================================
-        async function init() {
-            await initAuth();
-            await chargerCriteres();
-            renderJuryButtons();
-            renderCriteres();
-
-            // Événements du modal
-            btnConfirmCode.addEventListener('click', confirmJuryCode);
-            codeInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') confirmJuryCode();
-                // Limiter à 4 caractères numériques
-                if (e.key === 'Backspace') return;
-                if (!/^[0-9]$/.test(e.key) && e.key !== 'Enter') {
-                    e.preventDefault();
-                }
-            });
-            codeInput.addEventListener('input', () => {
-                if (codeInput.value.length > 4) {
-                    codeInput.value = codeInput.value.slice(0, 4);
-                }
-                // Auto-confirmer si 4 chiffres
-                if (codeInput.value.length === 4) {
-                    confirmJuryCode();
-                }
-            });
-
-            // Événements des boutons
-            btnValider.addEventListener('click', validerCotation);
-            btnReinitialiser.addEventListener('click', reinitialiserCotation);
-            btnSync.addEventListener('click', syncManuelle);
-            btnProbleme.addEventListener('click', signalerProbleme);
-            btnDeconnexion.addEventListener('click', deconnexion);
-
-            // Sauvegarde périodique
-            setInterval(() => {
-                if (isLocked && currentCandidatId && currentCotation.statut !== 'valide') {
-                    sauvegarderCotation(false);
-                }
-            }, 30000);
-
-            window.addEventListener('beforeunload', () => {
-                if (isLocked && currentCandidatId) {
-                    sauvegarderCotation(false);
-                }
-            });
-
-            // Si aucun jury connecté, afficher "aucun candidat"
-            if (!isLocked) {
-                afficherAucunCandidat();
-            }
-
-            console.log('🏆 Éloquence en Scène - Maisons des Jurys prêtes');
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
+        // Initialisation
+        ecouterJurys();
+        ecouterEtat();
+        ecouterTimer();
+        showToast('✅ Jury connecté - Sélectionnez votre nom', 'success');
+        console.log('🏆 Jury Éloquence en Scène - Connecté à Firebase');
     </script>
 </body>
 </html>
