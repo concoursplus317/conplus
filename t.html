@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏆 Éloquence en Scène - Jury</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --blanc: #ffffff;
+            --blanc-casse: #f8f7f4;
+            --bleu-fonce: #0a1628;
+            --bleu-marine: #1a2a4a;
+            --bleu-ciel: #4a90d9;
+            --rouge: #c0392b;
+            --rouge-dore: #a93226;
+            --or: #d4af37;
+            --gris-clair: #e8e6e1;
+            --gris-moyen: #b0aeaa;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --radius: 20px;
+            --transition: 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --green: #2ecc71;
+            --orange: #f39c12;
+            --red: #e74c3c;
+            --bleu-france: #0055a4;
+            --rouge-france: #ef4135;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--blanc-casse) 0%, #e8e4de 100%);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at 0% 0%, rgba(0, 85, 164, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 100% 100%, rgba(239, 65, 53, 0.03) 0%, transparent 60%);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--blanc-casse);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--bleu-france);
+            border-radius: 10px;
+        }
+
+        /* === SÉLECTEUR DE JURY === */
+        .jury-selector-container {
+            max-width: 1400px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            background: var(--blanc);
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--bleu-france);
+            border-right: 5px solid var(--rouge-france);
+        }
+        .jury-selector-container .label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--bleu-fonce);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .jury-selector-container .label i {
+            color: var(--or);
+        }
+        .jury-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+        .jury-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--gris-clair);
+            border-radius: 30px;
+            background: var(--blanc);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gris-moyen);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .jury-btn:hover {
+            border-color: var(--bleu-france);
+            color: var(--bleu-france);
+        }
+        .jury-btn.active {
+            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
+            color: var(--blanc);
+            border-color: var(--bleu-france);
+            box-shadow: 0 4px 20px rgba(0, 85, 164, 0.25);
+        }
+        .jury-btn .badge-num {
+            background: rgba(0,0,0,0.08);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .jury-btn.active .badge-num {
+            background: rgba(255,255,255,0.2);
+        }
+        .jury-btn .status-dot-mini {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-dot-mini.connected {
+            background: var(--green);
+        }
+        .status-dot-mini.disconnected {
+            background: var(--gris-clair);
+        }
+
+        .jury-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            background: var(--blanc);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            border-left: 5px solid var(--bleu-france);
+            border-right: 5px solid var(--rouge-france);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .jury-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .jury-header .logo i {
+            font-size: 2rem;
+            color: var(--bleu-france);
+        }
+        .jury-header .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--bleu-france), var(--rouge-france));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .jury-header .logo span {
+            font-weight: 300;
+            font-size: 0.8rem;
+            color: var(--gris-moyen);
+            -webkit-text-fill-color: var(--gris-moyen);
+        }
+        .jury-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .jury-header .user-info .badge-jury {
+            background: var(--bleu-france);
+            color: var(--blanc);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .jury-header .user-info .badge-jury.rouge {
+            background: var(--rouge-france);
+        }
+        .jury-header .user-info .btn-deconnexion {
+            background: transparent;
+            border: 1px solid var(--gris-clair);
+            color: var(--gris-moyen);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+        .jury-header .user-info .btn-deconnexion:hover {
+            border-color: var(--rouge-france);
+            color: var(--rouge-france);
+        }
+        .status-connection {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+        .status-connection .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.online {
+            background: var(--green);
+        }
+        .dot.offline {
+            background: var(--red);
+        }
+        .jury-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 24px;
+        }
+        @media (max-width: 1024px) {
+            .jury-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .candidat-card {
+            background: var(--blanc);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(26, 42, 74, 0.06);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            transition: all 0.3s ease;
+        }
+        .candidat-card .card-header {
+            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .candidat-card .card-header .match-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--blanc);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .candidat-card .card-header .timer-badge {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--blanc);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Poppins', monospace;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .candidat-card .card-header .timer-badge i {
+            color: var(--or);
+        }
+        .candidat-card .candidat-photo {
+            position: relative;
+            padding: 30px 20px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bleu-france) 0%, var(--blanc) 60%);
+        }
+        .candidat-card .candidat-photo .photo-frame {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 5px solid var(--blanc);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background: var(--gris-clair);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .candidat-card .candidat-photo .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .candidat-card .candidat-photo .photo-frame .placeholder {
+            font-size: 4rem;
+            color: var(--gris-moyen);
+            opacity: 0.3;
+        }
+        .candidat-card .candidat-photo .role-badge {
+            display: inline-block;
+            padding: 6px 24px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 16px;
+        }
+        .role-badge.these {
+            background: var(--bleu-france);
+            color: var(--blanc);
+        }
+        .role-badge.antithese {
+            background: var(--rouge-france);
+            color: var(--blanc);
+        }
+        .candidat-card .candidat-info {
+            padding: 20px 24px 24px;
+        }
+        .candidat-card .candidat-info .nom {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--bleu-fonce);
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .candidat-card .candidat-info .theme {
+            font-size: 0.85rem;
+            color: var(--gris-moyen);
+            text-align: center;
+            font-weight: 300;
+            line-height: 1.6;
+            padding: 8px 16px;
+            background: var(--blanc-casse);
+            border-radius: 10px;
+            margin-top: 8px;
+            border-left: 3px solid var(--or);
+        }
+        .candidat-card .candidat-info .theme i {
+            color: var(--or);
+            margin-right: 8px;
+        }
+        .candidat-card .status-cotation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px 24px;
+            border-top: 1px solid var(--gris-clair);
+            font-size: 0.75rem;
+            color: var(--gris-moyen);
+            flex-wrap: wrap;
+        }
+        .candidat-card .status-cotation .statut-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .candidat-card .status-cotation .statut-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.non-cote {
+            background: var(--gris-clair);
+        }
+        .dot.brouillon {
+            background: var(--or);
+        }
+        .dot.valide {
+            background: var(--bleu-france);
+        }
+        .dot.en-attente {
+            background: var(--orange);
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+        .cotation-card {
+            background: var(--blanc);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 42, 74, 0.06);
+            overflow: hidden;
+        }
+        .cotation-card .card-header {
+            background: linear-gradient(135deg, var(--bleu-france), var(--rouge-dore));
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cotation-card .card-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blanc);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cotation-card .card-header h2 i {
+            font-size: 1.2rem;
+        }
+        .cotation-card .card-header .jury-name {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 16px;
+            border-radius: 30px;
+        }
+        .cotation-card .card-body {
+            padding: 24px;
+        }
+        .candidat-actif-info {
+            background: rgba(212, 175, 55, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .candidat-actif-info .label {
+            font-size: 0.7rem;
+            color: var(--gris-moyen);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .candidat-actif-info .value {
+            font-weight: 700;
+            color: var(--bleu-fonce);
+        }
+        .candidat-actif-info .badge-en-cours {
+            background: var(--or);
+            color: var(--bleu-fonce);
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .criteria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .criteria-item {
+            background: var(--blanc-casse);
+            border-radius: 12px;
+            padding: 14px 18px;
+            border: 1px solid var(--gris-clair);
+            transition: var(--transition);
+        }
+        .criteria-item:hover {
+            border-color: var(--bleu-france);
+            box-shadow: 0 4px 20px rgba(0, 85, 164, 0.08);
+        }
+        .criteria-item .criteria-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .criteria-item .criteria-header label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--bleu-fonce);
+        }
+        .criteria-item .criteria-header .max-points {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--bleu-france);
+            background: rgba(0, 85, 164, 0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+        .criteria-item input {
+            width: 100%;
+            padding: 8px 14px;
+            background: var(--blanc);
+            border: 1px solid var(--gris-clair);
+            border-radius: 8px;
+            color: var(--bleu-fonce);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .criteria-item input:focus {
+            outline: none;
+            border-color: var(--bleu-france);
+            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+        }
+        .criteria-item input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .criteria-item input::-webkit-outer-spin-button,
+        .criteria-item input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        .criteria-item input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .total-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .total-section .total-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+        .total-section .total-value {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .total-section .total-value #totalScore {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--or);
+            min-width: 60px;
+            text-align: right;
+        }
+        .total-section .total-value .sur {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .comment-area {
+            margin-bottom: 14px;
+        }
+        .comment-area label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--bleu-fonce);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .comment-area label i {
+            color: var(--bleu-france);
+        }
+        .comment-area textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--blanc-casse);
+            border: 1px solid var(--gris-clair);
+            border-radius: 10px;
+            color: var(--bleu-fonce);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 50px;
+            transition: var(--transition);
+        }
+        .comment-area textarea:focus {
+            outline: none;
+            border-color: var(--bleu-france);
+            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.08);
+        }
+        .comment-area textarea:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .actions button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
+            min-width: 140px;
+        }
+        .actions button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .btn-valider {
+            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
+            color: var(--blanc);
+            border: 2px solid transparent;
+        }
+        .btn-valider:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 85, 164, 0.2);
+        }
+        .btn-reinitialiser {
+            background: transparent;
+            color: var(--gris-moyen);
+            border: 2px solid var(--gris-clair);
+        }
+        .btn-reinitialiser:hover:not(:disabled) {
+            border-color: var(--rouge-france);
+            color: var(--rouge-france);
+            transform: translateY(-2px);
+        }
+        .btn-sync {
+            background: var(--bleu-ciel);
+            color: var(--blanc);
+            border: 2px solid transparent;
+        }
+        .btn-sync:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(74, 144, 217, 0.2);
+        }
+        .btn-probleme {
+            background: var(--red);
+            color: var(--blanc);
+            border: 2px solid transparent;
+        }
+        .btn-probleme:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid var(--gris-clair);
+            margin-top: 16px;
+            font-size: 0.75rem;
+            color: var(--gris-moyen);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .status-bar .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-bar .status-indicator .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-dot.non-cote {
+            background: var(--gris-clair);
+        }
+        .status-dot.brouillon {
+            background: var(--or);
+        }
+        .status-dot.valide {
+            background: var(--bleu-france);
+        }
+        .status-bar .last-save {
+            font-size: 0.65rem;
+            color: var(--gris-moyen);
+        }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-overlay.active {
+            display: flex;
+        }
+        .loading-spinner {
+            background: var(--blanc);
+            padding: 30px 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .loading-spinner i {
+            font-size: 2.5rem;
+            color: var(--bleu-france);
+            animation: spin 1s linear infinite;
+        }
+        .loading-spinner p {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--bleu-fonce);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            color: var(--blanc);
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+        }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+        .toast.info { background: var(--bleu-ciel); }
+        .toast.show { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .no-candidat {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gris-moyen);
+        }
+        .no-candidat i {
+            font-size: 3rem;
+            opacity: 0.3;
+            margin-bottom: 12px;
+        }
+        .no-candidat p {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADING -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p>Chargement...</p>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Message</span>
+    </div>
+
+    <!-- ===== SÉLECTEUR DE JURY ===== -->
+    <div class="jury-selector-container" id="jurySelector">
+        <span class="label"><i class="fas fa-users"></i> Sélectionnez votre siège :</span>
+        <div class="jury-btn-group" id="juryBtnGroup">
+            <!-- Généré par JS -->
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="jury-header">
+        <div class="logo">
+            <i class="fas fa-gavel"></i>
+            <div>
+                <h1>Éloquence en Scène</h1>
+                <span>Plateforme du Jury</span>
+            </div>
+        </div>
+        <div class="user-info">
+            <span class="badge-jury" id="juryBadge">Jury 1</span>
+            <span class="badge-jury rouge" id="roleBadge">Cotation</span>
+            <div class="status-connection">
+                <span class="dot online" id="statusDot"></span>
+                <span id="statusText">Connecté</span>
+            </div>
+            <button class="btn-deconnexion" id="btnDeconnexion">
+                <i class="fas fa-sign-out-alt"></i> Quitter
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="jury-main" id="juryMain">
+        <!-- Colonne Candidat -->
+        <section class="candidat-card" id="candidatCard">
+            <div class="card-header">
+                <span class="match-badge"><i class="fas fa-microphone"></i> Match #1</span>
+                <span class="timer-badge"><i class="far fa-clock"></i> <span id="timerDisplay">--:--</span></span>
+            </div>
+            <div class="candidat-photo">
+                <div class="photo-frame" id="photoFrame">
+                    <span class="placeholder"><i class="fas fa-user-circle"></i></span>
+                </div>
+                <div class="role-badge these" id="roleBadgeCandidat">Thèse</div>
+            </div>
+            <div class="candidat-info">
+                <div class="nom" id="candidatNom">Chargement...</div>
+                <div class="theme"><i class="fas fa-quote-left"></i> <span id="candidatTheme">---</span></div>
+            </div>
+            <div class="status-cotation">
+                <span class="statut-item"><span class="dot non-cote" id="statutDot"></span> <span id="statutTexte">Non coté</span></span>
+                <span class="statut-item"><i class="far fa-clock"></i> <span id="derniereModif">--</span></span>
+            </div>
+        </section>
+
+        <!-- Colonne Cotation -->
+        <section class="cotation-card" id="cotationCard">
+            <div class="card-header">
+                <h2><i class="fas fa-pen-fancy"></i> Grille de cotation</h2>
+                <span class="jury-name" id="juryNameDisplay">Jury 1</span>
+            </div>
+            <div class="card-body">
+                <div class="candidat-actif-info">
+                    <span class="label"><i class="fas fa-user"></i> Candidat</span>
+                    <span class="value" id="actifNom">---</span>
+                    <span class="badge-en-cours">EN COURS</span>
+                </div>
+
+                <div class="criteria-grid" id="criteriaGrid">
+                    <!-- Généré par JS -->
+                </div>
+
+                <div class="total-section">
+                    <span class="total-label"><i class="fas fa-calculator"></i> Total</span>
+                    <div class="total-value">
+                        <span id="totalScore">0</span>
+                        <span class="sur">/ 100</span>
+                    </div>
+                </div>
+
+                <div class="comment-area">
+                    <label><i class="fas fa-comment"></i> Commentaire / Remarque</label>
+                    <textarea id="commentaire" placeholder="Votre appréciation sur la prestation..." rows="2"></textarea>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-valider" id="btnValider"><i class="fas fa-check"></i> Valider</button>
+                    <button class="btn-reinitialiser" id="btnReinitialiser"><i class="fas fa-undo"></i> Réinitialiser</button>
+                    <button class="btn-sync" id="btnSync"><i class="fas fa-sync-alt"></i> Synchroniser</button>
+                    <button class="btn-probleme" id="btnProbleme"><i class="fas fa-flag"></i> Signaler</button>
+                </div>
+
+                <div class="status-bar">
+                    <span class="status-indicator">
+                        <span class="status-dot non-cote" id="statusBarDot"></span>
+                        <span id="statusBarText">Brouillon</span>
+                    </span>
+                    <span class="last-save"><i class="far fa-save"></i> <span id="lastSaveText">Non sauvegardé</span></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // ============================================================
+        // 1. CONFIGURATION FIREBASE (LA MÊME QUE L'ORIGINAL)
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8vK7X2vX5V5n8Z9wZq7Z9yZ8vX7K5X2vX5",
+            authDomain: "votre-projet.firebaseapp.com",
+            projectId: "votre-projet",
+            storageBucket: "votre-projet.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ============================================================
+        // 2. CONFIGURATION DES JURYS
+        // ============================================================
+        const JURYS = [
+            { id: 'jury1', label: 'Jury 1', color: '#0055a4', short: 'J1' },
+            { id: 'jury2', label: 'Jury 2', color: '#2e7d32', short: 'J2' },
+            { id: 'jury3', label: 'Jury 3', color: '#b71c1c', short: 'J3' },
+            { id: 'jury4', label: 'Jury 4', color: '#e65100', short: 'J4' },
+            { id: 'jury5', label: 'Jury 5', color: '#4a148c', short: 'J5' }
+        ];
+
+        // ============================================================
+        // 3. ÉTAT
+        // ============================================================
+        let currentJuryId = 'jury1';
+        let currentCandidatId = null;
+        let currentCotation = {
+            criteres: {},
+            total: 0,
+            commentaire: '',
+            statut: 'brouillon', // 'brouillon' | 'valide'
+            juryId: 'jury1',
+            candidatId: null,
+            updatedAt: null
+        };
+        let criteresConfig = [];
+        let isLoading = false;
+
+        // ============================================================
+        // 4. RÉFÉRENCES DOM
+        // ============================================================
+        const $ = (id) => document.getElementById(id);
+        const juryBtnGroup = $('juryBtnGroup');
+        const juryBadge = $('juryBadge');
+        const juryNameDisplay = $('juryNameDisplay');
+        const candidatNom = $('candidatNom');
+        const candidatTheme = $('candidatTheme');
+        const actifNom = $('actifNom');
+        const photoFrame = $('photoFrame');
+        const roleBadgeCandidat = $('roleBadgeCandidat');
+        const statutDot = $('statutDot');
+        const statutTexte = $('statutTexte');
+        const statusBarDot = $('statusBarDot');
+        const statusBarText = $('statusBarText');
+        const totalScore = $('totalScore');
+        const commentaire = $('commentaire');
+        const lastSaveText = $('lastSaveText');
+        const timerDisplay = $('timerDisplay');
+        const statusDot = $('statusDot');
+        const statusText = $('statusText');
+        const loadingOverlay = $('loadingOverlay');
+        const toast = $('toast');
+        const toastMessage = $('toastMessage');
+        const btnValider = $('btnValider');
+        const btnReinitialiser = $('btnReinitialiser');
+        const btnSync = $('btnSync');
+        const btnProbleme = $('btnProbleme');
+        const btnDeconnexion = $('btnDeconnexion');
+
+        // ============================================================
+        // 5. TOAST
+        // ============================================================
+        function showToast(message, type = 'success') {
+            toast.className = 'toast ' + type + ' show';
+            toastMessage.textContent = message;
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ============================================================
+        // 6. LOADING
+        // ============================================================
+        function setLoading(active) {
+            isLoading = active;
+            loadingOverlay.classList.toggle('active', active);
+        }
+
+        // ============================================================
+        // 7. GÉNÉRATION DES BOUTONS JURY
+        // ============================================================
+        function renderJuryButtons() {
+            juryBtnGroup.innerHTML = '';
+            JURYS.forEach(jury => {
+                const btn = document.createElement('button');
+                btn.className = 'jury-btn' + (jury.id === currentJuryId ? ' active' : '');
+                btn.dataset.juryId = jury.id;
+                btn.innerHTML = `
+                    <span class="badge-num">${jury.short}</span>
+                    ${jury.label}
+                    <span class="status-dot-mini connected"></span>
+                `;
+                btn.addEventListener('click', () => switchJury(jury.id));
+                juryBtnGroup.appendChild(btn);
+            });
+        }
+
+        // ============================================================
+        // 8. CHANGEMENT DE JURY
+        // ============================================================
+        function switchJury(juryId) {
+            if (isLoading) return;
+            if (juryId === currentJuryId) return;
+
+            // Sauvegarder l'état actuel avant de changer
+            sauvegarderCotation().then(() => {
+                currentJuryId = juryId;
+                renderJuryButtons();
+                updateJuryUI();
+                chargerCandidatActuel();
+            }).catch(() => {
+                currentJuryId = juryId;
+                renderJuryButtons();
+                updateJuryUI();
+                chargerCandidatActuel();
+            });
+        }
+
+        // ============================================================
+        // 9. MISE À JOUR UI JURY
+        // ============================================================
+        function updateJuryUI() {
+            const jury = JURYS.find(j => j.id === currentJuryId);
+            if (jury) {
+                juryBadge.textContent = jury.label;
+                juryNameDisplay.textContent = jury.label;
+                document.querySelector('.jury-header').style.borderLeftColor = jury.color;
+                document.querySelector('.jury-selector-container').style.borderLeftColor = jury.color;
+                // Mettre à jour le style du bouton actif
+                document.querySelectorAll('.jury-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.juryId === currentJuryId);
+                });
+            }
+        }
+
+        // ============================================================
+        // 10. CHARGEMENT DES CRITÈRES (depuis Firestore ou config par défaut)
+        // ============================================================
+        async function chargerCriteres() {
+            try {
+                const doc = await db.collection('config').doc('criteres').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.criteres && Array.isArray(data.criteres)) {
+                        criteresConfig = data.criteres;
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn('Impossible de charger les critères, utilisation des defaults');
+            }
+            // Critères par défaut
+            criteresConfig = [
+                { id: 'fond', label: 'Fond du discours', max: 20 },
+                { id: 'forme', label: 'Forme / Élocution', max: 20 },
+                { id: 'argumentation', label: 'Argumentation', max: 20 },
+                { id: 'conviction', label: 'Capacité de conviction', max: 15 },
+                { id: 'originalite', label: 'Originalité', max: 15 },
+                { id: 'interaction', label: 'Interaction avec le public', max: 10 }
+            ];
+        }
+
+        function renderCriteres() {
+            const grid = $('criteriaGrid');
+            grid.innerHTML = '';
+            criteresConfig.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'criteria-item';
+                div.innerHTML = `
+                    <div class="criteria-header">
+                        <label for="crit_${c.id}">${c.label}</label>
+                        <span class="max-points">/${c.max}</span>
+                    </div>
+                    <input type="number" id="crit_${c.id}" data-crit-id="${c.id}" data-max="${c.max}" 
+                           min="0" max="${c.max}" step="0.5" value="0" />
+                `;
+                grid.appendChild(div);
+            });
+            // Écouteurs
+            grid.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('input', onCriteresChange);
+            });
+        }
+
+        // ============================================================
+        // 11. CHARGEMENT DU CANDIDAT ACTUEL
+        // ============================================================
+        async function chargerCandidatActuel() {
+            setLoading(true);
+            try {
+                // Récupérer le match actif (celui en cours)
+                const matchSnapshot = await db.collection('matches')
+                    .where('statut', '==', 'en_cours')
+                    .limit(1)
+                    .get();
+
+                if (matchSnapshot.empty) {
+                    // Aucun match en cours
+                    afficherAucunCandidat();
+                    setLoading(false);
+                    return;
+                }
+
+                const matchDoc = matchSnapshot.docs[0];
+                const matchData = matchDoc.data();
+                const candidatId = matchData.candidatId;
+
+                if (!candidatId) {
+                    afficherAucunCandidat();
+                    setLoading(false);
+                    return;
+                }
+
+                currentCandidatId = candidatId;
+
+                // Charger les infos du candidat
+                const candidatDoc = await db.collection('candidats').doc(candidatId).get();
+                if (!candidatDoc.exists) {
+                    afficherAucunCandidat();
+                    setLoading(false);
+                    return;
+                }
+
+                const candidatData = candidatDoc.data();
+                afficherCandidat(candidatData);
+
+                // Charger la cotation existante pour ce jury et ce candidat
+                await chargerCotation(candidatId);
+
+                // Timer
+                if (matchData.tempsDebat) {
+                    const debut = matchData.tempsDebat.toDate ? matchData.tempsDebat.toDate() : new Date(matchData.tempsDebat);
+                    demarrerTimer(debut, 7 * 60); // 7 minutes
+                }
+
+            } catch (e) {
+                console.error('Erreur chargement candidat:', e);
+                showToast('Erreur de chargement', 'error');
+            }
+            setLoading(false);
+        }
+
+        function afficherAucunCandidat() {
+            currentCandidatId = null;
+            candidatNom.textContent = 'Aucun candidat';
+            candidatTheme.textContent = '---';
+            actifNom.textContent = '---';
+            photoFrame.innerHTML = '<span class="placeholder"><i class="fas fa-user-circle"></i></span>';
+            roleBadgeCandidat.textContent = '--';
+            roleBadgeCandidat.className = 'role-badge';
+            // Réinitialiser les champs
+            reinitialiserFormulaire();
+            // Statut
+            statutDot.className = 'dot non-cote';
+            statutTexte.textContent = 'Aucun candidat';
+            statusBarDot.className = 'status-dot non-cote';
+            statusBarText.textContent = 'En attente';
+            btnValider.disabled = true;
+            btnReinitialiser.disabled = true;
+            commentaire.disabled = true;
+            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = true);
+        }
+
+        function afficherCandidat(data) {
+            candidatNom.textContent = data.nom || 'Candidat';
+            candidatTheme.textContent = data.theme || '---';
+            actifNom.textContent = data.nom || '---';
+            // Photo
+            if (data.photoUrl) {
+                photoFrame.innerHTML = `<img src="${data.photoUrl}" alt="${data.nom}" />`;
+            } else {
+                photoFrame.innerHTML = `<span class="placeholder"><i class="fas fa-user-circle"></i></span>`;
+            }
+            // Rôle
+            const role = data.role || 'these';
+            roleBadgeCandidat.textContent = role === 'these' ? 'Thèse' : 'Antithèse';
+            roleBadgeCandidat.className = 'role-badge ' + (role === 'these' ? 'these' : 'antithese');
+            // Activer les champs
+            btnValider.disabled = false;
+            btnReinitialiser.disabled = false;
+            commentaire.disabled = false;
+            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
+        }
+
+        // ============================================================
+        // 12. CHARGEMENT DE LA COTATION
+        // ============================================================
+        async function chargerCotation(candidatId) {
+            try {
+                const docRef = db.collection('cotations')
+                    .where('candidatId', '==', candidatId)
+                    .where('juryId', '==', currentJuryId)
+                    .limit(1);
+                const snapshot = await docRef.get();
+
+                if (snapshot.empty) {
+                    // Pas de cotation existante, initialiser
+                    initialiserCotation(candidatId);
+                    return;
+                }
+
+                const doc = snapshot.docs[0];
+                const data = doc.data();
+                currentCotation = {
+                    ...data,
+                    id: doc.id
+                };
+
+                // Remplir le formulaire
+                if (data.criteres) {
+                    criteresConfig.forEach(c => {
+                        const input = document.getElementById(`crit_${c.id}`);
+                        if (input && data.criteres[c.id] !== undefined) {
+                            input.value = data.criteres[c.id];
+                        }
+                    });
+                }
+                commentaire.value = data.commentaire || '';
+                currentCotation.total = data.total || 0;
+                currentCotation.statut = data.statut || 'brouillon';
+
+                // Mettre à jour l'affichage
+                mettreAJourAffichage();
+
+                // Dernière modification
+                if (data.updatedAt) {
+                    const date = data.updatedAt.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt);
+                    lastSaveText.textContent = 'Dernière modification: ' + date.toLocaleTimeString();
+                }
+
+                // Si la cotation est validée, désactiver les champs
+                if (data.statut === 'valide') {
+                    desactiverChamps(true);
+                } else {
+                    desactiverChamps(false);
+                }
+
+            } catch (e) {
+                console.error('Erreur chargement cotation:', e);
+                initialiserCotation(candidatId);
+            }
+        }
+
+        function initialiserCotation(candidatId) {
+            currentCotation = {
+                candidatId: candidatId,
+                juryId: currentJuryId,
+                criteres: {},
+                total: 0,
+                commentaire: '',
+                statut: 'brouillon',
+                updatedAt: new Date()
+            };
+            // Réinitialiser les champs
+            criteresConfig.forEach(c => {
+                const input = document.getElementById(`crit_${c.id}`);
+                if (input) input.value = 0;
+                currentCotation.criteres[c.id] = 0;
+            });
+            commentaire.value = '';
+            currentCotation.total = 0;
+            currentCotation.statut = 'brouillon';
+            desactiverChamps(false);
+            mettreAJourAffichage();
+            lastSaveText.textContent = 'Non sauvegardé';
+        }
+
+        function reinitialiserFormulaire() {
+            criteresConfig.forEach(c => {
+                const input = document.getElementById(`crit_${c.id}`);
+                if (input) input.value = 0;
+            });
+            commentaire.value = '';
+            totalScore.textContent = '0';
+            currentCotation.total = 0;
+            currentCotation.criteres = {};
+            criteresConfig.forEach(c => currentCotation.criteres[c.id] = 0);
+            currentCotation.commentaire = '';
+            currentCotation.statut = 'brouillon';
+            statutDot.className = 'dot non-cote';
+            statutTexte.textContent = 'Non coté';
+            statusBarDot.className = 'status-dot non-cote';
+            statusBarText.textContent = 'Brouillon';
+            lastSaveText.textContent = 'Non sauvegardé';
+            desactiverChamps(false);
+        }
+
+        // ============================================================
+        // 13. GESTION DES CHAMPS
+        // ============================================================
+        function desactiverChamps(desactiver) {
+            document.querySelectorAll('.criteria-item input').forEach(i => {
+                i.disabled = desactiver;
+            });
+            commentaire.disabled = desactiver;
+            btnValider.disabled = desactiver;
+            btnReinitialiser.disabled = desactiver;
+            if (desactiver) {
+                btnValider.textContent = '✅ Validé';
+                btnValider.style.background = 'var(--green)';
+            } else {
+                btnValider.innerHTML = '<i class="fas fa-check"></i> Valider';
+                btnValider.style.background = '';
+            }
+        }
+
+        // ============================================================
+        // 14. ÉVÉNEMENT CHANGEMENT CRITÈRES
+        // ============================================================
+        function onCriteresChange(e) {
+            const input = e.target;
+            const critId = input.dataset.critId;
+            const max = parseFloat(input.dataset.max);
+            let val = parseFloat(input.value) || 0;
+            if (val < 0) val = 0;
+            if (val > max) val = max;
+            input.value = val;
+            currentCotation.criteres[critId] = val;
+            calculerTotal();
+            currentCotation.statut = 'brouillon';
+            mettreAJourAffichage();
+            // Auto-save après 2s d'inactivité
+            clearTimeout(window._autoSaveTimeout);
+            window._autoSaveTimeout = setTimeout(() => {
+                sauvegarderCotation(false);
+            }, 2000);
+        }
+
+        function calculerTotal() {
+            let total = 0;
+            criteresConfig.forEach(c => {
+                total += (currentCotation.criteres[c.id] || 0);
+            });
+            currentCotation.total = Math.round(total * 100) / 100;
+            totalScore.textContent = currentCotation.total;
+            return currentCotation.total;
+        }
+
+        // ============================================================
+        // 15. MISE À JOUR AFFICHAGE
+        // ============================================================
+        function mettreAJourAffichage() {
+            totalScore.textContent = currentCotation.total || 0;
+            if (currentCotation.statut === 'valide') {
+                statutDot.className = 'dot valide';
+                statutTexte.textContent = 'Validé ✓';
+                statusBarDot.className = 'status-dot valide';
+                statusBarText.textContent = 'Validé';
+            } else if (currentCotation.statut === 'brouillon') {
+                const aDesNotes = Object.values(currentCotation.criteres).some(v => v > 0);
+                if (aDesNotes) {
+                    statutDot.className = 'dot brouillon';
+                    statutTexte.textContent = 'Brouillon';
+                    statusBarDot.className = 'status-dot brouillon';
+                    statusBarText.textContent = 'Brouillon';
+                } else {
+                    statutDot.className = 'dot non-cote';
+                    statutTexte.textContent = 'Non coté';
+                    statusBarDot.className = 'status-dot non-cote';
+                    statusBarText.textContent = 'Brouillon';
+                }
+            }
+            // Commentaire
+            if (commentaire.value !== currentCotation.commentaire) {
+                // Ne pas boucler
+            }
+        }
+
+        // ============================================================
+        // 16. SAUVEGARDE
+        // ============================================================
+        async function sauvegarderCotation(afficherToast = true) {
+            if (!currentCandidatId) return;
+
+            // Récupérer les valeurs des champs
+            criteresConfig.forEach(c => {
+                const input = document.getElementById(`crit_${c.id}`);
+                if (input) {
+                    currentCotation.criteres[c.id] = parseFloat(input.value) || 0;
+                }
+            });
+            currentCotation.commentaire = commentaire.value;
+            currentCotation.total = calculerTotal();
+            currentCotation.updatedAt = new Date();
+            currentCotation.juryId = currentJuryId;
+            currentCotation.candidatId = currentCandidatId;
+
+            try {
+                // Chercher si une cotation existe déjà
+                const query = await db.collection('cotations')
+                    .where('candidatId', '==', currentCandidatId)
+                    .where('juryId', '==', currentJuryId)
+                    .get();
+
+                if (query.empty) {
+                    // Créer
+                    const docRef = await db.collection('cotations').add({
+                        ...currentCotation,
+                        createdAt: new Date()
+                    });
+                    currentCotation.id = docRef.id;
+                } else {
+                    // Mettre à jour
+                    const doc = query.docs[0];
+                    await doc.ref.update({
+                        criteres: currentCotation.criteres,
+                        total: currentCotation.total,
+                        commentaire: currentCotation.commentaire,
+                        statut: currentCotation.statut,
+                        updatedAt: currentCotation.updatedAt,
+                        juryId: currentCotation.juryId,
+                        candidatId: currentCotation.candidatId
+                    });
+                    currentCotation.id = doc.id;
+                }
+
+                lastSaveText.textContent = 'Sauvegardé à ' + new Date().toLocaleTimeString();
+                if (afficherToast) {
+                    showToast('Cotation sauvegardée ✅', 'success');
+                }
+                return true;
+            } catch (e) {
+                console.error('Erreur sauvegarde:', e);
+                if (afficherToast) {
+                    showToast('Erreur de sauvegarde ❌', 'error');
+                }
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 17. VALIDATION
+        // ============================================================
+        async function validerCotation() {
+            if (!currentCandidatId) {
+                showToast('Aucun candidat sélectionné', 'error');
+                return;
+            }
+
+            // Vérifier que tous les critères sont notés
+            const tousNotes = criteresConfig.every(c => {
+                const val = currentCotation.criteres[c.id] || 0;
+                return val > 0;
+            });
+
+            if (!tousNotes) {
+                showToast('Veuillez noter tous les critères avant de valider', 'error');
+                return;
+            }
+
+            if (currentCotation.total < 10) {
+                showToast('Le total semble très bas, vérifiez vos notes', 'error');
+                return;
+            }
+
+            const confirmVal = confirm('Confirmez-vous la validation de cette cotation ? (Action définitive)');
+            if (!confirmVal) return;
+
+            currentCotation.statut = 'valide';
+            const ok = await sauvegarderCotation(true);
+            if (ok) {
+                desactiverChamps(true);
+                mettreAJourAffichage();
+                showToast('Cotation validée avec succès ✅', 'success');
+            }
+        }
+
+        // ============================================================
+        // 18. RÉINITIALISATION
+        // ============================================================
+        function reinitialiserCotation() {
+            if (!currentCandidatId) return;
+            if (currentCotation.statut === 'valide') {
+                showToast('Cette cotation est déjà validée, vous ne pouvez pas la réinitialiser', 'error');
+                return;
+            }
+            const confirmReset = confirm('Voulez-vous vraiment réinitialiser toutes les notes ?');
+            if (!confirmReset) return;
+            initialiserCotation(currentCandidatId);
+            showToast('Formulaire réinitialisé', 'info');
+        }
+
+        // ============================================================
+        // 19. TIMER
+        // ============================================================
+        let timerInterval = null;
+
+        function demarrerTimer(debut, dureeSeconds) {
+            clearInterval(timerInterval);
+            const fin = new Date(debut.getTime() + dureeSeconds * 1000);
+
+            function update() {
+                const now = new Date();
+                const diff = fin - now;
+                if (diff <= 0) {
+                    timerDisplay.textContent = '00:00';
+                    clearInterval(timerInterval);
+                    return;
+                }
+                const minutes = Math.floor(diff / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                timerDisplay.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            }
+            update();
+            timerInterval = setInterval(update, 1000);
+        }
+
+        // ============================================================
+        // 20. SIGNALER UN PROBLÈME
+        // ============================================================
+        async function signalerProbleme() {
+            if (!currentCandidatId) {
+                showToast('Aucun candidat actif', 'error');
+                return;
+            }
+            const msg = prompt('Décrivez le problème rencontré :');
+            if (!msg) return;
+            try {
+                await db.collection('rapports').add({
+                    juryId: currentJuryId,
+                    candidatId: currentCandidatId,
+                    message: msg,
+                    date: new Date(),
+                    statut: 'ouvert'
+                });
+                showToast('Problème signalé au centre de contrôle 🚨', 'info');
+            } catch (e) {
+                showToast('Erreur lors du signalement', 'error');
+            }
+        }
+
+        // ============================================================
+        // 21. SYNC MANUELLE
+        // ============================================================
+        async function syncManuelle() {
+            setLoading(true);
+            await chargerCandidatActuel();
+            setLoading(false);
+            showToast('Synchronisation effectuée', 'info');
+        }
+
+        // ============================================================
+        // 22. DÉCONNEXION
+        // ============================================================
+        function deconnexion() {
+            if (confirm('Voulez-vous vraiment quitter ?')) {
+                // Sauvegarder avant de quitter
+                sauvegarderCotation(false).then(() => {
+                    window.location.reload();
+                });
+            }
+        }
+
+        // ============================================================
+        // 23. AUTHENTIFICATION ANONYME (ou avec email)
+        // ============================================================
+        async function initAuth() {
+            try {
+                // Connexion anonyme pour accéder à Firestore
+                // (Si vous utilisez des règles sécurisées, adaptez)
+                const user = auth.currentUser;
+                if (!user) {
+                    await auth.signInAnonymously();
+                }
+                statusDot.className = 'dot online';
+                statusText.textContent = 'Connecté';
+            } catch (e) {
+                console.warn('Auth anonyme:', e);
+                statusDot.className = 'dot offline';
+                statusText.textContent = 'Hors ligne';
+            }
+        }
+
+        // ============================================================
+        // 24. INITIALISATION
+        // ============================================================
+        async function init() {
+            // Auth
+            await initAuth();
+
+            // Charger les critères
+            await chargerCriteres();
+
+            // Rendre les boutons jury
+            renderJuryButtons();
+
+            // Mettre à jour l'UI jury
+            updateJuryUI();
+
+            // Rendre les critères
+            renderCriteres();
+
+            // Charger le candidat actuel
+            await chargerCandidatActuel();
+
+            // Événements
+            btnValider.addEventListener('click', validerCotation);
+            btnReinitialiser.addEventListener('click', reinitialiserCotation);
+            btnSync.addEventListener('click', syncManuelle);
+            btnProbleme.addEventListener('click', signalerProbleme);
+            btnDeconnexion.addEventListener('click', deconnexion);
+
+            // Sauvegarder périodiquement (toutes les 30s)
+            setInterval(() => {
+                if (currentCandidatId && currentCotation.statut !== 'valide') {
+                    sauvegarderCotation(false);
+                }
+            }, 30000);
+
+            // Sauvegarder avant de quitter
+            window.addEventListener('beforeunload', () => {
+                if (currentCandidatId) {
+                    sauvegarderCotation(false);
+                }
+            });
+
+            console.log('🏆 Éloquence en Scène - Jury prêt');
+        }
+
+        // Lancer l'application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
