@@ -59,7 +59,7 @@
             border-radius: 10px;
         }
 
-        /* === SÉLECTEUR DE JURY === */
+        /* === SÉLECTEUR DE JURY (MAISON) === */
         .jury-selector-container {
             max-width: 1400px;
             margin: 0 auto 20px;
@@ -106,7 +106,7 @@
             align-items: center;
             gap: 8px;
         }
-        .jury-btn:hover {
+        .jury-btn:hover:not(.locked) {
             border-color: var(--bleu-france);
             color: var(--bleu-france);
         }
@@ -115,6 +115,15 @@
             color: var(--blanc);
             border-color: var(--bleu-france);
             box-shadow: 0 4px 20px rgba(0, 85, 164, 0.25);
+        }
+        .jury-btn.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            border-color: var(--gris-clair) !important;
+        }
+        .jury-btn.locked.active {
+            opacity: 1;
+            cursor: default;
         }
         .jury-btn .badge-num {
             background: rgba(0,0,0,0.08);
@@ -139,8 +148,137 @@
         .status-dot-mini.connected {
             background: var(--green);
         }
-        .status-dot-mini.disconnected {
-            background: var(--gris-clair);
+        .status-dot-mini.locked-dot {
+            background: var(--or);
+        }
+        .jury-btn .lock-icon {
+            font-size: 0.7rem;
+            color: var(--or);
+        }
+
+        /* === MODAL DE CONNEXION JURY (CODE D'ACCÈS) === */
+        .jury-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .jury-modal-overlay.active {
+            display: flex;
+        }
+        .jury-modal {
+            background: var(--blanc);
+            border-radius: var(--radius);
+            padding: 40px 50px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            text-align: center;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            0% { transform: scale(0.9) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .jury-modal .modal-icon {
+            font-size: 3.5rem;
+            color: var(--bleu-france);
+            margin-bottom: 12px;
+        }
+        .jury-modal h2 {
+            font-size: 1.4rem;
+            color: var(--bleu-fonce);
+            font-weight: 700;
+        }
+        .jury-modal .subtitle {
+            color: var(--gris-moyen);
+            font-size: 0.85rem;
+            margin: 4px 0 20px;
+        }
+        .jury-modal .jury-name-display {
+            font-weight: 700;
+            color: var(--bleu-france);
+            font-size: 1.2rem;
+            background: var(--blanc-casse);
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .jury-modal .code-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        .jury-modal .code-input-group input {
+            padding: 12px 18px;
+            border: 2px solid var(--gris-clair);
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Poppins', monospace;
+            width: 160px;
+            text-align: center;
+            letter-spacing: 6px;
+            transition: var(--transition);
+        }
+        .jury-modal .code-input-group input:focus {
+            outline: none;
+            border-color: var(--bleu-france);
+            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+        }
+        .jury-modal .code-input-group input.error {
+            border-color: var(--red);
+            animation: shake 0.4s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        .jury-modal .btn-confirm-code {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bleu-france), var(--bleu-marine));
+            color: var(--blanc);
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .jury-modal .btn-confirm-code:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 85, 164, 0.25);
+        }
+        .jury-modal .btn-confirm-code:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .jury-modal .error-msg {
+            color: var(--red);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            min-height: 24px;
+        }
+        .jury-modal .hint-text {
+            color: var(--gris-moyen);
+            font-size: 0.7rem;
+            margin-top: 12px;
         }
 
         .jury-header {
@@ -197,6 +335,10 @@
         }
         .jury-header .user-info .badge-jury.rouge {
             background: var(--rouge-france);
+        }
+        .jury-header .user-info .badge-jury.locked-badge {
+            background: var(--or);
+            color: var(--bleu-fonce);
         }
         .jury-header .user-info .btn-deconnexion {
             background: transparent;
@@ -784,6 +926,13 @@
         .no-candidat p {
             font-size: 0.9rem;
         }
+        .verrouille-badge {
+            background: var(--or) !important;
+            color: var(--bleu-fonce) !important;
+        }
+        .verrouille-badge i {
+            margin-right: 6px;
+        }
     </style>
 </head>
 <body>
@@ -802,12 +951,33 @@
         <span id="toastMessage">Message</span>
     </div>
 
-    <!-- ===== SÉLECTEUR DE JURY ===== -->
+    <!-- ===== MODAL DE CONNEXION JURY (CODE D'ACCÈS) ===== -->
+    <div class="jury-modal-overlay" id="juryModal">
+        <div class="jury-modal">
+            <div class="modal-icon"><i class="fas fa-home"></i></div>
+            <h2>🏠 Entrez dans votre maison</h2>
+            <p class="subtitle">Chaque jury a sa propre maison. Entrez le code d'accès pour rejoindre votre siège.</p>
+            <div class="jury-name-display" id="modalJuryName">Jury 1</div>
+            <div class="code-input-group">
+                <input type="password" id="codeInput" maxlength="4" placeholder="● ● ● ●" inputmode="numeric" />
+                <button class="btn-confirm-code" id="btnConfirmCode">
+                    <i class="fas fa-key"></i> Entrer
+                </button>
+            </div>
+            <div class="error-msg" id="modalError"></div>
+            <p class="hint-text"><i class="fas fa-info-circle"></i> Le code vous a été communiqué par l'organisateur</p>
+        </div>
+    </div>
+
+    <!-- ===== SÉLECTEUR DE JURY (MAISON) ===== -->
     <div class="jury-selector-container" id="jurySelector">
-        <span class="label"><i class="fas fa-users"></i> Sélectionnez votre siège :</span>
+        <span class="label"><i class="fas fa-flag"></i> Maisons des Jurys :</span>
         <div class="jury-btn-group" id="juryBtnGroup">
             <!-- Généré par JS -->
         </div>
+        <span style="font-size:0.7rem;color:var(--gris-moyen);margin-left:auto;" id="statusMaison">
+            <i class="fas fa-lock"></i> Sélectionnez une maison
+        </span>
     </div>
 
     <!-- ===== HEADER ===== -->
@@ -822,6 +992,9 @@
         <div class="user-info">
             <span class="badge-jury" id="juryBadge">Jury 1</span>
             <span class="badge-jury rouge" id="roleBadge">Cotation</span>
+            <span class="badge-jury locked-badge" id="lockBadge" style="display:none;">
+                <i class="fas fa-lock"></i> Verrouillé
+            </span>
             <div class="status-connection">
                 <span class="dot online" id="statusDot"></span>
                 <span id="statusText">Connecté</span>
@@ -906,7 +1079,7 @@
 
     <script>
         // ============================================================
-        // 1. CONFIGURATION FIREBASE (LA MÊME QUE L'ORIGINAL)
+        // 1. CONFIGURATION FIREBASE (LA MÊME - NE RIEN CHANGER)
         // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyB8vK7X2vX5V5n8Z9wZq7Z9yZ8vX7K5X2vX5",
@@ -922,32 +1095,34 @@
         const auth = firebase.auth();
 
         // ============================================================
-        // 2. CONFIGURATION DES JURYS
+        // 2. CONFIGURATION DES JURYS (MAISONS) AVEC CODES D'ACCÈS
         // ============================================================
         const JURYS = [
-            { id: 'jury1', label: 'Jury 1', color: '#0055a4', short: 'J1' },
-            { id: 'jury2', label: 'Jury 2', color: '#2e7d32', short: 'J2' },
-            { id: 'jury3', label: 'Jury 3', color: '#b71c1c', short: 'J3' },
-            { id: 'jury4', label: 'Jury 4', color: '#e65100', short: 'J4' },
-            { id: 'jury5', label: 'Jury 5', color: '#4a148c', short: 'J5' }
+            { id: 'jury1', label: 'Jury 1', color: '#0055a4', short: 'J1', code: '1234' },
+            { id: 'jury2', label: 'Jury 2', color: '#2e7d32', short: 'J2', code: '5678' },
+            { id: 'jury3', label: 'Jury 3', color: '#b71c1c', short: 'J3', code: '9012' },
+            { id: 'jury4', label: 'Jury 4', color: '#e65100', short: 'J4', code: '3456' },
+            { id: 'jury5', label: 'Jury 5', color: '#4a148c', short: 'J5', code: '7890' }
         ];
 
         // ============================================================
         // 3. ÉTAT
         // ============================================================
-        let currentJuryId = 'jury1';
+        let currentJuryId = null; // null = pas encore connecté
+        let isLocked = false; // une fois connecté, verrouillé
         let currentCandidatId = null;
         let currentCotation = {
             criteres: {},
             total: 0,
             commentaire: '',
-            statut: 'brouillon', // 'brouillon' | 'valide'
-            juryId: 'jury1',
+            statut: 'brouillon',
+            juryId: null,
             candidatId: null,
             updatedAt: null
         };
         let criteresConfig = [];
         let isLoading = false;
+        let pendingJuryId = null; // jury en cours de connexion
 
         // ============================================================
         // 4. RÉFÉRENCES DOM
@@ -979,64 +1154,161 @@
         const btnSync = $('btnSync');
         const btnProbleme = $('btnProbleme');
         const btnDeconnexion = $('btnDeconnexion');
+        const lockBadge = $('lockBadge');
+        const statusMaison = $('statusMaison');
+        const modalOverlay = $('juryModal');
+        const modalJuryName = $('modalJuryName');
+        const codeInput = $('codeInput');
+        const btnConfirmCode = $('btnConfirmCode');
+        const modalError = $('modalError');
 
         // ============================================================
-        // 5. TOAST
+        // 5. TOAST & LOADING
         // ============================================================
         function showToast(message, type = 'success') {
             toast.className = 'toast ' + type + ' show';
             toastMessage.textContent = message;
             clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // ============================================================
-        // 6. LOADING
-        // ============================================================
         function setLoading(active) {
             isLoading = active;
             loadingOverlay.classList.toggle('active', active);
         }
 
         // ============================================================
-        // 7. GÉNÉRATION DES BOUTONS JURY
+        // 6. GESTION DU MODAL DE CONNEXION
+        // ============================================================
+        function openJuryModal(juryId) {
+            const jury = JURYS.find(j => j.id === juryId);
+            if (!jury) return;
+            pendingJuryId = juryId;
+            modalJuryName.textContent = jury.label;
+            modalJuryName.style.color = jury.color;
+            codeInput.value = '';
+            modalError.textContent = '';
+            codeInput.className = '';
+            modalOverlay.classList.add('active');
+            setTimeout(() => codeInput.focus(), 100);
+        }
+
+        function closeJuryModal() {
+            modalOverlay.classList.remove('active');
+            pendingJuryId = null;
+            codeInput.value = '';
+            modalError.textContent = '';
+            codeInput.className = '';
+        }
+
+        function confirmJuryCode() {
+            const code = codeInput.value.trim();
+            if (!pendingJuryId) return;
+            const jury = JURYS.find(j => j.id === pendingJuryId);
+            if (!jury) return;
+
+            if (code === jury.code) {
+                // Code correct ! Verrouiller le jury
+                currentJuryId = pendingJuryId;
+                isLocked = true;
+                closeJuryModal();
+                applyJuryLock();
+                showToast(`✅ Bienvenue dans la maison du ${jury.label} !`, 'success');
+                chargerCandidatActuel();
+            } else {
+                codeInput.className = 'error';
+                modalError.textContent = '❌ Code incorrect. Réessayez.';
+                codeInput.value = '';
+                setTimeout(() => codeInput.focus(), 300);
+                setTimeout(() => codeInput.className = '', 500);
+            }
+        }
+
+        // ============================================================
+        // 7. VERROUILLAGE DU JURY
+        // ============================================================
+        function applyJuryLock() {
+            const jury = JURYS.find(j => j.id === currentJuryId);
+            if (!jury) return;
+
+            // Mettre à jour l'UI
+            updateJuryUI();
+            lockBadge.style.display = 'inline-block';
+
+            // Désactiver tous les boutons jury sauf celui actif
+            document.querySelectorAll('.jury-btn').forEach(btn => {
+                const id = btn.dataset.juryId;
+                if (id === currentJuryId) {
+                    btn.classList.add('active');
+                    btn.classList.remove('locked');
+                } else {
+                    btn.classList.add('locked');
+                    btn.classList.remove('active');
+                    // Ajouter un cadenas
+                    if (!btn.querySelector('.lock-icon')) {
+                        const lock = document.createElement('span');
+                        lock.className = 'lock-icon';
+                        lock.innerHTML = '<i class="fas fa-lock"></i>';
+                        btn.appendChild(lock);
+                    }
+                }
+            });
+
+            statusMaison.innerHTML = `<i class="fas fa-home"></i> ${jury.label} <i class="fas fa-lock" style="color:var(--or);margin-left:6px;"></i>`;
+            statusMaison.style.color = jury.color;
+
+            // Mettre à jour le header
+            juryBadge.textContent = jury.label + ' 🔒';
+            juryBadge.className = 'badge-jury verrouille-badge';
+            juryNameDisplay.textContent = jury.label;
+
+            // Changer la couleur des bordures
+            document.querySelector('.jury-header').style.borderLeftColor = jury.color;
+            document.querySelector('.jury-selector-container').style.borderLeftColor = jury.color;
+
+            // Activer les champs de cotation
+            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
+            commentaire.disabled = false;
+            btnValider.disabled = false;
+            btnReinitialiser.disabled = false;
+        }
+
+        // ============================================================
+        // 8. GÉNÉRATION DES BOUTONS JURY
         // ============================================================
         function renderJuryButtons() {
             juryBtnGroup.innerHTML = '';
             JURYS.forEach(jury => {
                 const btn = document.createElement('button');
-                btn.className = 'jury-btn' + (jury.id === currentJuryId ? ' active' : '');
+                btn.className = 'jury-btn';
+                if (isLocked) {
+                    if (jury.id === currentJuryId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.add('locked');
+                        btn.innerHTML = `
+                            <span class="badge-num">${jury.short}</span>
+                            ${jury.label}
+                            <span class="lock-icon"><i class="fas fa-lock"></i></span>
+                        `;
+                        juryBtnGroup.appendChild(btn);
+                        return;
+                    }
+                }
                 btn.dataset.juryId = jury.id;
                 btn.innerHTML = `
                     <span class="badge-num">${jury.short}</span>
                     ${jury.label}
                     <span class="status-dot-mini connected"></span>
                 `;
-                btn.addEventListener('click', () => switchJury(jury.id));
+                if (!isLocked) {
+                    btn.addEventListener('click', () => {
+                        if (!isLocked) {
+                            openJuryModal(jury.id);
+                        }
+                    });
+                }
                 juryBtnGroup.appendChild(btn);
-            });
-        }
-
-        // ============================================================
-        // 8. CHANGEMENT DE JURY
-        // ============================================================
-        function switchJury(juryId) {
-            if (isLoading) return;
-            if (juryId === currentJuryId) return;
-
-            // Sauvegarder l'état actuel avant de changer
-            sauvegarderCotation().then(() => {
-                currentJuryId = juryId;
-                renderJuryButtons();
-                updateJuryUI();
-                chargerCandidatActuel();
-            }).catch(() => {
-                currentJuryId = juryId;
-                renderJuryButtons();
-                updateJuryUI();
-                chargerCandidatActuel();
             });
         }
 
@@ -1044,21 +1316,21 @@
         // 9. MISE À JOUR UI JURY
         // ============================================================
         function updateJuryUI() {
+            if (!currentJuryId) return;
             const jury = JURYS.find(j => j.id === currentJuryId);
             if (jury) {
-                juryBadge.textContent = jury.label;
+                juryBadge.textContent = isLocked ? jury.label + ' 🔒' : jury.label;
+                if (isLocked) {
+                    juryBadge.className = 'badge-jury verrouille-badge';
+                } else {
+                    juryBadge.className = 'badge-jury';
+                }
                 juryNameDisplay.textContent = jury.label;
-                document.querySelector('.jury-header').style.borderLeftColor = jury.color;
-                document.querySelector('.jury-selector-container').style.borderLeftColor = jury.color;
-                // Mettre à jour le style du bouton actif
-                document.querySelectorAll('.jury-btn').forEach(b => {
-                    b.classList.toggle('active', b.dataset.juryId === currentJuryId);
-                });
             }
         }
 
         // ============================================================
-        // 10. CHARGEMENT DES CRITÈRES (depuis Firestore ou config par défaut)
+        // 10. CHARGEMENT DES CRITÈRES
         // ============================================================
         async function chargerCriteres() {
             try {
@@ -1073,7 +1345,6 @@
             } catch (e) {
                 console.warn('Impossible de charger les critères, utilisation des defaults');
             }
-            // Critères par défaut
             criteresConfig = [
                 { id: 'fond', label: 'Fond du discours', max: 20 },
                 { id: 'forme', label: 'Forme / Élocution', max: 20 },
@@ -1096,30 +1367,38 @@
                         <span class="max-points">/${c.max}</span>
                     </div>
                     <input type="number" id="crit_${c.id}" data-crit-id="${c.id}" data-max="${c.max}" 
-                           min="0" max="${c.max}" step="0.5" value="0" />
+                           min="0" max="${c.max}" step="0.5" value="0" disabled />
                 `;
                 grid.appendChild(div);
             });
-            // Écouteurs
             grid.querySelectorAll('input[type="number"]').forEach(input => {
                 input.addEventListener('input', onCriteresChange);
             });
+            // Désactiver tant que le jury n'est pas connecté
+            if (!isLocked) {
+                document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = true);
+                commentaire.disabled = true;
+                btnValider.disabled = true;
+                btnReinitialiser.disabled = true;
+            }
         }
 
         // ============================================================
         // 11. CHARGEMENT DU CANDIDAT ACTUEL
         // ============================================================
         async function chargerCandidatActuel() {
+            if (!isLocked || !currentJuryId) {
+                afficherAucunCandidat();
+                return;
+            }
             setLoading(true);
             try {
-                // Récupérer le match actif (celui en cours)
                 const matchSnapshot = await db.collection('matches')
                     .where('statut', '==', 'en_cours')
                     .limit(1)
                     .get();
 
                 if (matchSnapshot.empty) {
-                    // Aucun match en cours
                     afficherAucunCandidat();
                     setLoading(false);
                     return;
@@ -1137,7 +1416,6 @@
 
                 currentCandidatId = candidatId;
 
-                // Charger les infos du candidat
                 const candidatDoc = await db.collection('candidats').doc(candidatId).get();
                 if (!candidatDoc.exists) {
                     afficherAucunCandidat();
@@ -1147,14 +1425,11 @@
 
                 const candidatData = candidatDoc.data();
                 afficherCandidat(candidatData);
-
-                // Charger la cotation existante pour ce jury et ce candidat
                 await chargerCotation(candidatId);
 
-                // Timer
                 if (matchData.tempsDebat) {
                     const debut = matchData.tempsDebat.toDate ? matchData.tempsDebat.toDate() : new Date(matchData.tempsDebat);
-                    demarrerTimer(debut, 7 * 60); // 7 minutes
+                    demarrerTimer(debut, 7 * 60);
                 }
 
             } catch (e) {
@@ -1172,9 +1447,7 @@
             photoFrame.innerHTML = '<span class="placeholder"><i class="fas fa-user-circle"></i></span>';
             roleBadgeCandidat.textContent = '--';
             roleBadgeCandidat.className = 'role-badge';
-            // Réinitialiser les champs
             reinitialiserFormulaire();
-            // Statut
             statutDot.className = 'dot non-cote';
             statutTexte.textContent = 'Aucun candidat';
             statusBarDot.className = 'status-dot non-cote';
@@ -1189,21 +1462,20 @@
             candidatNom.textContent = data.nom || 'Candidat';
             candidatTheme.textContent = data.theme || '---';
             actifNom.textContent = data.nom || '---';
-            // Photo
             if (data.photoUrl) {
                 photoFrame.innerHTML = `<img src="${data.photoUrl}" alt="${data.nom}" />`;
             } else {
                 photoFrame.innerHTML = `<span class="placeholder"><i class="fas fa-user-circle"></i></span>`;
             }
-            // Rôle
             const role = data.role || 'these';
             roleBadgeCandidat.textContent = role === 'these' ? 'Thèse' : 'Antithèse';
             roleBadgeCandidat.className = 'role-badge ' + (role === 'these' ? 'these' : 'antithese');
-            // Activer les champs
-            btnValider.disabled = false;
-            btnReinitialiser.disabled = false;
-            commentaire.disabled = false;
-            document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
+            if (isLocked) {
+                btnValider.disabled = false;
+                btnReinitialiser.disabled = false;
+                commentaire.disabled = false;
+                document.querySelectorAll('.criteria-item input').forEach(i => i.disabled = false);
+            }
         }
 
         // ============================================================
@@ -1218,44 +1490,34 @@
                 const snapshot = await docRef.get();
 
                 if (snapshot.empty) {
-                    // Pas de cotation existante, initialiser
                     initialiserCotation(candidatId);
                     return;
                 }
 
                 const doc = snapshot.docs[0];
                 const data = doc.data();
-                currentCotation = {
-                    ...data,
-                    id: doc.id
-                };
+                currentCotation = { ...data, id: doc.id };
 
-                // Remplir le formulaire
-                if (data.criteres) {
-                    criteresConfig.forEach(c => {
-                        const input = document.getElementById(`crit_${c.id}`);
-                        if (input && data.criteres[c.id] !== undefined) {
-                            input.value = data.criteres[c.id];
-                        }
-                    });
-                }
+                criteresConfig.forEach(c => {
+                    const input = document.getElementById(`crit_${c.id}`);
+                    if (input && data.criteres && data.criteres[c.id] !== undefined) {
+                        input.value = data.criteres[c.id];
+                    }
+                });
                 commentaire.value = data.commentaire || '';
                 currentCotation.total = data.total || 0;
                 currentCotation.statut = data.statut || 'brouillon';
 
-                // Mettre à jour l'affichage
                 mettreAJourAffichage();
 
-                // Dernière modification
                 if (data.updatedAt) {
                     const date = data.updatedAt.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt);
                     lastSaveText.textContent = 'Dernière modification: ' + date.toLocaleTimeString();
                 }
 
-                // Si la cotation est validée, désactiver les champs
                 if (data.statut === 'valide') {
                     desactiverChamps(true);
-                } else {
+                } else if (isLocked) {
                     desactiverChamps(false);
                 }
 
@@ -1275,7 +1537,6 @@
                 statut: 'brouillon',
                 updatedAt: new Date()
             };
-            // Réinitialiser les champs
             criteresConfig.forEach(c => {
                 const input = document.getElementById(`crit_${c.id}`);
                 if (input) input.value = 0;
@@ -1284,7 +1545,7 @@
             commentaire.value = '';
             currentCotation.total = 0;
             currentCotation.statut = 'brouillon';
-            desactiverChamps(false);
+            if (isLocked) desactiverChamps(false);
             mettreAJourAffichage();
             lastSaveText.textContent = 'Non sauvegardé';
         }
@@ -1306,7 +1567,6 @@
             statusBarDot.className = 'status-dot non-cote';
             statusBarText.textContent = 'Brouillon';
             lastSaveText.textContent = 'Non sauvegardé';
-            desactiverChamps(false);
         }
 
         // ============================================================
@@ -1314,15 +1574,15 @@
         // ============================================================
         function desactiverChamps(desactiver) {
             document.querySelectorAll('.criteria-item input').forEach(i => {
-                i.disabled = desactiver;
+                i.disabled = desactiver || !isLocked;
             });
-            commentaire.disabled = desactiver;
-            btnValider.disabled = desactiver;
-            btnReinitialiser.disabled = desactiver;
+            commentaire.disabled = desactiver || !isLocked;
+            btnValider.disabled = desactiver || !isLocked;
+            btnReinitialiser.disabled = desactiver || !isLocked;
             if (desactiver) {
                 btnValider.textContent = '✅ Validé';
                 btnValider.style.background = 'var(--green)';
-            } else {
+            } else if (isLocked) {
                 btnValider.innerHTML = '<i class="fas fa-check"></i> Valider';
                 btnValider.style.background = '';
             }
@@ -1332,6 +1592,7 @@
         // 14. ÉVÉNEMENT CHANGEMENT CRITÈRES
         // ============================================================
         function onCriteresChange(e) {
+            if (!isLocked) return;
             const input = e.target;
             const critId = input.dataset.critId;
             const max = parseFloat(input.dataset.max);
@@ -1343,7 +1604,6 @@
             calculerTotal();
             currentCotation.statut = 'brouillon';
             mettreAJourAffichage();
-            // Auto-save après 2s d'inactivité
             clearTimeout(window._autoSaveTimeout);
             window._autoSaveTimeout = setTimeout(() => {
                 sauvegarderCotation(false);
@@ -1384,19 +1644,14 @@
                     statusBarText.textContent = 'Brouillon';
                 }
             }
-            // Commentaire
-            if (commentaire.value !== currentCotation.commentaire) {
-                // Ne pas boucler
-            }
         }
 
         // ============================================================
         // 16. SAUVEGARDE
         // ============================================================
         async function sauvegarderCotation(afficherToast = true) {
-            if (!currentCandidatId) return;
+            if (!isLocked || !currentCandidatId) return;
 
-            // Récupérer les valeurs des champs
             criteresConfig.forEach(c => {
                 const input = document.getElementById(`crit_${c.id}`);
                 if (input) {
@@ -1410,21 +1665,18 @@
             currentCotation.candidatId = currentCandidatId;
 
             try {
-                // Chercher si une cotation existe déjà
                 const query = await db.collection('cotations')
                     .where('candidatId', '==', currentCandidatId)
                     .where('juryId', '==', currentJuryId)
                     .get();
 
                 if (query.empty) {
-                    // Créer
                     const docRef = await db.collection('cotations').add({
                         ...currentCotation,
                         createdAt: new Date()
                     });
                     currentCotation.id = docRef.id;
                 } else {
-                    // Mettre à jour
                     const doc = query.docs[0];
                     await doc.ref.update({
                         criteres: currentCotation.criteres,
@@ -1439,15 +1691,11 @@
                 }
 
                 lastSaveText.textContent = 'Sauvegardé à ' + new Date().toLocaleTimeString();
-                if (afficherToast) {
-                    showToast('Cotation sauvegardée ✅', 'success');
-                }
+                if (afficherToast) showToast('Cotation sauvegardée ✅', 'success');
                 return true;
             } catch (e) {
                 console.error('Erreur sauvegarde:', e);
-                if (afficherToast) {
-                    showToast('Erreur de sauvegarde ❌', 'error');
-                }
+                if (afficherToast) showToast('Erreur de sauvegarde ❌', 'error');
                 return false;
             }
         }
@@ -1456,12 +1704,11 @@
         // 17. VALIDATION
         // ============================================================
         async function validerCotation() {
-            if (!currentCandidatId) {
+            if (!isLocked || !currentCandidatId) {
                 showToast('Aucun candidat sélectionné', 'error');
                 return;
             }
 
-            // Vérifier que tous les critères sont notés
             const tousNotes = criteresConfig.every(c => {
                 const val = currentCotation.criteres[c.id] || 0;
                 return val > 0;
@@ -1493,9 +1740,9 @@
         // 18. RÉINITIALISATION
         // ============================================================
         function reinitialiserCotation() {
-            if (!currentCandidatId) return;
+            if (!isLocked || !currentCandidatId) return;
             if (currentCotation.statut === 'valide') {
-                showToast('Cette cotation est déjà validée, vous ne pouvez pas la réinitialiser', 'error');
+                showToast('Cette cotation est déjà validée', 'error');
                 return;
             }
             const confirmReset = confirm('Voulez-vous vraiment réinitialiser toutes les notes ?');
@@ -1533,7 +1780,7 @@
         // 20. SIGNALER UN PROBLÈME
         // ============================================================
         async function signalerProbleme() {
-            if (!currentCandidatId) {
+            if (!isLocked || !currentCandidatId) {
                 showToast('Aucun candidat actif', 'error');
                 return;
             }
@@ -1564,24 +1811,33 @@
         }
 
         // ============================================================
-        // 22. DÉCONNEXION
+        // 22. DÉCONNEXION (REVIENT À L'ÉCRAN DE SÉLECTION)
         // ============================================================
         function deconnexion() {
-            if (confirm('Voulez-vous vraiment quitter ?')) {
-                // Sauvegarder avant de quitter
+            if (confirm('Voulez-vous vraiment quitter votre maison ?')) {
                 sauvegarderCotation(false).then(() => {
-                    window.location.reload();
+                    // Réinitialiser l'état
+                    isLocked = false;
+                    currentJuryId = null;
+                    currentCandidatId = null;
+                    lockBadge.style.display = 'none';
+                    statusMaison.innerHTML = '<i class="fas fa-lock"></i> Sélectionnez une maison';
+                    statusMaison.style.color = '';
+                    juryBadge.className = 'badge-jury';
+                    juryBadge.textContent = 'Jury';
+                    // Réactiver les boutons
+                    renderJuryButtons();
+                    afficherAucunCandidat();
+                    showToast('Vous avez quitté votre maison', 'info');
                 });
             }
         }
 
         // ============================================================
-        // 23. AUTHENTIFICATION ANONYME (ou avec email)
+        // 23. AUTHENTIFICATION
         // ============================================================
         async function initAuth() {
             try {
-                // Connexion anonyme pour accéder à Firestore
-                // (Si vous utilisez des règles sécurisées, adaptez)
                 const user = auth.currentUser;
                 if (!user) {
                     await auth.signInAnonymously();
@@ -1599,49 +1855,59 @@
         // 24. INITIALISATION
         // ============================================================
         async function init() {
-            // Auth
             await initAuth();
-
-            // Charger les critères
             await chargerCriteres();
-
-            // Rendre les boutons jury
             renderJuryButtons();
-
-            // Mettre à jour l'UI jury
-            updateJuryUI();
-
-            // Rendre les critères
             renderCriteres();
 
-            // Charger le candidat actuel
-            await chargerCandidatActuel();
+            // Événements du modal
+            btnConfirmCode.addEventListener('click', confirmJuryCode);
+            codeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') confirmJuryCode();
+                // Limiter à 4 caractères numériques
+                if (e.key === 'Backspace') return;
+                if (!/^[0-9]$/.test(e.key) && e.key !== 'Enter') {
+                    e.preventDefault();
+                }
+            });
+            codeInput.addEventListener('input', () => {
+                if (codeInput.value.length > 4) {
+                    codeInput.value = codeInput.value.slice(0, 4);
+                }
+                // Auto-confirmer si 4 chiffres
+                if (codeInput.value.length === 4) {
+                    confirmJuryCode();
+                }
+            });
 
-            // Événements
+            // Événements des boutons
             btnValider.addEventListener('click', validerCotation);
             btnReinitialiser.addEventListener('click', reinitialiserCotation);
             btnSync.addEventListener('click', syncManuelle);
             btnProbleme.addEventListener('click', signalerProbleme);
             btnDeconnexion.addEventListener('click', deconnexion);
 
-            // Sauvegarder périodiquement (toutes les 30s)
+            // Sauvegarde périodique
             setInterval(() => {
-                if (currentCandidatId && currentCotation.statut !== 'valide') {
+                if (isLocked && currentCandidatId && currentCotation.statut !== 'valide') {
                     sauvegarderCotation(false);
                 }
             }, 30000);
 
-            // Sauvegarder avant de quitter
             window.addEventListener('beforeunload', () => {
-                if (currentCandidatId) {
+                if (isLocked && currentCandidatId) {
                     sauvegarderCotation(false);
                 }
             });
 
-            console.log('🏆 Éloquence en Scène - Jury prêt');
+            // Si aucun jury connecté, afficher "aucun candidat"
+            if (!isLocked) {
+                afficherAucunCandidat();
+            }
+
+            console.log('🏆 Éloquence en Scène - Maisons des Jurys prêtes');
         }
 
-        // Lancer l'application
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
