@@ -81,7 +81,6 @@
         }
         .card h2 i { margin-right: 10px; }
 
-        /* Timer */
         .timer-display { text-align: center; padding: 16px; }
         .timer-display .clock {
             font-size: 4.5rem;
@@ -139,7 +138,6 @@
         .timer-presets button:hover { border-color: #d4af37; color: #fff; }
         .timer-presets button.active { border-color: #d4af37; color: #d4af37; background: rgba(212,175,55,0.05); }
 
-        /* Form */
         .form-group {
             margin-bottom: 16px;
         }
@@ -167,7 +165,6 @@
         }
         .form-group select option { background: #0a0a1a; }
 
-        /* Gestion des jurys */
         .jury-management {
             background: rgba(255,255,255,0.03);
             border-radius: 12px;
@@ -201,7 +198,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             color: #fff;
-            width: 120px;
+            width: 140px;
             font-family: 'Poppins', sans-serif;
         }
         .jury-management .jury-control input:focus {
@@ -221,10 +218,6 @@
             transition: all 0.3s;
         }
         .jury-management .jury-control button:hover { transform: scale(1.05); }
-        .jury-management .jury-control button.btn-remove {
-            background: #ef4444;
-        }
-        .jury-management .jury-control button.btn-remove:hover { background: #dc2626; }
 
         .jury-tags {
             display: flex;
@@ -268,7 +261,6 @@
         }
         .btn-send:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,85,164,0.3); }
 
-        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -286,7 +278,6 @@
         .stat-card .number { font-size: 1.8rem; font-weight: 700; color: #d4af37; }
         .stat-card .label { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* Tableau */
         .table-wrapper {
             overflow-x: auto;
             max-height: 500px;
@@ -433,21 +424,6 @@
             font-family: 'Poppins', sans-serif;
         }
         .btn-lu:hover { background: rgba(16,185,129,0.25); }
-
-        .vote-status-detail {
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.03);
-        }
-        .vote-ok { color: #10b981; }
-        .vote-draft { color: #f59e0b; }
-        .vote-none { color: #555; }
-        .vote-pending { color: #f59e0b; animation: pulse-dot 1.5s infinite; }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
     </style>
 </head>
 <body>
@@ -466,7 +442,6 @@
         <div class="grid-2">
             <!-- Panneau gauche -->
             <div>
-                <!-- Timer -->
                 <div class="card">
                     <h2><i class="fas fa-clock"></i> Chronomètre</h2>
                     <div class="timer-display">
@@ -486,7 +461,6 @@
                     </div>
                 </div>
 
-                <!-- Gestion des jurys -->
                 <div class="card">
                     <h2><i class="fas fa-users"></i> Gestion des jurys</h2>
                     <div class="jury-management">
@@ -498,16 +472,13 @@
                             <input type="text" id="newJuryInput" placeholder="Nom du jury..." value="Jury ">
                             <button id="addJuryBtn"><i class="fas fa-plus"></i> Ajouter</button>
                         </div>
-                        <div class="jury-tags" id="juryTags">
-                            <!-- Les jurys apparaîtront ici -->
-                        </div>
+                        <div class="jury-tags" id="juryTags"></div>
                         <div style="margin-top:10px;font-size:0.7rem;color:#555;">
                             <i class="fas fa-info-circle"></i> Chaque jury devra choisir son nom sur sa page
                         </div>
                     </div>
                 </div>
 
-                <!-- Envoi candidat -->
                 <div class="card">
                     <h2><i class="fas fa-paper-plane"></i> Envoyer un candidat</h2>
                     <div class="form-group">
@@ -525,7 +496,6 @@
                     <button class="btn-send" id="sendBtn"><i class="fas fa-paper-plane"></i> Envoyer aux Jurys</button>
                 </div>
 
-                <!-- Alertes -->
                 <div class="card alertes-section" id="alertesContainer">
                     <h3><i class="fas fa-exclamation-triangle"></i> Alertes des jurys</h3>
                     <div id="alertesList">
@@ -816,7 +786,6 @@
             juryCountDisplay.textContent = `👥 ${juryList.length} jurys`;
             document.getElementById('totalJurys').textContent = juryList.length;
 
-            // Événements pour supprimer
             document.querySelectorAll('.remove-jury').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
@@ -838,7 +807,6 @@
                 showToast('⚠️ Entrez un nom pour le jury', 'error');
                 return;
             }
-            // Ajouter un numéro si le nom est "Jury "
             if (nom === 'Jury ' || nom === 'Jury') {
                 nom = `Jury ${juryList.length + 1}`;
             }
@@ -851,7 +819,6 @@
             sauvegarderJurys();
         });
 
-        // Appuyer sur Entrée pour ajouter
         newJuryInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') addJuryBtn.click();
         });
@@ -926,7 +893,7 @@
             }
         }
 
-        // 👂 ÉCOUTER ÉTAT
+        // 👂 ÉCOUTEURS
         function ecouterEtat() {
             db.collection('etat').doc('current').onSnapshot((doc) => {
                 if (doc.exists) {
@@ -939,14 +906,10 @@
                     }
                     if (data.timerRunning !== undefined) timerRunning = data.timerRunning;
                     if (data.timerPaused !== undefined) timerPaused = data.timerPaused;
-                    if (data.nombreJurys !== undefined && data.nombreJurys !== juryList.length) {
-                        // Mise à jour du nombre de jurys si différent
-                    }
                 }
             });
         }
 
-        // 👂 ÉCOUTER JURYS
         function ecouterJurys() {
             db.collection('jurys').doc('liste').onSnapshot((doc) => {
                 if (doc.exists) {
@@ -964,12 +927,9 @@
                 mettreAJourAffichageJurys();
                 mettreAJourResultats();
                 mettreAJourStatistiques();
-            }, (error) => {
-                console.error('❌ Erreur écoute jurys:', error);
             });
         }
 
-        // 👂 ÉCOUTER COTATIONS
         function ecouterCotations() {
             db.collection('cotations').onSnapshot((snapshot) => {
                 const newData = {};
@@ -981,7 +941,6 @@
             });
         }
 
-        // 👂 ÉCOUTER ALERTES
         function ecouterAlertes() {
             db.collection('problemes').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
                 let html = '';
@@ -999,22 +958,16 @@
                         </div>
                     `;
                 });
-                if (!html) {
-                    html = '<div style="color:#555;font-size:0.8rem;">Aucune alerte</div>';
-                }
+                if (!html) html = '<div style="color:#555;font-size:0.8rem;">Aucune alerte</div>';
                 alertesList.innerHTML = html;
-                if (count > 0) {
-                    showToast(`📢 ${count} nouvelle(s) alerte(s) !`, 'warning');
-                }
+                if (count > 0) showToast(`📢 ${count} nouvelle(s) alerte(s) !`, 'warning');
 
                 document.querySelectorAll('.btn-lu').forEach(btn => {
                     btn.addEventListener('click', async function() {
                         try {
                             await db.collection('problemes').doc(this.dataset.id).update({ lu: true });
                             showToast('✅ Alerte marquée comme lue', 'success');
-                        } catch (e) {
-                            showToast('❌ Erreur', 'error');
-                        }
+                        } catch (e) { showToast('❌ Erreur', 'error'); }
                     });
                 });
             });
@@ -1154,17 +1107,12 @@
         }
 
         // 🎯 ÉVÉNEMENTS
-        matchSelect.addEventListener('change', function() {
-            remplirCandidats(this.value);
-        });
-
+        matchSelect.addEventListener('change', function() { remplirCandidats(this.value); });
         sendBtn.addEventListener('click', envoyerCandidat);
         exportBtn.addEventListener('click', exporterCSV);
-
         document.getElementById('timerStart').addEventListener('click', startTimer);
         document.getElementById('timerPause').addEventListener('click', pauseTimer);
         document.getElementById('timerReset').addEventListener('click', resetTimer);
-
         document.querySelectorAll('.timer-presets button[data-time]').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.timer-presets button[data-time]').forEach(b => b.classList.remove('active'));
