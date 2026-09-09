@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎯 Centre de Contrôle - Éloquence en Scène</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a1628;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a2a4a, #0a1628);
+            padding: 20px 30px;
+            border-radius: 16px;
+            border-left: 5px solid #d4af37;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        .header h1 i { color: #d4af37; margin-right: 12px; }
+        .header .status {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 1024px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+        .card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .card h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #d4af37;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .jury-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 600px) {
+            .jury-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .jury-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            border-left: 4px solid #0055a4;
+            transition: 0.3s;
+        }
+        .jury-card:hover { background: rgba(255,255,255,0.09); }
+        .jury-card .name {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .jury-card .status-badge {
+            font-size: 0.65rem;
+            padding: 2px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .status-badge.connected { background: rgba(46,204,113,0.2); color: #2ecc71; }
+        .status-badge.disconnected { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        .status-badge.partial { background: rgba(241,196,15,0.2); color: #f1c40f; }
+        .jury-card .vote-count {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 4px;
+        }
+        .candidat-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .candidat-item .nom { font-weight: 600; }
+        .candidat-item .moyenne {
+            font-weight: 700;
+            color: #d4af37;
+        }
+        .candidat-item .details {
+            font-size: 0.7rem;
+            color: #888;
+        }
+        .candidat-item .progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .candidat-item .progress .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0055a4, #d4af37);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        .btn-action {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        .btn-action:hover {
+            background: rgba(212,175,55,0.15);
+            border-color: #d4af37;
+        }
+        .btn-action.danger:hover {
+            background: rgba(231,76,60,0.2);
+            border-color: #e74c3c;
+        }
+        .match-control {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .match-control .btn-primary {
+            background: linear-gradient(135deg, #0055a4, #1a2a4a);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+        .match-control .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,85,164,0.3);
+        }
+        .match-control .btn-primary.danger {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+        }
+        .match-control .btn-primary.danger:hover {
+            box-shadow: 0 8px 30px rgba(192,57,43,0.3);
+        }
+        .empty-state {
+            color: #666;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            gap: 12px;
+        }
+        .toast.success { background: #2ecc71; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+        .toast.show { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9998;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-spinner {
+            background: #1a2a4a;
+            padding: 30px 40px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .loading-spinner i {
+            font-size: 2.5rem;
+            color: #d4af37;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p style="margin-top:12px;">Chargement...</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Message</span>
+    </div>
+
+    <header class="header">
+        <h1><i class="fas fa-tv"></i> Centre de Contrôle</h1>
+        <div>
+            <span class="status"><i class="fas fa-circle"></i> En ligne</span>
+            <button class="btn-action" id="btnRefresh" style="margin-left:12px;">
+                <i class="fas fa-sync-alt"></i> Rafraîchir
+            </button>
+        </div>
+    </header>
+
+    <div class="dashboard" id="dashboard">
+        <!-- Colonne gauche : Jurys -->
+        <div class="card">
+            <h2><i class="fas fa-users"></i> Jurys connectés</h2>
+            <div id="juryList">
+                <div class="empty-state">Chargement des jurys...</div>
+            </div>
+            
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
+                <h2 style="font-size:0.9rem;color:#888;margin-bottom:8px;">
+                    <i class="fas fa-gamepad"></i> Contrôle du Match
+                </h2>
+                <div class="match-control">
+                    <button class="btn-primary" id="btnStartMatch">
+                        <i class="fas fa-play"></i> Démarrer Match
+                    </button>
+                    <button class="btn-primary danger" id="btnEndMatch">
+                        <i class="fas fa-stop"></i> Terminer Match
+                    </button>
+                </div>
+                <div style="margin-top:8px;font-size:0.7rem;color:#666;" id="matchStatus">
+                    Aucun match en cours
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne droite : Résultats -->
+        <div class="card">
+            <h2><i class="fas fa-chart-bar"></i> Résultats par candidat</h2>
+            <div id="resultsList">
+                <div class="empty-state">Aucune cotation pour le moment</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 1. CONFIGURATION FIREBASE (LA MÊME)
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8vK7X2vX5V5n8Z9wZq7Z9yZ8vX7K5X2vX5",
+            authDomain: "votre-projet.firebaseapp.com",
+            projectId: "votre-projet",
+            storageBucket: "votre-projet.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ============================================================
+        // 2. ÉTAT
+        // ============================================================
+        const JURYS = [
+            { id: 'jury1', label: 'Jury 1', color: '#0055a4' },
+            { id: 'jury2', label: 'Jury 2', color: '#2e7d32' },
+            { id: 'jury3', label: 'Jury 3', color: '#b71c1c' },
+            { id: 'jury4', label: 'Jury 4', color: '#e65100' },
+            { id: 'jury5', label: 'Jury 5', color: '#4a148c' }
+        ];
+
+        let allCotations = [];
+        let candidatsCache = {};
+        let matchActuel = null;
+
+        // ============================================================
+        // 3. RÉFÉRENCES DOM
+        // ============================================================
+        const $ = id => document.getElementById(id);
+        const juryList = $('juryList');
+        const resultsList = $('resultsList');
+        const matchStatus = $('matchStatus');
+        const toast = $('toast');
+        const toastMessage = $('toastMessage');
+        const loadingOverlay = $('loadingOverlay');
+
+        // ============================================================
+        // 4. TOAST & LOADING
+        // ============================================================
+        function showToast(msg, type = 'success') {
+            toast.className = 'toast ' + type + ' show';
+            toastMessage.textContent = msg;
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function setLoading(active) {
+            loadingOverlay.classList.toggle('active', active);
+        }
+
+        // ============================================================
+        // 5. CHARGEMENT DES DONNÉES
+        // ============================================================
+        async function chargerDonnees() {
+            setLoading(true);
+            try {
+                // 1. Charger toutes les cotations
+                const cotationsSnap = await db.collection('cotations').get();
+                allCotations = [];
+                cotationsSnap.forEach(doc => {
+                    allCotations.push({ id: doc.id, ...doc.data() });
+                });
+
+                // 2. Charger tous les candidats
+                const candidatsSnap = await db.collection('candidats').get();
+                candidatsCache = {};
+                candidatsSnap.forEach(doc => {
+                    candidatsCache[doc.id] = { id: doc.id, ...doc.data() };
+                });
+
+                // 3. Charger le match actuel
+                const matchSnap = await db.collection('matches')
+                    .where('statut', '==', 'en_cours')
+                    .limit(1)
+                    .get();
+                if (!matchSnap.empty) {
+                    matchActuel = { id: matchSnap.docs[0].id, ...matchSnap.docs[0].data() };
+                } else {
+                    matchActuel = null;
+                }
+
+                // 4. Mettre à jour l'UI
+                afficherJurys();
+                afficherResultats();
+                afficherMatchStatus();
+
+            } catch (e) {
+                console.error('Erreur chargement:', e);
+                showToast('Erreur de chargement des données', 'error');
+            }
+            setLoading(false);
+        }
+
+        // ============================================================
+        // 6. AFFICHAGE DES JURYS
+        // ============================================================
+        function afficherJurys() {
+            juryList.innerHTML = '';
+            
+            JURYS.forEach(jury => {
+                // Compter les cotations de ce jury
+                const cotationsJury = allCotations.filter(c => c.juryId === jury.id);
+                const totalVotes = cotationsJury.length;
+                const votesValides = cotationsJury.filter(c => c.statut === 'valide').length;
+                const votesBrouillon = cotationsJury.filter(c => c.statut === 'brouillon').length;
+
+                const card = document.createElement('div');
+                card.className = 'jury-card';
+                card.style.borderLeftColor = jury.color;
+                
+                // Déterminer le statut
+                let statusClass = 'disconnected';
+                let statusText = 'Hors ligne';
+                if (totalVotes > 0) {
+                    if (votesValides > 0) {
+                        statusClass = 'connected';
+                        statusText = '✅ Actif';
+                    } else if (votesBrouillon > 0) {
+                        statusClass = 'partial';
+                        statusText = '📝 En cours';
+                    }
+                }
+
+                card.innerHTML = `
+                    <div class="name" style="color:${jury.color}">${jury.label}</div>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    <div class="vote-count">
+                        ${totalVotes} cotation${totalVotes > 1 ? 's' : ''} 
+                        ${votesValides > 0 ? `(${votesValides} validée${votesValides > 1 ? 's' : ''})` : ''}
+                    </div>
+                    <div style="margin-top:4px;font-size:0.6rem;color:#555;">
+                        ${votesBrouillon > 0 ? votesBrouillon + ' en brouillon' : ''}
+                    </div>
+                `;
+                juryList.appendChild(card);
+            });
+        }
+
+        // ============================================================
+        // 7. AFFICHAGE DES RÉSULTATS
+        // ============================================================
+        function afficherResultats() {
+            // Grouper par candidat
+            const candidatIds = [...new Set(allCotations.map(c => c.candidatId))];
+            
+            if (candidatIds.length === 0) {
+                resultsList.innerHTML = `<div class="empty-state">Aucune cotation pour le moment</div>`;
+                return;
+            }
+
+            const resultats = candidatIds.map(candidatId => {
+                const cotationsCandidat = allCotations.filter(c => c.candidatId === candidatId && c.statut === 'valide');
+                const total = cotationsCandidat.reduce((sum, c) => sum + (c.total || 0), 0);
+                const moyenne = cotationsCandidat.length > 0 ? (total / cotationsCandidat.length) : 0;
+                const nbJurys = cotationsCandidat.length;
+                const candidat = candidatsCache[candidatId] || { nom: 'Candidat inconnu' };
+                return {
+                    candidatId,
+                    nom: candidat.nom || 'Inconnu',
+                    moyenne: Math.round(moyenne * 100) / 100,
+                    nbJurys,
+                    totalJurys: JURYS.length,
+                    cotations: cotationsCandidat
+                };
+            });
+
+            // Trier par moyenne décroissante
+            resultats.sort((a, b) => b.moyenne - a.moyenne);
+
+            resultsList.innerHTML = '';
+            resultats.forEach((r, index) => {
+                const div = document.createElement('div');
+                div.className = 'candidat-item';
+                const pourcentage = r.nbJurys > 0 ? (r.nbJurys / r.totalJurys) * 100 : 0;
+                const medaille = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+                
+                div.innerHTML = `
+                    <div style="flex:1;">
+                        <div>
+                            <span class="nom">${medaille} ${r.nom}</span>
+                            <span class="details">(${r.nbJurys}/${r.totalJurys} jurys)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="bar" style="width:${pourcentage}%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="moyenne">${r.moyenne > 0 ? r.moyenne.toFixed(1) : '-'}</span>
+                        <span style="font-size:0.6rem;color:#666;">/100</span>
+                    </div>
+                `;
+                resultsList.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // 8. AFFICHAGE DU STATUT DU MATCH
+        // ============================================================
+        function afficherMatchStatus() {
+            if (matchActuel) {
+                const candidat = candidatsCache[matchActuel.candidatId];
+                matchStatus.innerHTML = `
+                    <i class="fas fa-play" style="color:#2ecc71;"></i> 
+                    Match en cours : <strong>${candidat ? candidat.nom : 'Inconnu'}</strong>
+                    ${matchActuel.tempsDebat ? ' - Débuté à ' + new Date(matchActuel.tempsDebat.toDate ? matchActuel.tempsDebat.toDate() : matchActuel.tempsDebat).toLocaleTimeString() : ''}
+                `;
+            } else {
+                matchStatus.innerHTML = `
+                    <i class="fas fa-pause" style="color:#666;"></i> 
+                    Aucun match en cours
+                `;
+            }
+        }
+
+        // ============================================================
+        // 9. CONTROLE DU MATCH
+        // ============================================================
+        async function demarrerMatch() {
+            const candidatId = prompt('Entrez l\'ID du candidat pour le match :');
+            if (!candidatId) return;
+            
+            // Vérifier que le candidat existe
+            try {
+                const doc = await db.collection('candidats').doc(candidatId).get();
+                if (!doc.exists) {
+                    showToast('Candidat non trouvé', 'error');
+                    return;
+                }
+            } catch (e) {
+                showToast('Erreur vérification candidat', 'error');
+                return;
+            }
+
+            // Arrêter le match actuel s'il existe
+            if (matchActuel) {
+                await db.collection('matches').doc(matchActuel.id).update({
+                    statut: 'termine'
+                });
+            }
+
+            // Créer un nouveau match
+            try {
+                await db.collection('matches').add({
+                    candidatId: candidatId,
+                    statut: 'en_cours',
+                    tempsDebat: new Date(),
+                    creeLe: new Date()
+                });
+                showToast('Match démarré ! 🎬', 'success');
+                await chargerDonnees();
+            } catch (e) {
+                showToast('Erreur démarrage match', 'error');
+            }
+        }
+
+        async function terminerMatch() {
+            if (!matchActuel) {
+                showToast('Aucun match en cours', 'error');
+                return;
+            }
+
+            if (!confirm('Confirmer la fin du match ?')) return;
+
+            try {
+                await db.collection('matches').doc(matchActuel.id).update({
+                    statut: 'termine',
+                    finLe: new Date()
+                });
+                showToast('Match terminé ✅', 'success');
+                await chargerDonnees();
+            } catch (e) {
+                showToast('Erreur fin du match', 'error');
+            }
+        }
+
+        // ============================================================
+        // 10. ÉCOUTE EN TEMPS RÉEL
+        // ============================================================
+        function ecouterModifications() {
+            // Écouter les cotations
+            db.collection('cotations').onSnapshot(() => {
+                chargerDonnees();
+            });
+
+            // Écouter les matches
+            db.collection('matches').onSnapshot(() => {
+                chargerDonnees();
+            });
+
+            // Écouter les candidats
+            db.collection('candidats').onSnapshot(() => {
+                chargerDonnees();
+            });
+        }
+
+        // ============================================================
+        // 11. AUTHENTIFICATION
+        // ============================================================
+        async function initAuth() {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    await auth.signInAnonymously();
+                }
+                return true;
+            } catch (e) {
+                console.warn('Auth:', e);
+                showToast('Erreur de connexion à Firebase', 'error');
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 12. INITIALISATION
+        // ============================================================
+        async function init() {
+            const authOk = await initAuth();
+            if (!authOk) {
+                juryList.innerHTML = '<div class="empty-state">⚠️ Erreur de connexion Firebase</div>';
+                return;
+            }
+
+            // Charger les données
+            await chargerDonnees();
+
+            // Écouter les modifications en temps réel
+            ecouterModifications();
+
+            // Événements
+            $('btnRefresh').addEventListener('click', () => {
+                chargerDonnees();
+                showToast('Données rafraîchies', 'info');
+            });
+
+            $('btnStartMatch').addEventListener('click', demarrerMatch);
+            $('btnEndMatch').addEventListener('click', terminerMatch);
+
+            console.log('🎯 Centre de Contrôle prêt');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
