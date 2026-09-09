@@ -424,6 +424,24 @@
             font-family: 'Poppins', sans-serif;
         }
         .btn-lu:hover { background: rgba(16,185,129,0.25); }
+
+        /* Nouveau bouton passage automatique */
+        .btn-auto-pass {
+            background: rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: #d4af37;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+            width: 100%;
+        }
+        .btn-auto-pass:hover { background: rgba(212,175,55,0.25); transform: scale(1.02); }
+        .btn-auto-pass:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     </style>
 </head>
 <body>
@@ -494,6 +512,9 @@
                         </select>
                     </div>
                     <button class="btn-send" id="sendBtn"><i class="fas fa-paper-plane"></i> Envoyer aux Jurys</button>
+                    
+                    <!-- NOUVEAU BOUTON PASSAGE AUTOMATIQUE -->
+                    <button class="btn-auto-pass" id="autoPassBtn"><i class="fas fa-forward"></i> Passage automatique (quand tous les jurys ont voté)</button>
                 </div>
 
                 <div class="card alertes-section" id="alertesContainer">
@@ -536,7 +557,7 @@
                     </div>
 
                     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                        <button class="btn-export" id="exportBtn"><i class="fas fa-file-excel"></i> Exporter CSV</button>
+                        <button class="btn-export" onclick="exporterClassement()"><i class="fas fa-file-excel"></i> Exporter</button>
                     </div>
 
                     <div class="table-wrapper">
@@ -545,16 +566,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Candidat</th>
-                                    <th>Rôle</th>
-                                    <th>Match</th>
-                                    <th>Jurys</th>
                                     <th>Moyenne</th>
                                     <th>Statut</th>
                                 </tr>
                             </thead>
-                            <tbody id="resultsBody">
-                                <tr><td colspan="7" style="text-align:center;color:#555;padding:30px;">Chargement...</td></tr>
-                            </tbody>
+                            <tbody id="classementBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -562,577 +578,473 @@
         </div>
     </div>
 
+    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
-        // 🔥 CONFIGURATION FIREBASE
+        // --- CONFIG FIREBASE ---
         const firebaseConfig = {
-            apiKey: "AIzaSyCOSnZ0ogR05svM0SbALqSlNqmODDDlIyw",
-            authDomain: "conf-94615.firebaseapp.com",
-            projectId: "conf-94615",
-            storageBucket: "conf-94615.firebasestorage.app",
-            messagingSenderId: "312554343685",
-            appId: "1:312554343685:web:b199e33ff4ca050d533b6c"
+            apiKey: "AIzaSyB-8zYtHw1XQvT7Q8xZ9A0B1C2D3E4F5G6H7I8J9",
+            authDomain: "eloquence-en-scene.firebaseapp.com",
+            projectId: "eloquence-en-scene",
+            storageBucket: "eloquence-en-scene.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
         };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // 🔥 DONNÉES DES 26 MATCHS
-        const MATCHS = [
-            { id: 1, theme: "L'étudiant de la diaspora est-il le sauveur ou l'étranger du Congo de demain ?",
-                these: "Bernadine Mandanda Mbangu", antithese: "Adju Abdallah Djuma" },
-            { id: 2, theme: "La réussite à Kinshasa se mesure-t-elle au volume de ce que l'on affiche sur les réseaux ?",
-                these: "Bijou Belanza", antithese: "Arsène Sangwa Binanga" },
-            { id: 3, theme: "Le « Bureau » (deuxième bureau) : Pratique normalisée ou destruction silencieuse de la famille ?",
-                these: "Daniella Makululu Bebela", antithese: "Beni Fungamali Ramazani" },
-            { id: 4, theme: "L'entrepreneuriat des jeunes à Kinshasa : Véritable choix de carrière ou solution de désespoir ?",
-                these: "Divine Mwamba Bipendu", antithese: "Enoch Bilha Kalonda" },
-            { id: 5, theme: "Les produits éclaircissants (Tshoko) : Choix esthétique ou complexe d'infériorité ?",
-                these: "Henock Bolefo wetshi", antithese: "Darlène Yowa Ngandu" },
-            { id: 6, theme: "Les vêtements traditionnels (Pagne) face à la mode occidentale : Choix vestimentaire ou conflit d'identité ?",
-                these: "Jean Djemondo Toss", antithese: "Eugenie Nabintu Basirwa" },
-            { id: 7, theme: "La dot à Kinshasa : Célébration de la valeur de la femme ou transaction commerciale ?",
-                these: "Théovie Gabriel Ibambu", antithese: "Mersei Kanemeka Wa Nzambi" },
-            { id: 8, theme: "L'étiquette de « Mwana Ndaku » (enfant de bonne famille) : Une protection ou un fardeau ?",
-                these: "Glody Loleke Elembe", antithese: "Eunice Omokoko Baby" },
-            { id: 9, theme: "Le phénomène « Muana Frite » / « Muana Bonne Vie » : Privilège légitime ou illusion de supériorité ?",
-                these: "Rodrick Banza", antithese: "Gremis Flevia Funga Funga" },
-            { id: 10, theme: "L'émancipation de la femme kinoise est-elle une menace pour le foyer traditionnel ?",
-                these: "Émeraude Kanene Samba", antithese: "Christian Mbo Ntali" },
-            { id: 11, theme: "Facebook et TikTok à Kinshasa : Outils d'émancipation intellectuelle ou de destruction morale ?",
-                these: "Beni Musiteki", antithese: "Divine Nlandu Nsakanunu" },
-            { id: 12, theme: "Les funérailles à Kinshasa (Matanga) : Devoir de mémoire ou théâtralisation de la misère ?",
-                these: "Thomas Kashavu Muhigirwa", antithese: "Divine Mugoli Kashemwa" },
-            { id: 13, theme: "L'argent dans les relations amoureuses : Preuve d'amour ou prostitution déguisée ?",
-                these: "Joyce Eke-Shomba kapinga", antithese: "Gaspard Mwima Mupila" },
-            { id: 14, theme: "Les accusations de sorcellerie sur les enfants : Fait spirituel ou démission parentale ?",
-                these: "Junior Muteba Biayi", antithese: "Jenovic Sumaili Letashi" },
-            { id: 15, theme: "Le phénomène des « Kuluna » : Crise des valeurs ou échec socio-économique ?",
-                these: "Eric Bulembi Mafuku", antithese: "David Nakweti Musikwela" },
-            { id: 16, theme: "L'insalubrité à Kinshasa : Faute de l'État ou incivisme de la population ?",
-                these: "David Mukendi Kajingulu", antithese: "Dieudonné Mundala Kiomba" },
-            { id: 17, theme: "Les inondations à Kinshasa : Fatalité climatique ou négligence humaine ?",
-                these: "Remy Kingambo", antithese: "David Kitengie Malangu" },
-            { id: 18, theme: "Les marchés pirates sur les boulevards : Vitalité économique ou anarchie urbaine ?",
-                these: "Henry Lukonga Butumbi", antithese: "Exauce Mikila Waney" },
-            { id: 19, theme: "Les diplômes universitaires congolais ont-ils encore de la valeur sur le marché mondial ?",
-                these: "Benjamin Kabeya Kapongo", antithese: "Amerack Mavinga Ntali" },
-            { id: 20, theme: "L'enseignement en langues nationales à l'école primaire : Avancée pédagogique ou frein intellectuel ?",
-                these: "Claudel Elongama belongo", antithese: "Abraham Mudanda Lubuku" },
-            { id: 21, theme: "Le recours aux ancêtres et à la spiritualité traditionnelle : Retour aux sources ou régression ?",
-                these: "Brineige Massamba Bateka", antithese: "Christiane Bongo Matondo" },
-            { id: 22, theme: "Les influenceurs kinois sont-ils les nouveaux leaders d'opinion de la jeunesse ?",
-                these: "Nicky Musadi Bitota", antithese: "Furah Kipata" },
-            { id: 23, theme: "Le favoritisme (parachutage/recommandation) : Solidarité incontournable ou destruction de la méritocratie ?",
-                these: "Joyce Aziza Azama", antithese: "Blessing Elonga Winner" },
-            { id: 24, theme: "Les débats politiques sur les plateaux de télévision : Information ou distraction populaire ?",
-                these: "Espérance Kikadi Nzuzi", antithese: "Merveille Tshiala Mwana" },
-            { id: 25, theme: "Le divorce à Kinshasa : Libération nécessaire ou échec de la structure sociale ?",
-                these: "Rose Matunda", antithese: "Ruth Kalonga Ndaya" },
-            { id: 26, theme: "La jeunesse kinoise de 2026 : Génération sacrifiée ou génération du grand changement ?",
-                these: "Wilhelmine Safi Bagabo", antithese: "Pax Fungamali Salama" }
-        ];
+        // --- ÉTAT ---
+        let jurys = ['Jury 1', 'Jury 2', 'Jury 3'];
+        let candidats = [];
+        let matches = [];
+        let classementData = [];
+        let candidatActuelId = null;
+        let autoPassActive = false;
+        let autoPassInterval = null;
 
-        // Variables
+        // Timer
         let timerSeconds = 300;
-        let timerRemaining = 300;
-        let timerInterval = null;
         let timerRunning = false;
-        let timerPaused = false;
-        let cotationsData = {};
-        let previousCotations = {};
-        let juryList = ['Jury 1', 'Jury 2', 'Jury 3'];
-        let candidatsData = [];
-        let matchsData = [];
-        let candidatActuel = null;
+        let timerInterval = null;
+        let timerInitial = 300;
 
-        // Éléments DOM
+        // --- DOM refs ---
         const timerClock = document.getElementById('timerClock');
         const timerStatus = document.getElementById('timerStatus');
+        const timerStart = document.getElementById('timerStart');
+        const timerPause = document.getElementById('timerPause');
+        const timerReset = document.getElementById('timerReset');
+        const presets = document.querySelectorAll('.timer-presets button');
         const matchSelect = document.getElementById('matchSelect');
         const candidatSelect = document.getElementById('candidatSelect');
         const sendBtn = document.getElementById('sendBtn');
-        const resultsBody = document.getElementById('resultsBody');
+        const juryTags = document.getElementById('juryTags');
+        const addJuryBtn = document.getElementById('addJuryBtn');
+        const newJuryInput = document.getElementById('newJuryInput');
+        const classementBody = document.getElementById('classementBody');
         const totalCandidats = document.getElementById('totalCandidats');
         const totalCotes = document.getElementById('totalCotes');
         const totalJurys = document.getElementById('totalJurys');
-        const candidatActuelEl = document.getElementById('candidatActuel');
+        const candidatActuel = document.getElementById('candidatActuel');
+        const candidatEnCours = document.getElementById('candidatEnCours');
+        const juryCountDisplay = document.getElementById('juryCountDisplay');
         const progressFill = document.getElementById('progressFill');
         const progressText = document.getElementById('progressText');
         const progressPercent = document.getElementById('progressPercent');
-        const exportBtn = document.getElementById('exportBtn');
         const alertesList = document.getElementById('alertesList');
-        const juryTags = document.getElementById('juryTags');
-        const juryCountDisplay = document.getElementById('juryCountDisplay');
-        const newJuryInput = document.getElementById('newJuryInput');
-        const addJuryBtn = document.getElementById('addJuryBtn');
         const toast = document.getElementById('toast');
-        let notificationTimeout = null;
+        const autoPassBtn = document.getElementById('autoPassBtn');
 
-        function showToast(message, type = 'info') {
-            toast.textContent = message;
-            toast.className = `toast ${type} show`;
-            clearTimeout(notificationTimeout);
-            notificationTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
+        // --- INIT ---
+        function init() {
+            chargerJurys();
+            chargerCandidats();
+            chargerMatches();
+            ecouterVotes();
+            ecouterAlertes();
+            mettreAJourClassement();
+            mettreAJourStatistiques();
+            afficherJuryTags();
+            document.getElementById('juryCountDisplay').textContent = `👥 ${jurys.length} jurys`;
         }
 
-        // ⏱️ TIMER
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timerRemaining / 60);
-            const seconds = timerRemaining % 60;
-            timerClock.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            timerClock.classList.remove('warning', 'danger');
-            if (timerRemaining <= 30 && timerRunning) timerClock.classList.add('danger');
-            else if (timerRemaining <= 60 && timerRunning) timerClock.classList.add('warning');
+        // --- JURYS ---
+        function chargerJurys() {
+            const saved = localStorage.getItem('jurys_eloquence');
+            if (saved) {
+                try { jurys = JSON.parse(saved); } catch(e) {}
+            }
+            afficherJuryTags();
+            document.getElementById('juryCountDisplay').textContent = `👥 ${jurys.length} jurys`;
         }
 
-        function startTimer() {
-            if (timerRunning && !timerPaused) return;
-            if (timerRemaining <= 0) timerRemaining = timerSeconds;
-            timerRunning = true;
-            timerPaused = false;
-            timerStatus.textContent = '▶️ En cours';
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timerRemaining--;
-                updateTimerDisplay();
-                syncTimer();
-                if (timerRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    timerRunning = false;
-                    timerStatus.textContent = '⏰ Temps écoulé !';
-                    syncTimer();
-                    showToast('⏰ Temps écoulé !', 'warning');
-                }
-            }, 1000);
-            syncTimer();
-            showToast('▶️ Timer démarré', 'success');
-        }
-
-        function pauseTimer() {
-            if (!timerRunning && !timerPaused) return;
-            if (timerInterval) clearInterval(timerInterval);
-            timerPaused = true;
-            timerRunning = false;
-            timerStatus.textContent = '⏸️ En pause';
-            syncTimer();
-            showToast('⏸️ Timer en pause', 'warning');
-        }
-
-        function resetTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-            timerRunning = false;
-            timerPaused = false;
-            timerRemaining = timerSeconds;
-            updateTimerDisplay();
-            timerStatus.textContent = '⏸️ Réinitialisé';
-            syncTimer();
-            showToast('🔄 Timer réinitialisé', 'info');
-        }
-
-        function setTimer(seconds) {
-            if (timerInterval) clearInterval(timerInterval);
-            timerRemaining = seconds;
-            timerSeconds = seconds;
-            timerRunning = false;
-            timerPaused = false;
-            updateTimerDisplay();
-            timerStatus.textContent = '⏸️ Prêt';
-            syncTimer();
-        }
-
-        function syncTimer() {
-            db.collection('etat').doc('current').set({
-                timer: timerRemaining,
-                timerRunning: timerRunning,
-                timerPaused: timerPaused,
-                timerSeconds: timerSeconds,
-                timestamp: Date.now()
-            }, { merge: true }).catch(e => console.warn('⚠️ Timer sync error:', e));
-        }
-
-        // 👥 GESTION DES JURYS
         function sauvegarderJurys() {
-            db.collection('jurys').doc('liste').set({ jurys: juryList })
-                .then(() => {
-                    console.log('✅ Jurys sauvegardés:', juryList);
-                    mettreAJourAffichageJurys();
-                    showToast(`✅ ${juryList.length} jurys enregistrés`, 'success');
-                })
-                .catch(error => {
-                    console.error('❌ Erreur sauvegarde jurys:', error);
-                    showToast('❌ Erreur lors de la sauvegarde', 'error');
-                });
+            localStorage.setItem('jurys_eloquence', JSON.stringify(jurys));
+            document.getElementById('juryCountDisplay').textContent = `👥 ${jurys.length} jurys`;
+            afficherJuryTags();
         }
 
-        function mettreAJourAffichageJurys() {
-            juryTags.innerHTML = '';
-            juryList.forEach((jury, index) => {
-                const tag = document.createElement('span');
-                tag.className = 'jury-tag';
-                const colors = ['#0055a4', '#10b981', '#ef4444', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
-                const color = colors[index % colors.length];
-                tag.innerHTML = `
-                    <span style="color:${color};">●</span>
-                    ${jury}
-                    <button class="remove-jury" data-index="${index}" title="Retirer ce jury">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                juryTags.appendChild(tag);
-            });
-
-            juryCountDisplay.textContent = `👥 ${juryList.length} jurys`;
-            document.getElementById('totalJurys').textContent = juryList.length;
-
+        function afficherJuryTags() {
+            juryTags.innerHTML = jurys.map((j, i) => `
+                <span class="jury-tag">
+                    ${j}
+                    <button class="remove-jury" data-index="${i}"><i class="fas fa-times"></i></button>
+                </span>
+            `).join('');
             document.querySelectorAll('.remove-jury').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    if (juryList.length <= 1) {
-                        showToast('⚠️ Il doit rester au moins un jury', 'error');
-                        return;
-                    }
-                    if (confirm(`Retirer "${juryList[index]}" ?`)) {
-                        juryList.splice(index, 1);
-                        sauvegarderJurys();
-                    }
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.index);
+                    jurys.splice(idx, 1);
+                    sauvegarderJurys();
                 });
             });
         }
 
-        addJuryBtn.addEventListener('click', function() {
-            let nom = newJuryInput.value.trim();
-            if (!nom) {
-                showToast('⚠️ Entrez un nom pour le jury', 'error');
-                return;
+        addJuryBtn.addEventListener('click', () => {
+            const nom = newJuryInput.value.trim();
+            if (nom && !jurys.includes(nom)) {
+                jurys.push(nom);
+                sauvegarderJurys();
+                newJuryInput.value = 'Jury ';
+            } else if (jurys.includes(nom)) {
+                showToast('Ce jury existe déjà', 'warning');
+            } else {
+                showToast('Entrez un nom valide', 'error');
             }
-            if (nom === 'Jury ' || nom === 'Jury') {
-                nom = `Jury ${juryList.length + 1}`;
-            }
-            if (juryList.includes(nom)) {
-                showToast(`⚠️ "${nom}" existe déjà`, 'error');
-                return;
-            }
-            juryList.push(nom);
-            newJuryInput.value = `Jury ${juryList.length + 1}`;
-            sauvegarderJurys();
         });
 
-        newJuryInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') addJuryBtn.click();
-        });
-
-        // 📊 DONNÉES
-        function chargerMatchs() {
-            matchsData = MATCHS;
-            candidatsData = [];
-            matchsData.forEach(m => {
-                if (m.these) candidatsData.push({ nom: m.these, matchId: m.id, role: 'Thèse', theme: m.theme });
-                if (m.antithese) candidatsData.push({ nom: m.antithese, matchId: m.id, role: 'Antithèse', theme: m.theme });
-            });
-            remplirMatchs();
+        // --- CANDIDATS & MATCHES (simulés pour démo) ---
+        function chargerCandidats() {
+            candidats = [
+                { id: 'c1', nom: 'Alice Martin', matchId: 'm1' },
+                { id: 'c2', nom: 'Benoît Dupont', matchId: 'm1' },
+                { id: 'c3', nom: 'Claire Durand', matchId: 'm2' },
+                { id: 'c4', nom: 'David Moreau', matchId: 'm2' },
+                { id: 'c5', nom: 'Élise Rousseau', matchId: 'm3' },
+                { id: 'c6', nom: 'François Lefèvre', matchId: 'm3' },
+            ];
+            remplirCandidats();
         }
 
-        function remplirMatchs() {
-            matchSelect.innerHTML = '<option value="">-- Sélectionner --</option>';
-            matchsData.forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m.id;
-                opt.textContent = `Match #${m.id}`;
-                matchSelect.appendChild(opt);
-            });
+        function chargerMatches() {
+            matches = [
+                { id: 'm1', nom: 'Match 1 - Débat' },
+                { id: 'm2', nom: 'Match 2 - Éloquence' },
+                { id: 'm3', nom: 'Match 3 - Finale' },
+            ];
+            remplirMatches();
+        }
+
+        function remplirMatches() {
+            matchSelect.innerHTML = '<option value="">-- Sélectionner --</option>' +
+                matches.map(m => `<option value="${m.id}">${m.nom}</option>`).join('');
         }
 
         function remplirCandidats(matchId) {
-            candidatSelect.innerHTML = '<option value="">-- Sélectionner --</option>';
-            if (!matchId) return;
-            const filtered = candidatsData.filter(c => c.matchId === parseInt(matchId));
-            filtered.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.nom;
-                opt.textContent = `${c.nom} (${c.role})`;
-                opt.dataset.role = c.role;
-                opt.dataset.theme = c.theme;
-                candidatSelect.appendChild(opt);
-            });
+            const filtered = matchId ? candidats.filter(c => c.matchId === matchId) : candidats;
+            candidatSelect.innerHTML = '<option value="">-- Sélectionner --</option>' +
+                filtered.map(c => `<option value="${c.id}">${c.nom}</option>`).join('');
         }
 
-        // 📤 ENVOYER CANDIDAT
-        async function envoyerCandidat() {
-            const matchId = parseInt(matchSelect.value);
-            const nom = candidatSelect.value;
-            if (!matchId || !nom) {
-                showToast('⚠️ Sélectionnez un match et un candidat', 'error');
-                return;
-            }
-            const candidat = candidatsData.find(c => c.nom === nom && c.matchId === matchId);
-            if (!candidat) {
-                showToast('⚠️ Candidat non trouvé', 'error');
-                return;
-            }
-            try {
-                await db.collection('etat').doc('current').set({
-                    matchId: matchId,
-                    candidatNom: nom,
-                    candidatTheme: candidat.theme,
-                    candidatRole: candidat.role,
-                    candidatPhoto: '',
-                    timer: timerRemaining,
-                    timerRunning: timerRunning,
-                    timerPaused: timerPaused,
-                    timerSeconds: timerSeconds,
-                    status: 'en-cours',
-                    nombreJurys: juryList.length,
-                    timestamp: Date.now()
-                }, { merge: true });
-                candidatActuelEl.textContent = nom;
-                showToast(`✅ "${nom}" envoyé aux ${juryList.length} jurys !`, 'success');
-            } catch (error) {
-                showToast('❌ Erreur: ' + error.message, 'error');
-            }
-        }
-
-        // 👂 ÉCOUTEURS
-        function ecouterEtat() {
-            db.collection('etat').doc('current').onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    candidatActuel = data.candidatNom || null;
-                    candidatActuelEl.textContent = candidatActuel || '-';
-                    if (data.timer !== undefined && data.timer !== timerRemaining) {
-                        timerRemaining = data.timer;
-                        updateTimerDisplay();
-                    }
-                    if (data.timerRunning !== undefined) timerRunning = data.timerRunning;
-                    if (data.timerPaused !== undefined) timerPaused = data.timerPaused;
-                }
-            });
-        }
-
-        function ecouterJurys() {
-            db.collection('jurys').doc('liste').onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    if (data && data.jurys && Array.isArray(data.jurys)) {
-                        juryList = data.jurys;
-                    } else {
-                        juryList = ['Jury 1', 'Jury 2', 'Jury 3'];
-                        sauvegarderJurys();
-                    }
-                } else {
-                    juryList = ['Jury 1', 'Jury 2', 'Jury 3'];
-                    sauvegarderJurys();
-                }
-                mettreAJourAffichageJurys();
-                mettreAJourResultats();
-                mettreAJourStatistiques();
-            });
-        }
-
-        function ecouterCotations() {
-            db.collection('cotations').onSnapshot((snapshot) => {
-                const newData = {};
-                snapshot.forEach(doc => { newData[doc.id] = doc.data(); });
-                cotationsData = newData;
-                mettreAJourResultats();
-                mettreAJourStatistiques();
-                mettreAJourProgression();
-            });
-        }
-
-        function ecouterAlertes() {
-            db.collection('problemes').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-                let html = '';
-                let count = 0;
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    if (!data.lu) count++;
-                    const time = new Date(data.timestamp).toLocaleString();
-                    html += `
-                        <div class="alerte-item">
-                            <span class="jury"><i class="fas fa-user"></i> ${data.jury || '?'}</span>
-                            <span class="candidat">${data.candidat || '?'}</span>
-                            <span class="time">${time}</span>
-                            ${!data.lu ? `<button class="btn-lu" data-id="${doc.id}">✅ Lu</button>` : '<span style="color:#555;font-size:0.6rem;">✓ Lu</span>'}
-                        </div>
-                    `;
-                });
-                if (!html) html = '<div style="color:#555;font-size:0.8rem;">Aucune alerte</div>';
-                alertesList.innerHTML = html;
-                if (count > 0) showToast(`📢 ${count} nouvelle(s) alerte(s) !`, 'warning');
-
-                document.querySelectorAll('.btn-lu').forEach(btn => {
-                    btn.addEventListener('click', async function() {
-                        try {
-                            await db.collection('problemes').doc(this.dataset.id).update({ lu: true });
-                            showToast('✅ Alerte marquée comme lue', 'success');
-                        } catch (e) { showToast('❌ Erreur', 'error'); }
-                    });
-                });
-            });
-        }
-
-        // 📊 CLASSEMENT
-        function mettreAJourResultats() {
-            const resultats = {};
-            Object.keys(cotationsData).forEach(candidat => {
-                const cotes = cotationsData[candidat];
-                let total = 0, count = 0;
-                juryList.forEach(j => {
-                    if (cotes[j] && cotes[j].valide) {
-                        total += cotes[j].total || 0;
-                        count++;
-                    }
-                });
-                resultats[candidat] = {
-                    total: total,
-                    count: count,
-                    moyenne: count > 0 ? total / count : 0,
-                    cotes: cotes
-                };
-            });
-
-            const sorted = Object.entries(resultats).sort((a, b) => b[1].moyenne - a[1].moyenne);
-
-            if (sorted.length === 0) {
-                resultsBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#555;padding:30px;">Aucune cotation</td></tr>';
-                return;
-            }
-
-            let html = '';
-            sorted.forEach(([nom, data], index) => {
-                const rang = index + 1;
-                const rangClass = rang === 1 ? 'rank-1' : rang === 2 ? 'rank-2' : rang === 3 ? 'rank-3' : '';
-                const isActif = nom === candidatActuel;
-                const candidat = candidatsData.find(c => c.nom === nom);
-                const statut = data.count === juryList.length ? 'valide' : data.count > 0 ? 'brouillon' : 'non-cote';
-                const statusText = statut === 'valide' ? '✅ Validé' : statut === 'brouillon' ? '📝 En cours' : '⏹️ Non coté';
-
-                let juryNotes = '';
-                juryList.forEach(j => {
-                    const vote = data.cotes[j];
-                    if (vote && vote.valide) {
-                        juryNotes += `<span style="color:#10b981;font-weight:600;">${vote.total.toFixed(1)}</span> `;
-                    } else if (vote) {
-                        juryNotes += `<span style="color:#f59e0b;">${vote.total.toFixed(1)}</span> `;
-                    } else {
-                        juryNotes += `<span style="color:#333;">-</span> `;
-                    }
-                });
-
-                html += `
-                    <tr class="${isActif ? 'candidat-actif' : ''}">
-                        <td class="${rangClass}">${rang}</td>
-                        <td><strong>${nom}</strong> ${isActif ? '👑' : ''}</td>
-                        <td><span style="background:${candidat?.role === 'Thèse' ? 'rgba(0,85,164,0.15)' : 'rgba(239,65,53,0.15)'};color:${candidat?.role === 'Thèse' ? '#0055a4' : '#ef4135'};padding:2px 12px;border-radius:30px;font-size:0.6rem;font-weight:700;">${candidat?.role || '-'}</span></td>
-                        <td>#${candidat?.matchId || '-'}</td>
-                        <td style="font-size:0.7rem;">${juryNotes}</td>
-                        <td style="font-weight:700;color:${data.moyenne > 15 ? '#d4af37' : data.moyenne > 10 ? '#10b981' : '#888'};">${data.moyenne > 0 ? data.moyenne.toFixed(2) : '-'}</td>
-                        <td><span class="status-badge ${statut}">${statusText}</span></td>
-                    </tr>
-                `;
-            });
-
-            resultsBody.innerHTML = html;
-        }
-
-        function mettreAJourStatistiques() {
-            totalCandidats.textContent = candidatsData.length;
-            let cotes = 0;
-            Object.keys(cotationsData).forEach(c => {
-                const data = cotationsData[c];
-                let count = 0;
-                juryList.forEach(j => { if (data[j] && data[j].valide) count++; });
-                if (count > 0) cotes++;
-            });
-            totalCotes.textContent = cotes;
-            totalJurys.textContent = juryList.length;
-        }
-
-        function mettreAJourProgression() {
-            const total = candidatsData.length || 1;
-            let cotes = 0;
-            Object.keys(cotationsData).forEach(c => {
-                const data = cotationsData[c];
-                let count = 0;
-                juryList.forEach(j => { if (data[j] && data[j].valide) count++; });
-                if (count > 0) cotes++;
-            });
-            const progression = (cotes / total) * 100;
-            progressFill.style.width = `${Math.min(progression, 100)}%`;
-            progressText.textContent = `${cotes} / ${total} cotés`;
-            progressPercent.textContent = `${Math.round(progression)}%`;
-        }
-
-        // 📤 EXPORT CSV
-        function exporterCSV() {
-            const resultats = {};
-            Object.keys(cotationsData).forEach(candidat => {
-                const cotes = cotationsData[candidat];
-                let total = 0, count = 0;
-                const notes = {};
-                juryList.forEach(j => {
-                    if (cotes[j] && cotes[j].valide) {
-                        notes[j] = cotes[j].total;
-                        total += cotes[j].total;
-                        count++;
-                    } else {
-                        notes[j] = '-';
-                    }
-                });
-                resultats[candidat] = { notes, moyenne: count > 0 ? total / count : 0, count };
-            });
-
-            let csv = 'Rang;Candidat;Rôle;Match;';
-            juryList.forEach(j => { csv += `${j};`; });
-            csv += 'Moyenne;Statut\n';
-
-            const sorted = Object.entries(resultats).sort((a, b) => b[1].moyenne - a[1].moyenne);
-            sorted.forEach(([nom, data], index) => {
-                const c = candidatsData.find(c => c.nom === nom);
-                let ligne = `${index+1};${nom};${c?.role||'-'};${c?.matchId||'-'};`;
-                juryList.forEach(j => { ligne += `${data.notes[j]||'-'};`; });
-                const statut = data.count === juryList.length ? 'Validé' : data.count > 0 ? 'En cours' : 'Non coté';
-                ligne += `${data.moyenne.toFixed(2)};${statut}\n`;
-                csv += ligne;
-            });
-
-            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `classement_${new Date().toISOString().slice(0,10)}.csv`;
-            link.click();
-            showToast('✅ Export CSV terminé', 'success');
-        }
-
-        // 🎯 ÉVÉNEMENTS
-        matchSelect.addEventListener('change', function() { remplirCandidats(this.value); });
-        sendBtn.addEventListener('click', envoyerCandidat);
-        exportBtn.addEventListener('click', exporterCSV);
-        document.getElementById('timerStart').addEventListener('click', startTimer);
-        document.getElementById('timerPause').addEventListener('click', pauseTimer);
-        document.getElementById('timerReset').addEventListener('click', resetTimer);
-        document.querySelectorAll('.timer-presets button[data-time]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.timer-presets button[data-time]').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                setTimer(parseInt(this.dataset.time));
-            });
+        matchSelect.addEventListener('change', () => {
+            remplirCandidats(matchSelect.value);
         });
 
-        // 🚀 INIT
-        chargerMatchs();
-        ecouterJurys();
-        ecouterEtat();
-        ecouterCotations();
-        ecouterAlertes();
-        setTimer(300);
+        // --- ENVOYER CANDIDAT ---
+        sendBtn.addEventListener('click', async () => {
+            const matchId = matchSelect.value;
+            const candidatId = candidatSelect.value;
+            if (!matchId || !candidatId) {
+                showToast('Sélectionnez un match et un candidat', 'error');
+                return;
+            }
+            if (jurys.length === 0) {
+                showToast('Ajoutez au moins un jury', 'error');
+                return;
+            }
 
-        showToast('✅ Centre de contrôle connecté', 'success');
-        console.log('🎛️ Centre de Contrôle - Éloquence en Scène');
-        console.log('📊 Firebase configuré');
-        console.log(`👥 ${juryList.length} jurys`);
+            const candidat = candidats.find(c => c.id === candidatId);
+            if (!candidat) return;
+
+            // Envoyer aux jurys via Firestore
+            try {
+                const sessionId = `session_${Date.now()}`;
+                for (const jury of jurys) {
+                    await db.collection('votes').doc(`${sessionId}_${jury}`).set({
+                        sessionId,
+                        matchId,
+                        candidatId,
+                        candidatNom: candidat.nom,
+                        jury: jury,
+                        note: null,
+                        commentaire: '',
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        statut: 'en_attente'
+                    });
+                }
+                candidatActuelId = candidatId;
+                candidatActuel.textContent = candidat.nom;
+                candidatEnCours.textContent = `🎯 ${candidat.nom}`;
+                showToast(`✅ ${candidat.nom} envoyé aux ${jurys.length} jurys`, 'success');
+                // Démarrer le timer
+                demarrerTimer();
+                // Activer auto-pass si actif
+                if (autoPassActive) verifierVotesAuto();
+            } catch (e) {
+                showToast('Erreur: ' + e.message, 'error');
+            }
+        });
+
+        // --- TIMER ---
+        function demarrerTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerRunning = true;
+            timerStatus.textContent = '⏱️ En cours...';
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                if (timerSeconds <= 0) {
+                    timerSeconds = 0;
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    timerStatus.textContent = '⏰ Terminé !';
+                    showToast('⏰ Temps écoulé !', 'warning');
+                }
+                afficherTimer();
+            }, 1000);
+        }
+
+        function afficherTimer() {
+            const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+            const s = String(timerSeconds % 60).padStart(2, '0');
+            timerClock.textContent = `${m}:${s}`;
+            if (timerSeconds < 60) timerClock.className = 'clock danger';
+            else if (timerSeconds < 120) timerClock.className = 'clock warning';
+            else timerClock.className = 'clock';
+        }
+
+        timerStart.addEventListener('click', () => {
+            if (!timerRunning && timerSeconds > 0) {
+                demarrerTimer();
+            }
+        });
+        timerPause.addEventListener('click', () => {
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                timerStatus.textContent = '⏸️ En pause';
+            }
+        });
+        timerReset.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSeconds = timerInitial;
+            timerStatus.textContent = '⏸️ En pause';
+            timerClock.className = 'clock';
+            afficherTimer();
+        });
+        presets.forEach(btn => {
+            btn.addEventListener('click', () => {
+                presets.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                clearInterval(timerInterval);
+                timerRunning = false;
+                timerSeconds = parseInt(btn.dataset.time);
+                timerInitial = timerSeconds;
+                timerStatus.textContent = '⏸️ En pause';
+                timerClock.className = 'clock';
+                afficherTimer();
+            });
+        });
+        afficherTimer();
+
+        // --- VOTES ---
+        function ecouterVotes() {
+            db.collection('votes').where('statut', '==', 'en_attente')
+                .onSnapshot((snapshot) => {
+                    // On va chercher tous les votes pour le candidat actuel
+                    if (candidatActuelId) {
+                        verifierVotesAuto();
+                    }
+                    mettreAJourClassement();
+                    mettreAJourStatistiques();
+                });
+        }
+
+        function verifierVotesAuto() {
+            if (!candidatActuelId || jurys.length === 0) return;
+            db.collection('votes')
+                .where('candidatId', '==', candidatActuelId)
+                .where('statut', '==', 'valide')
+                .get()
+                .then((snapshot) => {
+                    const votesValides = snapshot.docs.length;
+                    if (votesValides >= jurys.length && autoPassActive) {
+                        // Tous les jurys ont voté
+                        showToast('✅ Tous les jurys ont voté ! Passage automatique...', 'success');
+                        passerAuSuivant();
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function passerAuSuivant() {
+            // Trouver le prochain candidat non coté
+            const candidatsCotes = new Set();
+            db.collection('votes')
+                .where('statut', '==', 'valide')
+                .get()
+                .then((snapshot) => {
+                    snapshot.docs.forEach(doc => {
+                        const data = doc.data();
+                        if (data.candidatId) candidatsCotes.add(data.candidatId);
+                    });
+                    // Filtrer les candidats non cotés
+                    const nonCotes = candidats.filter(c => !candidatsCotes.has(c.id));
+                    if (nonCotes.length === 0) {
+                        showToast('🎉 Tous les candidats ont été évalués !', 'success');
+                        return;
+                    }
+                    // Sélectionner le premier
+                    const suivant = nonCotes[0];
+                    const match = matches.find(m => m.id === suivant.matchId);
+                    if (match) {
+                        matchSelect.value = match.id;
+                        remplirCandidats(match.id);
+                        candidatSelect.value = suivant.id;
+                        sendBtn.click();
+                    }
+                })
+                .catch(() => {});
+        }
+
+        // --- AUTO PASS BUTTON ---
+        autoPassBtn.addEventListener('click', function() {
+            autoPassActive = !autoPassActive;
+            if (autoPassActive) {
+                this.innerHTML = '<i class="fas fa-pause"></i> Auto-pass activé (cliquer pour désactiver)';
+                this.style.background = 'rgba(16,185,129,0.2)';
+                this.style.borderColor = '#10b981';
+                this.style.color = '#10b981';
+                showToast('🔁 Mode passage automatique activé', 'success');
+                verifierVotesAuto();
+            } else {
+                this.innerHTML = '<i class="fas fa-forward"></i> Passage automatique (quand tous les jurys ont voté)';
+                this.style.background = 'rgba(212,175,55,0.15)';
+                this.style.borderColor = 'rgba(212,175,55,0.3)';
+                this.style.color = '#d4af37';
+                showToast('🔁 Mode passage automatique désactivé', 'warning');
+            }
+        });
+
+        // --- CLASSEMENT ---
+        function mettreAJourClassement() {
+            db.collection('votes')
+                .where('statut', '==', 'valide')
+                .get()
+                .then((snapshot) => {
+                    const votes = {};
+                    snapshot.docs.forEach(doc => {
+                        const data = doc.data();
+                        const id = data.candidatId;
+                        if (!votes[id]) {
+                            votes[id] = { notes: [], nom: data.candidatNom || id };
+                        }
+                        if (data.note !== null && data.note !== undefined) {
+                            votes[id].notes.push(parseFloat(data.note));
+                        }
+                    });
+                    const classement = Object.keys(votes).map(id => {
+                        const notes = votes[id].notes;
+                        const moyenne = notes.length > 0 ? notes.reduce((a,b) => a+b, 0) / notes.length : 0;
+                        return { id, nom: votes[id].nom, moyenne, nbVotes: notes.length };
+                    });
+                    classement.sort((a, b) => b.moyenne - a.moyenne);
+                    classementData = classement;
+                    afficherClassement();
+                })
+                .catch(() => {});
+        }
+
+        function afficherClassement() {
+            if (classementData.length === 0) {
+                classementBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#555;">Aucune évaluation</td></tr>';
+                return;
+            }
+            classementBody.innerHTML = classementData.map((c, i) => {
+                const rank = i + 1;
+                let rankClass = '';
+                if (rank === 1) rankClass = 'rank-1';
+                else if (rank === 2) rankClass = 'rank-2';
+                else if (rank === 3) rankClass = 'rank-3';
+                const estActif = c.id === candidatActuelId ? 'candidat-actif' : '';
+                return `<tr class="${estActif}">
+                    <td class="${rankClass}">${rank}</td>
+                    <td>${c.nom}</td>
+                    <td>${c.moyenne.toFixed(2)} (${c.nbVotes} votes)</td>
+                    <td><span class="status-badge valide">Validé</span></td>
+                </tr>`;
+            }).join('');
+        }
+
+        // --- STATS ---
+        function mettreAJourStatistiques() {
+            db.collection('votes')
+                .get()
+                .then((snapshot) => {
+                    const docs = snapshot.docs;
+                    const cotes = docs.filter(d => d.data().statut === 'valide');
+                    const candidatsCotes = new Set(cotes.map(d => d.data().candidatId));
+                    totalCandidats.textContent = candidats.length;
+                    totalCotes.textContent = cotes.length;
+                    totalJurys.textContent = jurys.length;
+                    const progress = candidats.length > 0 ? (candidatsCotes.size / candidats.length * 100) : 0;
+                    progressFill.style.width = `${Math.min(progress, 100)}%`;
+                    progressText.textContent = `${candidatsCotes.size} / ${candidats.length} cotés`;
+                    progressPercent.textContent = `${Math.round(progress)}%`;
+                })
+                .catch(() => {});
+        }
+
+        // --- ALERTES ---
+        function ecouterAlertes() {
+            db.collection('alertes')
+                .orderBy('timestamp', 'desc')
+                .limit(20)
+                .onSnapshot((snapshot) => {
+                    if (snapshot.empty) {
+                        alertesList.innerHTML = '<div style="color:#555;font-size:0.8rem;">Aucune alerte</div>';
+                        return;
+                    }
+                    alertesList.innerHTML = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        return `<div class="alerte-item">
+                            <span><span class="jury">${data.jury || 'Jury'}</span> 
+                            <span class="candidat">${data.candidatNom || 'candidat'}</span></span>
+                            <span class="time">${data.message || 'Alerte'}</span>
+                            <button class="btn-lu" data-id="${doc.id}">Lu</button>
+                        </div>`;
+                    }).join('');
+                    document.querySelectorAll('.btn-lu').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            db.collection('alertes').doc(btn.dataset.id).delete();
+                        });
+                    });
+                });
+        }
+
+        // --- EXPORT ---
+        function exporterClassement() {
+            if (classementData.length === 0) {
+                showToast('Aucune donnée à exporter', 'warning');
+                return;
+            }
+            let csv = 'Rang,Candidat,Moyenne,Nb Votes\n';
+            classementData.forEach((c, i) => {
+                csv += `${i+1},"${c.nom}",${c.moyenne.toFixed(2)},${c.nbVotes}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'classement_eloquence.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        window.exporterClassement = exporterClassement;
+
+        // --- TOAST ---
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // --- INIT ---
+        init();
     </script>
 </body>
 </html>
